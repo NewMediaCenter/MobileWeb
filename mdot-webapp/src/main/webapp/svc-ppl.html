@@ -1,0 +1,90 @@
+<!--
+  Copyright 2011 The Kuali Foundation Licensed under the Educational Community
+  License, Version 2.0 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://www.osedu.org/licenses/ECL-2.0 Unless required by applicable law or
+  agreed to in writing, software distributed under the License is distributed
+  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied. See the License for the specific language governing
+  permissions and limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
+<!--
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+-->
+
+<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
+</head>
+
+<body>
+<div data-role="page" id="">
+  <div data-role="header">
+    <h1>Find People</h1>
+  </div>
+  <!-- /header -->
+  
+  <div data-role="content">
+    <form action="form.php" method="post">
+      <div data-role="fieldcontain" >
+        <label for="name">Last Name:</label>
+        <input type="text" name="name" id="name" value=""  />
+        <fieldset data-role="controlgroup" data-type="horizontal" >
+          <input type="radio" name="radio-choice-1" id="radio-choice-1" value="choice-1" />
+          <label for="radio-choice-1">starts with</label>
+          <input type="radio" name="radio-choice-1" id="radio-choice-2" value="choice-2"  />
+          <label for="radio-choice-2">is exactly</label>
+        </fieldset>
+        
+        <!--        <select name="slider" id="slider" data-role="slider"   data-theme="c">
+          <option  data-theme="c"  value="startswith">starts with</option>
+          <option  data-theme="c" value="exactly">is exactly</option>
+        </select>-->
+        
+        <label for="name">First Name:</label>
+        <input type="text" name="name" id="name" value=""  />
+      </div>
+      <div data-role="fieldcontain">
+        <select name="select-choice-1" id="select-choice-1">
+          <option value="all">Any Status</option>
+          <option value="Employee">Employee</option>
+          <option value="Faculty">Faculty</option>
+          <option value="Student">Student</option>
+        </select>
+        <select name="select-choice-1" id="select-choice-1">
+          <option value="all">Any Campus</option>
+          <option value="Employee">Employee</option>
+          <option value="Faculty">Faculty</option>
+          <option value="Student">Student</option>
+        </select>
+      </div>
+      <div data-role="fieldcontain">
+        <label for="name">User Name:</label>
+        <input type="text" name="name" id="name" value=""  />
+      </div>
+      <div data-inline="true">
+        <div class="ui-grid-a">
+          <div class="ui-block-a"><a href="index.html" data-role="button" data-theme="c">Cancel</a></div>
+          <div class="ui-block-b"><a href="svc-ppl-result.html" data-role="button" data-theme="a">Search</a></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- /content --> 
+  
+  <!-- /header --> 
+</div>
+<!-- /stc --> 
+
+<!-- /page -->
+
+</body>
+</html>

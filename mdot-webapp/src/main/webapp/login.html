@@ -1,0 +1,70 @@
+<!--
+  Copyright 2011 The Kuali Foundation Licensed under the Educational Community
+  License, Version 2.0 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://www.osedu.org/licenses/ECL-2.0 Unless required by applicable law or
+  agreed to in writing, software distributed under the License is distributed
+  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied. See the License for the specific language governing
+  permissions and limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
+<!--
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+-->
+
+<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
+
+
+</head>
+
+<body>
+
+<!------------------------------ Start of home page -------------------------------->
+<div data-role="page">
+  <div data-role="header" data-backbtn="false">
+    <h1> Login</h1>
+  </div>
+  <!-- /header -->
+  
+  <div data-role="content">
+    <form action="form.php" method="post">
+      <div data-role="fieldcontain">
+        <label for="name">User Name:</label>
+        <input type="text" name="name" id="name" value=""  />
+ 
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" value="" />
+      </div>
+      
+  
+
+      <fieldset class="ui-grid-a">
+      
+     
+      
+      
+	<div class="ui-block-a"> <a href="index.html" data-role="button" data-theme="c" data-transition="pop" data-direction="reverse">Cancel</a></div>
+	<div class="ui-block-b"><a href="index.html" data-role="button" data-theme="a" data-transition="pop" data-direction="reverse">Submit</a></div>	   
+</fieldset>
+  
+    </form>
+  </div>
+  <!-- /content --> 
+  
+</div>
+<p>&nbsp;</p>
+
+<!-- /page -->
+
+</body>
+</html>

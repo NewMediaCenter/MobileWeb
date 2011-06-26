@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2011 The Kuali Foundation Licensed under the Educational Community
+  License, Version 2.0 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://www.osedu.org/licenses/ECL-2.0 Unless required by applicable law or
+  agreed to in writing, software distributed under the License is distributed
+  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied. See the License for the specific language governing
+  permissions and limitations under the License.
+-->
+<web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>mdot</display-name>
+	<description>mDot Webapp</description>
+
+	<context-param>
+		<param-name>FullPathToSecurity</param-name>
+		<param-value>/opt/sa_forms/java/dev/edu/iu/uis/security/miu/</param-value>
+	</context-param>
+	<context-param>
+		<param-name>FullPathToSettings</param-name>
+		<param-value>/opt/j2ee/dev/edu/iu/uis/settings/miu/</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/SpringBeans.xml /WEB-INF/webmvc-config.xml</param-value> 
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+    <filter>
+        <filter-name>cas</filter-name>
+        <filter-class>org.kuali.mobility.mdot.filters.MobileCASFilter</filter-class>
+
+        <init-param>
+            <param-name>cassvc</param-name>
+            <param-value>MOBANY</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginURL</param-name>
+            <param-value>https://cas.iu.edu/cas/login</param-value>
+        </init-param>
+        <init-param>
+            <param-name>validationURL</param-name>
+            <param-value>https://cas.iu.edu/cas/serviceValidate</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>cas</filter-name>
+        <servlet-name>rest</servlet-name>
+    </filter-mapping>
+
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<servlet-name>rest</servlet-name>
+	</filter-mapping>
+
+    <servlet>
+        <servlet-name>rest</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/webmvc-config.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+  
+    <servlet-mapping>
+        <servlet-name>rest</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+</web-app>
