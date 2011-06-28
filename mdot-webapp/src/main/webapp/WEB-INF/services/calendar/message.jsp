@@ -17,7 +17,7 @@
 <title>My Calendar</title>
 <link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.min.js"></script>
 </head>
