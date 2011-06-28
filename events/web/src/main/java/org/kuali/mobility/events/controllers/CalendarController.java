@@ -60,23 +60,14 @@ public class CalendarController {
 		this.calendarEventOAuthService = calendarEventOAuthService;
 	}
 
-	private int getUniqueId(HttpServletRequest request) {
-		UniqueId uniqueId = (UniqueId) request.getSession(true).getAttribute("calendarUniqueId");
-		if (uniqueId == null) {
-			uniqueId = new UniqueId();
-			request.getSession().setAttribute("calendarUniqueId", uniqueId);
-		}
-		return uniqueId.getId();
-	}
-
 	@RequestMapping(value = "/month", method = RequestMethod.GET)
 	public String month(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String filter, @RequestParam(required = false) String date) {
-		int myCounter = getUniqueId(request);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat my = new SimpleDateFormat("yyyyMM");
 		Calendar selectedDate = Calendar.getInstance();
 		try {
 			if (date != null) {
-				selectedDate.setTime(sdf.parse(date));
+				selectedDate.setTime(my.parse(date));
 			}
 		} catch (ParseException e) {
 
@@ -100,7 +91,6 @@ public class CalendarController {
 			Map<String, MobileDayOfMonth> daysInMonth = new LinkedHashMap<String, MobileDayOfMonth>();
 
 			uiModel.addAttribute("selectedDate", sdf.format(selectedDate.getTime()));
-			SimpleDateFormat my = new SimpleDateFormat("yyyyMM");
 			for (int i = 0; i < days; i++) {
 				MobileDayOfMonth mobileDayOfMonth = new MobileDayOfMonth(startDate.get(Calendar.DATE));
 				mobileDayOfMonth.setCurrentMonth(startDate.get(Calendar.MONTH) == selectedDate.get(Calendar.MONTH));
@@ -131,9 +121,8 @@ public class CalendarController {
 			nextCalendar.getTime();
 			nextCalendar.add(Calendar.MONTH, 1);
 
-			uiModel.addAttribute("previousMonth", sdf.format(previousCalendar.getTime()));
-			uiModel.addAttribute("nextMonth", sdf.format(nextCalendar.getTime()));
-			uiModel.addAttribute("uniquePage", myCounter);
+			uiModel.addAttribute("previousMonth", my.format(previousCalendar.getTime()));
+			uiModel.addAttribute("nextMonth", my.format(nextCalendar.getTime()));
 			uiModel.addAttribute("monthYear", my.format(selectedDate.getTime()));
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
@@ -163,7 +152,10 @@ public class CalendarController {
 			endDate.add(Calendar.DATE, listViewEvents.getAppData().getListViewFutureDaysLimit() * 2);
 			previousDate.add(Calendar.DATE, -listViewEvents.getAppData().getListViewFutureDaysLimit());
 
+			SimpleDateFormat my = new SimpleDateFormat("yyyyMM");
+
 			uiModel.addAttribute("selectedDate", sdf.format(selectedDate.getTime()));
+			uiModel.addAttribute("monthSelectedDate", my.format(selectedDate.getTime()));
 			uiModel.addAttribute("beginDate", sdf.format(selectedDate.getTime()));
 			uiModel.addAttribute("endDate", sdf.format(endDate.getTime()));
 			uiModel.addAttribute("currentEndDate", sdf.format(currentEndDate.getTime()));
@@ -206,7 +198,9 @@ public class CalendarController {
 			previousDate.add(Calendar.DATE, -listViewEvents.getAppData().getListViewFutureDaysLimit());
 			endCalendar.add(Calendar.DATE, listViewEvents.getAppData().getListViewFutureDaysLimit());
 
+			SimpleDateFormat my = new SimpleDateFormat("yyyyMM");
 			uiModel.addAttribute("selectedDate", sdf.format(selectedDate.getTime()));
+			uiModel.addAttribute("monthSelectedDate", my.format(selectedDate.getTime()));
 			uiModel.addAttribute("beginDate", sdf.format(beginCalendar.getTime()));
 			uiModel.addAttribute("endDate", sdf.format(endCalendar.getTime()));
 			uiModel.addAttribute("currentEndDate", sdf.format(currentEndDate.getTime()));
@@ -239,7 +233,8 @@ public class CalendarController {
 		}
 		try {
 			ViewDetailedEvent event = calendarEventOAuthService.retrieveViewEventDetails(CASFilter.getRemoteUser(request), eventId, selectedDate);
-			// uiModel.addAttribute("selectedDate", sdf.format(selectedDate.getTime()));
+			// uiModel.addAttribute("selectedDate",
+			// sdf.format(selectedDate.getTime()));
 			if (occurrenceId != null) {
 				uiModel.addAttribute("occurrenceId", occurrenceId);
 			}
@@ -286,7 +281,11 @@ public class CalendarController {
 		try {
 			EditEvent event = calendarEventOAuthService.retrieveEditEvent(CASFilter.getRemoteUser(request), eventId, seriesId, selectedDate);
 			uiModel.addAttribute("event", event);
-			uiModel.addAttribute("seriesId", seriesId);
+			if (seriesId == null) {
+				uiModel.addAttribute("seriesId", event.getSeriesId());
+			} else {
+				uiModel.addAttribute("seriesId", seriesId);
+			}
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -298,11 +297,7 @@ public class CalendarController {
 	public String saveEvent(HttpServletRequest request, @ModelAttribute("event") EditEvent event, BindingResult result, SessionStatus status, Model uiModel) {
 		EditEvent eventReturned = null;
 		try {
-			if (event.getEventId() != null) {
-				eventReturned = calendarEventOAuthService.updateEvent(CASFilter.getRemoteUser(request), event, event.getEventId());
-			} else {
-				eventReturned = calendarEventOAuthService.createEvent(CASFilter.getRemoteUser(request), event);
-			}
+			eventReturned = calendarEventOAuthService.saveEvent(CASFilter.getRemoteUser(request), event, event.getEventId());
 			if (eventReturned.getResponseCode() == HttpStatus.UNPROCESSABLE_ENTITY.value()) {
 				Errors errors = ((Errors) result);
 				for (Iterator iterator = eventReturned.getErrors().entrySet().iterator(); iterator.hasNext();) {

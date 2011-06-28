@@ -16,12 +16,11 @@
 <html>
 <head>
 <title>My Calendar</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0a4.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 </head>
 
 <body>
@@ -34,6 +33,7 @@
         <form:hidden path="eventId"/>
         <form:hidden path="lockingNumber"/>
         <form:hidden path="seriesId"/>
+        <form:hidden path="date"/>
         
         <fieldset>Event:<br/><br/>
             <label for="title">Title</label>
@@ -42,8 +42,9 @@
            
             <br/><br/>
             <label for="allDay">All Day</label>
+            
             <form:checkbox path="allDay"  cssClass="text ui-widget-content ui-corner-all" onclick='javascript:$("div#calendar-time").toggle();' />
-           
+            
             <br/><br/>
             <label for="startDate">Start Date</label>
             <form:input path="startDate"  cssClass="text ui-widget-content ui-corner-all" />
@@ -166,9 +167,10 @@
                 <hr/>
                  <br/><br/>
     	       <label for="recurrenceType">Repeat:</label><br/>
+               
                <c:if test="${event.recurrenceType eq 'CUSTOM-DAILY' or event.recurrenceType eq 'CUSTOM-WEEKLY' or event.recurrenceType eq 'CUSTOM-MONTHLY' or event.recurrenceType eq 'CUSTOM-YEARLY'}">
                     <form:radiobutton path="recurrenceType" value="${event.recurrenceType}" label="${event.recurrenceMessage}"/><br/>
-                </c:if>
+                </c:if> 
                 <form:hidden path="dailyRecurrenceType"/>
                 <form:hidden path="recurrenceDay"/>
                 <form:hidden path="recurrenceInterval"/>
@@ -181,13 +183,14 @@
                 <c:forEach var="weekDay" items="${event.weeklyRecurrenceWeekDays}" varStatus="status">
                     <form:hidden path="weeklyRecurrenceWeekDays[${status.index}]" />
                 </c:forEach>
+                
                 <form:radiobutton path="recurrenceType" value="NONE" label="None"/><br/>
                 <form:radiobutton path="recurrenceType" value="DAILY" label="Every Day"/><br/>
                 <form:radiobutton path="recurrenceType" value="WEEKLY" label="Every Week"/><br/>
     	        <form:radiobutton path="recurrenceType" value="WEEKLY2" label="Every 2 Weeks" /><br/>
                 <form:radiobutton path="recurrenceType" value="MONTHLY" label="Every Month" /><br/>
                 <form:radiobutton path="recurrenceType" value="YEARLY" label="Every Year"/><br/>
-                <form:errors path="recurrenceType" />
+                <form:errors path="recurrenceType" /> 
             </c:if>
         </fieldset>
         <input name="save" type="image" value="Save" src="${pageContext.request.contextPath}/images/btn-save.gif" alt="save" />

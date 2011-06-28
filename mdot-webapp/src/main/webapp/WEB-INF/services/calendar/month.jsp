@@ -15,33 +15,25 @@
 <html>
 <head>
 <title>My Calendar</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.5.2.min.js">
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0a4.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.min.js"></script>
 </head>
 
 <body>
 <div data-role="page" id="Calendar-Events">
-<script type="text/javascript">
-calendarSelectedDate = ${selectedDate};
-calendarUniquePage = ${uniquePage};
-</script>
   <div data-role="header">
     <h1>Events</h1><a href="${pageContext.request.contextPath}/calendar/createEvent" data-ajax="false">Add Event</a> <a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
   </div>
   <!-- /header -->
   <div data-role="content" >
-      <c:set var="uniqueId" value="${sessionScope['calendarUniqueId'].id}" />
-      <c:set var="nextUniqueId" value="${sessionScope['calendarUniqueId'].nextId}" />
       <div class="cal-header" >
       <div class="ui-grid-20-60-20">
         <div class="ui-block-a">
           <div class="cal-arrow-left">
-                <a href="${pageContext.request.contextPath}/calendar/month?date=${previousMonth}" data-direction="reverse">
+                <a href="${pageContext.request.contextPath}/calendar/month?date=${previousMonth}" onclick="javascript:setCalendarSelectedDate(${previousMonth}01, ${previousMonth}); return true;" data-direction="reverse">
                     <img src="${pageContext.request.contextPath}/images/arrow-left.png" width="16" height="16" alt="back">
                 </a> 
           </div>
@@ -51,7 +43,7 @@ calendarUniquePage = ${uniquePage};
         </div>
         <div class="ui-block-c">
           <div class="cal-arrow-right">
-                <a href="${pageContext.request.contextPath}/calendar/month?date=${nextMonth}" >
+                <a href="${pageContext.request.contextPath}/calendar/month?date=${nextMonth}" onclick="javascript:setCalendarSelectedDate(${nextMonth}01, ${nextMonth});return true;">
                     <img src="${pageContext.request.contextPath}/images/arrow-right.png" width="16" height="16" alt="forward">
                 </a> 
            </div>
@@ -85,19 +77,11 @@ calendarUniquePage = ${uniquePage};
     <div class="ui-grid-evt-month"> 
       <c:forEach var="day" items="${events}">
            <div class="ui-block-${day.value.dayOfWeek}"> 
-            <c:choose>
-                <c:when test="${day.key eq selectedDate}">
-                    <c:set var="current" value="-current"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="current" value=""/>
-                </c:otherwise>
-             </c:choose>
               <c:choose>
                 <c:when test="${day.value.currentMonth}">
-             	      <a href="#" onclick='javascript:hideCalendarDay(${uniquePage},${day.value.monthYear});showCalendarDay(${uniquePage},${day.value.monthYear},${day.key});return false;'>
-                        <div id="datebox-${uniquePage}-${day.key}" class="datebox-${day.value.currentMonth}${current} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${current}${day.value.monthYear}">
-                            <div id="event-${uniquePage}-${day.key}" class="event-${day.value.hasEvents}${current} event-${day.value.hasEvents}${day.key} event-${day.value.hasEvents}${current}${day.value.monthYear}">${day.value.day}</div>
+                      <a href="#" onclick='javascript:setCalendarSelectedDate(${day.key}, ${monthYear});hideCalendarDay();showCalendarDay();return false;'>
+                        <div class="datebox-${day.value.currentMonth}${current} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${current}${monthYear}">
+                            <div class="event-${day.value.hasEvents}${current} event-${day.value.hasEvents}${monthYear}${day.key} event-${day.value.hasEvents}${current}${monthYear}">${day.value.day}</div>
                         </div>
                       </a> 
                  </c:when>
@@ -110,9 +94,9 @@ calendarUniquePage = ${uniquePage};
                             <c:set var="dataDirection" value=""/>
                         </c:otherwise>
                      </c:choose>
-                    <a href="${pageContext.request.contextPath}/calendar/month?date=${day.key}" data-direction="${dataDirection}" onclick='javascript:hideCalendarDay(${uniquePage},${day.value.monthYear});showCalendarDay(${uniquePage},${day.value.monthYear},${day.key});return true;'>
-                        <div id="datebox-${uniquePage}-${day.key}" class="datebox-${day.value.currentMonth} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${day.value.monthYear}">
-                            <div id="event-${uniquePage}-${day.key}" class="event-${day.value.hasEvents} event-${day.value.hasEvents}${day.key} event-${day.value.monthYear}">${day.value.day}</div>
+                    <a href="${pageContext.request.contextPath}/calendar/month?date=${day.value.monthYear}" data-direction="${dataDirection}" onclick='javascript:setCalendarSelectedDate(${day.key}, ${day.value.monthYear});hideCalendarDay();showCalendarDay();return true;'>
+                        <div class="datebox-${day.value.currentMonth} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${monthYear}">
+                            <div class="event-${day.value.hasEvents} event-${day.value.hasEvents}-${day.key} event-${day.value.hasEvents}${monthYear}">${day.value.day}</div>
                         </div>
                       </a> 
                  </c:otherwise>
@@ -121,8 +105,8 @@ calendarUniquePage = ${uniquePage};
       </c:forEach>
     </div>
   <br/>
-   <c:forEach var="day" items="${events}">
-      <div id="Calendar-Day-${uniquePage}-${day.key}" class="Calendar-Day-${day.value.monthYear} Calendar-Day-${uniquePage}">
+    <c:forEach var="day" items="${events}">
+      <div class="Calendar-Day-${monthYear} Calendar-Day-${monthYear}-${day.key}">
       <ul data-role="listview" data-theme="g">
         <c:forEach var="event" items="${day.value.events}">
            <li>
@@ -145,7 +129,7 @@ calendarUniquePage = ${uniquePage};
   <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
     <div data-role="navbar" role="navigation">
       <ul class="ui-grid-a">
-        <li class="ui-block-1"><a href="${pageContext.request.contextPath}/calendar/month?date=${selectedDate}">Month View</a></li>
+        <li class="ui-block-1"><a href="${pageContext.request.contextPath}/calendar/month?date=${monthYear}">Month View</a></li>
         <li class="ui-block-2"><a href="${pageContext.request.contextPath}/calendar/list?date=${selectedDate}">List View</a></li>
       </ul>
     </div>

@@ -255,44 +255,65 @@ function lookup(inputString) {
 /* Begin Calendar js*/
 
 var calendarSelectedDate = null;
-var calendarUniquePage = 0;
+var calendarSelectedMonthYear = null;
 
 $("div#Calendar-Events").live('pagecreate',function(e, ui){ 
-	    $("div.Calendar-Day-"+calendarUniquePage).hide();
-	    $("#Calendar-Day-"+calendarUniquePage+"-"+calendarSelectedDate).show();
+    if (calendarSelectedDate == null){
+    	var d = new Date();
+    	var curr_date = ""+d.getDate();
+    	if(curr_date.length < 2){
+    		curr_date = "0"+curr_Date;
+    	}
+    	var curr_month = (d.getMonth()+1)+"";
+    	if(curr_month.length < 2){
+    		curr_month = "0"+curr_month;
+    	}
+    	var curr_year = d.getFullYear();
+    	calendarSelectedDate = "" + curr_year + curr_month + curr_date;
+    	calendarSelectedMonthYear = "" + curr_year + curr_month;
+    	
+//    	alert("selected: "+calendarSelectedDate + " year: "+calendarSelectedMonthYear);
+    }
+	hideCalendarDay();
+	showCalendarDay();
  });
 
-function hideCalendarDay(uniquePage, monthYear){
-    $("div.Calendar-Day-"+uniquePage).hide();
-    
-    var days = $("div.datebox-true-current"+monthYear);
-    days.removeClass("datebox-true-current datebox-true-current"+monthYear);
-    days.addClass("datebox-true datebox-true"+monthYear);
-
-    var events = $("div.event-true-current"+monthYear);
-    events.removeClass("event-true-current event-true-current"+monthYear);
-    events.addClass("event-true event-true"+monthYear);
-
-    var eventsFalse = $("div.event-false-current"+monthYear);
-    eventsFalse.removeClass("event-false-current event-false-current"+monthYear);
-    eventsFalse.addClass("event-false event-false"+monthYear);
+function setCalendarSelectedDate(selectedDate, monthYear){
+	calendarSelectedDate = selectedDate;
+	calendarSelectedMonthYear = monthYear;
 }
 
-function showCalendarDay(uniquePage, monthYear, key){
-	$("#Calendar-Day-"+uniquePage+"-"+key).show()
+function hideCalendarDay(){
+	$("div.Calendar-Day-"+calendarSelectedMonthYear).hide();
+	var days = $("div.datebox-true-current"+calendarSelectedMonthYear);
+	days.removeClass("datebox-true-current datebox-true-current"+calendarSelectedMonthYear);
+	days.addClass("datebox-true datebox-true"+calendarSelectedMonthYear);
+	
+	var events = $("div.event-true-current"+calendarSelectedMonthYear);
+	events.removeClass("event-true-current event-true-current"+calendarSelectedMonthYear);
+	events.addClass("event-true event-true"+calendarSelectedMonthYear);
 
-    var currentDay = $("div.datebox-true"+key);
-    currentDay.removeClass("datebox-true datebox-true-"+monthYear);
-    currentDay.addClass("datebox-true-current datebox-true-current"+monthYear);
-
-    var currentEvent = $("div.event-true"+key);
-    currentEvent.removeClass("event-true event-true-"+monthYear);
-    currentEvent.addClass("event-true-current event-true-current"+monthYear);
-    
-    var currentEventFalse = $("div.event-false"+key);
-    currentEventFalse.removeClass("event-false event-false-"+monthYear);
-    currentEventFalse.addClass("event-false-current event-false-current"+monthYear);
+	var eventsFalse = $("div.event-false-current"+calendarSelectedMonthYear);
+	eventsFalse.removeClass("event-false-current event-false-current"+calendarSelectedMonthYear);
+	eventsFalse.addClass("event-false event-false"+calendarSelectedMonthYear);
 }
+
+function showCalendarDay(){
+	$("div.Calendar-Day-"+calendarSelectedMonthYear+"-"+calendarSelectedDate).show()
+
+    var currentDay = $("div.datebox-true"+calendarSelectedDate);
+    currentDay.removeClass("datebox-true datebox-true-"+calendarSelectedMonthYear);
+    currentDay.addClass("datebox-true-current datebox-true-current"+calendarSelectedMonthYear);
+
+    var currentEvent = $("div.event-true"+calendarSelectedMonthYear+calendarSelectedDate);
+    currentEvent.removeClass("event-true event-true-"+calendarSelectedMonthYear);
+    currentEvent.addClass("event-true-current event-true-current"+calendarSelectedMonthYear);
+
+    var currentEventFalse = $("div.event-false"+calendarSelectedDate);
+    currentEventFalse.removeClass("event-false event-false-"+calendarSelectedMonthYear);
+    currentEventFalse.addClass("event-false-current event-false-current"+calendarSelectedMonthYear);
+}
+
 /* End Calendar js*/
 
 /* 	function fill(thisValue) {

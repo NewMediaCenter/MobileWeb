@@ -15,12 +15,11 @@
 <html>
 <head>
 <title>My Calendar</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0a4.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.min.js"></script>
 </head>
 
 <body>
@@ -54,7 +53,7 @@
   <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
     <div data-role="navbar" role="navigation">
       <ul class="ui-grid-a">
-        <li class="ui-block-1"><a href="${pageContext.request.contextPath}/calendar/month?date=${selectedDate}">Month View</a></li>
+        <li class="ui-block-1"><a href="${pageContext.request.contextPath}/calendar/month?date=${monthSelectedDate}">Month View</a></li>
         <li class="ui-block-2"><a href="${pageContext.request.contextPath}/calendar/list?date=${selectedDate}">List View</a></li>
       </ul>
     </div>

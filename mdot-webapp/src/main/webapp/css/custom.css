@@ -579,14 +579,22 @@
 	color: #FFF;
 }
 
-
-
-
-
-
-
-
 .ui-grid-evt-month .datebox-false {
+	border-bottom: 1px solid #D6D6D6;
+	border-left: 1px solid #D6D6D6;
+	background-image: -moz-linear-gradient(top, #ffffff, #f6f6f6);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #f6f6f6));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#f6f6f6')";
+	font-weight:bold;
+	text-align: center;
+	font-size: 1.5em;
+	border-top: 1px solid #FFF;
+	border-right: 1px solid #FFF;
+	filter: alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity: 0.5;
+}
+.ui-grid-evt-month .datebox-false-current {
 	border-bottom: 1px solid #D6D6D6;
 	border-left: 1px solid #D6D6D6;
 	background-image: -moz-linear-gradient(top, #ffffff, #f6f6f6);
