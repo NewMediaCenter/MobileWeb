@@ -55,10 +55,10 @@
 <li data-role="list-divider">\${name}</li>
 {{each(i,lab) computerLabs}}
       <li data-id="\${buildingCode}" detailId="\${labCode}">
-
+		<a href="/mdot/maps?id=\${buildingCode}">
         <h3>\${labCode}</h3>
         <p>\${availability}</p>
-
+		</a>
       </li>
 {{/each}}
 </script>

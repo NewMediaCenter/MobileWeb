@@ -39,7 +39,8 @@ $('#mapslocation').live("pageshow", function() {
 /* 	$('#map_canvas').gmap({'center': getLatLng(), 'callback': function() {
 		
 	}); */
-	var buildingCode = $('#map_canvas').jqmData('code');
+	//var buildingCode = $('#map_canvas').jqmData('code');
+	var buildingCode = getParameterByName("id");
 	//alert(buildingCode);
 		if (buildingCode) {
 			$.getJSON('/mdot/maps/' + buildingCode, function(data) {
