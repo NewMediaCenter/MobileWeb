@@ -43,6 +43,7 @@ public class MobileCASFilter extends CASFilter {
 				|| servletPath.startsWith("/sakaiannouncements")
 				|| servletPath.startsWith("/sakaiassignments")
 				|| servletPath.startsWith("/sakaiassignmentdetails")
+				|| servletPath.startsWith("/sakaigradebook")
 				|| servletPath.startsWith("/myclasseshome") 
 				|| servletPath.startsWith("/myclasses") 
 				|| servletPath.startsWith("/forums") 

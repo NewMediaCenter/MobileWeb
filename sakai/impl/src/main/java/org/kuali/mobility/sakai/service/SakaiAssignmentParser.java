@@ -111,4 +111,24 @@ public class SakaiAssignmentParser {
 	    }
 		return anns;
     }
+    
+    public String parseCourseGrade(String json) {
+    	String courseGrade = null;
+    	try {
+		
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json.toString());
+            JSONArray itemArray = jsonObj.getJSONArray("gradebook_collection");
+            for (int i = 0; i < itemArray.size(); i++) {
+                courseGrade = itemArray.getJSONObject(i).getString("courseGrade");
+            }
+
+		} catch (JSONException e) {
+	    	e.printStackTrace();
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        //runOnUiThread(returnError);
+	    }
+		return courseGrade;
+    }
+
 }

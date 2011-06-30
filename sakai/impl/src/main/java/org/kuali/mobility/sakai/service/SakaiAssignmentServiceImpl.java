@@ -34,5 +34,11 @@ public class SakaiAssignmentServiceImpl implements SakaiAssignmentService {
 		List<SakaiAssignment> anns = parser.parseAssignmentDetails(json);
 		return anns;
 	}
+	
+	public String findCourseGrade(String json) {
+		SakaiAssignmentParser parser = new SakaiAssignmentParser();
+		String courseGrade = parser.parseCourseGrade(json);
+		return courseGrade;
+	}
 
 }

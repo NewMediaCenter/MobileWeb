@@ -23,5 +23,6 @@ public interface SakaiAssignmentService {
 
 	public List<SakaiAssignment> findAllCourseAssignments(String json);
 	public List<SakaiAssignment> findAssignmentDetails(String json);
+	public String findCourseGrade(String json);
 
 }

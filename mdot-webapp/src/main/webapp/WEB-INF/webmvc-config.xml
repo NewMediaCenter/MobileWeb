@@ -42,6 +42,7 @@
         <security:intercept-url access="ROLE_USER" pattern="/events/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiannouncements/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiassignments/**" />
+        <security:intercept-url access="ROLE_USER" pattern="/sakaigradebook/**" />
         <security:intercept-url access="ROLE_USER" pattern="/myclasseshome/**" />
         <security:intercept-url access="ROLE_USER" pattern="/myclasses/**" />
         <security:intercept-url access="ROLE_USER" pattern="/forums/**" />

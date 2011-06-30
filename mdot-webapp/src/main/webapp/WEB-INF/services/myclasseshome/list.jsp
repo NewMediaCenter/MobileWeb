@@ -64,14 +64,13 @@
 					</a>
 				</li>
 					</c:if>
-					<%-- 
-					
 					<c:if test="${item.code=='2'}">
-					<a href="/mdot/gradebook?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
+				<li>					
+					<a href="/mdot/sakaigradebook?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
 						<h3>${item.title}</h3>
 					</a>
-					</c:if>
-					--%>	
+				</li>
+					</c:if>	
 					<c:if test="${item.code=='3'}">
 				<li>
 					<a href="/mdot/roster?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">

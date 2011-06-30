@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><%= request.getParameter("siteTitle") %></title>
+<title>Grades</title>
 <link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
 <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
@@ -25,25 +25,28 @@
 </head>
 
 <body>
-<div data-role="page" id="abc">
+<div data-role="page" id="123">
 	<div data-role="header">
-		<h1>Assignments</h1><a href="/mdot/index.jsp" data-icon="home" class="ui-btn-right">home</a>
+		<h1>Grades</h1>
 	</div>
 	<!-- /header -->
 
 	<div data-role="content" data-theme="a">
 		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
 			<c:set var="lastCreatedDate" value=""/>
-			<c:forEach items="${sakaiassignments}" var="item" varStatus="status">
-				
+			<li>
+				<h3>Course Grade: ${courseGrade}</h3>
+			</li>
+			<c:forEach items="${sakaigrades}" var="item" varStatus="status">
+				<li data-role="list-divider">${item.title} - ${item.submittedStatus}</li>
 				<li>
-					<a href="/mdot/sakaiassignmentdetails?siteId=
-					<%= request.getParameter("siteId") %>&siteTitle=
-					<%= request.getParameter("siteTitle") %>&assId=
-					${item.id}" data-direction="forward">
-						<h3>${item.title}</h3>
-						<p>Due: ${item.dropByDate}</p>
-					</a>
+						<h3>Grade Scale</h3> <p> ${item.gradeScale}</p>
+						<c:set var="graded" value="${item.submissionGraded}" />
+						<jsp:useBean id="graded" class="java.lang.String" />
+						
+						<c:if test='<%=graded.equalsIgnoreCase("true")%>'>
+						<h3>Grade: </h3> <p> ${item.submissionGrade}</p>
+						</c:if>
 				</li>
 			</c:forEach>
 		</ul>
