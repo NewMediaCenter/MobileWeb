@@ -315,6 +315,26 @@ public class CalendarController {
 		return "redirect:/calendar/month";
 	}
 
+	@RequestMapping(value = "/deleteEvent", method = RequestMethod.GET)
+	public String deleteEvent(HttpServletRequest request, @RequestParam(required = true) Long eventId, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) String date, Model uiModel) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
+		Date selectedDate = null;
+		try {
+			if (date != null) {
+				selectedDate = sdf.parse(date);
+			}
+		} catch (ParseException e) {
+
+		}
+		try {
+			calendarEventOAuthService.deleteEvent(CASFilter.getRemoteUser(request), eventId, seriesId, selectedDate);
+		} catch (PageLevelException pageLevelException) {
+			uiModel.addAttribute("message", pageLevelException.getMessage());
+			return "calendar/message";
+		}
+		return "redirect:/calendar/month";
+	}
+
 	@RequestMapping(value = "/invite", method = RequestMethod.GET)
 	public String invite(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
