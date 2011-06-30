@@ -21,6 +21,10 @@
 
 /* Test */
 
+$(document).bind("mobileinit", function(){
+  $.mobile.ajaxEnabled = false;
+});
+
 function getParameterByName( name )
 {
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
@@ -77,10 +81,10 @@ function deleteOverlays() {
 }
 
 
-$('[data-role=page]').live('pageshow',function(e, ui){ 
-	var page_name = e.target.id;
-	if (page_name == 'mapslocation'){
-		
+$('[data-role=page][id=mapslocation2]').live('pageshow',function(e, ui){ 
+	//var page_name = e.target.id;
+	//if (page_name == 'mapslocation'){
+		var buildingCode = $('#map_canvas').jqmData('code');
 //		var buildingCode = getParameterByName("bc");
 		if (buildingCode) {
 			//alert(buildingCode);
@@ -106,7 +110,7 @@ $('[data-role=page]').live('pageshow',function(e, ui){
 				
 			});
 		}
-	}
+	//}
 });
 
 // When map page opens get location and display map
@@ -152,19 +156,19 @@ $('[data-role=page][id=computerlabshome]').live('pagebeforeshow',function(event,
 });
 
 function refreshComputerLabs() {
-	  $.mobile.pageLoading();
-	  $('#cllist').text('');
-	  var dynamicDataResp = $.ajax({
-	        url: "/mdot/computerlabs?campus=BL",
-	        dataType: 'json',
-	        async: false,
-	        cache: false           
-	      });
-	  if(dynamicDataResp.status == 200){
-	    var dynamicDataObj = jQuery.parseJSON(dynamicDataResp.responseText);
-	    $.tmpl('clListTemplate', dynamicDataObj).appendTo('#cllist');
-	    $('#cllist').listview('refresh');
-	  }
+	$.mobile.pageLoading();
+	$('#cllist').text('');
+	var dynamicDataResp = $.ajax({
+		url: "/mdot/computerlabs?campus=BL",
+		dataType: 'json',
+		async: false,
+		cache: false           
+	});
+	if(dynamicDataResp.status == 200){
+		var dynamicDataObj = jQuery.parseJSON(dynamicDataResp.responseText);
+		$.tmpl('clListTemplate', dynamicDataObj).appendTo('#cllist');
+		$('#cllist').listview('refresh');
+	}
 }
 
 $('[data-role=page]').live('pagecreate', function (event) {
@@ -204,6 +208,16 @@ $('[data-role=page]').live('pagecreate', function (event) {
 		activemapslocation = 1;
 //		initialize(39.17, -86.5);
 	} else if (this.id == "computerlabshome" && activecomputerlabshome == 0) {
+//		$('#cllist').delegate('li', 'vclick', function() {
+//			var clid = $(this).jqmData('id');
+//			$('#map_canvas').jqmData('code', clid);
+//			$.mobile.changePage({
+//				url: "/mdot/maps", 
+//				type: "get",
+//				data: clid
+//			});
+//		});
+		/*
 		$('#cllist').delegate('li', 'click', function() {
 			var detailId = $(this).get(0).getAttribute('detailId');
 			buildingCode = detailId;
@@ -213,6 +227,7 @@ $('[data-role=page]').live('pagecreate', function (event) {
 				type: "get"
 			});
 		});
+		*/
 	}
 });
 

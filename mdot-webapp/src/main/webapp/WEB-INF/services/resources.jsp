@@ -14,7 +14,7 @@
 <link href="/mdot/css/custom.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="/mdot/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="/mdot/js/custom.js"></script>
 <script type="text/javascript" src="/mdot/js/jquery.mobile-1.0b1.js"></script>
 <script type="text/javascript" src="/mdot/js/jquery.tmpl.js"></script>
-<script type="text/javascript" src="/mdot/js/custom.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>

@@ -28,18 +28,43 @@
 </head>
 
 <body>
-<div data-role="page" id="mapslocation" class="page-map" style="width:100%; height:100%; padding:0;">
+<div data-role="page" id="mapslocation" class="page-map">
 	<div data-role="header">
 		<h1>Maps</h1>
 	</div>
 	<!-- /header -->
 
-	<div data-role="content" data-theme="a" style="width:100%; height:100%; padding:0;">
-		<c:if test="${not empty location}">
+<script type="text/javascript">
+$('#mapslocation').live("pageshow", function() {
+/* 	$('#map_canvas').gmap({'center': getLatLng(), 'callback': function() {
 		
-		</c:if>
-		
-		<div id="map_canvas" style="width:100%; height:100%; padding:0;"></div>
+	}); */
+	var buildingCode = $('#map_canvas').jqmData('code');
+	//alert(buildingCode);
+		if (buildingCode) {
+			$.getJSON('/mdot/maps/' + buildingCode, function(data) {
+				initialize(39.17, -86.5);
+				var items = [];
+				var latitude = data.latitude;
+				var longitude = data.longitude;
+				
+				if (map) {
+					google.maps.event.trigger(map, 'resize');
+					var location = new google.maps.LatLng(latitude, longitude);
+					map.setZoom(17);
+					map.setCenter(location);
+					deleteOverlays();
+				    addMarker(location);
+				    google.maps.event.trigger(map, 'resize');
+				}
+				
+			});
+		}
+});
+</script>
+
+	<div data-role="content" data-theme="a">
+		<div id="map_canvas" style="height:300px;"></div>
 	</div>
 	<!-- /content -->
 

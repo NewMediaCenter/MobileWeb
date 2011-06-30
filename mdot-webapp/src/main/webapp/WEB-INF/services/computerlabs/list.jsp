@@ -54,7 +54,7 @@
 <script id="clListTemplate" type="text/x-jquery-tmpl">
 <li data-role="list-divider">\${name}</li>
 {{each(i,lab) computerLabs}}
-      <li data-id="\${labCode}" detailId="${buildingCode}">
+      <li data-id="\${buildingCode}" detailId="\${labCode}">
 
         <h3>\${labCode}</h3>
         <p>\${availability}</p>
