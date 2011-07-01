@@ -15,11 +15,15 @@
 
 package org.kuali.mobility.alerts.controllers;
 
+import java.util.List;
+
+import org.kuali.mobility.alerts.entity.Alert;
 import org.kuali.mobility.alerts.service.AlertsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller 
 @RequestMapping("/alerts")
@@ -31,10 +35,15 @@ public class AlertsController {
         this.alertsService = alertsService;
     }
     
-    @RequestMapping(headers = "Accept=application/json")
-    @ResponseBody
-    public String getTest() {
-        return "Test";
-    } 
-    
+    @RequestMapping(method = RequestMethod.GET)
+    public String getList(Model uiModel) {
+    	try {
+    		List<Alert> alerts = alertsService.findAllAlertsByCampus("BL");
+    		uiModel.addAttribute("alerts", alerts);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return "alerts/list";
+    }
 }

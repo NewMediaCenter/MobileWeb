@@ -8,6 +8,8 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +44,16 @@
       <li><a href="#ask"><img src="images/service-icons/srvc-askiu.png" alt="AskIU" class="ui-li-icon">AskIU </a></li>
       <li><a href="#din"><img src="images/service-icons/srvc-dining.png" alt="Dining Services" class="ui-li-icon">Dining Services</a></li>
       <li><a href="/mdot/emergencycontacts"><img src="images/service-icons/srvc-emergency.png" alt="Emergency Contacts" class="ui-li-icon">Emergency Contacts </a></li>
-      <li><a href="#caa"><img src="images/service-icons/srvc-alerts-green.png" alt="Campus Alerts" class="ui-li-icon">Campus Alerts</a></li>
+      
+      <li>
+      	<a href="/mdot/alerts"><img src="images/service-icons/srvc-alerts-green.png" alt="Campus Alerts" class="ui-li-icon">
+      	Campus Alerts
+      	<c:if test="${alertCount gt 0}"> 
+      		<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">${alertCount}</span>
+      	</c:if>
+      	</a>
+      </li>
+      
       <li><a href="#fdb"><img src="images/service-icons/srvc-feedback.png" alt="Feedback" class="ui-li-icon">Feedback</a></li>
     </ul>
   </div>
@@ -234,26 +245,6 @@
   <!-- /header --> 
 </div>
 <!-- /din --> 
-
-<!------------------------------ Start of caa -------------------------------->
-<div data-role="page" id="caa">
-  <div data-role="header">
-    <h1>Campus Alerts</h1>
-  </div>
-  <!-- /header -->
-  
-  <div data-role="content">
-    <p>I'm first in the source order so I'm shown as the page.</p>
-    <p><a href="#home">Back to foo</a></p>
-  </div>
-  <!-- /content -->
-  
-  <div data-role="footer">
-    <h4>Page Footer</h4>
-  </div>
-  <!-- /header --> 
-</div>
-<!-- /caa --> 
 
 <!------------------------------ Start of fdb -------------------------------->
 <div data-role="page" id="fdb">

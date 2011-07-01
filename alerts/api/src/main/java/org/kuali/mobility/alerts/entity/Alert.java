@@ -17,8 +17,80 @@ package org.kuali.mobility.alerts.entity;
 
 import java.io.Serializable;
 
-public class Alert implements Serializable {
+public class Alert implements Serializable, Comparable<Alert> {
 
-	private static final long serialVersionUID = -8636429278178124976L;
-    
+	private static final long serialVersionUID = 3298337944905192830L;
+	
+	private String campus;
+    private String type;
+    private String title;
+    private String priority;
+    private String mobileText;
+    private String url;
+    private int key;
+
+    public String getCampus() {
+        return campus;
+    }
+
+    public void setCampus(String campus) {
+        this.campus = campus;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getMobileText() {
+        return mobileText;
+    }
+
+    public void setMobileText(String mobileText) {
+        this.mobileText = mobileText;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int compareTo(Alert that) {
+        if (this.getCampus() == null || that == null || that.getCampus() == null) {
+            return -1;
+        }
+        return this.getCampus().compareTo(that.getCampus());
+    }
+
+	public int getKey() {
+		return key;
+	}
+
+	public void setKey(int key) {
+		this.key = key;
+	}
+
+	
 }

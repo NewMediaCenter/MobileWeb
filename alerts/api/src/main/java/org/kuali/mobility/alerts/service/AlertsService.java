@@ -15,6 +15,14 @@
 
 package org.kuali.mobility.alerts.service;
 
+import java.util.List;
+
+import org.kuali.mobility.alerts.entity.Alert;
+
 public interface AlertsService {
 
+	List<Alert> findAllAlertsByCampus(String campus);
+	
+	int findAlertCountByCampus(String campus);
+	
 }

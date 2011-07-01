@@ -27,6 +27,14 @@
             <groupId>org.kuali.mobility</groupId>
             <artifactId>alerts-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>configparams-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>configparams-impl</artifactId>
+        </dependency>
         <!-- Persistence dependencies -->
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -41,6 +49,11 @@
         <dependency>
             <groupId>net.sf.flexjson</groupId>
             <artifactId>flexjson</artifactId>
+        </dependency>
+        <!-- XML dependencies -->
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
         </dependency>
         <!-- Testing dependencies -->
         <dependency>
@@ -58,6 +71,10 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
     </dependencies>
     <build>
         <resources>

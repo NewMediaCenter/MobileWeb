@@ -15,6 +15,8 @@
  
 package org.kuali.mobility.mdot.controllers;
 
+import org.kuali.mobility.alerts.service.AlertsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +26,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class HomeController {
 
+    @Autowired
+    private AlertsService alertsService;
+    public void setAlertsService(AlertsService alertsService) {
+        this.alertsService = alertsService;
+    }
+    
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	uiModel.addAttribute("test", "test2");
+    	uiModel.addAttribute("alertCount", alertsService.findAlertCountByCampus("BL"));
     	return "index";
     }
         
