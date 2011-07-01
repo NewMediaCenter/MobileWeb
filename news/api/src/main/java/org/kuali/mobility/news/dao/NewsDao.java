@@ -15,6 +15,11 @@
 
 package org.kuali.mobility.news.dao;
 
+import java.util.List;
+
+import org.kuali.mobility.news.entity.NewsSource;
+
 public interface NewsDao {
-	
+	public List<NewsSource> getAllActiveNewsSourcesByLocationCode(String locationCode);
+	public NewsSource getNewsSourceByCode(String sourceCode);
 }

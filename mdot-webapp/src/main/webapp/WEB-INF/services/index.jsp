@@ -38,7 +38,7 @@
       <li><a href="svc-ppl.html"><img src="images/service-icons/srvc-people.png" alt="People" class="ui-li-icon">People</a></li>
       <li><a href="/mdot/computerlabs"><img src="images/service-icons/srvc-stc.png" alt="Computer Labs" class="ui-li-icon">Computer Labs </a></li>
       <li><a href="/mdot/itnotices"><img src="images/service-icons/srvc-itnotice.png" alt="IT Notices" class="ui-li-icon">IT Notices </a></li>
-      <li><a href="#nws"><img src="images/service-icons/srvc-news.png" alt="News" class="ui-li-icon">News</a></li>
+      <li><a href="/mdot/news"><img src="images/service-icons/srvc-news.png" alt="News" class="ui-li-icon">News</a></li>
       <li><a href="/mdot/calendar/month"><img src="images/service-icons/srvc-events.png" alt="Events" class="ui-li-icon">Events</a></li>
       <li><a href="/mdot/knowledgebase"><img src="images/service-icons/srvc-kb.png" alt="Knowledge Base" class="ui-li-icon">Knowledge Base </a></li>
       <li><a href="#ask"><img src="images/service-icons/srvc-askiu.png" alt="AskIU" class="ui-li-icon">AskIU </a></li>

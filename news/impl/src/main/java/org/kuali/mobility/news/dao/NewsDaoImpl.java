@@ -15,10 +15,18 @@
 
 package org.kuali.mobility.news.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.kuali.mobility.news.entity.MaintRss;
+import org.kuali.mobility.news.entity.NewsSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class NewsDaoImpl implements NewsDao {
@@ -34,4 +42,38 @@ public class NewsDaoImpl implements NewsDao {
         this.entityManager = entityManager;
     }
 
+	@Override
+	@Transactional
+	public List<NewsSource> getAllActiveNewsSourcesByLocationCode(String locationCode) {
+		Query query = entityManager.createQuery("select r from MaintRss r where r.active = 1 and (r.campus like :campusCode or r.campus like 'UA') order by r.order");
+        query.setParameter("campusCode", locationCode);
+        @SuppressWarnings("unchecked")
+		List<MaintRss> maintRss =  query.getResultList();
+        List<NewsSource> sources = new ArrayList<NewsSource>();
+        for (MaintRss rss : maintRss) {
+        	sources.add(convertMaintRssToNewsSource(rss));
+        }
+        return sources;
+	}
+
+	@Override
+	public NewsSource getNewsSourceByCode(String rssShortCode) {
+		Query query = entityManager.createQuery("select r from MaintRss r where r.shortCode like :rssShortCode");
+		query.setParameter("rssShortCode", rssShortCode);
+		try {
+            return convertMaintRssToNewsSource((MaintRss)query.getSingleResult());
+        } catch (NoResultException e) {
+            return null;
+        }
+	}
+	
+	private NewsSource convertMaintRssToNewsSource(MaintRss rss) {
+		NewsSource source = new NewsSource();
+    	source.setLocationCode(rss.getCampus());
+    	source.setSourceCode(rss.getShortCode());
+    	source.setSourceType(rss.getType());
+    	source.setSourceName(rss.getDisplayName());
+    	source.setSourceUrl(rss.getUrl());
+    	return source;
+	}
 }

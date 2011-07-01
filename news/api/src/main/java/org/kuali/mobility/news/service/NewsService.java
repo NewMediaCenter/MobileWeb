@@ -14,6 +14,16 @@
  */
 package org.kuali.mobility.news.service;
 
+import java.util.List;
+
+import org.kuali.mobility.news.entity.NewsArticle;
+import org.kuali.mobility.news.entity.NewsSource;
+import org.kuali.mobility.news.entity.NewsStream;
+
 public interface NewsService {
 
+	public List<NewsSource> getAllNewsSourcesByLocation(String locationCode);
+	public NewsStream getNewsStream(String sourceCode);
+	public NewsArticle getNewsArticle(String articleId);
+	public String getDefaultNewsSourceCode();
 }

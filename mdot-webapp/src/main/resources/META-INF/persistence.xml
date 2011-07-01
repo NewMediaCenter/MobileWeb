@@ -22,6 +22,7 @@
     <class>org.kuali.mobility.configparams.entity.ConfigParam</class>
     <class>org.kuali.mobility.maps.entity.Location</class>
     <class>org.kuali.mobility.maps.entity.MapsGroup</class>
+    <class>org.kuali.mobility.news.entity.MaintRss</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
   </persistence-unit>
 
