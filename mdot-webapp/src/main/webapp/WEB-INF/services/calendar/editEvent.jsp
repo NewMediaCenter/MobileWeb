@@ -15,12 +15,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Calendar</title>
 <link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/jquery.mobile.datebox.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript">
+    $( document ).bind( "mobileinit", function(){ $.mobile.page.prototype.options.degradeInputs.date = 'text'; });	
+</script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile.datebox.min.js"></script>
 </head>
 
 <body>
@@ -42,14 +48,12 @@
            
             <br/><br/>
             <label for="allDay">All Day</label>
-            
             <form:checkbox path="allDay"  cssClass="text ui-widget-content ui-corner-all" onclick='javascript:$("div#calendar-time").toggle();' />
-            
             <br/><br/>
             <label for="startDate">Start Date</label>
-            <form:input path="startDate"  cssClass="text ui-widget-content ui-corner-all" />
+            <form:input path="startDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
             <br/><form:errors path="startDate" />
-            <br/><br/>
+            <br/>
             <c:choose>
                 <c:when test="${event.allDay}">
                     <c:set var="displayCalendarTime" value="none" />
@@ -59,79 +63,17 @@
                 </c:otherwise>
             </c:choose>
             <div id="calendar-time" style="display: ${displayCalendarTime}">
-                <label for="startHour">Start Time</label>
-                <form:select path="startHour"  cssClass="ui-widget-content ui-corner-all" >
-                    <form:option value="0" label="12" /> 
-                    <form:option value="1" label="1" />
-                    <form:option value="2" label="2" />
-                    <form:option value="3" label="3" />
-                    <form:option value="4" label="4" />
-                    <form:option value="5" label="5" />
-                    <form:option value="6" label="6" />
-                    <form:option value="7" label="7" />
-                    <form:option value="8" label="8" />
-                    <form:option value="9" label="9" />
-                    <form:option value="10" label="10" />
-                    <form:option value="11" label="11" />
-                </form:select>
-                <form:select path="startMinute"  cssClass="ui-widget-content ui-corner-all" > 
-                    <form:option value="0" label=":00" />
-                    <form:option value="5" label=":05" />
-                    <form:option value="10" label=":10" />
-                    <form:option value="15" label=":15" />
-                    <form:option value="20" label=":20" />
-                    <form:option value="25" label=":25" />
-                    <form:option value="30" label=":30" />
-                    <form:option value="35" label=":35" />
-                    <form:option value="40" label=":40" />
-                    <form:option value="45" label=":45" />
-                    <form:option value="50" label=":50" />
-                    <form:option value="55" label=":55" />
-                </form:select>
-                <form:select path="startAmPm"  cssClass="ui-widget-content ui-corner-all" >
-                    <form:option value="AM" label="AM" />
-                    <form:option value="PM" label="PM" />
-                </form:select>
+                <label for="startTime">Start Time</label>
+                <form:input path="startTime"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"mode": "timebox", "timeFormat":12}' />
                 <br/><br/>
             
                 <label for="endDate">End Date</label>
-                <form:input path="endDate"  cssClass="text ui-widget-content ui-corner-all" />
+                <form:input path="endDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
                 <br/><form:errors path="endDate" />
-                <br/><br/>
+                <br/>
                 
-                <label for="endHour">End Time</label>
-                <form:select path="endHour"  cssClass="ui-widget-content ui-corner-all" >
-                    <form:option value="0" label="12" /> 
-                    <form:option value="1" label="1" />
-                    <form:option value="2" label="2" />
-                    <form:option value="3" label="3" />
-                    <form:option value="4" label="4" />
-                    <form:option value="5" label="5" />
-                    <form:option value="6" label="6" />
-                    <form:option value="7" label="7" />
-                    <form:option value="8" label="8" />
-                    <form:option value="9" label="9" />
-                    <form:option value="10" label="10" />
-                    <form:option value="11" label="11" />
-                </form:select>
-                <form:select path="endMinute"  cssClass="ui-widget-content ui-corner-all" > 
-                    <form:option value="0" label=":00" />
-                    <form:option value="5" label=":05" />
-                    <form:option value="10" label=":10" />
-                    <form:option value="15" label=":15" />
-                    <form:option value="20" label=":20" />
-                    <form:option value="25" label=":25" />
-                    <form:option value="30" label=":30" />
-                    <form:option value="35" label=":35" />
-                    <form:option value="40" label=":40" />
-                    <form:option value="45" label=":45" />
-                    <form:option value="50" label=":50" />
-                    <form:option value="55" label=":55" />
-                </form:select>
-                <form:select path="endAmPm"  cssClass="ui-widget-content ui-corner-all" >
-                    <form:option value="AM" label="AM" />
-                    <form:option value="PM" label="PM" />
-                </form:select>
+                 <label for="endTime">End Time</label>
+                <form:input path="endTime"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"mode": "timebox", "timeFormat":12}' />
                 <br/><br/>
             </div>
             <label for="location">Location</label>
@@ -178,7 +120,6 @@
                 <form:hidden path="recurrenceRelativeDay"/>
                 <form:hidden path="recurrenceRelativePosition"/>
                 <form:hidden path="recurrenceUntilCount"/>
-                <form:hidden path="recurrenceUntilDate"/>
                 <form:hidden path="relativeInterval"/>
                 <c:forEach var="weekDay" items="${event.weeklyRecurrenceWeekDays}" varStatus="status">
                     <form:hidden path="weeklyRecurrenceWeekDays[${status.index}]" />
@@ -190,7 +131,11 @@
     	        <form:radiobutton path="recurrenceType" value="WEEKLY2" label="Every 2 Weeks" /><br/>
                 <form:radiobutton path="recurrenceType" value="MONTHLY" label="Every Month" /><br/>
                 <form:radiobutton path="recurrenceType" value="YEARLY" label="Every Year"/><br/>
-                <form:errors path="recurrenceType" /> 
+                <form:errors path="recurrenceType" />
+                <br/><br/>
+               <label for="recurrenceUntilDate">Repeat Until Date</label>
+            	<form:input path="recurrenceUntilDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
+            	<br/><form:errors path="recurrenceUntilDate" />
             </c:if>
         </fieldset>
         <input name="save" type="image" value="Save" src="${pageContext.request.contextPath}/images/btn-save.gif" alt="save" />

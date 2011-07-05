@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Calendar</title>
 <link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
@@ -23,6 +24,10 @@
 </head>
 
 <body>
+<script type="text/javascript">
+	calendarSelectedDate = ${selectedDate};
+	calendarSelectedMonthYear = ${monthYear};
+</script>
 <div data-role="page" id="Calendar-Events">
   <div data-role="header">
     <h1>Events</h1><a href="${pageContext.request.contextPath}/calendar/createEvent" data-ajax="false">Add Event</a> <a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
@@ -76,14 +81,20 @@
     </div>
     <div class="ui-grid-evt-month"> 
       <c:forEach var="day" items="${events}">
-           <div class="ui-block-${day.value.dayOfWeek}"> 
+           <div class="ui-block-${day.value.dayOfWeek}">
               <c:choose>
                 <c:when test="${day.value.currentMonth}">
-                      <a href="#" onclick='javascript:setCalendarSelectedDate(${day.key}, ${monthYear});hideCalendarDay();showCalendarDay();return false;'>
-                        <div class="datebox-${day.value.currentMonth}${current} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${current}${monthYear}">
-                            <div class="event-${day.value.hasEvents}${current} event-${day.value.hasEvents}${monthYear}${day.key} event-${day.value.hasEvents}${current}${monthYear}">${day.value.day}</div>
-                        </div>
-                      </a> 
+                	<c:choose>
+               			<c:when test="${selectedDate eq day.key}">
+               				<c:set var="current" value="-current"/>
+               			</c:when>
+               			<c:otherwise>
+               				<c:set var="current" value=""/>
+               			</c:otherwise>
+               		</c:choose>
+                    <div class="datebox-${day.value.currentMonth}${current} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${current}${monthYear}" onclick='javascript:hideCalendarDay(${monthYear});showCalendarDay(${monthYear}, ${day.key});return false;'>
+                        <div class="event-${day.value.hasEvents}${current} event-${day.value.hasEvents}${monthYear}${day.key} event-${day.value.hasEvents}${current}${monthYear}">${day.value.day}</div>
+                    </div>
                  </c:when>
                  <c:otherwise>
                     <c:choose>
@@ -94,11 +105,9 @@
                             <c:set var="dataDirection" value=""/>
                         </c:otherwise>
                      </c:choose>
-                    <a href="${pageContext.request.contextPath}/calendar/month?date=${day.value.monthYear}" data-direction="${dataDirection}" onclick='javascript:setCalendarSelectedDate(${day.key}, ${day.value.monthYear});hideCalendarDay();showCalendarDay();return true;'>
                         <div class="datebox-${day.value.currentMonth} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${monthYear}">
                             <div class="event-${day.value.hasEvents} event-${day.value.hasEvents}-${day.key} event-${day.value.hasEvents}${monthYear}">${day.value.day}</div>
                         </div>
-                      </a> 
                  </c:otherwise>
               </c:choose>
           </div>
@@ -106,7 +115,16 @@
     </div>
   <br/>
     <c:forEach var="day" items="${events}">
-      <div class="Calendar-Day-${monthYear} Calendar-Day-${monthYear}-${day.key}">
+    <c:choose>
+       <c:when test="${selectedDate eq day.key}">
+           <c:set var="display" value="block"/>
+       </c:when>
+       <c:otherwise>
+           <c:set var="display" value="none"/>
+       </c:otherwise>
+	</c:choose>
+    
+      <div class="Calendar-Day-${monthYear} Calendar-Day-${monthYear}-${day.key}" style="display: ${display};">
       <ul data-role="listview" data-theme="g">
         <c:forEach var="event" items="${day.value.events}">
            <li>
