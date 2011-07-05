@@ -10,40 +10,13 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Alerts</title>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<jsp:include page="../resources.jsp" />
-
-</head>
-
-<body>
-<div data-role="page" id="alertshome">
-	<div data-role="header">
-		<h1>Alerts</h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" data-theme="a">
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-filter="true" data-inset="false" id="alertlist">
-
-			<c:forEach items="${alerts}" var="alert" varStatus="status">
+<div data-role="content" data-theme="a">
+	<ul data-role="listview" data-theme="c" data-dividertheme="b" data-filter="true" data-inset="false" id="alertlist">
+		<c:forEach items="${alerts}" var="alert" varStatus="status">
 			<li data-role="list-divider">${alert.campus} - ${alert.title}</li>
-		
-			<li>
-					<p>${alert.mobileText}</p>
-			</li>
-				
-			</c:forEach>
- 
-		</ul>
-	</div>
-	<!-- /content -->
-
- 
+			<li><p>${alert.mobileText}</p></li>
+		</c:forEach> 
+	</ul>
 </div>
-
-</body>
-</html>

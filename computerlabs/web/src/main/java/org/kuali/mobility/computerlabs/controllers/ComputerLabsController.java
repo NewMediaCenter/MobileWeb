@@ -40,9 +40,6 @@ public class ComputerLabsController {
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public String findAllComputerLabsByCampus(@RequestParam(value = "campus", required = true) String campus) {
-//    	List<ComputerLab> labs = computerLabsService.findAllComputerLabsByCampus(campus);
-//    	return computerLabsService.toJson(labs);
-//    	return "Test" + campus;
     	List<LabLocation> labLocations = computerLabsService.findAllLabLocationsByCampus("BL");
     	return computerLabsService.toJsonLabLocation(labLocations);
     }
@@ -50,14 +47,11 @@ public class ComputerLabsController {
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
     	try {
-//    		List<ComputerLab> labs = computerLabsService.findAllComputerLabsByCampus("BL");
-//    		uiModel.addAttribute("computerlabs", labs);
     		List<LabLocation> labLocations = computerLabsService.findAllLabLocationsByCampus("BL");
     		uiModel.addAttribute("lablocations", labLocations);
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-    	
     	return "computerlabs/list";
     }
 
