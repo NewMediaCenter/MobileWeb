@@ -16,13 +16,16 @@
 package org.kuali.mobility.alerts.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.kuali.mobility.alerts.entity.Alert;
 
 public interface AlertsService {
 
-	List<Alert> findAllAlertsByCampus(String campus);
+	List<Alert> findAllAlertsByCriteria(Map<String, String> criteria);
 	
-	int findAlertCountByCampus(String campus);
+    List<Alert> findAllAlertsFromJson(String url);
+
+    int findAlertCountByCriteria(Map<String, String> criteria);
 	
 }

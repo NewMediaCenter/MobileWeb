@@ -15,6 +15,9 @@
  
 package org.kuali.mobility.mdot.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.kuali.mobility.alerts.service.AlertsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +37,9 @@ public class HomeController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	uiModel.addAttribute("alertCount", alertsService.findAlertCountByCampus("BL"));
+        Map<String, String> criteria = new HashMap<String, String>();      
+        criteria.put("campus", "BL");
+    	uiModel.addAttribute("alertCount", alertsService.findAlertCountByCriteria(criteria));
     	return "index";
     }
         

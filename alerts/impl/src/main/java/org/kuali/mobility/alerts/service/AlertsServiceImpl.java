@@ -15,12 +15,15 @@
 
 package org.kuali.mobility.alerts.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -30,6 +33,8 @@ import org.kuali.mobility.alerts.entity.Alert;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import flexjson.JSONDeserializer;
 
 @Service
 public class AlertsServiceImpl implements AlertsService {
@@ -45,17 +50,46 @@ public class AlertsServiceImpl implements AlertsService {
 	}
 	
 	@Override
-	public int findAlertCountByCampus(String campus) {
+	public int findAlertCountByCriteria(Map<String, String> criteria) {
 		// TODO Move to cached copy of feeds
-		return findAllAlertsByCampus(campus).size();
+		return findAllAlertsByCriteria(criteria).size();
 	}
 	
 	@Override
-	public List<Alert> findAllAlertsByCampus(String campus) {
-		return parseAlerts(campus, true);
+	public List<Alert> findAllAlertsByCriteria(Map<String, String> criteria) {
+		return parseAlerts(criteria, true);
 	}
 	
-	public List<Alert> parseAlerts(String campus, boolean ignoreXmlCampus) {    
+    public List<Alert> findAllAlertsFromJson(String url) {
+        String json = "";           
+        
+        BufferedReader in = null;
+        try {
+            URL feed = new URL(url);
+            in = new BufferedReader(new InputStreamReader(feed.openStream()));
+
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                json += inputLine;
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            try {            
+                in.close();
+            } catch (Exception e) {}
+        }
+        
+        if (json == null || "".equals(json)) {
+            return new ArrayList<Alert>();
+        }
+                
+        return new JSONDeserializer<ArrayList<Alert>>().deserialize(json);
+    }
+	
+	private List<Alert> parseAlerts(Map<String, String> criteria, boolean ignoreXmlCampus) {  
+	    String campus = criteria.get("campus");
+	    
 		List<Alert> alerts = new ArrayList<Alert>();
 		try {
 			String url = configParamService.findValueByName(CAMPUS_STATUS_URL_PARAM) + campus;
