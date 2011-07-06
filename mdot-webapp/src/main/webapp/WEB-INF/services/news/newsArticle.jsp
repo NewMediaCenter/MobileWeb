@@ -28,7 +28,6 @@
 
 	<div data-role="content" data-theme="a">
 		<h3>${newsArticle.title}</h3>
-		<h4>${newsArticle.publishDate}</h4>
 		<p>${newsArticle.description}</p>
 	</div>
 	<!-- /content -->

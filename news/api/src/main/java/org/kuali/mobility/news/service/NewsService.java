@@ -25,5 +25,5 @@ public interface NewsService {
 	public List<NewsSource> getAllNewsSourcesByLocation(String locationId);
 	public NewsStream getNewsStream(String sourceId);
 	public NewsArticle getNewsArticle(String sourceId, String articleId);
-	public String getDefaultNewsSourceCode();
+	public String getDefaultNewsSourceId();
 }

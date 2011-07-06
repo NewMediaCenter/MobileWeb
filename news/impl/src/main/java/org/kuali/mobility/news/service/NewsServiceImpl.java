@@ -15,13 +15,13 @@
 
 package org.kuali.mobility.news.service;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.news.dao.NewsDaoImpl;
 import org.kuali.mobility.news.entity.LinkFeed;
 import org.kuali.mobility.news.entity.MaintRss;
@@ -49,6 +49,14 @@ public class NewsServiceImpl implements NewsService {
 	@Autowired
 	private DynamicRssCacheService dynamicRssCacheService;
 	
+	@Autowired
+	private ConfigParamService configParamService;
+	public void setConfigParamService(ConfigParamService configParamService) {
+		this.configParamService = configParamService;
+	}
+	
+	private static final String NEWS_DEFAULT_SOURCE_ID = "NEWS_DEFAULT_SOURCE_ID";
+	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(NewsServiceImpl.class);
 	
 	@Override
@@ -60,7 +68,6 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public NewsStream getNewsStream(String rssShortCode) {
-		// TODO Auto-generated method stub
 		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", rssShortCode);
         if (maintRss != null) {
 			try {
@@ -73,26 +80,6 @@ public class NewsServiceImpl implements NewsService {
 	        }
         }
         return null;
-		
-//		NewsSource newsSource = rssService.getNewsSource(rssShortCode);
-//		if (newsSource == null) {
-//			newsSource = newsDao.getNewsSourceByCode(rssShortCode);
-//			rssCacheService.putNewsSource(newsSource.getSourceCode(), newsSource);
-//		}
-//		NewsStream newsStream = newsSource.getNewsStream();
-//		if (newsStream == null) {
-//			Rss rss;
-//			try {
-//				rss = rssService.fetch(newsSource.getSourceUrl());
-//				newsStream =  convertRssToNewsStream(rss);
-//				newsSource.setNewsStream(newsStream);
-//				return newsStream;
-//			} catch (Exception e) {
-//				return null;
-//			}
-//		} else {
-//			return newsStream;
-//		}
 	}
 
 	@Override
@@ -111,16 +98,14 @@ public class NewsServiceImpl implements NewsService {
 	private NewsArticle convertLinkFeedToArticle(LinkFeed lf) {
 		NewsArticle article = new NewsArticle();
 		article.setArticleId(lf.getFeedUrl());
-		article.setDescription(lf.getBodyText());
+		article.setDescription(lf.getRichBodyText());
 		article.setTitle(lf.getTitle());
-		article.setPublishDate(new Timestamp(lf.getLastUpdate().getTime()));
 		return article;
 	}
 
 	@Override
-	public String getDefaultNewsSourceCode() {
-		// TODO Auto-generated method stub
-		return "top";
+	public String getDefaultNewsSourceId() {
+		return configParamService.findValueByName(NEWS_DEFAULT_SOURCE_ID);
 	}
 	
 	private NewsStream convertRssToNewsStream(Rss rss) {

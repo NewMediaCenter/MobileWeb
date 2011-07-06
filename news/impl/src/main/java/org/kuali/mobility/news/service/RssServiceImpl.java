@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.news.dao.RssDao;
 import org.kuali.mobility.news.entity.LinkFeed;
 import org.kuali.mobility.news.entity.MaintRss;
@@ -65,10 +67,17 @@ public class RssServiceImpl implements RssService {
 	@Autowired
 	private RssDao rssDao;
 	
-	//TODO:Where do we put constants?
-	private static String WEB_APP_CONTEXT_PATH = "/mobile";
-	private static String RSS_SOCKET_TIMEOUT_SECONDS = "RSS.SOCKET.TIMEOUT.SECONDS";
-	private static int RSS_SOCKET_DEFAULT_TIMEOUT = 10000;
+	@Autowired
+	private ConfigParamService configParamService;
+	public void setConfigParamService(ConfigParamService configParamService) {
+		this.configParamService = configParamService;
+	}
+	
+	private static final String WEB_APP_CONTEXT_PATH = "/mobile";
+	private static final String RSS_SOCKET_TIMEOUT_SECONDS = "IU_RSS_SOCKET_TIMEOUT_SECONDS";
+	private static final int RSS_SOCKET_DEFAULT_TIMEOUT = 10000;
+	private static final String IU_NEWS_URL_MATCHER_REGEX = "IU_NEWS_URL_MATCHER_REGEX";
+	private static final String IU_NEWS_URL_MATCHER_FORMAT = "IU_NEWS_URL_MATCHER_FORMAT";
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RssServiceImpl.class);
 
@@ -183,14 +192,14 @@ public class RssServiceImpl implements RssService {
         WireFeedInput input = new WireFeedInput();
         GetMethod get = null;
         try {
-            //LOG.info("SSL rss preparation: " + url);
+            LOG.info("SSL rss preparation: " + url);
             //SSLUtility.prepareHttps(url); TODO:do we need this?
             get = new GetMethod(url);
             int timeout = getSocketTimeout(RSS_SOCKET_TIMEOUT_SECONDS, RSS_SOCKET_DEFAULT_TIMEOUT);
             XmlReader xmlReader = new XmlReader(getInputStreamFromGetMethod(get, timeout));
             wireFeed = input.build(xmlReader);
         } catch (ParsingFeedException e) {
-            //LOG.info("RSS parsing failed for URL:" + url + " ... trying alternative method.");
+            LOG.info("RSS parsing failed for URL:" + url + " ... trying alternative method.");
             //SSLUtility.prepareHttps(url);
             String xmlString = getStringFromRssUrl(url);
             ByteArrayInputStream stream = new ByteArrayInputStream(xmlString.getBytes());
@@ -205,7 +214,7 @@ public class RssServiceImpl implements RssService {
     }
 	
 	private String getStringFromRssUrl(String url) throws Exception {
-        //LOG.info("start rssConnection:" + url);
+        LOG.info("start rssConnection:" + url);
         BufferedReader br = null;
         GetMethod get = null;
         StringBuilder sb = new StringBuilder();
@@ -214,13 +223,13 @@ public class RssServiceImpl implements RssService {
             int timeout = getSocketTimeout(RSS_SOCKET_TIMEOUT_SECONDS, RSS_SOCKET_DEFAULT_TIMEOUT);
             br = new BufferedReader(new InputStreamReader(getInputStreamFromGetMethod(get, timeout)));
             String line = null;
-            //LOG.info("start reading rssLines:" + url);
+            LOG.info("start reading rssLines:" + url);
             while ((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
-            //LOG.info("end getting rssLines:" + url);
+            LOG.info("end getting rssLines:" + url);
         } catch (Exception e) {
-            //LOG.error("Error in getStringFromRssUrl for url " + url, e);
+            LOG.error("Error in getStringFromRssUrl for url " + url, e);
         } finally {
             if (br != null) {
                 br.close();
@@ -229,7 +238,7 @@ public class RssServiceImpl implements RssService {
                 get.releaseConnection();
             }
         }
-        //LOG.info("end rssConnection:" + url);
+        LOG.info("end rssConnection:" + url);
         return xmlFixer(sb.toString());
     }
 	
@@ -268,7 +277,7 @@ public class RssServiceImpl implements RssService {
         }
         List<RssItem> rssItems = new ArrayList<RssItem>();
         int counter = 1;
-        //LOG.info("start getting rssItems:" + url);
+        LOG.info("start getting rssItems:" + url);
         for (@SuppressWarnings("unchecked")
 		Iterator<Item> iter = channel.getItems().iterator(); iter.hasNext();) {
             Item item = iter.next();
@@ -329,7 +338,7 @@ public class RssServiceImpl implements RssService {
 
             rssItem.setCategories(new ArrayList<RssCategory>());
             if (item != null && item.getCategories() != null) {
-//                LOG.info("start getting rssCategory:" + url);
+                LOG.info("start getting rssCategory:" + url);
                 for (@SuppressWarnings("unchecked")
 				Iterator<Category> iterator = item.getCategories().iterator(); iterator.hasNext();) {
                     Category category = iterator.next();
@@ -338,7 +347,7 @@ public class RssServiceImpl implements RssService {
                     rssCategory.setValue(category.getValue());
                     rssItem.getCategories().add(rssCategory);
                 }
-//                LOG.info("end getting rssCategory:" + url);
+                LOG.info("end getting rssCategory:" + url);
             }
 
             rssItems.add(rssItem);
@@ -366,8 +375,8 @@ public class RssServiceImpl implements RssService {
         }
         rss.setLastUpdateDate(new Timestamp(System.currentTimeMillis()));
         try {
-            //String name = InetAddress.getLocalHost().getHostName();
-            //LOG.info("[" + name + "] Finished downloading url: " + url);
+            String name = InetAddress.getLocalHost().getHostName();
+            LOG.info("[" + name + "] Finished downloading url: " + url);
         } catch (Exception e) {
             // Ignore exceptions if logging or hostname lookup fails.
         }
@@ -387,9 +396,7 @@ public class RssServiceImpl implements RssService {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 	        get = new GetMethod(url);
-	        //TODO: use application constants when that part is created
-	        //int timeout = getSocketTimeout(Constants.RSS_SOCKET_TIMEOUT_SECONDS, Constants.RSS_SOCKET_DEFAULT_TIMEOUT);
-	        int timeout = RSS_SOCKET_DEFAULT_TIMEOUT;
+	        int timeout = getSocketTimeout(RSS_SOCKET_TIMEOUT_SECONDS, RSS_SOCKET_DEFAULT_TIMEOUT);
 	        InputStream inputStream = getInputStreamFromGetMethod(get, timeout);
 	        InputSource is = new InputSource(inputStream);
 			Document doc = builder.parse(is);
@@ -420,13 +427,13 @@ public class RssServiceImpl implements RssService {
 		} catch (SocketTimeoutException e) {
 			tryAgainIfNeeded = false;
 		} catch (ParserConfigurationException e) {
-//			LOG.error("ParserConfigurationException in parseLinkFeedFromUrl for url " + url, e);
+			LOG.error("ParserConfigurationException in parseLinkFeedFromUrl for url " + url, e);
 		} catch (IOException e) {
-//			LOG.error("IOException in parseLinkFeedFromUrl for url " + url, e);
+			LOG.error("IOException in parseLinkFeedFromUrl for url " + url, e);
 		} catch (SAXException e) {
-//			LOG.error("SAXException in parseLinkFeedFromUrl for url " + url, e);
+			LOG.error("SAXException in parseLinkFeedFromUrl for url " + url, e);
 		} catch (Exception e) {
-//			LOG.error("Exception in parseLinkFeedFromUrl for url " + url, e);
+			LOG.error("Exception in parseLinkFeedFromUrl for url " + url, e);
 		} finally {
             if (get != null) {
                 get.releaseConnection();
@@ -434,7 +441,7 @@ public class RssServiceImpl implements RssService {
 		}
 		// In case the new way of getting the bodyContent above fails, try it the old way.
 		if (html.isEmpty() && tryAgainIfNeeded) {
-//			LOG.info("Could not parse RSS bodyContent initially, trying old method for URL: " + url);
+			LOG.info("Could not parse RSS bodyContent initially, trying old method for URL: " + url);
 			html = this.parseRssDocBodyFromUrlAlternative(url);
 		}
 		lf.setTitle(title.trim());
@@ -470,10 +477,10 @@ public class RssServiceImpl implements RssService {
 		try {
 			String pageContent = this.getStringFromRssUrl(link);
 	        if (pageContent.indexOf("bodyContent") > 0) {
-//	        	LOG.info("BodyContent Type\r\n");
+	        	LOG.info("BodyContent Type\r\n");
 	        	html = this.getCDataPage(pageContent.trim(), "/rss/channel/bodyContent");
 	        } else {
-//	        	LOG.info("CDATA Type\r\n");
+	        	LOG.info("CDATA Type\r\n");
 	        	html = this.getCDataPage(pageContent.trim(), "/rss/channel/description/text()");
 	        }
 	        if ("".equals(html.trim())) {
@@ -486,7 +493,7 @@ public class RssServiceImpl implements RssService {
 			html = html.replaceAll("\\n", " <BR/><BR/> ");
 			html = this.handleUrls(html);
 		} catch (Exception e) {
-//			LOG.error("Error processing page: " + link, e);
+			LOG.error("Error processing page: " + link, e);
 			html = "";
 		}
         return html;
@@ -512,15 +519,15 @@ public class RssServiceImpl implements RssService {
 		boolean b;
 		String s;
 		StringBuffer sb = new StringBuffer();
-		//TODO: use application constants when that part is created
-		String regex = null; //this.getCacheService().findConfigParamValueByName(Constants.EVENTS_URL_MATCHER_REGEX);
+		 //this.getCacheService().findConfigParamValueByName(Constants.EVENTS_URL_MATCHER_REGEX);
+		String regex = configParamService.findValueByName(IU_NEWS_URL_MATCHER_REGEX);
 		if (regex == null || regex.length() < 1) {
 			// Below, without the extra slashes: (http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?
 			regex = "(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";
 //			regex = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
 		}
-		//TODO: use application constants when that part is created
-		String stringFormat = null; //this.getCacheService().findConfigParamValueByName(Constants.EVENTS_URL_MATCHER_FORMAT);
+		//this.getCacheService().findConfigParamValueByName(Constants.EVENTS_URL_MATCHER_FORMAT);
+		String stringFormat = configParamService.findValueByName(IU_NEWS_URL_MATCHER_FORMAT); 
 		if (stringFormat == null || stringFormat.length() < 1) {
 			stringFormat = "<a target='_blank' href='%s'>%s</a>";
 		}
@@ -557,10 +564,10 @@ public class RssServiceImpl implements RssService {
 	private Integer getSocketTimeout(String name, int defaultTimeoutInMillis) {
         int timeout = defaultTimeoutInMillis;
         try {
-//            String param = cacheService.findConfigParamValueByName(name);
-//            if (param != null && !"".equals(param)) {
-//                timeout = new Integer(param) * 1000;
-//            }
+            String param = configParamService.findValueByName(name);
+            if (param != null && !"".equals(param)) {
+                timeout = new Integer(param) * 1000;
+            }
         } catch (Exception e) {
             // Use default
         }

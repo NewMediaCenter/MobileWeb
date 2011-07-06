@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.news.entity.Counter;
 import org.kuali.mobility.news.entity.DynamicRss;
 import org.kuali.mobility.news.entity.LinkFeed;
@@ -20,10 +21,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 	
-//	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DynamicRssCacheServiceImpl.class);
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DynamicRssCacheServiceImpl.class);
 	
 	@Autowired
 	private RssService rssService;
+	
+	@Autowired
+	private ConfigParamService configParamService;
+	public void setConfigParamService(ConfigParamService configParamService) {
+		this.configParamService = configParamService;
+	}
 	
 	private Counter counter;
 
@@ -32,6 +39,8 @@ public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 	
 	// String represents the url from which the feed is referred to in the RSS, before it is modified to link to what we actually need
 	private ConcurrentMap<String, LinkFeed> cachedLinkFeeds;
+	
+	private static final String NEWS_UITS_QUERY_STRING = "IU_NEWS_UITS_QUERY_STRING";
 	
 	/*
 	 * There is currently no system for updating the feeds
@@ -60,13 +69,13 @@ public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 					if (newRss != null) {
 						dynRss.update(newRss);
 					}
-//					LOG.info("Updated Dynamic RSS " + dynRss.getFeedUrl() + " next update in " + dynRss.getUpdateIntervalSeconds() + " seconds.");
+					LOG.info("Updated Dynamic RSS " + dynRss.getFeedUrl() + " next update in " + dynRss.getUpdateIntervalSeconds() + " seconds.");
 				} 
 //				else {
-//					LOG.info("Not yet updating Dynamic RSS " + dynRss.getFeedUrl() + " next update at " + nextUpdate);
+					LOG.info("Not yet updating Dynamic RSS " + dynRss.getFeedUrl() + " next update at " + nextUpdate);
 //				}
 			} catch (Exception e) {
-//				LOG.error("Error in dynamic rss cache reload for id:" + dynRss.getId() + " url:" + dynRss.getFeedUrl(), e);
+				LOG.error("Error in dynamic rss cache reload for id:" + dynRss.getId() + " url:" + dynRss.getFeedUrl(), e);
 			}
 		}
 		List<LinkFeed> linkFeedList = this.getAllLinkFeeds();
@@ -77,13 +86,13 @@ public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 				Date nextUpdate = cal.getTime();
 				if (now.after(nextUpdate)) {
 					this.loadLinkFeed(lf.getFeedUrl());
-//					LOG.info("Updated LinkFeed " + lf.getFeedUrl() + " next update in " + lf.getUpdateIntervalSeconds() + " seconds.");
+					LOG.info("Updated LinkFeed " + lf.getFeedUrl() + " next update in " + lf.getUpdateIntervalSeconds() + " seconds.");
 				} 
 //				else {
 //					LOG.info("Not yet updating LinkFeed " + lf.getFeedUrl() + " next update at " + nextUpdate);
 //				}
 			} catch (Exception e) {
-//				LOG.error("Error in dynamic linkfeed cache reload for id:" + lf.getId() + " url:" + lf.getFeedUrl(), e);
+				LOG.error("Error in dynamic linkfeed cache reload for id:" + lf.getId() + " url:" + lf.getFeedUrl(), e);
 			}
 		}
 	}
@@ -119,7 +128,7 @@ public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 					}				
 				}
 			} catch (Exception e) {
-//				LOG.error("Error creating dynamic rss cache for url " + feedUrl, e);
+				LOG.error("Error creating dynamic rss cache for url " + feedUrl, e);
 			}
 		}
 		// We'll always return cache here. If the cache already exists, return it. If another thread beat us to the punch and created the cache first, we'll use theirs.
@@ -152,7 +161,7 @@ public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 					}
 				}				
 			} else {
-//				LOG.info("Did not pass RSS. Loading LinkFeed for URL: " + url);
+				LOG.info("Did not pass RSS. Loading LinkFeed for URL: " + url);
 				lf = this.loadLinkFeed(url);
 			}
 		}
@@ -195,8 +204,8 @@ public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
         	// IUPUI Newscenter at http://newscenter.iupui.edu/
         } else if (url.indexOf("http://uitsnews.iu.edu") > -1) {
         	//"?1=1&feed=mdot";	
-        	//TODO: use application constants when that part is created
-        	String uits = ""; //cacheService.findConfigParamValueByName("News.UITSQueryString");
+//        	String uits = cacheService.findConfigParamValueByName("News.UITSQueryString");
+        	String uits = configParamService.findValueByName(NEWS_UITS_QUERY_STRING);
         	if (!url.endsWith(uits)) {
         		url += uits;
         	}

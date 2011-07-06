@@ -43,7 +43,7 @@ public class NewsController {
     
     public String getNewsStream(String sourceId, Model uiModel) {
     	if (sourceId == null || "".equals(sourceId)) {
-    		sourceId = newsService.getDefaultNewsSourceCode();
+    		sourceId = newsService.getDefaultNewsSourceId();
     	}
     	NewsStream news = newsService.getNewsStream(sourceId);
     	uiModel.addAttribute("newsStream", news);

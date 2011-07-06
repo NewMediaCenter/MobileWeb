@@ -36,6 +36,8 @@ public class RssCacheServiceImpl implements RssCacheService {
 	//private ConcurrentMap<String, LinkFeed> cachedLinkFeeds;
 	
 	private boolean isInitialized = false;
+	
+	private static final String RSS_TYPE_EVENTS_IUPUI = "EVENTS-IUPUI";
 
 	public RssCacheServiceImpl() {
 		this.cachedRssMap = new ConcurrentHashMap<Long, Rss>();
@@ -362,9 +364,7 @@ public class RssCacheServiceImpl implements RssCacheService {
 	 */
 
 	private boolean isIUPUIEventsCalendar(MaintRss maintRss) {
-		//TODO: use application constants when the service (or its equivalent) is available
-//		return Constants.RSS_TYPE_EVENTS_IUPUI.equals(maintRss.getType());
-		return "EVENTS-IUPUI".equals(maintRss.getType());
+		return RSS_TYPE_EVENTS_IUPUI.equals(maintRss.getType());
 	}
 	
 	/*
