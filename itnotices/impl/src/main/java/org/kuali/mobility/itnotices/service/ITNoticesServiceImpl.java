@@ -81,52 +81,16 @@ public class ITNoticesServiceImpl implements ITNoticesService {
     
 	private void determineImage(ITNotice notice) {
 		if ("Service News".equals(notice.getNoticeType())) {
-			notice.setImageUrl("./ip/images/notices_news_large.png");
+			notice.setImageUrl("./images/itnotices/news.png");
 		} else if ("Announcement".equals(notice.getNoticeType())) {
-			notice.setImageUrl("./ip/images/notices_announce_large.png");
+			notice.setImageUrl("./images/itnotices/announcement.png");
 		} else if ("Alert".equals(notice.getNoticeType())) {
-			notice.setImageUrl("./ip/images/notices_error_large.png");
+			notice.setImageUrl("./images/itnotices/error.png");
 		} else if ("Key Alert".equals(notice.getNoticeType())) {
-			notice.setImageUrl("./ip/images/notices_critical_large.png");
+			notice.setImageUrl("./images/itnotices/critical.png");
 		} else if ("Maintenance".equals(notice.getNoticeType())) {
-			notice.setImageUrl("./ip/images/notices_warning_large.png");
+			notice.setImageUrl("./images/itnotices/warning.png");
 		}
 	}
-    
-    /*
-    private List<ITNotice> getITNoticesFromFeed() throws JDOMException, IOException {
-		List<ITNotice> notices = new ArrayList<ITNotice>();
 
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = null;
-		URL urlObj = new URL("http://itnotices.iu.edu/rss.aspx");
-		URLConnection urlConnection = urlObj.openConnection();
-		urlConnection.setConnectTimeout(5000);
-		urlConnection.setReadTimeout(5000);
-		urlConnection.connect();
-		doc = builder.build(urlConnection.getInputStream());
-
-		if (doc != null) {
-			Element root = doc.getRootElement();
-			List items = root.getChild("channel").getChildren("item");
-			for (Iterator iterator = items.iterator(); iterator.hasNext();) {
-				Element item = (Element) iterator.next();
-				String services = "";
-				List service = item.getChildren("service");
-				for (Iterator iterator2 = service.iterator(); iterator2.hasNext();) {
-					Element s = (Element) iterator2.next();
-					services += s.getContent(0).getValue() + ", ";					
-				}
-				if (services.endsWith(", ")) {
-					services = services.substring(0, services.length() - 2);
-				}
-				ITNotice notice = new ITNotice(item.getChildTextTrim("lastUpdated"), item.getChildTextTrim("noticeType"), item.getChildTextTrim("title"), services, item.getChildTextTrim("message"));
-				determineImage(notice);
-				model.addNotice(notice);
-			}				
-		}
-
-		return notices;
-    }
-	*/
 }

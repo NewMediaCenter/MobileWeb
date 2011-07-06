@@ -59,7 +59,19 @@ public class ITNoticesController {
     		e.printStackTrace();
     	}
     	
-    	return "itnotices/list";
+    	return "itnotices";
+    }
+    
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public String getDetails(Model uiModel, @RequestParam(required = true) int id) {
+        try {
+            List<ITNotice> notices = itNoticesService.findAllITNotices();
+            uiModel.addAttribute("notice", notices.get(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "itnotices/details";
     }
      
 }

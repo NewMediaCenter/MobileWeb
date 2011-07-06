@@ -54,11 +54,6 @@
             <groupId>net.sf.flexjson</groupId>
             <artifactId>flexjson</artifactId>
         </dependency>
-        <!-- XML dependencies -->
-        <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>jdom</artifactId>
-        </dependency>
         <!-- Testing dependencies -->
         <dependency>
             <groupId>org.mortbay.jetty</groupId>

@@ -20,4 +20,14 @@
         <put-attribute name="title" value="Alerts"/>
         <put-attribute name="content" value="/WEB-INF/services/alerts/list.jsp"/>
     </definition>
+    
+    <definition name="itnotices" extends="template">
+        <put-attribute name="title" value="IT Notices"/>
+        <put-attribute name="content" value="/WEB-INF/services/itnotices/list.jsp"/>
+    </definition>
+    
+    <definition name="itnotices/details" extends="template">
+        <put-attribute name="title" value="IT Notice Details"/>
+        <put-attribute name="content" value="/WEB-INF/services/itnotices/details.jsp"/>
+    </definition>
 </tiles-definitions>

@@ -10,8 +10,9 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ attribute name="id" required="true"%>
+<%@ attribute name="id" required="true" %>
+<%@ attribute name="filter" required="false"  %>
 
-<ul data-role="listview" data-theme="c" data-dividertheme="b" data-filter="true" data-inset="false" id="${id}">
+<ul data-role="listview" data-theme="b" data-dividertheme="b" data-filter="${filter eq null || filter eq '' ? 'false' : filter}" data-inset="false" id="${id}">
 <jsp:doBody/>
 </ul>

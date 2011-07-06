@@ -12,19 +12,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" tagdir="/WEB-INF/tags/kme" %>
 
-	
-
 <kme:content>
-    <kme:listView id="itnoticeslist">
-        <c:forEach items="${notices}" var="notice" varStatus="status">
-            <kme:listRow>
-				<a href="itnotices/details?id=${status.index}">
-					<h3>${notice.title}</h3>
-					<img src="${notice.imageUrl}"/>
-					<p>${notice.service}</p>
-					<p>Last Updated: ${notice.lastUpdated}</p>
-				</a>
-            </kme:listRow>
-        </c:forEach>
-    </kme:listView>
+    <kme:textArea>
+        <h3>${notice.title}</h3>
+        <p>${notice.message}</p>
+        <p>${notice.lastUpdated}</p>
+    </kme:textArea>
 </kme:content>

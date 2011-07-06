@@ -11,6 +11,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div data-role="content" data-theme="b">
+<div class="textArea">
 <jsp:doBody/>
 </div>
