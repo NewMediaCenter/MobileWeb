@@ -9,15 +9,9 @@
   permissions and limitations under the License.
 --%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="kme" tagdir="/WEB-INF/tags/kme" %>
+<%@ attribute name="id" required="true"%>
 
-<kme:content>
-    <kme:listView id="alertlist">
-        <c:forEach items="${alerts}" var="alert" varStatus="status">
-            <kme:listDivider>${alert.campus} - ${alert.title}</kme:listDivider>
-            <kme:listRow><p>${alert.mobileText}</p></kme:listRow>
-		</c:forEach>
-    </kme:listView>
-</kme:content>
+<ul data-role="listview" data-theme="c" data-dividertheme="b" data-filter="true" data-inset="false" id="${id}">
+<jsp:doBody/>
+</ul>
