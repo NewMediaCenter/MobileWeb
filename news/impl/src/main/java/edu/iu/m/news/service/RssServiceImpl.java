@@ -37,7 +37,6 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -62,7 +61,6 @@ import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssCategory;
 import edu.iu.m.news.entity.RssItem;
 
-@Service
 public class RssServiceImpl implements RssService {
 	
 	@Autowired
@@ -75,10 +73,10 @@ public class RssServiceImpl implements RssService {
 	}
 	
 	private static final String WEB_APP_CONTEXT_PATH = "/mobile";
-	private static final String RSS_SOCKET_TIMEOUT_SECONDS = "IU_RSS_SOCKET_TIMEOUT_SECONDS";
+	private static final String RSS_SOCKET_TIMEOUT_SECONDS = "RSS.SOCKET.TIMEOUT.SECONDS";
 	private static final int RSS_SOCKET_DEFAULT_TIMEOUT = 10000;
-	private static final String IU_NEWS_URL_MATCHER_REGEX = "IU_NEWS_URL_MATCHER_REGEX";
-	private static final String IU_NEWS_URL_MATCHER_FORMAT = "IU_NEWS_URL_MATCHER_FORMAT";
+	private static final String IU_NEWS_URL_MATCHER_REGEX = "Events.Url.Matcher.Regex";
+	private static final String IU_NEWS_URL_MATCHER_FORMAT = "Events.Url.Matcher.Format";
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RssServiceImpl.class);
 

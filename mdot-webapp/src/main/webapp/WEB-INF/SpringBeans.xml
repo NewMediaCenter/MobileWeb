@@ -100,5 +100,14 @@
 		<property name="password" value="${kb.password}" />
     </bean>
     
+    <bean class="edu.iu.m.news.service.NewsServiceImpl"></bean>
+    <bean class="edu.iu.m.news.service.RssServiceImpl"></bean>
+    <bean class="edu.iu.m.news.service.MaintRssServiceImpl"></bean>
+    <bean class="edu.iu.m.news.service.RssCacheServiceImpl"></bean>
+    <bean class="edu.iu.m.news.service.DynamicRssCacheServiceImpl"></bean>
+    <bean class="edu.iu.m.news.dao.RssDaoImpl"></bean>
+    <bean class="edu.iu.m.news.dao.MaintRssDaoImpl"></bean>
+    <bean class="edu.iu.m.news.dao.NewsDaoImpl"></bean>
+    
 </beans>
  

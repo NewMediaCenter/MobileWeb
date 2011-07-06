@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import edu.iu.m.news.entity.Counter;
 import edu.iu.m.news.entity.DynamicRss;
@@ -17,7 +16,6 @@ import edu.iu.m.news.entity.LinkFeed;
 import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssItem;
 
-@Service
 public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 	
 	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DynamicRssCacheServiceImpl.class);
@@ -39,7 +37,7 @@ public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 	// String represents the url from which the feed is referred to in the RSS, before it is modified to link to what we actually need
 	private ConcurrentMap<String, LinkFeed> cachedLinkFeeds;
 	
-	private static final String NEWS_UITS_QUERY_STRING = "IU_NEWS_UITS_QUERY_STRING";
+	private static final String NEWS_UITS_QUERY_STRING = "News.UITSQueryString";
 	
 	/*
 	 * There is currently no system for updating the feeds

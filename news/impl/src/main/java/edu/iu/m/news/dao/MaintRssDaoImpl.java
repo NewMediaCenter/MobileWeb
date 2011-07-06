@@ -6,11 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Repository;
-
 import edu.iu.m.news.entity.MaintRss;
 
-@Repository
 public class MaintRssDaoImpl implements MaintRssDao {
 
     @PersistenceContext

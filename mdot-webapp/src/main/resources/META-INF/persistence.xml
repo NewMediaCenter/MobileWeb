@@ -22,9 +22,9 @@
     <class>org.kuali.mobility.configparams.entity.ConfigParam</class>
     <class>org.kuali.mobility.maps.entity.Location</class>
     <class>org.kuali.mobility.maps.entity.MapsGroup</class>
-    <class>org.kuali.mobility.news.entity.MaintRss</class>
-    <class>org.kuali.mobility.news.entity.Rss</class>
-    <class>org.kuali.mobility.news.entity.RssItem</class>
+    <class>edu.iu.m.news.entity.MaintRss</class>
+    <class>edu.iu.m.news.entity.Rss</class>
+    <class>edu.iu.m.news.entity.RssItem</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
   </persistence-unit>
 

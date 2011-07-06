@@ -25,12 +25,10 @@ import javax.persistence.Query;
 
 import org.kuali.mobility.news.dao.NewsDao;
 import org.kuali.mobility.news.entity.NewsSource;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.MaintRss;
 
-@Repository
 public class NewsDaoImpl implements NewsDao {
 
     @PersistenceContext
