@@ -21,15 +21,14 @@
 <body>
 <div data-role="page" id="">
 	<div data-role="header">
-		<a href="/mdot/news?category=${category}" data-icon="arrow-l">Back</a>
+		<a href="/mdot/news/${sourceId}" data-icon="arrow-l">Back</a>
 		<h1>${newsArticle.title}</h1>
 	</div>
 	<!-- /header -->
 
 	<div data-role="content" data-theme="a">
 		<h3>${newsArticle.title}</h3>
-		<h4>${newsArticle.author}</h4>
-		<h4>${newsArticle.pubDate}</h4>
+		<h4>${newsArticle.publishDate}</h4>
 		<p>${newsArticle.description}</p>
 	</div>
 	<!-- /content -->

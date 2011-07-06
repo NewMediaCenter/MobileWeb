@@ -24,6 +24,7 @@ import org.kuali.mobility.news.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,13 +41,13 @@ public class NewsController {
         this.newsService = newsService;
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String getNewsStream(@RequestParam(value = "source", required = false) String source, Model uiModel) {
-    	if (source == null || "".equals(source)) {
-    		source = newsService.getDefaultNewsSourceCode();
+    public String getNewsStream(String sourceId, Model uiModel) {
+    	if (sourceId == null || "".equals(sourceId)) {
+    		sourceId = newsService.getDefaultNewsSourceCode();
     	}
-    	NewsStream news = newsService.getNewsStream(source);
+    	NewsStream news = newsService.getNewsStream(sourceId);
     	uiModel.addAttribute("newsStream", news);
+    	uiModel.addAttribute("sourceId", sourceId);
     	
     	List<NewsSource> sources = newsService.getAllNewsSourcesByLocation(selectedCampus);
     	uiModel.addAttribute("newsSources", sources);
@@ -54,11 +55,19 @@ public class NewsController {
     	return "news/newsStream";
     }
     
-    @RequestMapping(value = "/article", method = RequestMethod.GET)
-    public String getNewsArticle(@RequestParam(value = "id", required = true) String articleId, Model uiModel) {
-    	NewsArticle newsArticle = newsService.getNewsArticle(articleId);
+    @RequestMapping(method = RequestMethod.GET)
+    public String getNewsStream(Model uiModel) {
+    	return getNewsStream(null, uiModel);
+    }
+    
+    @RequestMapping(value = "/{sourceId}", method = RequestMethod.GET)
+    public String getNewsArticle(@PathVariable("sourceId") String sourceId, @RequestParam(value = "articleId", required = false) String articleId, Model uiModel) {
+    	if (articleId == null || articleId.equals("")) {
+    		return getNewsStream(sourceId, uiModel);
+    	}
+    	NewsArticle newsArticle = newsService.getNewsArticle(sourceId, articleId);
     	uiModel.addAttribute("newsArticle", newsArticle);
-    	uiModel.addAttribute("category", "");
+    	uiModel.addAttribute("sourceId", sourceId);
     	return "news/newsArticle";
     }
       

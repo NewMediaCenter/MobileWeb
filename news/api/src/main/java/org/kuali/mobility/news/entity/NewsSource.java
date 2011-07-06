@@ -5,8 +5,28 @@ public class NewsSource {
 	private String locationCode;
 	private String sourceUrl;
 	private String sourceName;
-	private String sourceCode;
-	private String sourceType;
+	private String sourceId;
+	private NewsStream newsStream;
+	
+	public NewsSource copy() {
+		NewsSource copy = new NewsSource();
+		if (locationCode!=null) {
+			copy.setLocationCode(new String(locationCode));
+		}
+		if (sourceUrl!=null) {
+			copy.setSourceUrl(new String(sourceUrl));
+		}
+		if (sourceName!=null) {
+			copy.setSourceName(new String(sourceName));
+		}
+		if (sourceId!=null) {
+			copy.setSourceId(new String(sourceId));
+		}
+		if (newsStream != null) {
+			copy.setNewsStream(newsStream.copy());
+		}
+		return copy;
+	}
 	
 	public String getLocationCode() {
 		return locationCode;
@@ -26,16 +46,16 @@ public class NewsSource {
 	public void setSourceName(String sourceName) {
 		this.sourceName = sourceName;
 	}
-	public String getSourceCode() {
-		return sourceCode;
+	public String getSourceId() {
+		return sourceId;
 	}
-	public void setSourceCode(String sourceCode) {
-		this.sourceCode = sourceCode;
+	public void setSourceId(String sourceId) {
+		this.sourceId = sourceId;
 	}
-	public String getSourceType() {
-		return sourceType;
+	public NewsStream getNewsStream() {
+		return newsStream;
 	}
-	public void setSourceType(String sourceType) {
-		this.sourceType = sourceType;
+	public void setNewsStream(NewsStream newsStream) {
+		this.newsStream = newsStream;
 	}
 }

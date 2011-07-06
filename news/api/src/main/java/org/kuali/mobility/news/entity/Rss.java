@@ -5,62 +5,75 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Entity
-//@Table(name="RSS_T")
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.Version;
+
+@Entity
+@Table(name="RSS_T")
 public class Rss implements Serializable {
 
 	private static final long serialVersionUID = 9179814979533742706L;
 
-//    @Id
-//    @SequenceGenerator(name="rss_sequence", sequenceName="SEQ_RSS_T", initialValue=1000, allocationSize=1)
-//    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="rss_sequence")
-//    @Column(name="RSS_ID")
+    @Id
+    @SequenceGenerator(name="rss_sequence", sequenceName="SEQ_RSS_T", initialValue=1000, allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="rss_sequence")
+    @Column(name="RSS_ID")
     private Long rssId;
 
-//    @Column(name="RSS_TITLE")
+    @Column(name="RSS_TITLE")
 	private String title;
 
-//    @Column(name="RSS_URL")
+    @Column(name="RSS_URL")
 	private String url;
 
-//    @Column(name="LAST_UPDATE_DATE")
+    @Column(name="LAST_UPDATE_DATE")
     private Timestamp lastUpdateDate;
 
-//    @Column(name="LINK")
+    @Column(name="LINK")
 	private String link;
 
-//    @Column(name="IMG_LOC")
+    @Column(name="IMG_LOC")
 	private String imageLocation;
 
-//    @Column(name="FRM_URL")
+    @Column(name="FRM_URL")
 	private String formLink;
 
-//    @Column(name="FRM_DESC")
+    @Column(name="FRM_DESC")
 	private String formDescription;
 
-//    @Column(name="FRM_TITLE")
+    @Column(name="FRM_TITLE")
 	private String formTitle;
 
-//    @Column(name="FRM_NM")
+    @Column(name="FRM_NM")
 	private String formName;
     
-//    @Column(name="RSS_MAINT_ID")
+    @Column(name="RSS_MAINT_ID")
     private Long rssMaintId;
     
-//    @Version
-//    @Column(name="VER_NBR")
+    @Version
+    @Column(name="VER_NBR")
     protected Long versionNumber;
 	
-//    @OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST}, mappedBy="rss")
+    @OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST}, mappedBy="rss")
 	private List<RssItem> rssItems;
 	
-//    @Transient
+    @Transient
 	private boolean update;
     
-//    @Transient
+    @Transient
 	private boolean delete;
 
-//	@Transient
+	@Transient
 	private boolean putInCache;
 
 	public Rss() {

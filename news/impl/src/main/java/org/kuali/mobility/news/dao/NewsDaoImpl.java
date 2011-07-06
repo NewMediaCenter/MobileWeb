@@ -70,8 +70,7 @@ public class NewsDaoImpl implements NewsDao {
 	private NewsSource convertMaintRssToNewsSource(MaintRss rss) {
 		NewsSource source = new NewsSource();
     	source.setLocationCode(rss.getCampus());
-    	source.setSourceCode(rss.getShortCode());
-    	source.setSourceType(rss.getType());
+    	source.setSourceId(rss.getShortCode());
     	source.setSourceName(rss.getDisplayName());
     	source.setSourceUrl(rss.getUrl());
     	return source;

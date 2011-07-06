@@ -2,7 +2,6 @@ package org.kuali.mobility.news.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 public class NewsArticle implements Serializable, Comparable<NewsArticle> {
 
@@ -11,10 +10,31 @@ public class NewsArticle implements Serializable, Comparable<NewsArticle> {
 	private String title;
 	private String link;
 	private String description;
-	private Collection<String> categories;
 	private String thumbnailImageUrl;
 	private Timestamp publishDate;
 	private String articleId;
+	
+	public NewsArticle copy() {
+		NewsArticle copy = new NewsArticle();
+		if (title != null) {
+			copy.setTitle(new String(title));
+		}
+		if (link != null) {
+			copy.setLink(new String(link));
+		}
+		if (description != null) {
+			copy.setDescription(new String(description));
+		}
+		if (thumbnailImageUrl != null) {
+			copy.setThumbnailImageUrl(new String(thumbnailImageUrl));
+		}
+		if (articleId != null) {
+			copy.setArticleId(new String(articleId));
+		}
+		copy.setPublishDate(new Timestamp(publishDate.getTime()));
+		
+		return copy;
+	}
 	
 	public String getTitle() {
 		return title;
@@ -33,12 +53,6 @@ public class NewsArticle implements Serializable, Comparable<NewsArticle> {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public Collection<String> getCategories() {
-		return categories;
-	}
-	public void setCategories(Collection<String> categories) {
-		this.categories = categories;
 	}
 	public Timestamp getPublishDate() {
 		return publishDate;

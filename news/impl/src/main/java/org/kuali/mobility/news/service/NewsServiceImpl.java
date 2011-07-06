@@ -15,73 +15,106 @@
 
 package org.kuali.mobility.news.service;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.kuali.mobility.news.dao.NewsDaoImpl;
+import org.kuali.mobility.news.entity.LinkFeed;
+import org.kuali.mobility.news.entity.MaintRss;
 import org.kuali.mobility.news.entity.NewsArticle;
 import org.kuali.mobility.news.entity.NewsDay;
 import org.kuali.mobility.news.entity.NewsSource;
 import org.kuali.mobility.news.entity.NewsStream;
 import org.kuali.mobility.news.entity.Rss;
-import org.kuali.mobility.news.entity.RssCategory;
 import org.kuali.mobility.news.entity.RssItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IUNewsServiceImpl implements NewsService {
-  
+public class NewsServiceImpl implements NewsService {
+	
 	@Autowired
     private RssService rssService;
 	
 	@Autowired
 	private NewsDaoImpl newsDao;
 	
+	@Autowired
+    private RssCacheService rssCacheService;
+	
+	@Autowired
+	private DynamicRssCacheService dynamicRssCacheService;
+	
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(NewsServiceImpl.class);
+	
 	@Override
 	public List<NewsSource> getAllNewsSourcesByLocation(String campusCode){
 		List<NewsSource> sources = newsDao.getAllActiveNewsSourcesByLocationCode(campusCode);
+		
 		return sources;
 	}
 
 	@Override
 	public NewsStream getNewsStream(String rssShortCode) {
 		// TODO Auto-generated method stub
-		NewsSource newsSource = newsDao.getNewsSourceByCode(rssShortCode);
-		Rss rss;
-		try {
-			rss = rssService.fetch(newsSource.getSourceUrl());
-			return convertRssToNewsStream(rss);
-		} catch (Exception e) {
-			NewsStream testNewsStream = new NewsStream();
-			final Writer result = new StringWriter();
-		    final PrintWriter printWriter = new PrintWriter(result);
-		    e.printStackTrace(printWriter);
-
-		    NewsDay newsDay = new NewsDay();
-		    List<NewsArticle> articles = new ArrayList<NewsArticle>();
-		    newsDay.setArticles(articles);
-		    newsDay.setFormattedDate("The Date");
-			NewsArticle a = new NewsArticle();
-			a.setDescription(e.getMessage() + "<br/><br />" + result.toString());
-			a.setTitle("Error");
-			articles.add(a);
-			testNewsStream.getArticles().add(newsDay);
-			return testNewsStream;
-		}
+		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", rssShortCode);
+        if (maintRss != null) {
+			try {
+	        	Rss rssFeed = this.getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
+	        	if (rssFeed != null) {
+	        		return convertRssToNewsStream(rssFeed);
+	        	}
+	        } catch (Exception e) {
+	            LOG.error(e.getMessage(), e);
+	        }
+        }
+        return null;
+		
+//		NewsSource newsSource = rssService.getNewsSource(rssShortCode);
+//		if (newsSource == null) {
+//			newsSource = newsDao.getNewsSourceByCode(rssShortCode);
+//			rssCacheService.putNewsSource(newsSource.getSourceCode(), newsSource);
+//		}
+//		NewsStream newsStream = newsSource.getNewsStream();
+//		if (newsStream == null) {
+//			Rss rss;
+//			try {
+//				rss = rssService.fetch(newsSource.getSourceUrl());
+//				newsStream =  convertRssToNewsStream(rss);
+//				newsSource.setNewsStream(newsStream);
+//				return newsStream;
+//			} catch (Exception e) {
+//				return null;
+//			}
+//		} else {
+//			return newsStream;
+//		}
 	}
 
 	@Override
-	public NewsArticle getNewsArticle(String articleId) {
-		// TODO Auto-generated method stub
+	public NewsArticle getNewsArticle(String sourceId, String articleId) {
+		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", sourceId);
+        if (maintRss != null) {
+            Rss rss = this.getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
+            LinkFeed lf = this.getDynamicRssCacheService().getLinkFeed(articleId, rss);
+            if (lf != null) {
+            	return convertLinkFeedToArticle(lf);
+            }        	
+        }
 		return null;
+	}
+
+	private NewsArticle convertLinkFeedToArticle(LinkFeed lf) {
+		NewsArticle article = new NewsArticle();
+		article.setArticleId(lf.getFeedUrl());
+		article.setDescription(lf.getBodyText());
+		article.setTitle(lf.getTitle());
+		article.setPublishDate(new Timestamp(lf.getLastUpdate().getTime()));
+		return article;
 	}
 
 	@Override
@@ -103,18 +136,14 @@ public class IUNewsServiceImpl implements NewsService {
 			article.setPublishDate(item.getPublishDate());
 			//article.setArticleId(item.getRssItemId().toString());
 			article.setLink(item.getLink());
-			Collection<String> categories = new ArrayList<String>();
-			for (RssCategory category : item.getCategories()) {
-				categories.add(category.getValue());
-			}
-			article.setCategories(categories);
 			article.setThumbnailImageUrl(item.getEnclosureUrl());
 			article.setDescription(item.getDescription());
+			article.setArticleId(item.getLinkUrlEncoded());
 			articles.add(article);
 		}
 		
-		Collections.sort(articles);
-		Collections.reverse(articles);
+		Collections.sort(articles); //sort the articles in ascending order
+		Collections.reverse(articles); //reverse the list so the newest appears first
 		
 		List<NewsDay> dayArticles = new ArrayList<NewsDay>();
 		
@@ -140,6 +169,10 @@ public class IUNewsServiceImpl implements NewsService {
 			}
 			articleListForDate.add(article);
 		}
+		NewsDay newsDay = new NewsDay();
+		newsDay.setArticles(articleListForDate);
+		newsDay.setFormattedDate(currentDateString);
+		dayArticles.add(newsDay);
 		
 		newsStream.setArticles(dayArticles);
 		return newsStream;
@@ -160,5 +193,21 @@ public class IUNewsServiceImpl implements NewsService {
 
 	public void setNewsDao(NewsDaoImpl newsDao) {
 		this.newsDao = newsDao;
+	}
+
+	public RssCacheService getRssCacheService() {
+		return rssCacheService;
+	}
+
+	public void setRssCacheService(RssCacheService rssCacheService) {
+		this.rssCacheService = rssCacheService;
+	}
+
+	public DynamicRssCacheService getDynamicRssCacheService() {
+		return dynamicRssCacheService;
+	}
+
+	public void setDynamicRssCacheService(DynamicRssCacheService dynamicRssCacheService) {
+		this.dynamicRssCacheService = dynamicRssCacheService;
 	}
 }

@@ -23,6 +23,8 @@
     <class>org.kuali.mobility.maps.entity.Location</class>
     <class>org.kuali.mobility.maps.entity.MapsGroup</class>
     <class>org.kuali.mobility.news.entity.MaintRss</class>
+    <class>org.kuali.mobility.news.entity.Rss</class>
+    <class>org.kuali.mobility.news.entity.RssItem</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
   </persistence-unit>
 

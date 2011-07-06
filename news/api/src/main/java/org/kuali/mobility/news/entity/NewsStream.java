@@ -16,7 +16,7 @@
 package org.kuali.mobility.news.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewsStream implements Serializable {
@@ -26,8 +26,29 @@ public class NewsStream implements Serializable {
 	private String title;
 	private String description;
 	private List<NewsDay> articles;
-	private Timestamp lastUpdateDate;
+	
+	public NewsStream copy() {
+		NewsStream copy = new NewsStream();
+		if (title != null) {
+			copy.setTitle(new String(title));
+		}
+		if (description != null) {
+			copy.setDescription(new String(description));
+		}
+		if (!articles.isEmpty()) {
+			List<NewsDay> articlesCopy = new ArrayList<NewsDay>();
+			for (NewsDay day : articles) {
+				articlesCopy.add(day.copy());
+			}
+			copy.setArticles(articlesCopy);
+		}
+		return copy;
+	}
     
+	public NewsStream() {
+		articles = new ArrayList<NewsDay>();
+	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -45,11 +66,5 @@ public class NewsStream implements Serializable {
 	}
 	public void setArticles(List<NewsDay> articles) {
 		this.articles = articles;
-	}
-	public Timestamp getLastUpdateDate() {
-		return lastUpdateDate;
-	}
-	public void setLastUpdateDate(Timestamp lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
 	}
 }

@@ -26,22 +26,12 @@
 	<!-- /header -->
 
 	<div data-role="content" data-theme="a">
-		<ul data-role="listview" data-inset="true" data-theme="c">
-			<c:forEach items="${newsSources}" var="item" varStatus="status">
-				<li>
-					<a href="/mdot/news?source=${item.sourceCode}">
-						${item.sourceName}
-					</a>
-				</li>
-			</c:forEach>
-		</ul>
 		<ul data-role="listview" data-theme="c" class="news-index">
 			<c:forEach items="${newsStream.articles}" var="day" varStatus="status">
 				</li><li data-role="list-divider" class="divider">${day.formattedDate}</li>
 				<c:forEach items="${day.articles}" var="article" varStatus="status">
 					<li>
-						<%-- <a href="/mdot/news/article?id=${article.articleId}">--%>
-						<a href="${article.link}">
+						<a href="/mdot/news/${sourceId}?articleId=${article.articleId}">
 							<p class="news-title">${article.title}</p>
 							<div class="container_12">
 					          <div class="grid_2"> <img src="${article.thumbnailImageUrl}" alt="news"></div>
@@ -53,6 +43,15 @@
 						</a>
 					</li>
 				</c:forEach>
+			</c:forEach>
+		</ul>
+		<ul data-role="listview" data-inset="true" data-theme="c">
+			<c:forEach items="${newsSources}" var="item" varStatus="status">
+				<li>
+					<a href="/mdot/news/${item.sourceId}">
+						${item.sourceName}
+					</a>
+				</li>
 			</c:forEach>
 		</ul>
 	</div>

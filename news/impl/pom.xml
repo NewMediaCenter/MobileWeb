@@ -22,12 +22,7 @@
         <version>1.0.0-ALPHA-1</version>
 	</parent>
 	<dependencies>
-		<!-- Internal dependencies -->
-		<dependency>
-			<groupId>org.kuali.mobility</groupId>
-			<artifactId>news-api</artifactId>
-		</dependency>
-		<dependency>
+	   <dependency>
 		    <groupId>net.java.dev.rome</groupId>
 		    <artifactId>rome</artifactId>
 		    <version>1.0.0</version>
@@ -35,6 +30,20 @@
 		<dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>commons-lang</groupId>
+		    <artifactId>commons-lang</artifactId>
+		    <version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<!-- Internal dependencies -->
+		<dependency>
+			<groupId>org.kuali.mobility</groupId>
+			<artifactId>news-api</artifactId>
 		</dependency>
 		<!-- Persistence dependencies -->
 		<dependency>

@@ -22,8 +22,8 @@ import org.kuali.mobility.news.entity.NewsStream;
 
 public interface NewsService {
 
-	public List<NewsSource> getAllNewsSourcesByLocation(String locationCode);
-	public NewsStream getNewsStream(String sourceCode);
-	public NewsArticle getNewsArticle(String articleId);
+	public List<NewsSource> getAllNewsSourcesByLocation(String locationId);
+	public NewsStream getNewsStream(String sourceId);
+	public NewsArticle getNewsArticle(String sourceId, String articleId);
 	public String getDefaultNewsSourceCode();
 }
