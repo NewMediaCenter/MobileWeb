@@ -68,7 +68,7 @@
    
     <bean name="MobileUserDetailsService" class="org.kuali.mobility.mdot.userdetails.MobileUserDetailsService" />
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+    <bean id="viewResolver" class="org.kuali.mobility.view.KualiMobileResourceBundleViewResolver">
         <property name="basename" value="views"/>
     </bean>
     
