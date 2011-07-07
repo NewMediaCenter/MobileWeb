@@ -31,13 +31,12 @@
 		<ul data-role="listview" data-theme="c" data-dividertheme="b"
 			data-filter="true" data-inset="false" id="cllist">
 
-<%--
 			<c:forEach items="${lablocations}" var="location" varStatus="status">
 			<li data-role="list-divider">${location.name}</li>
 			
 			<c:forEach items="${location.computerLabs}" var="item" varStatus="status">
 				<li detailId="${item.buildingCode}">
-					<a href="/mdot/maps">
+					<a href="/mdot/maps?id=${item.buildingCode}">
 						<h3>${item.labCode}</h3>
 						<p>${item.availability} seats available</p>
 					</a>
@@ -45,7 +44,6 @@
 			</c:forEach>
 
 			</c:forEach>
- --%>
  
 		</ul>
 	</div>

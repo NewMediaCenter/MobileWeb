@@ -37,122 +37,14 @@ function getParameterByName( name )
     return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-/* Maps */
 
-var buildingCode;
-
-var map;
-var markersArray = [];
-  
-function addMarker(location) {
-  marker = new google.maps.Marker({
-    position: location,
-    map: map
-  });
-  markersArray.push(marker);
-}
-
-// Removes the overlays from the map, but keeps them in the array
-function clearOverlays() {
-  if (markersArray) {
-    for (i in markersArray) {
-      markersArray[i].setMap(null);
-    }
-  }
-}
-
-// Shows any overlays currently in the array
-function showOverlays() {
-  if (markersArray) {
-    for (i in markersArray) {
-      markersArray[i].setMap(map);
-    }
-  }
-}
-
-// Deletes all markers in the array by removing references to them
-function deleteOverlays() {
-  if (markersArray) {
-    for (i in markersArray) {
-      markersArray[i].setMap(null);
-    }
-    markersArray.length = 0;
-  }
-}
-
-
-$('[data-role=page][id=mapslocation2]').live('pageshow',function(e, ui){ 
-	//var page_name = e.target.id;
-	//if (page_name == 'mapslocation'){
-		var buildingCode = $('#map_canvas').jqmData('code');
-//		var buildingCode = getParameterByName("bc");
-		if (buildingCode) {
-			//alert(buildingCode);
-			$.getJSON('/mdot/maps/' + buildingCode, function(data) {
-				initialize(39.17, -86.5);
-				var items = [];
-				var latitude = data.latitude;
-				var longitude = data.longitude;
-				
-				if (map) {
-					google.maps.event.trigger(map, 'resize');
-					var location = new google.maps.LatLng(latitude, longitude);
-//					var bounds = new google.maps.LatLngBounds();
-//					bounds.extend(location);
-//					map.fitBounds(bounds);
-					map.setZoom(17);
-					map.setCenter(location);
-					deleteOverlays();
-				    addMarker(location);
-				    google.maps.event.trigger(map, 'resize');
-//				    alert("test");
-				}
-				
-			});
-		}
-	//}
-});
-
-// When map page opens get location and display map
-//$('.page-map').live("pagecreate", function() {
-//	var buildingCode = getParameterByName("bc");
-//	if (buildingCode) {
-//		//alert(buildingCode);
-//		$.getJSON('/mdot/maps/' + buildingCode, function(data) {
-//			var items = [];
-//			$.each(data.results, function(key, val) {
-//				//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
-//				//items.push('<a href="/mdot/knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
-//				
-//			});
-////			var pagehtml = '<div id="resultdata"></div>'
-////			$('#searchresults').html(pagehtml);
-////			$("#resultdata").html(items.join('')).page();
-//			alert(data);
-//		});
-//	} else {
-//		initialize(39.17, -86.5);	
-//	}
-//});
-
-function initialize(lat,lng) {
-	var latlng = new google.maps.LatLng(lat, lng);
-	var myOptions = {
-		zoom: 17,
-		center: latlng,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-	map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
-    //map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
-    google.maps.event.trigger(map, 'resize');
-}
 
 /* Computer Labs */
 
 $('[data-role=page][id=computerlabshome]').live('pagebeforeshow',function(event, ui){
 	//alert('test44');
 	$('#clListTemplate').template('clListTemplate');
-	refreshComputerLabs();
+	//refreshComputerLabs();
 });
 
 function refreshComputerLabs() {
