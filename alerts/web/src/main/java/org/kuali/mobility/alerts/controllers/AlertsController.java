@@ -50,7 +50,7 @@ public class AlertsController {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-    	return "alerts";
+    	return "alerts/list";
     }
     
 }

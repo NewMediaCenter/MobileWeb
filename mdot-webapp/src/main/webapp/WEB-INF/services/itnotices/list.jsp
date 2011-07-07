@@ -10,21 +10,33 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="kme" tagdir="/WEB-INF/tags/kme" %>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-	
-
-<kme:content>
-    <kme:listView id="itnoticeslist">
-        <c:forEach items="${notices}" var="notice" varStatus="status">
-            <kme:listRow>
-				<a href="itnotices/details?id=${status.index}">
-					<h3>${notice.title}</h3>
-					<img src="${notice.imageUrl}"/>
-					<p>${notice.service}</p>
-					<p>Last Updated: ${notice.lastUpdated}</p>
-				</a>
-            </kme:listRow>
-        </c:forEach>
-    </kme:listView>
-</kme:content>
+<kme:page title="IT Notices" id="itnotices">
+	<kme:content>
+	    <kme:definitionListView id="itnoticeslist">
+	        <c:forEach items="${notices}" var="notice" varStatus="status">
+	            <kme:definitionListTerm>
+	                <c:if test="${empty notice.title && empty notice.noticeType ? 'false' : 'true'}">
+						<a href="itnotices/details?id=${status.index}">
+						    <c:if test="${empty notice.noticeType ? 'false' : 'true'}">
+								<span class="itNoticeIcon-${notice.noticeType}">${notice.noticeType}: </span>
+		                    </c:if>
+		                    <c:if test="${empty notice.title ? 'false' : 'true'}">
+		                        ${notice.title}
+		                    </c:if>
+						</a>
+					</c:if>
+	            </kme:definitionListTerm>
+	            <kme:definitionListDefinition>
+	                <a href="itnotices/details?id=${status.index}">
+	                    <p>${notice.service}</p>
+	                </a>
+	                <a href="itnotices/details?id=${status.index}">
+	                    <p>Last Updated: ${notice.lastUpdated}</p>
+	                </a>
+	            </kme:definitionListDefinition>
+	        </c:forEach>
+	    </kme:definitionListView>
+	</kme:content>
+</kme:page>

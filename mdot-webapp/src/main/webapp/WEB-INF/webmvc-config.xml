@@ -67,16 +67,13 @@
     </security:authentication-manager>
    
     <bean name="MobileUserDetailsService" class="org.kuali.mobility.mdot.userdetails.MobileUserDetailsService" />
-
-    <bean id="viewResolver" class="org.kuali.mobility.view.KualiMobileResourceBundleViewResolver">
-        <property name="basename" value="views"/>
-    </bean>
     
-    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
-        <property name="definitions">
-            <list>
-                <value>/WEB-INF/tiles-def.xml</value>
-            </list>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/services/" />
+        <property name="suffix" value=".jsp" />
+        <property name="order">
+            <value>1</value>
         </property>
     </bean>
     

@@ -86,23 +86,7 @@
 			<version>2.5</version>
 			<type>jar</type>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-jsp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-template</artifactId>
-        </dependency>
-		<!-- Service dependencies -->
+        <!-- Service dependencies -->
 		<dependency>
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>shared-api</artifactId>

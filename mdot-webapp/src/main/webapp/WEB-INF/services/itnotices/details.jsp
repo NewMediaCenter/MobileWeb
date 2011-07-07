@@ -10,12 +10,14 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="kme" tagdir="/WEB-INF/tags/kme" %>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:content>
-    <kme:textArea>
-        <h3>${notice.title}</h3>
-        <p>${notice.message}</p>
-        <p>${notice.lastUpdated}</p>
-    </kme:textArea>
-</kme:content>
+<kme:page title="IT Notice Details" id="itnoticedetails">
+	<kme:content>
+	    <kme:section>
+	        <h3>${notice.title}</h3>
+	        <p>${notice.message}</p>
+	        <p>${notice.lastUpdated}</p>
+	    </kme:section>
+	</kme:content>
+</kme:page>

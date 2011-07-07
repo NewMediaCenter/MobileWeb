@@ -59,7 +59,7 @@ public class ITNoticesController {
     		e.printStackTrace();
     	}
     	
-    	return "itnotices";
+    	return "itnotices/list";
     }
     
     @RequestMapping(value = "/details", method = RequestMethod.GET)
