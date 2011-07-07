@@ -124,6 +124,7 @@ public class CalendarController {
 			uiModel.addAttribute("previousMonth", my.format(previousCalendar.getTime()));
 			uiModel.addAttribute("nextMonth", my.format(nextCalendar.getTime()));
 			uiModel.addAttribute("monthYear", my.format(selectedDate.getTime()));
+			uiModel.addAttribute("today", sdf.format(new Date()));
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -306,6 +307,7 @@ public class CalendarController {
 						errors.rejectValue(entry.getKey(), "", error);
 					}
 				}
+				event.setDefaultCategories(eventReturned.getDefaultCategories());
 				return "calendar/editEvent";
 			}
 		} catch (PageLevelException pageLevelException) {

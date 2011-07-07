@@ -86,14 +86,22 @@
                 <c:when test="${day.value.currentMonth}">
                 	<c:choose>
                			<c:when test="${selectedDate eq day.key}">
-               				<c:set var="current" value="-current"/>
+               				<c:set var="current" value="-selected"/>
                			</c:when>
                			<c:otherwise>
                				<c:set var="current" value=""/>
                			</c:otherwise>
                		</c:choose>
-                    <div class="datebox-${day.value.currentMonth}${current} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${current}${monthYear}" onclick='javascript:hideCalendarDay(${monthYear});showCalendarDay(${monthYear}, ${day.key});return false;'>
-                        <div class="event-${day.value.hasEvents}${current} event-${day.value.hasEvents}${monthYear}${day.key} event-${day.value.hasEvents}${current}${monthYear}">${day.value.day}</div>
+               		<c:choose>
+               			<c:when test="${today eq day.key}">
+               				<c:set var="todaySelected" value="event-${day.value.hasEvents}-today"/>
+               			</c:when>
+               			<c:otherwise>
+               				<c:set var="todaySelected" value=""/>
+               			</c:otherwise>
+               		</c:choose>
+                    <div class="datebox-${day.value.currentMonth}" onclick='javascript:hideCalendarDay(${monthYear});showCalendarDay(${monthYear}, ${day.key});return false;'>
+                        <div class="event-${day.value.hasEvents}${current} event-${day.value.hasEvents}${monthYear}${day.key} event-${day.value.hasEvents}${current}${monthYear} ${todaySelected}">${day.value.day}</div>
                     </div>
                  </c:when>
                  <c:otherwise>
@@ -105,7 +113,7 @@
                             <c:set var="dataDirection" value=""/>
                         </c:otherwise>
                      </c:choose>
-                        <div class="datebox-${day.value.currentMonth} datebox-${day.value.currentMonth}${day.key} datebox-${day.value.currentMonth}${monthYear}">
+                        <div class="datebox-${day.value.currentMonth}">
                             <div class="event-${day.value.hasEvents} event-${day.value.hasEvents}-${day.key} event-${day.value.hasEvents}${monthYear}">${day.value.day}</div>
                         </div>
                  </c:otherwise>
@@ -129,8 +137,8 @@
         <c:forEach var="event" items="${day.value.events}">
            <li>
               <a href="${pageContext.request.contextPath}/calendar/event?eventId=${event.eventId}&date=${event.date}">
-                <h3><c:out value="${event.title}"/></h3>
-                <p><c:out value="${event.location}"/></p>
+                <h3 style="white-space:normal"><c:out value="${event.title}"/></h3>
+                <p style="white-space:normal"><c:out value="${event.location}"/></p>
                 <p><c:out value="${event.time}"/></p>
              </a> 
           </li>

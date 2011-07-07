@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Calendar</title>
 <link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />

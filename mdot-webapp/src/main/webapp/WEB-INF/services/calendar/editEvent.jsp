@@ -41,18 +41,21 @@
         <form:hidden path="seriesId"/>
         <form:hidden path="date"/>
         
-        <fieldset>Event:<br/><br/>
+        <fieldset>
             <label for="title">Title</label>
-            <form:input path="title"  cssClass="text ui-widget-content ui-corner-all" />
-            <br/><form:errors path="title" />
-           
-            <br/><br/>
+            <form:input path="title" cssClass="text ui-widget-content ui-corner-all" />
+            <form:errors path="title" />
+                        <br/>
+            <label for="location">Location</label>
+            <form:input path="location"  cssClass="text ui-widget-content ui-corner-all" />
+            <form:errors path="location" />
+            <br/>
+            <form:checkbox path="allDay" onclick='javascript:$("div#calendar-time").toggle();' />
             <label for="allDay">All Day</label>
-            <form:checkbox path="allDay"  cssClass="text ui-widget-content ui-corner-all" onclick='javascript:$("div#calendar-time").toggle();' />
-            <br/><br/>
+            <br/>
             <label for="startDate">Start Date</label>
             <form:input path="startDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
-            <br/><form:errors path="startDate" />
+            <form:errors path="startDate" />
             <br/>
             <c:choose>
                 <c:when test="${event.allDay}">
@@ -65,54 +68,39 @@
             <div id="calendar-time" style="display: ${displayCalendarTime}">
                 <label for="startTime">Start Time</label>
                 <form:input path="startTime"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"mode": "timebox", "timeFormat":12}' />
-                <br/><br/>
-            
+                <br/>
                 <label for="endDate">End Date</label>
                 <form:input path="endDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
-                <br/><form:errors path="endDate" />
+                <form:errors path="endDate" />
                 <br/>
-                
                  <label for="endTime">End Time</label>
                 <form:input path="endTime"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"mode": "timebox", "timeFormat":12}' />
-                <br/><br/>
+                <br/>
             </div>
-            <label for="location">Location</label>
-            <form:input path="location"  cssClass="text ui-widget-content ui-corner-all" />
-            <br/><form:errors path="location" />
-            <br/><br/>
-
             <label for="categories">Category</label>
             
             <form:select path="categories" multiple="true" items="${event.defaultCategories}" data-native-menu="false"/>
-            <br/><form:errors path="categories" />
-            <br/><br/>
+            <form:errors path="categories" />
+            <br/>
             <label for="showAs">Show As</label>
-             <form:select path="showAs"  cssClass="ui-widget-content ui-corner-all" >
+             <form:select path="showAs"  cssClass="ui-widget-content ui-corner-all" data-native-menu="false">
                     <form:option value="BUSY" label="Busy" />
                     <form:option value="FREE" label="Free" />
-            </form:select><br/><form:errors path="showAs" />
-            <br/><br/>
+            </form:select><form:errors path="showAs" />
+            <br/>
             <label for="sharing">Sharing</label>
-            <form:select path="sharing"  cssClass="ui-widget-content ui-corner-all" >
+            <form:select path="sharing"  cssClass="ui-widget-content ui-corner-all" data-native-menu="false">
                     <form:option value="PUBLIC" label="Public" />
                     <form:option value="PRIVATE" label="Private" />
                     <form:option value="CONFIDENTIAL" label="Confidential" />
-            </form:select><br/><form:errors path="sharing" />
-            
-            <br/><br/>
+            </form:select><form:errors path="sharing" />
+            <br/>
             <label for="description">Description</label>
             <form:textarea path="description" />
-            <br/><form:errors path="description" />
-            <br/><br/>
+            <form:errors path="description" />
+            <br/>
             
             <c:if test="${empty seriesId}">
-                <hr/>
-                 <br/><br/>
-    	       <label for="recurrenceType">Repeat:</label><br/>
-               
-               <c:if test="${event.recurrenceType eq 'CUSTOM-DAILY' or event.recurrenceType eq 'CUSTOM-WEEKLY' or event.recurrenceType eq 'CUSTOM-MONTHLY' or event.recurrenceType eq 'CUSTOM-YEARLY'}">
-                    <form:radiobutton path="recurrenceType" value="${event.recurrenceType}" label="${event.recurrenceMessage}"/><br/>
-                </c:if> 
                 <form:hidden path="dailyRecurrenceType"/>
                 <form:hidden path="recurrenceDay"/>
                 <form:hidden path="recurrenceInterval"/>
@@ -124,18 +112,24 @@
                 <c:forEach var="weekDay" items="${event.weeklyRecurrenceWeekDays}" varStatus="status">
                     <form:hidden path="weeklyRecurrenceWeekDays[${status.index}]" />
                 </c:forEach>
-                
-                <form:radiobutton path="recurrenceType" value="NONE" label="None"/><br/>
-                <form:radiobutton path="recurrenceType" value="DAILY" label="Every Day"/><br/>
-                <form:radiobutton path="recurrenceType" value="WEEKLY" label="Every Week"/><br/>
-    	        <form:radiobutton path="recurrenceType" value="WEEKLY2" label="Every 2 Weeks" /><br/>
-                <form:radiobutton path="recurrenceType" value="MONTHLY" label="Every Month" /><br/>
-                <form:radiobutton path="recurrenceType" value="YEARLY" label="Every Year"/><br/>
-                <form:errors path="recurrenceType" />
-                <br/><br/>
-               <label for="recurrenceUntilDate">Repeat Until Date</label>
+	            <fieldset data-role="controlgroup">
+	                <hr/>
+	    	       <label for="recurrenceType">Repeat:</label><br/>
+	               <c:if test="${event.recurrenceType eq 'CUSTOM-DAILY' or event.recurrenceType eq 'CUSTOM-WEEKLY' or event.recurrenceType eq 'CUSTOM-MONTHLY' or event.recurrenceType eq 'CUSTOM-YEARLY'}">
+	                    <form:radiobutton path="recurrenceType" value="${event.recurrenceType}" label="Custom: ${event.recurrenceMessage}"/>
+	                </c:if>                
+	                <form:radiobutton path="recurrenceType" value="NONE" label="None"/>
+	                <form:radiobutton path="recurrenceType" value="DAILY" label="Every Day"/>
+	                <form:radiobutton path="recurrenceType" value="WEEKLY" label="Every Week"/>
+	    	        <form:radiobutton path="recurrenceType" value="WEEKLY2" label="Every 2 Weeks" />
+	                <form:radiobutton path="recurrenceType" value="MONTHLY" label="Every Month" />
+	                <form:radiobutton path="recurrenceType" value="YEARLY" label="Every Year"/>
+	                <form:errors path="recurrenceType" />
+                </fieldset>
+                <br/>
+                <label for="recurrenceUntilDate">Repeat Until Date</label>
             	<form:input path="recurrenceUntilDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
-            	<br/><form:errors path="recurrenceUntilDate" />
+            	<form:errors path="recurrenceUntilDate" /><br/>
             </c:if>
         </fieldset>
         <input name="save" type="image" value="Save" src="${pageContext.request.contextPath}/images/btn-save.gif" alt="save" />

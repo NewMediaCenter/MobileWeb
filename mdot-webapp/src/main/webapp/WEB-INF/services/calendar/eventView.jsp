@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Calendar</title>
 <link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
@@ -31,7 +32,7 @@
   <c:if test="${event.meeting}"> <a href="${pageContext.request.contextPath}/calendar/invite?eventId=${event.eventId}" class="ui-btn-right" >view invites</a><br/><br/></c:if>
       <ul data-role="listview" data-theme="g">
           <li>
-                <h3><c:out value="${event.title}"/></h3>
+                <h3 style="white-space:normal"><c:out value="${event.title}"/></h3>
                 <p><c:out value="${event.location}"/></p>
                 <p><c:out value="${event.displayDate}"/></p>
           </li>
@@ -59,7 +60,7 @@
           <c:if test="${not empty event.recurrenceMessage}">
               <li>
                     <h3>Recurrence</h3>
-                    <p><c:out value="${event.recurrenceMessage}"/></p>
+                    <p style="white-space:normal"><c:out value="${event.recurrenceMessage}"/></p>
               </li>
           </c:if>
           <li>

@@ -597,7 +597,7 @@
 	-webkit-box-shadow:none;
 	box-shadow: none;
 	font-weight:normal;
-	background:#900 url(../../jquery-1.0b1/images/eventdot-current.png) no-repeat center 1.45em;
+	background:#900 url(../images/eventdot-current.png) no-repeat center 1.45em;
 }
 .ui-grid-evt-month .datebox-true .event-false-selected {
 	border-bottom:none;
@@ -633,12 +633,12 @@
 .event-true {
 	padding-top: 0.27em;
 	padding-bottom: 0.35em;
-	background: url(../../jquery-1.0b1/images/eventdot.png) no-repeat center 1.45em;
+	background: url(../images/eventdot.png) no-repeat center 1.45em;
 }
 .event-true-today {
 	padding-top: 0.27em;
 	padding-bottom: 0.35em;
-	background: url(../../jquery-1.0b1/images/eventdot.png) no-repeat center 1.45em;
+	background: url(../images/eventdot.png) no-repeat center 1.45em;
 	background-color:#FFF7D5;
 	-moz-box-shadow: inset 0 0 6px #DDD;
 	-webkit-box-shadow: inset 0px 0px 6px #DDD;
