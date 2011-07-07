@@ -57,7 +57,7 @@
         </property>
     </bean>
 
-
+<!-- 
     <bean id="calendarEventOAuthService" class="edu.iu.es.espd.ccl.oauth.CalendarEventOAuthServiceImpl">
         <property name="calendarRestURL" value="http://localhost:8080/ccl-dev/rest/" />
         <property name="providerPublicURL" value="http://localhost:8080/ccl-dev/session" />
@@ -67,7 +67,7 @@
         <property name="consumerKey" value="mobileOAuthConsumerKey" />
         <property name="consumerSecret" value="hello" />
         <property name="resourceId" value="MOBILE_ID" />
-        <property name="socketTimeout" value="30000" /><!-- need longer timeout when developing -->
+        <property name="socketTimeout" value="30000" />
         <property name="connectionManagerTimeout" value="30000" />
         <property name="connectionTimeout" value="30000" />
         <property name="cookieNames">
@@ -76,7 +76,7 @@
             </list>
         </property>
     </bean>
-<!-- 
+-->
      <bean id="calendarEventOAuthService" class="edu.iu.es.espd.ccl.oauth.CalendarEventOAuthServiceImpl">
         <property name="calendarRestURL" value="https://test.uisapp2.iu.edu/ccl-unt/rest/" />
         <property name="providerPublicURL" value="https://test.uisapp2.iu.edu/ccl-unt/session" />
@@ -92,7 +92,7 @@
             </list>
         </property>
     </bean>
-         -->
+         
     <bean class="org.kuali.mobility.knowledgebase.service.KnowledgeBaseServiceImpl">
         <qualifier value="main"/>
         <!-- inject any dependencies required by this bean -->
