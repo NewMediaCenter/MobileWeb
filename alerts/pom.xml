@@ -32,6 +32,7 @@
                 <module>api</module>
                 <module>impl</module>
                 <module>web</module>
+                <module>webapp</module>
             </modules>
         </profile>
         <profile>
@@ -50,6 +51,12 @@
             <id>web</id>
             <modules>
                 <module>web</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>webapp</id>
+            <modules>
+                <module>webapp</module>
             </modules>
         </profile>
     </profiles>

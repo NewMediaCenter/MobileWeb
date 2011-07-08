@@ -15,9 +15,7 @@
 
 package org.kuali.mobility.alerts.controllers;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.kuali.mobility.alerts.entity.Alert;
 import org.kuali.mobility.alerts.service.AlertsService;
@@ -40,12 +38,11 @@ public class AlertsController {
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
     	try {
-    	    Map<String, String> criteria = new HashMap<String, String>();
-    	    criteria.put("campus", "BL");
-    	    
-    		List<Alert> alerts = alertsService.findAllAlertsByCriteria(criteria);
+    	    //Map<String, String> criteria = new HashMap<String, String>();
+    	    //criteria.put("campus", "BL");    	    
+    		//List<Alert> alerts = alertsService.findAllAlertsByCriteria(criteria);
     		
-    	    //List<Alert> alerts = alertsService.findAllAlertsFromJson("http://localhost:9999/mdot/testdata/alerts.json");
+    	    List<Alert> alerts = alertsService.findAllAlertsFromJson("http://localhost:9999/mdot/testdata/alerts.json");
     		uiModel.addAttribute("alerts", alerts);
     	} catch (Exception e) {
     		e.printStackTrace();

@@ -147,6 +147,13 @@
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>alerts-web</artifactId>
 		</dependency>
+		<dependency> 
+			<groupId>org.kuali.mobility</groupId>
+			<artifactId>alerts-webapp</artifactId>
+	        <version>1.0.0-ALPHA-1</version>
+      		<type>war</type>
+      		<scope>runtime</scope>
+    	</dependency>    	
 		<dependency>
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>events-api</artifactId>
@@ -325,6 +332,20 @@
 							<port>9999</port>
 						</connector>
 					</connectors>
+					<overlays>
+		            <overlay>
+		              	<groupId>com.example.projects</groupId>
+		              	<artifactId>documentedprojectdependency</artifactId>
+		              	<excludes>
+		                	<exclude>WEB-INF/web.xml,WEB-INF/kme.tld</exclude>
+		              	</excludes>
+		            	</overlay>
+		          	</overlays>					
+		          	<!--  
+					<baseResource implementation="org.mortbay.resource.ResourceCollection">
+                    	<resourcesAsCSV>src/main/webapp,../alerts/webbpp/src/main/webapp</resourcesAsCSV>
+                	</baseResource>
+                	-->
 				</configuration>
 			</plugin>
 		</plugins>

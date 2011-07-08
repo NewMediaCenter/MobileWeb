@@ -50,7 +50,6 @@ public class AlertsServiceImpl implements AlertsService {
 	@Override
 	public List<Alert> findAllAlertsByCriteria(Map<String, String> criteria) {
         // Note: RI does not use the criteria parameter
-	    LOG.info("In RI Impl");
 	    return findAllAlertsFromJson(configParamService.findConfigParamByName(CP_JSON_ALERTS_URL).getValue());
 	}
 	

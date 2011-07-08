@@ -33,7 +33,7 @@
         <spring.security.oauth.version>1.0.0.M3</spring.security.oauth.version>
         <rice.version>1.0.1.1</rice.version>
         <hsqldb.version>1.8.0.10</hsqldb.version>
-        <jetty.version>6.1.11</jetty.version>
+        <jetty.version>6.1.26</jetty.version>
         <jdom.version>1.1</jdom.version>
         <persistence-api.version>1.0</persistence-api.version>
         <flexjson.version>2.1</flexjson.version>
@@ -174,12 +174,12 @@
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
-                <artifactId>alerts-iu-impl</artifactId>
+                <artifactId>alerts-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
-                <artifactId>alerts-web</artifactId>
+                <artifactId>alerts-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- AskIU Service -->
