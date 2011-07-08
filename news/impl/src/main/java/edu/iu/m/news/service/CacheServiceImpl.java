@@ -17,7 +17,7 @@ import edu.iu.m.news.entity.Rss;
 public class CacheServiceImpl implements CacheService {
     
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(CacheServiceImpl.class);
-    private static final String CACHE_SRV = "CacheService";
+    private static final String CACHE_SRV = "newsCacheService";
 
     @Autowired
     private RssCacheService rssCacheService;
