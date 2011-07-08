@@ -13,6 +13,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
+
 <kme:page title="Campus Alerts" id="campusalerts">
 	<kme:content>
 	    <kme:definitionListView id="alertlist" filter="true">

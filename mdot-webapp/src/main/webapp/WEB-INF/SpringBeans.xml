@@ -37,7 +37,7 @@
         <property name="resourceId" value="miu_id" />
         <property name="cookieNames">
             <list>
-                <value>JSESSIONID</value>
+                <value>X-Mapping-jfafkpgg</value>
             </list>
         </property>
     </bean>

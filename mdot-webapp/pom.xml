@@ -332,20 +332,6 @@
 							<port>9999</port>
 						</connector>
 					</connectors>
-					<overlays>
-		            <overlay>
-		              	<groupId>com.example.projects</groupId>
-		              	<artifactId>documentedprojectdependency</artifactId>
-		              	<excludes>
-		                	<exclude>WEB-INF/web.xml,WEB-INF/kme.tld</exclude>
-		              	</excludes>
-		            	</overlay>
-		          	</overlays>					
-		          	<!--  
-					<baseResource implementation="org.mortbay.resource.ResourceCollection">
-                    	<resourcesAsCSV>src/main/webapp,../alerts/webbpp/src/main/webapp</resourcesAsCSV>
-                	</baseResource>
-                	-->
 				</configuration>
 			</plugin>
 		</plugins>
