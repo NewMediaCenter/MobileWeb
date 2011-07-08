@@ -294,6 +294,11 @@
                 <artifactId>itnotices-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>itnotices-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- Knowledge Base Service -->
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
