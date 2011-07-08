@@ -28,10 +28,10 @@
     <import resource="classpath:RiceSpringBeans.xml" />
 
     <bean id="oncourseOAuthService" class="edu.iu.es.espd.oauth.OAuth2LegServiceImpl">
-        <property name="providerPublicURL" value="http://149.166.143.137:8080/direct/describe" />
-        <property name="providerRequestTokenURL" value="http://149.166.143.137:8080/oauthdirect/oauth/request_token" />
-        <property name="providerAuthorizeURL" value="http://149.166.143.137:8080/oauthdirect/oauth/authorize" />
-        <property name="providerAccessTokenURL" value="http://149.166.143.137:8080/oauthdirect/oauth/access_token" />
+        <property name="providerPublicURL" value="https://regression.oncourse.iu.edu/direct/describe" />
+        <property name="providerRequestTokenURL" value="https://regression.oncourse.iu.edu/oauthdirect/oauth/request_token" />
+        <property name="providerAuthorizeURL" value="https://regression.oncourse.iu.edu/oauthdirect/oauth/authorize" />
+        <property name="providerAccessTokenURL" value="https://regression.oncourse.iu.edu/oauthdirect/oauth/access_token" />
         <property name="consumerKey" value="miu_id" />
         <property name="consumerSecret" value="test_miu_secret" />
         <property name="resourceId" value="miu_id" />
