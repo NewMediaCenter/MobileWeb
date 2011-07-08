@@ -37,6 +37,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -573,6 +574,7 @@ public class RssServiceImpl implements RssService {
         return timeout;
     }
 
+	@Transactional
 	public void deleteRss(Rss rss) {
 	  	Rss rssToDelete = this.getRssFromDatabase(rss.getRssMaintId());
 	  	if (rssToDelete != null && rssToDelete.getRssId() != null) {

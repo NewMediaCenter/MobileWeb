@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.MaintRss;
 import edu.iu.m.news.entity.Rss;
@@ -38,7 +39,7 @@ public class RssCacheServiceImpl implements RssCacheService {
 	
 	private static final String RSS_TYPE_EVENTS_IUPUI = "EVENTS-IUPUI";
 
-	public RssCacheServiceImpl() {
+	public RssCacheServiceImpl() {		
 		this.cachedRssMap = new ConcurrentHashMap<Long, Rss>();
 		this.storedMaintRssCaches = new ConcurrentHashMap<String, MaintRssCache>();
 		//this.cachedLinkFeeds = new ConcurrentHashMap<String, LinkFeed>();
@@ -81,6 +82,7 @@ public class RssCacheServiceImpl implements RssCacheService {
 		this.cachedRssMap.remove(maintRssId);
 	}
 	
+	@Transactional
 	private void updateRss(Rss rss) {
 		Rss rssCopy = CachedCopies.copy(rss);
 		if (rss.isDelete()) {
@@ -312,7 +314,7 @@ public class RssCacheServiceImpl implements RssCacheService {
 	 */
 	
 	public List<MaintRss> getAllMaintRssByCampusAndType(String campusCode, String type) {
-		if (!isInitialized) load(true);
+		if (!isInitialized) load(false);
 		
 		// maintRssCache should never be null, as the getOrCreate should always return an object
 		MaintRssCache maintRssCache = this.getOrCreateMaintRssCache(campusCode);
@@ -322,7 +324,7 @@ public class RssCacheServiceImpl implements RssCacheService {
 	}
 	
 	public List<MaintRss> getAllMaintRssByCampus(String campusCode) {
-		if (!isInitialized) load(true);
+		if (!isInitialized) load(false);
 		
 		// maintRssCache should never be null, as the getOrCreate should always return an object
 		MaintRssCache maintRssCache = this.getOrCreateMaintRssCache(campusCode);
@@ -332,7 +334,7 @@ public class RssCacheServiceImpl implements RssCacheService {
 	}
 	
 	public MaintRss getMaintRssByCampusAndShortCode(String campusCode, String shortCode) {
-		if (!isInitialized) load(true);
+		if (!isInitialized) load(false);
 		
 		// maintRssCache should never be null, as the getOrCreate should always return an object
 		MaintRssCache maintRssCache = this.getOrCreateMaintRssCache(campusCode);
@@ -474,5 +476,5 @@ public class RssCacheServiceImpl implements RssCacheService {
 			return rssItemCopy;
 		}
 	}
-	
+
 }

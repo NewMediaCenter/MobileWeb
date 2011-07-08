@@ -99,6 +99,7 @@ public class NewsServiceImpl implements NewsService {
 		NewsArticle article = new NewsArticle();
 		article.setArticleId(lf.getFeedUrl());
 		article.setDescription(lf.getRichBodyText());
+		article.setDescription(lf.getBodyText());
 		article.setTitle(lf.getTitle());
 		return article;
 	}
