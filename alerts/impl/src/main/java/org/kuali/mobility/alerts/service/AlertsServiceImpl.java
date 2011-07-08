@@ -42,6 +42,9 @@ public class AlertsServiceImpl implements AlertsService {
 		this.configParamService = configParamService;
 	}
 	
+	/**
+	 * @see org.kuali.mobility.alerts.service.AlertsService#findAllAlertsByCriteria(java.util.Map)
+	 */
 	@Override
 	public int findAlertCountByCriteria(Map<String, String> criteria) {
 		return findAllAlertsByCriteria(criteria).size();

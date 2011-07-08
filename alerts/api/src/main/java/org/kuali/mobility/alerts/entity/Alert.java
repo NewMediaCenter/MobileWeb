@@ -17,6 +17,12 @@ package org.kuali.mobility.alerts.entity;
 
 import java.io.Serializable;
 
+/**
+ * An object representing an alert. Alerts include events such as a crisis, 
+ * emergency, or warning on campus.
+ * 
+ * @author Kuali Mobility Team 
+ */
 public class Alert implements Serializable, Comparable<Alert> {
 
 	private static final long serialVersionUID = 3298337944905192830L;
@@ -77,13 +83,6 @@ public class Alert implements Serializable, Comparable<Alert> {
         this.url = url;
     }
 
-    public int compareTo(Alert that) {
-        if (this.getCampus() == null || that == null || that.getCampus() == null) {
-            return -1;
-        }
-        return this.getCampus().compareTo(that.getCampus());
-    }
-
 	public int getKey() {
 		return key;
 	}
@@ -91,6 +90,13 @@ public class Alert implements Serializable, Comparable<Alert> {
 	public void setKey(int key) {
 		this.key = key;
 	}
+	
+	public int compareTo(Alert that) {
+        if (this.getCampus() == null || that == null || that.getCampus() == null) {
+            return -1;
+        }
+        return this.getCampus().compareTo(that.getCampus());
+    }
 
 	
 }

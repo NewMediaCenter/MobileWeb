@@ -20,8 +20,24 @@ import java.util.Map;
 
 import org.kuali.mobility.alerts.entity.Alert;
 
+/**
+ * Provides service methods for retrieving <code>Alert</code> instances.
+ * 
+ * @author Kuali Mobility Team 
+ */
 public interface AlertsService {
 
+	/**
+	 * A finder that returns all <code>Alert</code> instances that match the
+	 * given criteria.
+	 * 
+	 * @param criteria 
+	 * 			- <code>Map&lt;String&gt;, &lt;String&gt;</code> of key-value 
+	 * 			pairs used in determining the <code>Alert</code> instances returned. 
+	 * 			Any criteria not valid will be ignored.
+	 * @return <code>List&lt;Alert&gt;</code> filtered by the criteria or an empty 
+	 * 			<code>List</code>. 
+	 */
 	List<Alert> findAllAlertsByCriteria(Map<String, String> criteria);
 	
     List<Alert> findAllAlertsFromJson(String url);
