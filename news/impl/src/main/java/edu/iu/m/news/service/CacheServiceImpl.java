@@ -32,17 +32,18 @@ public class CacheServiceImpl implements CacheService {
 	}
     
 	public CacheServiceImpl() {
+		//TODO: This should go in startup of the app
 		startCache();
     }
 
     public void startCache() {
-//        try {
-//            reloadCacheDoWork();
-//        } catch (Exception e) {
-//            LOG.error("Error initializing cache.", e);
-//        }
-        
-        Thread thread = new Thread(new CacheReloaderBackgroundReloaderCombined());
+//      try {
+//      	reloadCacheDoWork();
+//  	} catch (Exception e) {
+//      	LOG.error("Error initializing cache.", e);
+//  	}
+    	
+    	Thread thread = new Thread(new CacheReloaderBackgroundReloaderCombined());
         thread.setDaemon(true);
         thread.start();
     }
@@ -111,7 +112,7 @@ public class CacheServiceImpl implements CacheService {
 	}
 	
 	private void rssReload() {
-    	List<MaintRss> maintRssNotify = this.getRssCacheService().reload(true);
+    	List<MaintRss> maintRssNotify = rssCacheService.reload(true);
     	for (MaintRss maintRss : maintRssNotify) {
     		if (maintRss != null && maintRss.getRssId() != null) {
     			this.updateMaintRss(maintRss);	
@@ -167,7 +168,7 @@ public class CacheServiceImpl implements CacheService {
             return startupDelay;
         }
         
-        public void run() {
+        public void run() {        	
             Long myReloadTime = getReloadCacheMinutes();
             Calendar updateCalendar = Calendar.getInstance();
             updateCalendar.add(Calendar.MINUTE, myReloadTime.intValue());
@@ -176,6 +177,7 @@ public class CacheServiceImpl implements CacheService {
             boolean runSavingReloads = shouldRunSavingReloads();
             Long startupDelay = getStartupDelay();
             Calendar startupTime = Calendar.getInstance();
+            
             // Cache loop
             while (true) {
                 Date now = new Date();
@@ -224,7 +226,6 @@ public class CacheServiceImpl implements CacheService {
                     LOG.error("Error:", e);
                 }
                 Long reloadCacheMinutes = getReloadCacheMinutes();
-                LOG.info("Awake! cacheMinutes: " + reloadCacheMinutes.intValue() + " reloadTime: " + myReloadTime.intValue());
                 if (reloadCacheMinutes.intValue() != myReloadTime.intValue()) {
                     now = new Date();
                     LOG.info("updateTimes: " + now.toString());

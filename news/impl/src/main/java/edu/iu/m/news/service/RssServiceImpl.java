@@ -223,11 +223,11 @@ public class RssServiceImpl implements RssService {
             int timeout = getSocketTimeout(RSS_SOCKET_TIMEOUT_SECONDS, RSS_SOCKET_DEFAULT_TIMEOUT);
             br = new BufferedReader(new InputStreamReader(getInputStreamFromGetMethod(get, timeout)));
             String line = null;
-            LOG.info("start reading rssLines:" + url);
+//            LOG.info("start reading rssLines:" + url);
             while ((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
-            LOG.info("end getting rssLines:" + url);
+//            LOG.info("end getting rssLines:" + url);
         } catch (Exception e) {
             LOG.error("Error in getStringFromRssUrl for url " + url, e);
         } finally {
@@ -238,7 +238,7 @@ public class RssServiceImpl implements RssService {
                 get.releaseConnection();
             }
         }
-        LOG.info("end rssConnection:" + url);
+//        LOG.info("end rssConnection:" + url);
         return xmlFixer(sb.toString());
     }
 	
@@ -338,7 +338,7 @@ public class RssServiceImpl implements RssService {
 
             rssItem.setCategories(new ArrayList<RssCategory>());
             if (item != null && item.getCategories() != null) {
-                LOG.info("start getting rssCategory:" + url);
+//                LOG.info("start getting rssCategory:" + url);
                 for (@SuppressWarnings("unchecked")
 				Iterator<Category> iterator = item.getCategories().iterator(); iterator.hasNext();) {
                     Category category = iterator.next();
@@ -347,7 +347,7 @@ public class RssServiceImpl implements RssService {
                     rssCategory.setValue(category.getValue());
                     rssItem.getCategories().add(rssCategory);
                 }
-                LOG.info("end getting rssCategory:" + url);
+//                LOG.info("end getting rssCategory:" + url);
             }
 
             rssItems.add(rssItem);
@@ -477,10 +477,10 @@ public class RssServiceImpl implements RssService {
 		try {
 			String pageContent = this.getStringFromRssUrl(link);
 	        if (pageContent.indexOf("bodyContent") > 0) {
-	        	LOG.info("BodyContent Type\r\n");
+//	        	LOG.info("BodyContent Type\r\n");
 	        	html = this.getCDataPage(pageContent.trim(), "/rss/channel/bodyContent");
 	        } else {
-	        	LOG.info("CDATA Type\r\n");
+//	        	LOG.info("CDATA Type\r\n");
 	        	html = this.getCDataPage(pageContent.trim(), "/rss/channel/description/text()");
 	        }
 	        if ("".equals(html.trim())) {

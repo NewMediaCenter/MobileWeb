@@ -35,8 +35,6 @@ public class RssCacheServiceImpl implements RssCacheService {
 	// String represents the url from which the feed is referred to in the RSS, before it is modified to link to what we actually need
 	//private ConcurrentMap<String, LinkFeed> cachedLinkFeeds;
 	
-	private boolean isInitialized = false;
-	
 	private static final String RSS_TYPE_EVENTS_IUPUI = "EVENTS-IUPUI";
 
 	public RssCacheServiceImpl() {		
@@ -172,7 +170,6 @@ public class RssCacheServiceImpl implements RssCacheService {
 		Date end = new Date();
 //		SimpleDateFormat sdf = new SimpleDateFormat();
 		LOG.info("Rss Cache Loaded. Start: " + now.toString() + " >> End: " + end.toString());
-		isInitialized = true;
 	}
 	
 	/*
@@ -314,8 +311,6 @@ public class RssCacheServiceImpl implements RssCacheService {
 	 */
 	
 	public List<MaintRss> getAllMaintRssByCampusAndType(String campusCode, String type) {
-		if (!isInitialized) load(false);
-		
 		// maintRssCache should never be null, as the getOrCreate should always return an object
 		MaintRssCache maintRssCache = this.getOrCreateMaintRssCache(campusCode);
 		List<MaintRss> maintRssForDisplay = maintRssCache.getAllMaintRssByType(type);
@@ -324,8 +319,6 @@ public class RssCacheServiceImpl implements RssCacheService {
 	}
 	
 	public List<MaintRss> getAllMaintRssByCampus(String campusCode) {
-		if (!isInitialized) load(false);
-		
 		// maintRssCache should never be null, as the getOrCreate should always return an object
 		MaintRssCache maintRssCache = this.getOrCreateMaintRssCache(campusCode);
 		List<MaintRss> maintRssForDisplay = maintRssCache.getAllMaintRss();
@@ -334,8 +327,6 @@ public class RssCacheServiceImpl implements RssCacheService {
 	}
 	
 	public MaintRss getMaintRssByCampusAndShortCode(String campusCode, String shortCode) {
-		if (!isInitialized) load(false);
-		
 		// maintRssCache should never be null, as the getOrCreate should always return an object
 		MaintRssCache maintRssCache = this.getOrCreateMaintRssCache(campusCode);
 		MaintRss maintRss = maintRssCache.get(shortCode);
@@ -351,8 +342,6 @@ public class RssCacheServiceImpl implements RssCacheService {
 //	}
 	
 	public Rss getRssByMaintRssId(Long maintRssId) {
-		if (!isInitialized) load(true);
-		
 		Rss rss = this.cachedRssMap.get(maintRssId);
 		if (rss != null) {
 			rss = CachedCopies.copy(rss);
