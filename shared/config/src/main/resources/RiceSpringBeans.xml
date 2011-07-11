@@ -78,7 +78,47 @@
 		<property name="password" value="${rice.basic.datasource.password}" />
 		<property name="accessToUnderlyingConnectionAllowed" value="${rice.basic.datasource.accessToUnderlyingConnectionAllowed}" />
 	</bean>
+	
 
+	<bean id="rice" class="org.kuali.rice.core.config.RiceConfigurer" lazy-init="true">
+		<property name="serviceNamespace" value="KME" />
+		<property name="dataSource" ref="MIUDB" />
+		<property name="serverDataSource" ref="enWorkflowDataSource" />
+		<property name="nonTransactionalDataSource" ref="nonTransactionalDataSource" />
+		<property name="rootConfig" ref="config" />
+		<property name="transactionManager" ref="jotm" />
+		<property name="userTransaction" ref="jotm" />
+		<property name="environment" value="dev" />
+		<property name="platform" value="Oracle9i"/>
+		<property name="rootResourceLoader">
+			<bean class="org.kuali.rice.core.resourceloader.SpringBeanFactoryResourceLoader" />
+		</property>
+
+		<property name="ksbConfigurer">
+			<bean class="org.kuali.rice.ksb.messaging.config.KSBConfigurer">
+				<property name="messageDataSource">
+					<ref local="enWorkflowDataSource" />
+				</property>
+				
+				<property name="serviceServletUrl" value="${serviceServletUrl}" />
+				<property name="registryDataSource">
+					<ref local="enWorkflowDataSource"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="cacheServiceExporter" class="org.kuali.rice.ksb.messaging.KSBExporter" depends-on="rice">
+		<property name="serviceDefinition">
+			<bean class="org.kuali.rice.ksb.messaging.JavaServiceDefinition">
+				<property name="service" ref="newsCacheService" />
+				<property name="localServiceName" value="newsCacheService" />
+				<property name="busSecurity" value="false" />
+				<property name="queue" value="false" />
+				<property name="retryAttempts" value="1" />
+			</bean>
+		</property>
+	</bean>
+  
 	<!--
 		<bean id="rice" class="org.kuali.rice.core.config.RiceConfigurer" lazy-init="true"> <property name="serviceNamespace" value="MIU" /> <property name="dataSource" ref="MIUDB" />
 		<property name="serverDataSource" ref="enWorkflowDataSource" /> <property name="rootConfig" ref="config" /> <property name="transactionManager" ref="jotm" /> <property
