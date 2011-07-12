@@ -38,6 +38,7 @@
         <property name="cookieNames">
             <list>
                 <value>X-Mapping-jfafkpgg</value>
+                <value>JSESSIONID</value>
             </list>
         </property>
     </bean>
