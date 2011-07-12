@@ -181,6 +181,11 @@
 				<artifactId>askiu-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>askiu-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Athletics Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -197,6 +202,11 @@
 				<artifactId>athletics-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>athletics-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Computer Labs Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -213,6 +223,11 @@
 				<artifactId>computerlabs-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>computerlabs-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Configuration Parameters Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -245,6 +260,11 @@
 				<artifactId>emergencyinfo-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>emergencyinfo-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Events Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -261,6 +281,11 @@
 				<artifactId>events-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>events-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- IT Notices Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -298,6 +323,11 @@
 				<artifactId>knowledgebase-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>knowledgebase-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Maps Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -314,6 +344,11 @@
 				<artifactId>maps-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>maps-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- News Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -330,6 +365,11 @@
 				<artifactId>news-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>news-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- People Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -346,6 +386,11 @@
 				<artifactId>people-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>people-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Sakai Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -362,6 +407,11 @@
 				<artifactId>sakai-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>sakai-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Spring dependencies -->
 			<dependency>
 				<groupId>org.springframework</groupId>
