@@ -18,7 +18,7 @@ public class DefinitionListViewTag extends SimpleTagSupport {
         try {
             out.println("<dl data-role=\"listview\" data-theme=\"b\" data-dividertheme=\"b\" data-filter=\""+ (filter ? "true" : "false") + "\" data-inset=\"false\" id=\"" + id + "\">");
             getJspBody().invoke(out);          
-            out.println("</div>");
+            out.println("</dl>");
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }

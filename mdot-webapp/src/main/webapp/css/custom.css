@@ -863,47 +863,72 @@ background: linear-gradient(top, rgba(241,241,241,0) 0%,rgba(241,241,241,1) 69%,
 	padding: 0.7em 40px 0.7em 15px;
 }
 
-/* IT Notices
+
+
+/* All Services - Definition List Default Styles
 -----------------------------------------------------------------------------------------------------------*/
 
-dl#itnoticeslist {
+dl {
     padding: 0;
-    margin: -25px -15px -15px -15px;
+    /* temporary hack to remove page padding */
+    margin: -17px -15px -15px -15px;
 }
 
-dl#itnoticeslist dt {
+dl dt {
     border-top: 2px solid #BBB;
-    padding: 15px 0 0 0;
-    margin: 10px 0 10px 0;
+    padding: 15px 0 0 15px;
+    margin: 0 0 5px 0;
     clear: left;
-    font-size: 15px;
+    font-size: 17px;
+    font-weight: bold;
 }
 
-dl#itnoticeslist dt a {
+dl dt a {
     color: #000;
     text-decoration: none;
-}
-
-
-dl#itnoticeslist dd {
-    padding: 0;
-    margin: 0;
-    font-size: 10px;
     font-weight: normal;
 }
 
-dl#itnoticeslist dd a {
+
+dl dd {
+    padding: 0 15px 15px 15px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+dl dd a {
     color: #333;
     font-weight: bold;
     text-decoration: none;
 }
 
-dl#itnoticeslist p {
+dl p {
     padding: 0;
     margin: 0;
 }
-    
-span.itNoticeIcon-Announcement {
+
+
+/* IT Notices
+-----------------------------------------------------------------------------------------------------------*/
+
+dl#itnoticeslist dt {
+    padding: 15px 0 0 0;
+}
+
+dl#itnoticeslist dt a {
+    color: #000;
+}
+
+dl#itnoticeslist dd {
+    font-size: 10px;
+}
+
+dl#itnoticeslist dd a {
+    color: #333;
+}
+
+span.itNoticeIcon-Announcement, span.itNoticeIcon-Critical, span.itNoticeIcon-Error, span.itNoticeIcon-News, span.itNoticeIcon-Warning {
     margin: -15px 20px 10px 0;
     padding: 0;
     float: left;
@@ -911,5 +936,46 @@ span.itNoticeIcon-Announcement {
     height: 130px;
     display: block;
     text-indent: -9999px;
-    background: transparent url('../images/itnotices/announcement.png') top left no-repeat;
+    background-color: transparent;
+    background-position: top left;
+    background-repeat: no-repeat;
 }
+
+span.itNoticeIcon-Announcement {
+    background-image: url('../images/itnotices/announcement.png');
+}
+
+span.itNoticeIcon-Critical {
+    background-image: url('../images/itnotices/critical.png');
+}
+
+span.itNoticeIcon-Error {
+    background-image: url('../images/itnotices/error.png');
+}
+
+span.itNoticeIcon-News {
+    background-image: url('../images/itnotices/news.png');
+}
+
+span.itNoticeIcon-Warning {
+    background-image: url('../images/itnotices/warning.png');
+}
+
+
+/* Campus Alerts
+-----------------------------------------------------------------------------------------------------------*/
+/* Nothing further custom needed for Campus Alerts */
+
+
+/* Emergency Info
+-----------------------------------------------------------------------------------------------------------*/
+
+dl#emergencylist dt a {
+    color: #000;
+}
+
+dl#emergencylist dd a {
+    color: #333;
+    font-weight: normal;
+}
+

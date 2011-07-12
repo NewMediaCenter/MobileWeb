@@ -35,6 +35,7 @@ public class PageTag extends SimpleTagSupport {
             out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.mobile-1.0b1.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.tmpl.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=true\"></script>");
+            out.println("<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0;\">");
             out.println("</head>");
             out.println("<body>");
             out.println("<div data-role=\"page\" id=\"" + id + "\">");
@@ -43,7 +44,7 @@ public class PageTag extends SimpleTagSupport {
             out.println("</div>");
             getJspBody().invoke(out);
             out.println("</div>");
-            out.println("</div>");
+            //out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         } catch (Exception e) {
