@@ -38,18 +38,6 @@
 		</dependency>
 		<!-- Rice dependencies -->
 		<dependency>
-			<groupId>org.kuali.rice</groupId>
-			<artifactId>rice-extras</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.kuali.rice</groupId>
-			<artifactId>rice-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.kuali.rice</groupId>
-			<artifactId>rice-impl</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
 			<version>2.4.0</version>
@@ -85,7 +73,6 @@
 			<groupId>jotm</groupId>
 			<artifactId>jotm</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
@@ -141,6 +128,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>2.2.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-simple</artifactId>
 			<version>2.2.9</version>
 		</dependency>
@@ -183,11 +175,6 @@
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15</artifactId>
 			<version>1.45</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-			<version>2.2.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.abdera</groupId>
