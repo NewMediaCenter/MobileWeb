@@ -8,39 +8,11 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Knowledge Base</title>
-<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
-
-</head>
-
-<body>
-<div data-role="page" id="kbdoc">
-
-
-	<div data-role="header">
-		<h1>Knowledge Base</h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" data-theme="a">
-${kbdoc}
-	</div>
-	<!-- /content -->
-
-
-</div>
-<!-- /page -->
-
-</body>
-</html>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
+<kme:page title="Knowledge Base" id="kbdoc">
+	<kme:content>
+		${kbdoc}
+	</kme:content>
+</kme:page>
