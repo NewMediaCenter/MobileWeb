@@ -163,11 +163,13 @@ public class CacheServiceImpl implements CacheService {
         }
         
         public void run() {    
-        	try {
-                Thread.sleep(1000 * 20);
-            } catch (InterruptedException e) {
-                LOG.error("Error:", e);
-            }
+        	while(configParamService == null || rssCacheService == null || dynamicRssCacheService == null) {
+	        	try {
+	                Thread.sleep(1000 * 3);
+	            } catch (InterruptedException e) {
+	                LOG.error("Error:", e);
+	            }
+        	}
             Long myReloadTime = getReloadCacheMinutes();
             Calendar updateCalendar = Calendar.getInstance();
             updateCalendar.add(Calendar.MINUTE, myReloadTime.intValue());
@@ -179,6 +181,7 @@ public class CacheServiceImpl implements CacheService {
             
             try {
 	          	reloadCacheDoWork();
+	          	rssCacheService.reload(false);
 	      	} catch (Exception e) {
 	          	LOG.error("Error initializing cache.", e);
 	      	}

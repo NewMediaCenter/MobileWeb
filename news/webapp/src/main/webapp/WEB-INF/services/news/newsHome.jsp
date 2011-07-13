@@ -30,16 +30,14 @@
 			<li class="news-topstory">
 		        <div class="bottom-fade"></div>
 		        <a href="/mdot/news/${topArticleSourceId}?articleId=${topArticle.articleId}">
-		        	<div class="grid_2"> 
-			        	<c:choose>
-			        		<c:when test="${!empty topArticle.thumbnailImageUrl}">
-						    	<img src="${topArticle.thumbnailImageUrl}" alt="topstory">
-						    </c:when>
-						    <c:otherwise>
-						    	<img src="images/news-generic.png" alt="topstory">
-						    </c:otherwise>
-						</c:choose>
-					</div>
+		        	<c:choose>
+		        		<c:when test="${!empty topArticle.thumbnailImageUrl}">
+					    	<img src="${topArticle.thumbnailImageUrl}" alt="topstory">
+					    </c:when>
+					    <c:otherwise>
+					    	<img src="images/news-generic.png" alt="topstory">
+					    </c:otherwise>
+					</c:choose>
 			        <div>
 			          <p class="news-title">${topArticle.title}</p>
 			          <p class="news-teaser">${topArticle.description}</p>
@@ -49,7 +47,7 @@
 		
 			<c:forEach items="${newsStreams}" var="stream" varStatus="status">
 			
-				<li data-role="" class="" data-theme="b" data-icon="listview">
+				<li data-role="" class="" data-theme="b" data-icon="listview" >
 					<a href="/mdot/news/${stream.sourceId}">${stream.title}</a>
 				</li> 
 				

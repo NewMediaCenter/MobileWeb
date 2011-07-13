@@ -20,40 +20,22 @@
 
 <body>
 <div data-role="page" id="">
-	<div data-role="header">
+	<div data-role="header" data-position="">
+		<a href="/mdot/news"  data-icon="arrow-l" data-direction="reverse">back</a>
 		<h1>${newsStream.title}</h1>
 	</div>
 	<!-- /header -->
 
-	<div data-role="content" data-theme="a">
+	<div data-role="content">
 		<ul data-role="listview" data-theme="c" class="news-index">
 			<c:forEach items="${newsStream.articles}" var="day" varStatus="status">
-				</li><li data-role="list-divider" class="divider">${day.formattedDate}</li>
 				<c:forEach items="${day.articles}" var="article" varStatus="status">
 					<li>
 						<a href="/mdot/news/${sourceId}?articleId=${article.articleId}">
 							<p class="news-title">${article.title}</p>
-							<div class="container_12">
-					          <c:if test="${!empty article.thumbnailImageUrl}">
-					          	<div class="grid_2"> <img src="${article.thumbnailImageUrl}" alt="news"></div>
-					          </c:if>
-					          <div class="grid_10">
-					            <p class="news-teaser">${article.description}</p>
-					            <div class="bottom-fade"> </div>
-					          </div>
-					        </div>
 						</a>
 					</li>
 				</c:forEach>
-			</c:forEach>
-		</ul>
-		<ul data-role="listview" data-inset="true" data-theme="c">
-			<c:forEach items="${newsSources}" var="item" varStatus="status">
-				<li>
-					<a href="/mdot/news/${item.sourceId}">
-						${item.sourceName}
-					</a>
-				</li>
 			</c:forEach>
 		</ul>
 	</div>
