@@ -31,7 +31,7 @@
 			<c:forEach items="${newsStream.articles}" var="day" varStatus="status">
 				<c:forEach items="${day.articles}" var="article" varStatus="status">
 					<li>
-						<a href="/mdot/news/${sourceId}?articleId=${article.articleId}">
+						<a href="/mdot/news/${sourceId}?articleId=${article.articleId}&referrer=stream">
 							<p class="news-title">${article.title}</p>
 						</a>
 					</li>

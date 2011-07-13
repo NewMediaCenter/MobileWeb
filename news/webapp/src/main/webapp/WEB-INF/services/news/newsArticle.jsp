@@ -21,6 +21,12 @@
 <body>
 <div data-role="page" id="">
 	<div data-role="header" data-position="">
+		<c:if test="${referrer=='home'}">
+			<a href="/mdot/news"  data-icon="arrow-l" data-direction="reverse">back</a>
+		</c:if>
+		<c:if test="${referrer=='stream'}">
+			<a href="/mdot/news/${sourceId}"  data-icon="arrow-l" data-direction="reverse">back</a>
+		</c:if>
 		<h1>${sourceTitle}</h1>
 	</div>
 	<!-- /header -->

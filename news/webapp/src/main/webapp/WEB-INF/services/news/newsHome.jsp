@@ -29,7 +29,7 @@
 		<ul data-role="listview" data-theme="c" class="news-index">
 			<li class="news-topstory">
 		        <div class="bottom-fade"></div>
-		        <a href="/mdot/news/${topArticleSourceId}?articleId=${topArticle.articleId}">
+		        <a href="/mdot/news/${topArticleSourceId}?articleId=${topArticle.articleId}&referrer=home">
 		        	<c:choose>
 		        		<c:when test="${!empty topArticle.thumbnailImageUrl}">
 					    	<img src="${topArticle.thumbnailImageUrl}" alt="topstory">
@@ -54,7 +54,7 @@
 				<c:forEach items="${stream.articles}" var="day" varStatus="status">
 					<c:forEach items="${day.articles}" var="article" varStatus="status">
 						<li>
-							<a href="/mdot/news/${stream.sourceId}?articleId=${article.articleId}">
+							<a href="/mdot/news/${stream.sourceId}?articleId=${article.articleId}&referrer=home">
 				        		<p class="news-title">${article.title}</p>
 				        	</a>
 				        </li>

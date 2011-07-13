@@ -71,13 +71,14 @@ public class NewsController {
     }
     
     @RequestMapping(value = "/{sourceId}", method = RequestMethod.GET)
-    public String getNewsArticle(@PathVariable("sourceId") String sourceId, @RequestParam(value = "articleId", required = false) String articleId, Model uiModel) {
+    public String getNewsArticle(@PathVariable("sourceId") String sourceId, @RequestParam(value = "articleId", required = false) String articleId, @RequestParam(value = "referrer", required = false) String referrer, Model uiModel) {
     	if (articleId != null && articleId != "") {
     		NewsArticle newsArticle = newsService.getNewsArticle(sourceId, articleId);
     		NewsSource news = newsService.getNewsSourceById(sourceId);
         	uiModel.addAttribute("newsArticle", newsArticle);
         	uiModel.addAttribute("sourceId", sourceId);
         	uiModel.addAttribute("sourceTitle", news.getSourceName());
+        	uiModel.addAttribute("referrer", referrer);
         	return "news/newsArticle";
     	} else {
     		NewsStream news = newsService.getNewsStream(sourceId, false);
