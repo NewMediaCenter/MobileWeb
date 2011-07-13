@@ -56,6 +56,8 @@ public class NewsServiceImpl implements NewsService {
 	}
 	
 	private static final String NEWS_DEFAULT_SOURCE_ID = "NEWS_DEFAULT_SOURCE_ID";
+	private static final int SAMPLE_COUNT_DEFAULT = 2;
+	private static final String SAMPLE_COUNT = "NEWS_SAMPLE_COUNT";
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(NewsServiceImpl.class);
 	
@@ -65,15 +67,23 @@ public class NewsServiceImpl implements NewsService {
 		
 		return sources;
 	}
+	
+	@Override
+	public NewsSource getNewsSourceById(String sourceId) {
+		return newsDao.getNewsSourceById(sourceId);
+	}
 
 	@Override
-	public NewsStream getNewsStream(String rssShortCode) {
+	public NewsStream getNewsStream(String rssShortCode, boolean sample) {
 		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", rssShortCode);
         if (maintRss != null) {
 			try {
 	        	Rss rssFeed = this.getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
 	        	if (rssFeed != null) {
-	        		return convertRssToNewsStream(rssFeed);
+	        		NewsStream stream = convertRssToNewsStream(rssFeed, sample);
+	        		stream.setSourceId(rssShortCode);
+	        		stream.setTitle(maintRss.getDisplayName());
+	        		return stream;
 	        	}
 	        } catch (Exception e) {
 	            LOG.error(e.getMessage(), e);
@@ -98,7 +108,7 @@ public class NewsServiceImpl implements NewsService {
 	private NewsArticle convertLinkFeedToArticle(LinkFeed lf) {
 		NewsArticle article = new NewsArticle();
 		article.setArticleId(lf.getFeedUrl());
-		article.setDescription(lf.getRichBodyText());
+		//article.setDescription(lf.getRichBodyText());
 		article.setDescription(lf.getBodyText());
 		article.setTitle(lf.getTitle());
 		return article;
@@ -109,13 +119,21 @@ public class NewsServiceImpl implements NewsService {
 		return configParamService.findValueByName(NEWS_DEFAULT_SOURCE_ID);
 	}
 	
-	private NewsStream convertRssToNewsStream(Rss rss) {
+	private NewsStream convertRssToNewsStream(Rss rss, boolean sample) {
+		int sampleCount = SAMPLE_COUNT_DEFAULT;
+		if (sample) {
+			try {
+				sampleCount = Integer.parseInt(configParamService.findValueByName(SAMPLE_COUNT));
+			} catch (Exception e) {}
+		}
+		
 		NewsStream newsStream = new NewsStream();
 		
 		newsStream.setTitle(rss.getTitle());
 		newsStream.setDescription(rss.getFormDescription());
 		
 		List<NewsArticle> articles = new ArrayList<NewsArticle>();
+		int count = 0;
 		for (RssItem item : rss.getRssItems()) {
 			NewsArticle article = new NewsArticle();
 			article.setTitle(item.getTitle());
@@ -126,6 +144,8 @@ public class NewsServiceImpl implements NewsService {
 			article.setDescription(item.getDescription());
 			article.setArticleId(item.getLinkUrlEncoded());
 			articles.add(article);
+			count++;
+			if (sample && count == sampleCount) break;
 		}
 		
 		Collections.sort(articles); //sort the articles in ascending order

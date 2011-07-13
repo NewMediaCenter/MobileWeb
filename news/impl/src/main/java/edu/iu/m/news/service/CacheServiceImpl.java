@@ -37,12 +37,6 @@ public class CacheServiceImpl implements CacheService {
     }
 
     public void startCache() {
-//      try {
-//      	reloadCacheDoWork();
-//  	} catch (Exception e) {
-//      	LOG.error("Error initializing cache.", e);
-//  	}
-    	
     	Thread thread = new Thread(new CacheReloaderBackgroundReloaderCombined());
         thread.setDaemon(true);
         thread.start();
@@ -168,7 +162,12 @@ public class CacheServiceImpl implements CacheService {
             return startupDelay;
         }
         
-        public void run() {        	
+        public void run() {    
+        	try {
+                Thread.sleep(1000 * 20);
+            } catch (InterruptedException e) {
+                LOG.error("Error:", e);
+            }
             Long myReloadTime = getReloadCacheMinutes();
             Calendar updateCalendar = Calendar.getInstance();
             updateCalendar.add(Calendar.MINUTE, myReloadTime.intValue());
@@ -177,6 +176,12 @@ public class CacheServiceImpl implements CacheService {
             boolean runSavingReloads = shouldRunSavingReloads();
             Long startupDelay = getStartupDelay();
             Calendar startupTime = Calendar.getInstance();
+            
+            try {
+	          	reloadCacheDoWork();
+	      	} catch (Exception e) {
+	          	LOG.error("Error initializing cache.", e);
+	      	}
             
             // Cache loop
             while (true) {

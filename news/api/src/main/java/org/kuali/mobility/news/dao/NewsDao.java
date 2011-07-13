@@ -21,5 +21,5 @@ import org.kuali.mobility.news.entity.NewsSource;
 
 public interface NewsDao {
 	public List<NewsSource> getAllActiveNewsSourcesByLocationCode(String locationCode);
-	public NewsSource getNewsSourceByCode(String sourceCode);
+	public NewsSource getNewsSourceById(String sourceId);
 }

@@ -57,7 +57,7 @@ public class NewsDaoImpl implements NewsDao {
 	}
 
 	@Override
-	public NewsSource getNewsSourceByCode(String rssShortCode) {
+	public NewsSource getNewsSourceById(String rssShortCode) {
 		Query query = entityManager.createQuery("select r from MaintRss r where r.shortCode like :rssShortCode");
 		query.setParameter("rssShortCode", rssShortCode);
 		try {

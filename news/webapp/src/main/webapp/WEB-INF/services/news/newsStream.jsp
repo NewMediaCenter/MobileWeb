@@ -34,7 +34,9 @@
 						<a href="/mdot/news/${sourceId}?articleId=${article.articleId}">
 							<p class="news-title">${article.title}</p>
 							<div class="container_12">
-					          <div class="grid_2"> <img src="${article.thumbnailImageUrl}" alt="news"></div>
+					          <c:if test="${!empty article.thumbnailImageUrl}">
+					          	<div class="grid_2"> <img src="${article.thumbnailImageUrl}" alt="news"></div>
+					          </c:if>
 					          <div class="grid_10">
 					            <p class="news-teaser">${article.description}</p>
 					            <div class="bottom-fade"> </div>

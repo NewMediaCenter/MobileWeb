@@ -20,15 +20,22 @@
 
 <body>
 <div data-role="page" id="">
-	<div data-role="header">
-		<a href="/mdot/news/${sourceId}" data-icon="arrow-l">Back</a>
-		<h1>${newsArticle.title}</h1>
+	<div data-role="header" data-position="">
+		<h1>${sourceTitle}</h1>
 	</div>
 	<!-- /header -->
 
-	<div data-role="content" data-theme="a">
+	<div data-role="content" class="news-story">
 		<h3>${newsArticle.title}</h3>
-		<p>${newsArticle.description}</p>
+		<p>
+			<%-- <c:if test="${!empty topArticle.thumbnailImageUrl}">
+				<div class="image-caption">
+			    	<img src="${newsArticle.thumbnailImageUrl}" alt="pic">
+			    	<p><!-- Caption--!></p>
+			   	</div>
+		   	</c:if>--%>
+			${newsArticle.description}
+		</p>
 	</div>
 	<!-- /content -->
 

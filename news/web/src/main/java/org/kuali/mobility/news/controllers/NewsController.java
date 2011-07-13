@@ -15,9 +15,11 @@
 
 package org.kuali.mobility.news.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kuali.mobility.news.entity.NewsArticle;
+import org.kuali.mobility.news.entity.NewsDay;
 import org.kuali.mobility.news.entity.NewsSource;
 import org.kuali.mobility.news.entity.NewsStream;
 import org.kuali.mobility.news.service.NewsService;
@@ -41,34 +43,51 @@ public class NewsController {
         this.newsService = newsService;
     }
     
-    public String getNewsStream(String sourceId, Model uiModel) {
-    	if (sourceId == null || "".equals(sourceId)) {
-    		sourceId = newsService.getDefaultNewsSourceId();
-    	}
-    	NewsStream news = newsService.getNewsStream(sourceId);
-    	uiModel.addAttribute("newsStream", news);
-    	uiModel.addAttribute("sourceId", sourceId);
-    	
-    	List<NewsSource> sources = newsService.getAllNewsSourcesByLocation(selectedCampus);
-    	uiModel.addAttribute("newsSources", sources);
-    	
-    	return "news/newsStream";
-    }
-    
     @RequestMapping(method = RequestMethod.GET)
-    public String getNewsStream(Model uiModel) {
-    	return getNewsStream(null, uiModel);
+    public String newsHome(Model uiModel) {	
+    	List<NewsSource> sources = newsService.getAllNewsSourcesByLocation(selectedCampus);
+    	List<NewsStream> newsStreams = new ArrayList<NewsStream>();
+    	String defaultSourceId = newsService.getDefaultNewsSourceId();
+    	NewsArticle topNewsArticle = null; 
+    	for (NewsSource source : sources) {
+    		NewsStream news = newsService.getNewsStream(source.getSourceId(), true);
+    		if (news != null) {
+    			newsStreams.add(news);
+    			if (source.getSourceId().equals(defaultSourceId)) {
+    				if (news.getArticles() != null && !news.getArticles().isEmpty()) {
+    					NewsDay day = news.getArticles().get(0);
+    					if (day.getArticles() != null && !day.getArticles().isEmpty()) {
+        					topNewsArticle = day.getArticles().get(0);
+        				}
+    				}
+    			}
+    		}
+    	}
+    	uiModel.addAttribute("newsStreams", newsStreams);
+    	uiModel.addAttribute("topArticle", topNewsArticle);
+    	uiModel.addAttribute("topArticleSourceId", defaultSourceId);
+    	
+    	return "news/newsHome";
     }
     
     @RequestMapping(value = "/{sourceId}", method = RequestMethod.GET)
     public String getNewsArticle(@PathVariable("sourceId") String sourceId, @RequestParam(value = "articleId", required = false) String articleId, Model uiModel) {
-    	if (articleId == null || articleId.equals("")) {
-    		return getNewsStream(sourceId, uiModel);
+    	if (articleId != null && articleId != "") {
+    		NewsArticle newsArticle = newsService.getNewsArticle(sourceId, articleId);
+    		NewsSource news = newsService.getNewsSourceById(sourceId);
+        	uiModel.addAttribute("newsArticle", newsArticle);
+        	uiModel.addAttribute("sourceId", sourceId);
+        	uiModel.addAttribute("sourceTitle", news.getSourceName());
+        	return "news/newsArticle";
+    	} else {
+    		NewsStream news = newsService.getNewsStream(sourceId, false);
+        	uiModel.addAttribute("newsStream", news);
+        	uiModel.addAttribute("sourceId", sourceId);
+        	
+        	List<NewsSource> sources = newsService.getAllNewsSourcesByLocation(selectedCampus);
+        	uiModel.addAttribute("newsSources", sources);
+        	
+        	return "news/newsStream";
     	}
-    	NewsArticle newsArticle = newsService.getNewsArticle(sourceId, articleId);
-    	uiModel.addAttribute("newsArticle", newsArticle);
-    	uiModel.addAttribute("sourceId", sourceId);
-    	return "news/newsArticle";
     }
-      
 }

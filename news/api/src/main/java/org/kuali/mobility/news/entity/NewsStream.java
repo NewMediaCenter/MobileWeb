@@ -25,10 +25,14 @@ public class NewsStream implements Serializable {
 	
 	private String title;
 	private String description;
+	private String sourceId;
 	private List<NewsDay> articles;
 	
 	public NewsStream copy() {
 		NewsStream copy = new NewsStream();
+		if (sourceId != null) {
+			copy.setSourceId(new String(sourceId));
+		}
 		if (title != null) {
 			copy.setTitle(new String(title));
 		}
@@ -66,5 +70,13 @@ public class NewsStream implements Serializable {
 	}
 	public void setArticles(List<NewsDay> articles) {
 		this.articles = articles;
+	}
+
+	public String getSourceId() {
+		return sourceId;
+	}
+
+	public void setSourceId(String sourceId) {
+		this.sourceId = sourceId;
 	}
 }
