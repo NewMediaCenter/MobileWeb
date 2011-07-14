@@ -19,7 +19,7 @@
 	    <kme:unorderedList>
 	        <c:forEach items="${home.tools}" var="tool" varStatus="status">	            
 	            <kme:listItem>
-	            	<a href="${tool.url}"><img src="${tool.iconUrl}" alt="${tool.title}" class="ui-li-icon">
+	            	<a href="${tool.url}" style="background-image: url('${tool.iconUrl}');">
 			      	${tool.title}
 			      	<c:if test="${tool.badgeCount gt 0}"> 
 			      		<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">${tool.badgeCount}</span>

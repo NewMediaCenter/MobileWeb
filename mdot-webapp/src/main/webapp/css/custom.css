@@ -870,7 +870,7 @@
 
 dl {
     padding: 0;
-    /* temporary hack to remove page padding */
+    /* temporary adjustment for testing to remove page padding */
     margin: -17px -15px -15px -15px;
 }
 
@@ -918,10 +918,42 @@ dl p {
     margin: 0;
 }
 
+/* Home
+-----------------------------------------------------------------------------------------------------------*/
+div#home ul li a {
+	background-repeat: no-repeat;
+	background-position: 8px 5px;
+	padding-left: 50px;
+	color:#444 !important;
+    text-shadow:0 1px 1px #f6f6f6 !important;
+}
+
+/* quick adjustment for testing */
+div#home ul li.ui-btn-up-b {
+	border:1px solid #ccc !important;
+    background-color:#eee !important;
+    font-weight:bold !important;
+    color:#444 !important;
+    text-shadow:0 1px 1px #f6f6f6 !important;
+    background-image:-moz-linear-gradient(top, #fefefe, #eee) !important;
+    background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #fdfdfd), color-stop(1, #eee)) !important;
+    -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorStr='#fdfdfd', EndColorStr='#eeeeee') !important";
+}
+
+/* quick adjustment for testing */
+div#home ul li.ui-btn-hover-b {
+	border:1px solid #ccc !important;
+    background-color:#fff !important;
+    font-weight:bold !important;
+    color:#000 !important;
+    text-shadow:0 1px 1px #f6f6f6 !important;
+    background-image:-moz-linear-gradient(top, #eee, #bbb) !important;
+    background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #eee), color-stop(1, #bbbbbb)) !important;
+    -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#bbbbbb') !important";
+}
 
 /* IT Notices
 -----------------------------------------------------------------------------------------------------------*/
-
 dl.itnoticeslist dt a {
     padding: 15px 250px 10px 135px;
     position: relative;
