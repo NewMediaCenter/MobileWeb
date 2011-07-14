@@ -25,6 +25,18 @@
         <!-- Internal dependencies -->
         <dependency>
             <groupId>org.kuali.mobility</groupId>
+            <artifactId>shared-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>shared-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>shared-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
             <artifactId>alerts-api</artifactId>
         </dependency>
         <dependency>

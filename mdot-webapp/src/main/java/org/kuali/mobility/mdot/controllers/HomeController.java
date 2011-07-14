@@ -15,32 +15,64 @@
  
 package org.kuali.mobility.mdot.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.kuali.mobility.alerts.service.AlertsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.kuali.mobility.mdot.entity.HomeScreen;
+import org.kuali.mobility.mdot.entity.Tool;
+import org.kuali.mobility.util.HttpUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 
 @Controller 
 @RequestMapping("/")
 public class HomeController {
 
-    @Autowired
-    private AlertsService alertsService;
-    public void setAlertsService(AlertsService alertsService) {
-        this.alertsService = alertsService;
-    }
-    
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(HomeController.class);
+	
     @RequestMapping(method = RequestMethod.GET)
-    public String getList(Model uiModel) {
-        Map<String, String> criteria = new HashMap<String, String>();      
-        criteria.put("campus", "BL");
-    	uiModel.addAttribute("alertCount", alertsService.findAlertCountByCriteria(criteria));
+    public String getList(Model uiModel) {      
+    	HomeScreen home = new HomeScreen();
+
+    	String json = HttpUtil.stringFromUrl("http://localhost:9999/mdot/testdata/home.json");           
+        if (json != null && !"".equals(json.trim())) {
+            home = new JSONDeserializer<HomeScreen>().use(null, HomeScreen.class).deserialize(json);
+        }
+        
+        uiModel.addAttribute("home", home);
+    	
     	return "index";
     }
-        
+
+    @RequestMapping(value = "home.json", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public String getHomeScreenJson() {
+    	HomeScreen home = new HomeScreen();
+    	home.setPrincipalId("1234");
+    	home.setPrincipalName("natjohns");
+    	List<Tool> tools = new ArrayList<Tool>();
+    	Tool itnotices = new Tool();
+    	itnotices.setBadgeCount("0");
+    	itnotices.setDescription("Information about campus IT services.");
+    	itnotices.setIconUrl("srvc-itnotice.png");
+    	itnotices.setTitle("IT Notices");
+    	itnotices.setUrl("/itnotices");
+    	tools.add(itnotices);
+    	Tool myclasses = new Tool();
+    	myclasses.setBadgeCount("2");
+    	myclasses.setDescription("Class information; forums, grades, etc.");
+    	myclasses.setIconUrl("srvc-myclasses.png");
+    	myclasses.setTitle("My Classes");
+    	myclasses.setUrl("/myclasses");
+    	tools.add(myclasses);    	
+    	home.setTools(tools);
+    	return new JSONSerializer().exclude("*.class").include("tools").serialize(home);
+    }
+    
 }

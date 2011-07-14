@@ -15,15 +15,13 @@
 
 package org.kuali.mobility.alerts.service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.kuali.mobility.alerts.entity.Alert;
 import org.kuali.mobility.configparams.service.ConfigParamService;
+import org.kuali.mobility.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,24 +56,7 @@ public class AlertsServiceImpl implements AlertsService {
 	
 	@Override
     public List<Alert> findAllAlertsFromJson(String url) {
-        String json = "";           
-        
-        BufferedReader in = null;
-        try {
-            URL feed = new URL(url);
-            in = new BufferedReader(new InputStreamReader(feed.openStream()));
-
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                json += inputLine;
-            }
-        } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            try {            
-                in.close();
-            } catch (Exception e) {}
-        }
+        String json = HttpUtil.stringFromUrl(url);
         
         if (json == null || "".equals(json)) {
             return new ArrayList<Alert>();

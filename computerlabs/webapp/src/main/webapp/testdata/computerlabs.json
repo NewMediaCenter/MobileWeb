@@ -1,0 +1,1037 @@
+[
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"9/9",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"9/9",
+            "buildingCode":null,
+            "buildingNameOnly":"ACC102",
+            "buildingShortCode":"ACC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"ACC102 (ACC102)",
+            "labCode":"ACC102",
+            "labOnly":"ACC102"
+         }
+      ],
+      "name":"ACC102"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"24/28",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"24/28",
+            "buildingCode":"BL111",
+            "buildingNameOnly":"Ballantine Hall",
+            "buildingShortCode":"BH",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Ballantine Hall (BH104)",
+            "labCode":"BH104",
+            "labOnly":"BH104"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"40/42",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"40/42",
+            "buildingCode":"BL111",
+            "buildingNameOnly":"Ballantine Hall",
+            "buildingShortCode":"BH",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Ballantine Hall (BH115)",
+            "labCode":"BH115",
+            "labOnly":"BH115"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"26/27",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"26/27",
+            "buildingCode":"BL111",
+            "buildingNameOnly":"Ballantine Hall",
+            "buildingShortCode":"BH",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Ballantine Hall (BH117)",
+            "labCode":"BH117",
+            "labOnly":"BH117"
+         }
+      ],
+      "name":"Ballantine Hall"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"22/22",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"22/22",
+            "buildingCode":"BL433",
+            "buildingNameOnly":"Briscoe Quad",
+            "buildingShortCode":"BQ",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Briscoe Quad (BQ147)",
+            "labCode":"BQ147",
+            "labOnly":"BQ147"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"6/6",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"6/6",
+            "buildingCode":"BL433",
+            "buildingNameOnly":"Briscoe Quad",
+            "buildingShortCode":"BQ",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Briscoe Quad (BQ148)",
+            "labCode":"BQ148",
+            "labOnly":"BQ148"
+         }
+      ],
+      "name":"Briscoe Quad"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"50/57",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"50/57",
+            "buildingCode":"BL451",
+            "buildingNameOnly":"Business, Kelley School of",
+            "buildingShortCode":"BU",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Business, Kelley School of (BU101)",
+            "labCode":"BU101",
+            "labOnly":"BU101"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"33/33",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"33/33",
+            "buildingCode":"BL451",
+            "buildingNameOnly":"Business, Kelley School of",
+            "buildingShortCode":"BU",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Business, Kelley School of (BU415)",
+            "labCode":"BU415",
+            "labOnly":"BU415"
+         }
+      ],
+      "name":"Business, Kelley School of"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"11/12",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"11/12",
+            "buildingCode":"BL313",
+            "buildingNameOnly":"Eigenmann Hall",
+            "buildingShortCode":"EG",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Eigenmann Hall (EG100)",
+            "labCode":"EG100",
+            "labOnly":"EG100"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"14/14",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"14/14",
+            "buildingCode":"BL313",
+            "buildingNameOnly":"Eigenmann Hall",
+            "buildingShortCode":"EG",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Eigenmann Hall (EG101)",
+            "labCode":"EG101",
+            "labOnly":"EG101"
+         }
+      ],
+      "name":"Eigenmann Hall"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"7/7",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"7/7",
+            "buildingCode":"BL257",
+            "buildingNameOnly":"Forest Quad",
+            "buildingShortCode":"FR",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Forest Quad (FR147)",
+            "labCode":"FR147",
+            "labOnly":"FR147"
+         }
+      ],
+      "name":"Forest Quad"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"10/11",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"10/11",
+            "buildingCode":"BL278",
+            "buildingNameOnly":"Griggs Lounge (Ashton)",
+            "buildingShortCode":"GG",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Griggs Lounge (Ashton) (GG101)",
+            "labCode":"GG101",
+            "labOnly":"GG101"
+         }
+      ],
+      "name":"Griggs Lounge (Ashton)"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"49/65",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"49/65",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC101)",
+            "labCode":"IC101",
+            "labOnly":"IC101"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"-1/27",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"-1/27",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC103)",
+            "labCode":"IC103",
+            "labOnly":"IC103"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"22/26",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"22/26",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC106)",
+            "labCode":"IC106",
+            "labOnly":"IC106"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"17/24",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"17/24",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC107)",
+            "labCode":"IC107",
+            "labOnly":"IC107"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"22/26",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"22/26",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC109)",
+            "labCode":"IC109",
+            "labOnly":"IC109"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"12/18",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"12/18",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC110)",
+            "labCode":"IC110",
+            "labOnly":"IC110"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"1/8",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"1/8",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC111)",
+            "labCode":"IC111",
+            "labOnly":"IC111"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"1/6",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"1/6",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC114)",
+            "labCode":"IC114",
+            "labOnly":"IC114"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"18/25",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"18/25",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC115)",
+            "labCode":"IC115",
+            "labOnly":"IC115"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"6/8",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"6/8",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC126)",
+            "labCode":"IC126",
+            "labOnly":"IC126"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"2/8",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"2/8",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC128)",
+            "labCode":"IC128",
+            "labOnly":"IC128"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"8/9",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"8/9",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC130)",
+            "labCode":"IC130",
+            "labOnly":"IC130"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"2/8",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"2/8",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC131)",
+            "labCode":"IC131",
+            "labOnly":"IC131"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"1/8",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"1/8",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC134)",
+            "labCode":"IC134",
+            "labOnly":"IC134"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"66/75",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"66/75",
+            "buildingCode":null,
+            "buildingNameOnly":"Information Commons",
+            "buildingShortCode":"IC",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Information Commons (IC201)",
+            "labCode":"IC201",
+            "labOnly":"IC201"
+         }
+      ],
+      "name":"Information Commons"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"19/19",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"19/19",
+            "buildingCode":"BL107",
+            "buildingNameOnly":"Jordan Hall",
+            "buildingShortCode":"JH",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Jordan Hall (JH224)",
+            "labCode":"JH224",
+            "labOnly":"JH224"
+         }
+      ],
+      "name":"Jordan Hall"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"52/53",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"52/53",
+            "buildingCode":"BL209",
+            "buildingNameOnly":"Library",
+            "buildingShortCode":"LI",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Library (LI502)",
+            "labCode":"LI502",
+            "labOnly":"LI502"
+         }
+      ],
+      "name":"Library"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"6/8",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"6/8",
+            "buildingCode":"BL059",
+            "buildingNameOnly":"Lindley Hall",
+            "buildingShortCode":"LH",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Lindley Hall (LH026)",
+            "labCode":"LH026",
+            "labOnly":"LH026"
+         }
+      ],
+      "name":"Lindley Hall"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"21/24",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"21/24",
+            "buildingCode":"BL437",
+            "buildingNameOnly":"McNutt Quad",
+            "buildingShortCode":"MN",
+            "campus":"BL",
+            "floor":null,
+            "lab":"McNutt Quad (MN006)",
+            "labCode":"MN006",
+            "labOnly":"MN006"
+         }
+      ],
+      "name":"McNutt Quad"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"24/38",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"24/38",
+            "buildingCode":"BL181",
+            "buildingNameOnly":"Music Library and Recital Center, Simon",
+            "buildingShortCode":"M",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Music Library and Recital Center, Simon (M160)",
+            "labCode":"M160",
+            "labOnly":"M160"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"86/92",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"86/92",
+            "buildingCode":"BL181",
+            "buildingNameOnly":"Music Library and Recital Center, Simon",
+            "buildingShortCode":"M",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Music Library and Recital Center, Simon (M360)",
+            "labCode":"M360",
+            "labOnly":"M360"
+         }
+      ],
+      "name":"Music Library and Recital Center, Simon"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"24/24",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"24/24",
+            "buildingCode":"BL419",
+            "buildingNameOnly":"Psychology",
+            "buildingShortCode":"PY",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Psychology (PY120)",
+            "labCode":"PY120",
+            "labOnly":"PY120"
+         }
+      ],
+      "name":"Psychology"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"39/40",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"39/40",
+            "buildingCode":null,
+            "buildingNameOnly":"SPEA",
+            "buildingShortCode":"PV",
+            "campus":"BL",
+            "floor":null,
+            "lab":"SPEA (PV150)",
+            "labCode":"PV150",
+            "labOnly":"PV150"
+         }
+      ],
+      "name":"SPEA"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"14/17",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"14/17",
+            "buildingCode":"BL181-Speech",
+            "buildingNameOnly":"Speech and Hearing Clinic",
+            "buildingShortCode":"SG",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Speech and Hearing Clinic (SG164)",
+            "labCode":"SG164",
+            "labOnly":"SG164"
+         }
+      ],
+      "name":"Speech and Hearing Clinic"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"14/14",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"14/14",
+            "buildingCode":"BL017",
+            "buildingNameOnly":"Student Building",
+            "buildingShortCode":"SB",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Student Building (SB222)",
+            "labCode":"SB222",
+            "labOnly":"SB222"
+         }
+      ],
+      "name":"Student Building"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"20/20",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"20/20",
+            "buildingCode":"BL243",
+            "buildingNameOnly":"Teter Quad",
+            "buildingShortCode":"TE",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Teter Quad (TE202)",
+            "labCode":"TE202",
+            "labOnly":"TE202"
+         }
+      ],
+      "name":"Teter Quad"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"5/7",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"5/7",
+            "buildingCode":"BL053",
+            "buildingNameOnly":"Union Building",
+            "buildingShortCode":"UB",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Union Building (UB089)",
+            "labCode":"UB089",
+            "labOnly":"UB089"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"6/7",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"6/7",
+            "buildingCode":"BL053",
+            "buildingNameOnly":"Union Building",
+            "buildingShortCode":"UB",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Union Building (UB089A)",
+            "labCode":"UB089A",
+            "labOnly":"UB089A"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"27/35",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"27/35",
+            "buildingCode":"BL053",
+            "buildingNameOnly":"Union Building",
+            "buildingShortCode":"UB",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Union Building (UB098)",
+            "labCode":"UB098",
+            "labOnly":"UB098"
+         }
+      ],
+      "name":"Union Building"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"14/14",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"14/14",
+            "buildingCode":"BL245",
+            "buildingNameOnly":"Wendell W. Wright Education Building",
+            "buildingShortCode":"ED",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Wendell W. Wright Education Building (ED1160)",
+            "labCode":"ED1160",
+            "labOnly":"ED1160"
+         },
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"44/49",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"44/49",
+            "buildingCode":"BL245",
+            "buildingNameOnly":"Wendell W. Wright Education Building",
+            "buildingShortCode":"ED",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Wendell W. Wright Education Building (ED2011)",
+            "labCode":"ED2011",
+            "labOnly":"ED2011"
+         }
+      ],
+      "name":"Wendell W. Wright Education Building"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"16/16",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"16/16",
+            "buildingCode":"BL299",
+            "buildingNameOnly":"Willkie Quad",
+            "buildingShortCode":"WI",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Willkie Quad (WI100)",
+            "labCode":"WI100",
+            "labOnly":"WI100"
+         }
+      ],
+      "name":"Willkie Quad"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"16/16",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"16/16",
+            "buildingCode":"BL133",
+            "buildingNameOnly":"Woodburn Hall",
+            "buildingShortCode":"WH",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Woodburn Hall (WH211)",
+            "labCode":"WH211",
+            "labOnly":"WH211"
+         }
+      ],
+      "name":"Woodburn Hall"
+   },
+   {
+      "computerLabs":[
+         {
+            "active":true,
+            "avList":[
+               {
+                  "availability":"8/8",
+                  "description":"Overall",
+                  "name":"overall",
+                  "order":1
+               }
+            ],
+            "availability":"8/8",
+            "buildingCode":"BL237",
+            "buildingNameOnly":"Wright Quad",
+            "buildingShortCode":"WT",
+            "campus":"BL",
+            "floor":null,
+            "lab":"Wright Quad (WT003)",
+            "labCode":"WT003",
+            "labOnly":"WT003"
+         }
+      ],
+      "name":"Wright Quad"
+   }
+]

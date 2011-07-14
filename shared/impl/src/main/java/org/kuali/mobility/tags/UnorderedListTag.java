@@ -13,7 +13,7 @@ public class UnorderedListTag extends SimpleTagSupport {
         PageContext pageContext = (PageContext) getJspContext();
         JspWriter out = pageContext.getOut();
         try {
-            out.println("<ul>");
+            out.println("<ul data-role=\"listview\" data-theme=\"b\" data-inset=\"true\">");
             getJspBody().invoke(out);          
             out.println("</ul>");
         } catch (Exception e) {
@@ -21,4 +21,4 @@ public class UnorderedListTag extends SimpleTagSupport {
         }
     }
     
-}
+}	
