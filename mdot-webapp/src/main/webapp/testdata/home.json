@@ -5,7 +5,7 @@
       {
          "badgeCount":"0",
          "description":"Class information; forums, grades, etc.",
-         "iconUrl":"srvc-myclasses.png",
+         "iconUrl":"images/service-icons/srvc-myclasses.png",
          "id":"1",
          "title":"My Classes",
          "url":"/mdot/myclasses"
@@ -13,7 +13,7 @@
       {
          "badgeCount":"0",
          "description":"Classifieds",
-         "iconUrl":"srvc-classifieds.png",
+         "iconUrl":"images/service-icons/srvc-classifieds.png",
          "id":"0",
          "title":"Classifieds",
          "url":"https://onestart.iu.edu/ccf2-prd/ClassifiedsMb.do"
@@ -21,7 +21,7 @@
       {
          "badgeCount":"0",
          "description":"Bus Schedules",
-         "iconUrl":"srvc-bus.png",
+         "iconUrl":"images/service-icons/srvc-bus.png",
          "id":"0",
          "title":"Bus Schedules",
          "url":"/mdot/bus"
@@ -29,7 +29,7 @@
       {
          "badgeCount":"0",
          "description":"Campus Maps",
-         "iconUrl":"srvc-maps.png",
+         "iconUrl":"images/service-icons/srvc-maps.png",
          "id":"0",
          "title":"Campus Maps",
          "url":"/mdot/maps"
@@ -37,7 +37,7 @@
       {
          "badgeCount":"0",
          "description":"Athletics",
-         "iconUrl":"srvc-athletics.png",
+         "iconUrl":"images/service-icons/srvc-athletics.png",
          "id":"0",
          "title":"Athletics",
          "url":"/mdot/athletics"
@@ -45,7 +45,7 @@
       {
          "badgeCount":"0",
          "description":"People",
-         "iconUrl":"srvc-people.png",
+         "iconUrl":"images/service-icons/srvc-people.png",
          "id":"0",
          "title":"People",
          "url":"/mdot/people"
@@ -53,7 +53,7 @@
       {
          "badgeCount":"0",
          "description":"Computer Labs",
-         "iconUrl":"srvc-stc.png",
+         "iconUrl":"images/service-icons/srvc-stc.png",
          "id":"0",
          "title":"Computer Labs",
          "url":"/mdot/computerlabs"
@@ -61,7 +61,7 @@
       {
          "badgeCount":"0",
          "description":"IT Notices",
-         "iconUrl":"srvc-itnotice.png",
+         "iconUrl":"images/service-icons/srvc-itnotice.png",
          "id":"0",
          "title":"IT Notices",
          "url":"/mdot/itnotices"
@@ -69,7 +69,7 @@
       {
          "badgeCount":"0",
          "description":"News",
-         "iconUrl":"srvc-news.png",
+         "iconUrl":"images/service-icons/srvc-news.png",
          "id":"0",
          "title":"News",
          "url":"/mdot/news"
@@ -77,7 +77,7 @@
       {
          "badgeCount":"0",
          "description":"Events",
-         "iconUrl":"srvc-events.png",
+         "iconUrl":"images/service-icons/srvc-events.png",
          "id":"0",
          "title":"Events",
          "url":"/mdot/events"
@@ -85,7 +85,7 @@
       {
          "badgeCount":"0",
          "description":"Knowledge Base",
-         "iconUrl":"srvc-kb.png",
+         "iconUrl":"images/service-icons/srvc-kb.png",
          "id":"0",
          "title":"Knowledge Base",
          "url":"/mdot/knowledgebase"
@@ -93,7 +93,7 @@
       {
          "badgeCount":"0",
          "description":"Ask IU",
-         "iconUrl":"srvc-askiu.png",
+         "iconUrl":"images/service-icons/srvc-askiu.png",
          "id":"0",
          "title":"Ask IU",
          "url":"/mdot/askiu"
@@ -101,15 +101,15 @@
       {
          "badgeCount":"0",
          "description":"Dining Services",
-         "iconUrl":"srvc-dining.png",
+         "iconUrl":"images/service-icons/srvc-dining.png",
          "id":"0",
          "title":"Dining Services",
-         "url":"/mdot/diningservices"
+         "url":"/mdot/dining"
       },
       {
          "badgeCount":"0",
          "description":"Emergency Contacts",
-         "iconUrl":"srvc-emergency.png",
+         "iconUrl":"images/service-icons/srvc-emergency.png",
          "id":"0",
          "title":"Emergency Contacts",
          "url":"/mdot/emergencyinfo"
@@ -117,7 +117,7 @@
       {
          "badgeCount":"2",
          "description":"Campus Alerts",
-         "iconUrl":"srvc-alerts-green.png",
+         "iconUrl":"images/service-icons/srvc-alerts-green.png",
          "id":"0",
          "title":"Campus Alerts",
          "url":"/mdot/alerts"
@@ -125,18 +125,18 @@
       {
          "badgeCount":"0",
          "description":"Feedback",
-         "iconUrl":"srvc-feedback.png",
+         "iconUrl":"images/service-icons/srvc-feedback.png",
          "id":"0",
          "title":"Feedback",
          "url":"/mdot/feedback"
       },
       {
          "badgeCount":"0",
-         "description":"External Test",
-         "iconUrl":"srvc-feedback.png",
+         "description":"Jaguar Athletics",
+         "iconUrl":"https://m.iu.edu/miu-prd/home/ip/images/ipicon-jag.png",
          "id":"0",
-         "title":"External Test (Google)",
-         "url":"http://www.google.com"
+         "title":"Jaguar Athletics",
+         "url":"http://www.iupuijags.com"
       }
    ]
 }

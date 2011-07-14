@@ -99,7 +99,64 @@
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>shared-config</artifactId>
 		</dependency>
-		<dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>dining-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>dining-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>dining-web</artifactId>
+        </dependency>
+        <dependency> 
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>dining-webapp</artifactId>
+            <version>1.0.0-ALPHA-1</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>   
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>feedback-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>feedback-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>feedback-web</artifactId>
+        </dependency>
+        <dependency> 
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>feedback-webapp</artifactId>
+            <version>1.0.0-ALPHA-1</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>   
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>bus-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>bus-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>bus-web</artifactId>
+        </dependency>
+        <dependency> 
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>bus-webapp</artifactId>
+            <version>1.0.0-ALPHA-1</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>   
+        <dependency>
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>emergencyinfo-api</artifactId>
 		</dependency>

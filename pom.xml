@@ -54,10 +54,13 @@
 				<module>alerts</module>
 				<module>askiu</module>
 				<module>athletics</module>
+                <module>bus</module>
 				<module>computerlabs</module>
 				<module>configparams</module>
+                <module>dining</module>
 				<module>emergencyinfo</module>
 				<module>events</module>
+                <module>feedback</module>
 				<module>itnotices</module>
 				<module>knowledgebase</module>
 				<module>maps</module>
@@ -78,10 +81,13 @@
 				<module>alerts</module>
 				<module>askiu</module>
 				<module>athletics</module>
+                <module>bus</module>
 				<module>computerlabs</module>
 				<module>configparams</module>
+                <module>dining</module>
 				<module>emergencyinfo</module>
 				<module>events</module>
+                <module>feedback</module>
 				<module>itnotices</module>
 				<module>knowledgebase</module>
 				<module>maps</module>
@@ -199,25 +205,46 @@
                 <artifactId>askiu-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
-			<!-- Athletics Service -->
+            <!-- Athletics Service -->
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>athletics-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>athletics-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>athletics-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>athletics-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+   			<!-- Bus Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
-				<artifactId>athletics-api</artifactId>
+				<artifactId>bus-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
-				<artifactId>athletics-impl</artifactId>
+				<artifactId>bus-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
-				<artifactId>athletics-web</artifactId>
+				<artifactId>bus-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
-                <artifactId>athletics-webapp</artifactId>
+                <artifactId>bus-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
 			<!-- Computer Labs Service -->
@@ -257,6 +284,27 @@
 				<artifactId>configparams-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <!-- Dining Service -->
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>dining-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>dining-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>dining-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>dining-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Emergency Information Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
@@ -297,6 +345,27 @@
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>events-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Feedback Service -->
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>feedback-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>feedback-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>feedback-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>feedback-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
 			<!-- IT Notices Service -->

@@ -14,19 +14,8 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="IU Mobile" id="home">
+<kme:page title="Bus Schedules" id="bus">
 	<kme:content>
-	    <kme:unorderedList>
-	        <c:forEach items="${home.tools}" var="tool" varStatus="status">	            
-	            <kme:listItem>
-	            	<a href="${tool.url}"><img src="${tool.iconUrl}" alt="${tool.title}" class="ui-li-icon">
-			      	${tool.title}
-			      	<c:if test="${tool.badgeCount gt 0}"> 
-			      		<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">${tool.badgeCount}</span>
-			      	</c:if>
-			      	</a>
-	            </kme:listItem>
-			</c:forEach>
-	    </kme:unorderedList>
+	Bus Schedules
 	</kme:content>
 </kme:page>
