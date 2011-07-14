@@ -35,6 +35,9 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>edu.iu.m.news.listener.NewsListener</listener-class>
+	</listener>
 
     <filter>
         <filter-name>cas</filter-name>

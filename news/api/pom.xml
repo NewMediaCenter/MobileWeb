@@ -25,7 +25,6 @@
 		<dependency>
 		    <groupId>org.jdom</groupId>
 		    <artifactId>jdom</artifactId>
-		    <version>1.1</version>
 		</dependency>
 		<!-- Persistence dependencies -->
 		<dependency>
@@ -41,7 +40,7 @@
 	    <dependency>
            	<groupId>net.sf.flexjson</groupId>
        	    <artifactId>flexjson</artifactId>
-        </dependency> 
+        </dependency>
 	</dependencies>
 	<build>
 		<resources>

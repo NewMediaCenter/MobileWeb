@@ -10,10 +10,12 @@ import javax.xml.namespace.QName;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.rice.ksb.service.KSBServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.iu.m.news.entity.MaintRss;
 import edu.iu.m.news.entity.Rss;
 
+@Service
 public class CacheServiceImpl implements CacheService {
     
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(CacheServiceImpl.class);
@@ -25,21 +27,24 @@ public class CacheServiceImpl implements CacheService {
     @Autowired
     private DynamicRssCacheService dynamicRssCacheService;
     
+    private static Thread cacheReloaderThread = null;
+    
     @Autowired
 	private ConfigParamService configParamService;
 	public void setConfigParamService(ConfigParamService configParamService) {
 		this.configParamService = configParamService;
 	}
-    
-	public CacheServiceImpl() {
-		//TODO: This should go in startup of the app
-		startCache();
-    }
 
     public void startCache() {
-    	Thread thread = new Thread(new CacheReloaderBackgroundReloaderCombined());
-        thread.setDaemon(true);
-        thread.start();
+    	cacheReloaderThread = new Thread(new CacheReloaderBackgroundReloaderCombined());
+    	cacheReloaderThread.setDaemon(true);
+    	cacheReloaderThread.start();
+    }
+    
+    public void stopCache()
+    {
+    	cacheReloaderThread.interrupt();
+		cacheReloaderThread = null;
     }
     
     public synchronized void reloadCache() {
@@ -163,13 +168,6 @@ public class CacheServiceImpl implements CacheService {
         }
         
         public void run() {    
-        	while(configParamService == null || rssCacheService == null || dynamicRssCacheService == null) {
-	        	try {
-	                Thread.sleep(1000 * 3);
-	            } catch (InterruptedException e) {
-	                LOG.error("Error:", e);
-	            }
-        	}
             Long myReloadTime = getReloadCacheMinutes();
             Calendar updateCalendar = Calendar.getInstance();
             updateCalendar.add(Calendar.MINUTE, myReloadTime.intValue());

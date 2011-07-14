@@ -7,6 +7,7 @@ import edu.iu.m.news.entity.Rss;
 public interface CacheService {
     
     void startCache();
+    void stopCache();
     void reloadCache();
     void reloadCacheDoWork();
     
