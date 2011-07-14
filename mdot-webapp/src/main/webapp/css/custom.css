@@ -751,13 +751,16 @@
 .forum-reply textarea.ui-input-text {
 	height: 200px;
 }
+
 /* MISC STUFF
 -----------------------------------------------------------------------------------------------------------*/
+
 .shadow {
 	-moz-box-shadow: 5px 5px 5px #ccc;
 	-webkit-box-shadow: 5px 5px 5px #ccc;
 	box-shadow: 5px 5px 5px #ccc;
 }
+
 /* NEWS
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -820,7 +823,7 @@
 	white-space:normal;
 	margin-bottom:0px;
 }
-
+	
 
 
 
@@ -873,8 +876,8 @@ dl {
 
 dl dt {
     border-top: 2px solid #BBB;
-    padding: 15px 0 0 15px;
-    margin: 0 0 5px 0;
+    padding: 0;
+    margin: 0;
     clear: left;
     font-size: 17px;
     font-weight: bold;
@@ -884,13 +887,17 @@ dl dt a {
     color: #000;
     text-decoration: none;
     font-weight: normal;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 5px 15px 5px 15px;
 }
 
 
 dl dd {
-    padding: 0 15px 15px 15px;
+    padding: 0; /* 15px 15px 15px;*/
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
 }
 
@@ -898,9 +905,15 @@ dl dd a {
     color: #333;
     font-weight: bold;
     text-decoration: none;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 5px 15px 5px 15px;
 }
 
 dl p {
+	margin: 0;
+    padding: 5px 15px 5px 15px;
     padding: 0;
     margin: 0;
 }
@@ -909,26 +922,27 @@ dl p {
 /* IT Notices
 -----------------------------------------------------------------------------------------------------------*/
 
-dl#itnoticeslist dt {
-    padding: 15px 0 0 0;
+dl.itnoticeslist dt a {
+    padding: 15px 250px 10px 135px;
+    position: relative;
+    color: #000 !important;
+    border: none;
+    width: 60%;
 }
 
-dl#itnoticeslist dt a {
-    color: #000;
-}
-
-dl#itnoticeslist dd {
-    font-size: 10px;
-}
-
-dl#itnoticeslist dd a {
-    color: #333;
+dl.itnoticeslist dd a {
+    padding: 5px 150px 10px 135px;
+    color: #333 !important;
+    border: none;
+    width: 60%;
 }
 
 span.itNoticeIcon-Announcement, span.itNoticeIcon-Critical, span.itNoticeIcon-Error, span.itNoticeIcon-News, span.itNoticeIcon-Warning {
-    margin: -15px 20px 10px 0;
+    margin: 0;
     padding: 0;
-    float: left;
+    position: absolute;
+    left: 0;
+    top: -5px;
     width: 115px;
     height: 130px;
     display: block;
@@ -961,17 +975,53 @@ span.itNoticeIcon-Warning {
 
 /* Campus Alerts
 -----------------------------------------------------------------------------------------------------------*/
-/* Nothing further custom needed for Campus Alerts */
+div#campusalerts dt, div#campusalerts dd {
+	margin: 0;
+	padding: 7px 15px 7px 15px;
+}
 
 
 /* Emergency Info
 -----------------------------------------------------------------------------------------------------------*/
-
-dl#emergencylist dt a {
-    color: #000;
+dl.emergencylist dt a {
+    color: #000 !important;
 }
 
-dl#emergencylist dd a {
-    color: #333;
+dl.emergencylist dd a {
+    color: #333 !important;
     font-weight: normal;
 }
+
+/* Computer Labs
+-----------------------------------------------------------------------------------------------------------*/
+div#computerlabs h3 {
+	margin: 0 -15px 0 -15px;
+	padding: 7px 15px 7px 15px;
+	font-size: 16px;
+	text-shadow: none;
+	display: block;
+	width: 100%;
+	border: 1px solid #456f9a;
+    background: #000;
+    color: #fff;
+    font-weight: bold;
+    background: -moz-linear-gradient(center top , #484848, #000000) repeat scroll 0 0 #000000;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #484848), color-stop(1, #000000));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#484848', EndColorStr='#000000')";
+}
+
+div#computerlabs dl {
+    margin: 0 -15px 0 -15px;
+    padding: 0;	
+}
+
+div#computerlabs dt a {
+    color: #000 !important; 
+}
+
+div#computerlabs dd a {
+	color: #333;
+	font-weight: normal;
+}
+
+

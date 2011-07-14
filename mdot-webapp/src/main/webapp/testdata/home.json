@@ -112,7 +112,7 @@
          "iconUrl":"images/service-icons/srvc-emergency.png",
          "id":"0",
          "title":"Emergency Contacts",
-         "url":"/mdot/emergencyinfo"
+         "url":"/mdot/emergencycontacts"
       },
       {
          "badgeCount":"2",
