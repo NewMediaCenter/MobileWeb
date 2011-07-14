@@ -45,7 +45,7 @@ public class NewsDaoImpl implements NewsDao {
 	@Override
 	@Transactional
 	public List<NewsSource> getAllActiveNewsSourcesByLocationCode(String locationCode) {
-		Query query = entityManager.createQuery("select r from MaintRss r where r.active = 1 and (r.campus like :campusCode or r.campus like 'UA') order by r.order");
+		Query query = entityManager.createQuery("select r from MaintRss r where r.active = 1 and r.type like 'NEWS' and (r.campus like :campusCode or r.campus like 'UA') order by r.order");
         query.setParameter("campusCode", locationCode);
         @SuppressWarnings("unchecked")
 		List<MaintRss> maintRss =  query.getResultList();
@@ -58,7 +58,7 @@ public class NewsDaoImpl implements NewsDao {
 
 	@Override
 	public NewsSource getNewsSourceById(String rssShortCode) {
-		Query query = entityManager.createQuery("select r from MaintRss r where r.shortCode like :rssShortCode");
+		Query query = entityManager.createQuery("select r from MaintRss r where r.shortCode like :rssShortCode and r.type like 'NEWS'");
 		query.setParameter("rssShortCode", rssShortCode);
 		try {
             return convertMaintRssToNewsSource((MaintRss)query.getSingleResult());
