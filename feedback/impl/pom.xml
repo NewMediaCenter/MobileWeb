@@ -39,6 +39,14 @@
             <groupId>org.kuali.mobility</groupId>
             <artifactId>feedback-api</artifactId>
         </dependency>
+        <dependency>
+			<groupId>org.kuali.mobility</groupId>
+			<artifactId>configparams-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kuali.mobility</groupId>
+			<artifactId>configparams-impl</artifactId>
+		</dependency>
         <!-- Persistence dependencies -->
         <dependency>
             <groupId>javax.persistence</groupId>

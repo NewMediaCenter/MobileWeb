@@ -18,6 +18,7 @@ package org.kuali.mobility.feedback.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.kuali.mobility.feedback.entity.Feedback;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -26,6 +27,44 @@ public class FeedbackDaoImpl implements FeedbackDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public FeedbackDaoImpl() {}
+    
+    public void saveFeedback(Feedback feedback) {
+        if (feedback == null) {
+            return;
+        }
+        if (feedback.getFeedbackId() == null) {
+            entityManager.persist(feedback);
+        } else {
+            entityManager.merge(feedback);
+        }
+    }
+    
+//    public void deleteFeedbackById(Long id) {
+//        Query query = entityManager.createQuery("delete from Feedback f where feedbackId = :id");
+//        query.setParameter("id", id);
+//        query.executeUpdate();
+//    }
+//    
+//    public Feedback findFeedbackById(Long id) {
+//        Query query = entityManager.createQuery("select f from Feedback f where feedbackId = :id");
+//        query.setParameter("id", id);
+//        return (Feedback) query.getSingleResult();
+//    }
+//    
+//    @SuppressWarnings("unchecked")
+//    public List<Feedback> findAllFeedback() {
+//        Query query = entityManager.createQuery("select f from Feedback f order by f.feedbackId");
+//        return query.getResultList();
+//    }
+//    
+//    @SuppressWarnings("unchecked")
+//    public List<Feedback> findAllFeedbackByService(String service) {
+//        Query query = entityManager.createQuery("select f from Feedback f where service = :service order by f.feedbackId");
+//        query.setParameter("service", service);
+//        return query.getResultList();
+//    }
+        
     public EntityManager getEntityManager() {
         return entityManager;
     }
@@ -33,5 +72,4 @@ public class FeedbackDaoImpl implements FeedbackDao {
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-
 } 

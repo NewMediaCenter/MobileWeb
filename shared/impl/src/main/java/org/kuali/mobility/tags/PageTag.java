@@ -34,6 +34,8 @@ public class PageTag extends SimpleTagSupport {
             out.println("<script type=\"text/javascript\" src=\"/mdot/js/custom.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.mobile-1.0b1.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.tmpl.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.validate.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.validate.ready.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=true\"></script>");
             out.println("<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;\">");
             out.println("</head>");

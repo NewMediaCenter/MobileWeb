@@ -23,6 +23,22 @@
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>shared-api</artifactId>
 		</dependency>
+		<!-- UIS Utilities dependencies -->
+		<dependency>
+			<groupId>uisutilities</groupId>
+			<artifactId>mail</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uisutilities</groupId>
+			<artifactId>activation</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uisutilities</groupId>
+			<artifactId>uisutilities</artifactId>
+			<version>2.2.0</version>
+		</dependency>
 		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>

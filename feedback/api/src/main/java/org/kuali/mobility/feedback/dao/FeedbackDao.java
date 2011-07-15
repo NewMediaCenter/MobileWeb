@@ -15,6 +15,8 @@
 
 package org.kuali.mobility.feedback.dao;
 
-public interface FeedbackDao {
+import org.kuali.mobility.feedback.entity.Feedback;
 
+public interface FeedbackDao {
+	public void saveFeedback(Feedback feedback);
 }
