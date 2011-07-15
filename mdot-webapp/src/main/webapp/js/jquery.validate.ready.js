@@ -1,3 +1,6 @@
 $(document).ready(function() {
-	$("#feedback").validate();
+	var feedback = $("#feedback");
+	var askiu = $("#askiu");
+	if (feedback) feedback.validate();
+	if (askiu) askiu.validate();
 });

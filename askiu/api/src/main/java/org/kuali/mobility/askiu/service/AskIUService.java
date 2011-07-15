@@ -15,6 +15,9 @@
 
 package org.kuali.mobility.askiu.service;
 
-public interface AskIUService {
+import org.kuali.mobility.askiu.entity.AskIU;
 
+public interface AskIUService {
+	boolean postQuery(AskIU ask);
+	public boolean isValidEmail(String email);
 }
