@@ -15,7 +15,7 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Feedback" id="feedback">
+<kme:page title="Feedback" id="feedback_page">
 	<kme:content>
 		<form:form action="${pageContext.request.contextPath}/feedback" commandName="feedback" data-ajax="false" method="post">
 			Do you have suggestions for other mobile services at Indiana University or ideas on how we can improve the current services? Let us know!
@@ -41,17 +41,17 @@
 			      </div>
 			      <div data-role="fieldcontain">
 					<label for="deviceType" class="select">Device Type:</label>
-					<form:select path="deviceType" multiple="false" items="${deviceTypes}" data-native-menu="false"/>
+					<form:select path="deviceType" multiple="false" items="${deviceTypes}" data-native-menu="false" class="required"/>
 					<form:errors path="deviceType"/>
 			      </div>
 			      <div data-role="fieldcontain">
 			        <label for="noteText">Message:</label>
-			        <form:input path="noteText" cols="40" rows="8" class="required"></form:input>
+			        <form:textarea path="noteText" cols="40" rows="8" class="required" />
 			        <form:errors path="noteText"/>
 			      </div>
 			      <div data-role="fieldcontain">
 			        <label for="email">Your Email:</label>
-			        <form:input path="email" type="text" value=""  />
+			        <form:input path="email" type="text" value="" class="email"  />
 			      </div>
 		      </fieldset>
 		      <div data-inline="true">
