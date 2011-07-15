@@ -1,0 +1,227 @@
+/* Calander Month - Custom Grid
+-----------------------------------------------------------------------------------------------------------*/
+.monthgrid {
+	padding:0px;
+	overflow:hidden;
+}
+
+.monthgrid .ui-grid-20-60-20 .ui-block-1, .ui-grid-20-60-20 .ui-block-3 {
+	width: 20%;
+}
+.monthgrid .ui-grid-20-60-20 .ui-block-2 {
+	width: 60%;
+	text-align:center;
+	border-left:none;
+	border-right:0px none
+}
+.monthgrid .ui-grid-20-60-20 .ui-block-1 {
+	clear: left;
+}
+/* content configurations. */
+.monthgrid .ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d {
+	overflow: hidden;
+}
+.monthgrid .ui-block-1, .ui-block-2, .ui-block-3, .ui-block-4, .ui-block-5 {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	min-height:1px;
+}
+/* grid solo: 100 - single item fallback */
+.monthgrid .ui-grid-solo .ui-block-1 {
+	width: 100%;
+	float: none;
+}
+/* grid a: 50/50 */
+.monthgrid .ui-grid-a .ui-block-1, .ui-grid-a .ui-block-2 {
+	width: 50%;
+}
+.monthgrid .ui-grid-a .ui-block-1 {
+	clear: left;
+}
+/* grid b: 33/33/33 */
+.monthgrid .ui-grid-b .ui-block-1, .ui-grid-b .ui-block-2, .ui-grid-b .ui-block-3 {
+	width: 33.333%;
+}
+.monthgrid .ui-grid-b .ui-block-1 {
+	clear: left;
+}
+/* grid c: 25/25/25/25 */
+.monthgrid .ui-grid-c .ui-block-1, .ui-grid-c .ui-block-2, .ui-grid-c .ui-block-3, .ui-grid-c .ui-block-4 {
+	width: 25%;
+}
+.monthgrid .ui-grid-c .ui-block-1 {
+	clear: left;
+}
+/* grid d: 20/20/20/20/20 */
+.monthgrid .ui-grid-d .ui-block-1, .ui-grid-d .ui-block-2, .ui-grid-d .ui-block-3, .ui-grid-d .ui-block-4, .ui-grid-d .ui-block-5 {
+	width: 20%;
+}
+.monthgrid .ui-grid-d .ui-block-1 {
+	clear: left;
+}
+.monthgrid .ui-grid-evt-month .ui-block-1, .ui-grid-evt-month .ui-block-2, .ui-grid-evt-month .ui-block-3, .ui-grid-evt-month .ui-block-4, .ui-grid-evt-month .ui-block-5, .ui-grid-evt-month .ui-block-6, .ui-grid-evt-month .ui-block-7 {
+	width: 14.2%;
+}
+.monthgrid .ui-grid-evt-month .ui-block-1 {
+	clear: left;
+}
+.monthgrid .ui-grid-evt-month .daysofweek {
+	font-size:.65em;
+	text-align: center;
+	padding-top: .1em;
+	padding-bottom: .1em;
+}
+.monthgrid .ui-grid-evt-month .datebox-true {
+	border-bottom: 1px solid #D6D6D6;
+	border-left: 1px solid #D6D6D6;
+	background-image: -moz-linear-gradient(top, #ffffff, #f6f6f6);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #f6f6f6));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#f6f6f6')";
+	font-weight:bold;
+	text-align: center;
+	font-size: 1.5em;
+	/* [disabled]border-top: 1px solid #FFF;
+*/
+	/* [disabled]border-right: 1px solid #FFF;
+*/
+	text-shadow: 0px 1px 0px #e5e5ee;
+}
+/*.ui-grid-evt-month .datebox-true-current {
+	border-bottom:none;
+	border-left:none;
+	background-image: -moz-linear-gradient(top, #cc0000, #990000);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #cc0000), color-stop(1, #990000));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#cc0000', EndColorStr='#990000')";
+	font-weight: normal;
+	text-align: center;
+	font-size: 1.5em;
+	border-top: none;
+	border-right:none;
+	
+	color: #FFF;
+}
+*/
+
+
+
+
+.monthgrid .ui-grid-evt-month .datebox-true .event-true-selected {
+	border-bottom:none;
+	border-left:none;
+	font-weight: normal;
+	text-align: center;
+	border-top: none;
+	border-right:none;
+	color: #FFF;
+	padding-top: 0.27em;
+	padding-bottom: 0.35em;
+	-moz-box-shadow: none;
+	-webkit-box-shadow:none;
+	box-shadow: none;
+	font-weight:normal;
+	background:#900 url(../images/eventdot-current.png) no-repeat center 1.45em;
+}
+.monthgrid .ui-grid-evt-month .datebox-true .event-false-selected {
+	border-bottom:none;
+	border-left:none;
+	font-weight: normal;
+	text-align: center;
+	border-top: none;
+	border-right:none;
+	color: #FFF;
+	padding-top: 0.27em;
+	padding-bottom: 0.35em;
+	-moz-box-shadow: none;
+	-webkit-box-shadow:none;
+	box-shadow: none;
+	font-weight:normal;
+	background:#900;
+}
+.monthgrid .ui-grid-evt-month .datebox-false {
+	border-bottom: 1px solid #D6D6D6;
+	border-left: 1px solid #D6D6D6;
+	background-image: -moz-linear-gradient(top, #ffffff, #f6f6f6);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #f6f6f6));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#f6f6f6')";
+	font-weight:bold;
+	text-align: center;
+	font-size: 1.5em;
+	border-top: 1px solid #FFF;
+	border-right: 1px solid #FFF;
+	filter: alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity: 0.5;
+}
+.monthgrid .event-true {
+	padding-top: 0.27em;
+	padding-bottom: 0.35em;
+	background: url(../images/eventdot.png) no-repeat center 1.45em;
+}
+.monthgrid .event-true-today {
+	padding-top: 0.27em;
+	padding-bottom: 0.35em;
+	background: url(../images/eventdot.png) no-repeat center 1.45em;
+	background-color:#FFF7D5;
+	-moz-box-shadow: inset 0 0 6px #DDD;
+	-webkit-box-shadow: inset 0px 0px 6px #DDD;
+	box-shadow: inner 0 0 6px #DDD;
+}
+.monthgrid .event-false-today {
+	padding-top: 0.27em;
+	padding-bottom: 0.35em;
+	background-color:#FFF7D5;
+	-moz-box-shadow: inset 0 0 6px #DDD;
+	-webkit-box-shadow: inset 0px 0px 6px #DDD;
+	box-shadow: inner 0 0 6px #DDD;
+}
+/*.selected-day.datebox-true-current .event-true {
+	padding-top: 0.27em;
+	padding-bottom: 0.35em;
+	background: url(../images/eventdot-current.png) no-repeat center 1.45em;
+	
+	-moz-box-shadow: none;
+	-webkit-box-shadow:none;
+	box-shadow: none;
+	font-weight:normal
+}*/
+
+
+
+.monthgrid .event-false {
+	padding-top: 0.27em;
+	padding-bottom: 0.35em;
+}
+.monthgrid .month-year {
+	font-size:1.4em;
+	font-weight: bold;
+	padding-top: .2em;
+	padding-bottom: 0em;
+}
+.monthgrid .cal-arrow-left {
+	padding-top: .5em;
+	padding-bottom: .5em;
+	padding-left: 1em;
+	float:left
+}
+.monthgrid .cal-arrow-right {
+	float:right;
+	padding-top: .5em;
+	padding-bottom: .5em;
+	padding-right: 1em;
+}
+.monthgrid .cal-header {
+	background-image: -moz-linear-gradient(top, #ffffff, #f6f6f6);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #f6f6f6));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#f6f6f6')";
+	border-bottom:1px solid #CCC
+}
+.monthgrid .ui-grid-evt-month a:link {
+	color:#000;
+	text-decoration: none;
+}
+.monthgrid .ui-grid-evt-month a:visited {
+	color:#000;
+	text-decoration: none;
+}

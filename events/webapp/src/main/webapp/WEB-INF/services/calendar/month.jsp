@@ -33,7 +33,7 @@
     <h1>Events</h1><a href="${pageContext.request.contextPath}/calendar/createEvent" data-ajax="false">Add Event</a> <a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
   </div>
   <!-- /header -->
-  <div data-role="content" >
+  <div data-role="content" class="monthgrid">
       <div class="cal-header" >
       <div class="ui-grid-20-60-20">
         <div class="ui-block-a">
