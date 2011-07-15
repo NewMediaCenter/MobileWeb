@@ -21,6 +21,7 @@
 <body>
 <div data-role="page" id="">
 	<div data-role="header">
+		<a href="/mdot"  data-icon="arrow-l" data-direction="reverse">back</a>
 		<h1>News</h1>
 	</div>
 	<!-- /header -->

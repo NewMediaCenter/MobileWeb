@@ -3,7 +3,6 @@ package edu.iu.m.news.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -13,7 +12,6 @@ public class NewsListener implements ServletContextListener {
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(NewsListener.class);
 
-	@Autowired
     private CacheService cacheService;
 
 	public void contextInitialized(final ServletContextEvent event) {
