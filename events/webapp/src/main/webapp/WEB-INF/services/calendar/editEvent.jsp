@@ -79,7 +79,10 @@
             </div>
             <label for="categories">Category</label>
             
-            <form:select path="categories" multiple="true" items="${event.defaultCategories}" data-native-menu="false"/>
+            <form:select path="categories" multiple="true"  data-native-menu="false">
+            	<form:option value="" label="No Category" data-placeholder="true"/>
+            	<form:options items="${event.defaultCategories}"/>
+            </form:select>
             <form:errors path="categories" />
             <br/>
             <label for="showAs">Show As</label>

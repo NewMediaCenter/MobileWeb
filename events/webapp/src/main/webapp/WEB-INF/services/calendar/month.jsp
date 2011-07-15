@@ -121,6 +121,8 @@
           </div>
       </c:forEach>
     </div>
+  
+  <c:if test="${not empty filter}">Filtered by: ${filter.filterName}<br/></c:if>
   <br/>
     <c:forEach var="day" items="${events}">
     <c:choose>

@@ -41,6 +41,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import edu.iu.es.espd.ccl.oauth.CalendarEventOAuthService;
 import edu.iu.es.espd.ccl.oauth.CalendarViewEvent;
 import edu.iu.es.espd.ccl.oauth.EditEvent;
+import edu.iu.es.espd.ccl.oauth.Filter;
+import edu.iu.es.espd.ccl.oauth.Filters;
 import edu.iu.es.espd.ccl.oauth.ListViewEvents;
 import edu.iu.es.espd.ccl.oauth.MeetingInvite;
 import edu.iu.es.espd.ccl.oauth.MeetingStatusChange;
@@ -61,7 +63,7 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value = "/month", method = RequestMethod.GET)
-	public String month(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String filter, @RequestParam(required = false) String date) {
+	public String month(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat my = new SimpleDateFormat("yyyyMM");
 		Calendar selectedDate = Calendar.getInstance();
@@ -73,7 +75,8 @@ public class CalendarController {
 
 		}
 		try {
-			MonthViewEvents monthEvents = calendarEventOAuthService.retrieveMonthEvents(CASFilter.getRemoteUser(request), selectedDate.getTime(), filter);
+			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
+			MonthViewEvents monthEvents = calendarEventOAuthService.retrieveMonthEvents(CASFilter.getRemoteUser(request), selectedDate.getTime(), filter != null ? filter.getFilterId() : null);
 			uiModel.addAttribute("viewData", monthEvents.getViewData());
 			uiModel.addAttribute("appData", monthEvents.getAppData());
 
@@ -125,6 +128,7 @@ public class CalendarController {
 			uiModel.addAttribute("nextMonth", my.format(nextCalendar.getTime()));
 			uiModel.addAttribute("monthYear", my.format(selectedDate.getTime()));
 			uiModel.addAttribute("today", sdf.format(new Date()));
+			uiModel.addAttribute("filter", filter);
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -133,7 +137,7 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String filter, @RequestParam(required = false) String date) {
+	public String list(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Calendar selectedDate = Calendar.getInstance();
 		try {
@@ -146,7 +150,8 @@ public class CalendarController {
 		try {
 			Calendar endDate = (Calendar) selectedDate.clone();
 			Calendar previousDate = (Calendar) selectedDate.clone();
-			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(CASFilter.getRemoteUser(request), selectedDate.getTime(), filter);
+			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
+			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(CASFilter.getRemoteUser(request), selectedDate.getTime(), filter != null ? filter.getFilterId() : null);
 
 			Calendar currentEndDate = (Calendar) selectedDate.clone();
 			currentEndDate.add(Calendar.DATE, listViewEvents.getAppData().getListViewFutureDaysLimit());
@@ -165,6 +170,7 @@ public class CalendarController {
 			uiModel.addAttribute("viewData", listViewEvents.getViewData());
 			uiModel.addAttribute("appData", listViewEvents.getAppData());
 			uiModel.addAttribute("events", listViewEvents.getEvents());
+			uiModel.addAttribute("filter", filter);
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -173,7 +179,7 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value = "/listEvents", method = RequestMethod.GET)
-	public String listEvents(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String filter, @RequestParam(required = true) String date, @RequestParam(required = true) String beginDate, @RequestParam(required = true) String endDate) {
+	public String listEvents(HttpServletRequest request, Model uiModel, @RequestParam(required = true) String date, @RequestParam(required = true) String beginDate, @RequestParam(required = true) String endDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Calendar selectedDate = Calendar.getInstance();
 		Calendar beginCalendar = Calendar.getInstance();
@@ -189,10 +195,11 @@ public class CalendarController {
 				endCalendar.setTime(sdf.parse(endDate));
 			}
 		} catch (ParseException e) {
-			return list(request, uiModel, filter, date);
+			return list(request, uiModel, date);
 		}
 		try {
-			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(CASFilter.getRemoteUser(request), selectedDate.getTime(), beginCalendar.getTime(), endCalendar.getTime(), filter);
+			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
+			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(CASFilter.getRemoteUser(request), selectedDate.getTime(), beginCalendar.getTime(), endCalendar.getTime(), filter != null ? filter.getFilterId() : null);
 
 			Calendar currentEndDate = (Calendar) endCalendar.clone();
 			Calendar previousDate = (Calendar) beginCalendar.clone();
@@ -210,11 +217,51 @@ public class CalendarController {
 			uiModel.addAttribute("viewData", listViewEvents.getViewData());
 			uiModel.addAttribute("appData", listViewEvents.getAppData());
 			uiModel.addAttribute("events", listViewEvents.getEvents());
+			uiModel.addAttribute("filter", filter);
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
 		}
 		return "calendar/list";
+	}
+
+	@RequestMapping(value = "/filters", method = RequestMethod.GET)
+	public String filters(HttpServletRequest request, Model uiModel) {
+		try {
+			Filters filters = calendarEventOAuthService.retrieveFilters(CASFilter.getRemoteUser(request));
+			uiModel.addAttribute("filters", filters.getFilters());
+
+			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
+			if (filter != null) {
+				uiModel.addAttribute("filter", filter);
+			} else {
+				uiModel.addAttribute("filter", new Filter());
+			}
+		} catch (PageLevelException pageLevelException) {
+			uiModel.addAttribute("message", pageLevelException.getMessage());
+			return "calendar/message";
+		}
+		return "calendar/filters";
+	}
+
+	@RequestMapping(value = "/selectFilter", method = RequestMethod.POST)
+	public String selectFilter(HttpServletRequest request, Model uiModel, @ModelAttribute("filter") Filter filter) {
+		try {
+			if (filter.getFilterId() != null && !"".equals(filter.getFilterId().trim())) {
+				Filter filterFound = calendarEventOAuthService.retrieveFilter(CASFilter.getRemoteUser(request), filter.getFilterId());
+				request.getSession().setAttribute("calendar.event.filterId", filterFound);
+			}
+		} catch (PageLevelException pageLevelException) {
+			uiModel.addAttribute("message", pageLevelException.getMessage());
+			return "calendar/message";
+		}
+		return "redirect:/calendar/options";
+	}
+
+	@RequestMapping(value = "/removeFilter", method = RequestMethod.GET)
+	public String removeFilter(HttpServletRequest request, Model uiModel) {
+		request.getSession().removeAttribute("calendar.event.filterId");
+		return "redirect:/calendar/options";
 	}
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
@@ -380,6 +427,8 @@ public class CalendarController {
 
 	@RequestMapping(value = "/options", method = RequestMethod.GET)
 	public String options(HttpServletRequest request, Model uiModel) {
+		Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
+		uiModel.addAttribute("filter", filter);
 		return "calendar/options";
 	}
 

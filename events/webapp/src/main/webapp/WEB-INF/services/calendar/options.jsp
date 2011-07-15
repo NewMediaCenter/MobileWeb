@@ -9,39 +9,58 @@
   permissions and limitations under the License.
 --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Calendar</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.min.js"></script>
+<link
+	href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css"
+	rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css"
+	rel="stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.min.js"></script>
 </head>
 
 <body>
-<div data-role="page" id="Calendar-Events">
-  <div data-role="header">
-    <h1>Options</h1><a href="${pageContext.request.contextPath}/calendar/month" class="ui-btn-left" data-direction="reverse" data-transition="slide">view calendar</a> <a href="${pageContext.request.contextPath}/calendar/createEvent" class="ui-btn-right" data-ajax="false">Add Event</a>
-  </div>
-  <div data-role="content" >
-      <ul data-role="listview" data-theme="g">
-          <li>
-             <a data-ajax="false" href="${pageContext.request.contextPath}/calendar/refresh">
-                <h3>Refresh My Calendar</h3>
-                <p>This will refresh your calendar.</p>
-             </a>
-          </li>
-      </ul>
-  </div>
-  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
-  </div>
-</div>
-<!-- /page -->
+	<div data-role="page" id="Calendar-Events">
+		<div data-role="header">
+			<h1>Options</h1>
+			<a href="${pageContext.request.contextPath}/calendar/month"
+				class="ui-btn-left" data-direction="reverse" data-transition="slide">view
+				calendar</a> <a
+				href="${pageContext.request.contextPath}/calendar/createEvent"
+				class="ui-btn-right" data-ajax="false">Add Event</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-theme="g">
+				<li><a data-ajax="false"
+					href="${pageContext.request.contextPath}/calendar/filters">
+						<h3>Filters</h3>
+						<p>Filter your events.</p> </a></li>
+				<c:if test="${not empty filter}">
+					<li><a data-ajax="false"
+						href="${pageContext.request.contextPath}/calendar/removeFilter">
+							<h3>Remove Filter ${filter.filterName}</h3>
+							<p>Remove your filter.</p> </a></li>
+				</c:if>
+				<li><a data-ajax="false"
+					href="${pageContext.request.contextPath}/calendar/refresh">
+						<h3>Refresh My Calendar</h3>
+						<p>This will refresh your calendar.</p> </a></li>
+			</ul>
+		</div>
+		<div data-role="footer" data-id="events-footer" data-position="fixed"
+			role="contentinfo" data-theme="b"></div>
+	</div>
+	<!-- /page -->
 
 </body>
 </html>

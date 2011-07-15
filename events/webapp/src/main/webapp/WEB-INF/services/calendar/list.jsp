@@ -31,6 +31,7 @@
   <!-- /header -->
   
   <div data-role="content" ><div align="center"><b><c:out value="${viewData.title}"/></b><br/><br/></div>
+  <c:if test="${not empty filter}">Filtered by: ${filter.filterName}<br/><br/></c:if>
     <ul data-role="listview" data-theme="g">
         <li><a href="${pageContext.request.contextPath}/calendar/listEvents?date=${selectedDate}&beginDate=${previousDate}&endDate=${currentEndDate}" >
             <h3>Display Previous <c:out value="${days}"/> days.</h3>
