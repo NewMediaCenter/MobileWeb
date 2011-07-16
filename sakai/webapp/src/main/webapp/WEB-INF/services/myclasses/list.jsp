@@ -15,19 +15,17 @@
 <html>
 <head>
 <title>My Classes</title>
-<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
-
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 </head>
 
 <body>
 <div data-role="page" id="">
 	<div data-role="header">
-		<h1>My Classes</h1><a href="/mdot/index.jsp" data-icon="home" class="ui-btn-right">home</a>
+		<h1>My Classes</h1><a href="${pageContext.request.contextPath}/index.jsp" data-icon="home" class="ui-btn-right">home</a>
 	</div>
 	<!-- /header -->
 
@@ -36,7 +34,7 @@
 		<ul data-role="listview" data-theme="c" data-inset="true">
 			<c:forEach items="${myclasses}" var="item" varStatus="status">
 				<li>
-					<a href="/mdot/myclasseshome?siteId=${item.courseId}&siteTitle=${item.courseTitle}">
+					<a href="${pageContext.request.contextPath}/myclasseshome?siteId=${item.courseId}&siteTitle=${item.courseTitle}">
 						<h3>${item.courseTitle}</h3>
 						<p>${item.courseDesc}</p>
 					</a>
@@ -47,7 +45,7 @@
 	<div data-role="footer" data-id="mcl-footer" data-position="fixed"  role="contentinfo"  data-theme="b">
     	<div data-role="navbar" role="navigation">
       	<ul class="ui-grid-a">
-        <li class="ui-block-a"><a href="/mdot/myclasses">My Classes</a></li>
+        <li class="ui-block-a"><a href="${pageContext.request.contextPath}/myclasses">My Classes</a></li>
         <li class="ui-block-b"><a href="mcl-prog.html">My Projects </a></li>
       	</ul>
     </div>

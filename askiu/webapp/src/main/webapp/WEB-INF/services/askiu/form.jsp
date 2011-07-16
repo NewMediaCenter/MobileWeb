@@ -11,8 +11,8 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
+<%@ taglib prefix="c"    uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="kme"  uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <kme:page title="Ask IU" id="ask_iu">
@@ -37,7 +37,7 @@
 		      </fieldset>
 		      <div data-inline="true">
 		        <div class="ui-grid-a">
-		          <div class="ui-block-a"><a href="/mdot" data-role="button">Cancel</a></div>
+		          <div class="ui-block-a"><a href="${pageContext.request.contextPath}" data-role="button">Cancel</a></div>
 		          <div class="ui-block-b"><input class="submit" type="submit" value="Submit" /></div>
 		        </div>
 		      </div>

@@ -51,7 +51,7 @@ function refreshComputerLabs() {
 	$.mobile.pageLoading();
 	$('#cllist').text('');
 	var dynamicDataResp = $.ajax({
-		url: "/mdot/computerlabs?campus=BL",
+		url: "computerlabs?campus=BL",
 		dataType: 'json',
 		async: false,
 		cache: false           
@@ -136,11 +136,11 @@ function lookup(inputString) {
 			}
 		});
 */
-		$.getJSON('/mdot/knowledgebase/search?criteria=' + inputString, function(data) {
+		$.getJSON('knowledgebase/search?criteria=' + inputString, function(data) {
 			var items = [];
 			$.each(data.results, function(key, val) {
 				//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
-				items.push('<a href="/mdot/knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
+				items.push('<a href="knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
 			});
 			var pagehtml = '<div id="resultdata"></div>'
 			$('#searchresults').html(pagehtml);

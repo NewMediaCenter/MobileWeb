@@ -85,7 +85,7 @@ $('[data-role=page][id=mapslocation2]').live('pageshow',function(e, ui){
 //		var buildingCode = getParameterByName("bc");
 		if (buildingCode) {
 			//alert(buildingCode);
-			$.getJSON('/mdot/maps/' + buildingCode, function(data) {
+			$.getJSON('${pageContext.request.contextPath}/maps/' + buildingCode, function(data) {
 				initialize(39.17, -86.5);
 				var items = [];
 				var latitude = data.latitude;
@@ -115,11 +115,11 @@ $('[data-role=page][id=mapslocation2]').live('pageshow',function(e, ui){
 //	var buildingCode = getParameterByName("bc");
 //	if (buildingCode) {
 //		//alert(buildingCode);
-//		$.getJSON('/mdot/maps/' + buildingCode, function(data) {
+//		$.getJSON('${pageContext.request.contextPath}/maps/' + buildingCode, function(data) {
 //			var items = [];
 //			$.each(data.results, function(key, val) {
 //				//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
-//				//items.push('<a href="/mdot/knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
+//				//items.push('<a href="${pageContext.request.contextPath}/knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
 //				
 //			});
 ////			var pagehtml = '<div id="resultdata"></div>'
@@ -153,7 +153,7 @@ $('#mapslocation').live("pageshow", function() {
 	var buildingCode = getParameterByName("id");
 	//alert(buildingCode);
 		if (buildingCode) {
-			$.getJSON('/mdot/maps/' + buildingCode, function(data) {
+			$.getJSON('${pageContext.request.contextPath}/maps/' + buildingCode, function(data) {
 				initialize(39.17, -86.5);
 				var items = [];
 				var latitude = data.latitude;

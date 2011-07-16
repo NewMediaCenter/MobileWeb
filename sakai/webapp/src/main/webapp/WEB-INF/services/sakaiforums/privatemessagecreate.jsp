@@ -15,13 +15,12 @@
 <html>
 <head>
 <title>Page Title</title>
-<link href="/mdot/css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="/mdot/css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="/mdot/js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="/mdot/js/custom.js"></script>
-<script type="text/javascript" src="/mdot/js/jquery.mobile-1.0a4.1.js"></script>
-<script type="text/javascript" src="/mdot/js/jquery.blockUI.js"></script>
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.blockUI.js"></script>
 
 
 <script type="text/javascript">
@@ -34,14 +33,14 @@ $(function(){
         body = $form.find( 'textArea[name="body_r"]' ).val();
 		siteId = "<%= request.getParameter("siteId") %>";
 		var referrer = document.referrer;
-		$.post("/mdot/sakaiprivatemessages", { 'to': to, 'title': title, 'body': body, 'siteId': siteId},
+		$.post("${pageContext.request.contextPath}/sakaiprivatemessages", { 'to': to, 'title': title, 'body': body, 'siteId': siteId},
 				   function(data) {
 				     //alert("Sent " + data);
 				     $.unblockUI();
 				     $.mobile.changePage(referrer, "slide", false, true);
 				   });
 
-		//$.post("/mdot/sakaiforumsmessages", forumThreadForm, function(data){
+		//$.post("${pageContext.request.contextPath}/sakaiforumsmessages", forumThreadForm, function(data){
 		//    confirmationVar.text(data);
 		//    hideContentTransition();
 		//    showConfirmation();

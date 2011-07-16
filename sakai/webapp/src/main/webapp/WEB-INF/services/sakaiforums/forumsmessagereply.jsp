@@ -15,13 +15,12 @@
 <html>
 <head>
 <title>Page Title</title>
-<link href="/mdot/css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="/mdot/css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="/mdot/js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="/mdot/js/custom.js"></script>
-<script type="text/javascript" src="/mdot/js/jquery.mobile-1.0a4.1.js"></script>
-<script type="text/javascript" src="/mdot/js/jquery.blockUI.js"></script>
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.blockUI.js"></script>
 
 <script type="text/javascript">
 
@@ -35,7 +34,7 @@ $(function(){
 		topicId = $form.find( 'input[name="topicId"]' ).val();
 		forumId = $form.find( 'input[name="forumId"]' ).val();
 		var referrer = document.referrer;
-		$.post("/mdot/sakaiforumsmessagedetails", { 'title': title, 'body': body, 'messageId': messageId, 'topicId': topicId, 'forumId': forumId },
+		$.post("${pageContext.request.contextPath}/sakaiforumsmessagedetails", { 'title': title, 'body': body, 'messageId': messageId, 'topicId': topicId, 'forumId': forumId },
 				   function(data) {
 				     //alert("Posted " + data);
 				     $.unblockUI();

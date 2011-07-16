@@ -15,7 +15,7 @@
 
 <kme:page title="Emergency Contacts" id="emergencyinfo">
     <kme:content>
-        <kme:definitionListView id="emergencylist" filter="true">
+        <kme:definitionListView id="emergencylist" filter="false">
             <c:forEach items="${emergencyinfos}" var="emergencyinfo" varStatus="status">
                 <kme:definitionListTerm><a href="tel:${emergencyinfo.link}">${emergencyinfo.title}</a></kme:definitionListTerm>
                 <kme:definitionListDefinition>

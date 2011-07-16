@@ -13,34 +13,25 @@
  * permissions and limitations under the License.
  */
  
-package org.kuali.mobility.athletics.controllers;
+package org.kuali.mobility.events.controllers;
 
-import org.kuali.mobility.athletics.service.AthleticsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller 
-@RequestMapping("/athletics")
-public class AthleticsController {
-    
-    @Autowired
-    private AthleticsService athleticsService;
-    public void setEmergencyInfoService(AthleticsService athleticsService) {
-        this.athleticsService = athleticsService;
-    }
+@RequestMapping("/events")
+public class EventsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
     	try {
-    		//uiModel.addAttribute("athletics", athletics);
+    		//uiModel.addAttribute("events", events);
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-    	return "athletics/list";
+    	return "events/list";
     }
     
 }

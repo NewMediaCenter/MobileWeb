@@ -56,7 +56,7 @@
 		      </fieldset>
 		      <div data-inline="true">
 		        <div class="ui-grid-a">
-		          <div class="ui-block-a"><a href="/mdot" data-role="button">Cancel</a></div>
+		          <div class="ui-block-a"><a href="${pageContext.request.contextPath}" data-role="button">Cancel</a></div>
 		          <div class="ui-block-b"><input class="submit" type="submit" value="Submit" /></div>
 		        </div>
 		      </div>

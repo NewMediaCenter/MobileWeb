@@ -8,7 +8,7 @@
          "iconUrl":"images/service-icons/srvc-myclasses.png",
          "id":"1",
          "title":"My Classes",
-         "url":"/mdot/myclasses"
+         "url":"myclasses"
       },
       {
          "badgeCount":"0",
@@ -24,7 +24,7 @@
          "iconUrl":"images/service-icons/srvc-bus.png",
          "id":"0",
          "title":"Bus Schedules",
-         "url":"/mdot/bus"
+         "url":"bus"
       },
       {
          "badgeCount":"0",
@@ -32,7 +32,7 @@
          "iconUrl":"images/service-icons/srvc-maps.png",
          "id":"0",
          "title":"Campus Maps",
-         "url":"/mdot/maps"
+         "url":"maps"
       },
       {
          "badgeCount":"0",
@@ -40,7 +40,7 @@
          "iconUrl":"images/service-icons/srvc-athletics.png",
          "id":"0",
          "title":"Athletics",
-         "url":"/mdot/athletics"
+         "url":"athletics"
       },
       {
          "badgeCount":"0",
@@ -48,7 +48,7 @@
          "iconUrl":"images/service-icons/srvc-people.png",
          "id":"0",
          "title":"People",
-         "url":"/mdot/people"
+         "url":"people"
       },
       {
          "badgeCount":"0",
@@ -56,7 +56,7 @@
          "iconUrl":"images/service-icons/srvc-stc.png",
          "id":"0",
          "title":"Computer Labs",
-         "url":"/mdot/computerlabs"
+         "url":"computerlabs"
       },
       {
          "badgeCount":"0",
@@ -64,7 +64,7 @@
          "iconUrl":"images/service-icons/srvc-itnotice.png",
          "id":"0",
          "title":"IT Notices",
-         "url":"/mdot/itnotices"
+         "url":"itnotices"
       },
       {
          "badgeCount":"0",
@@ -72,7 +72,7 @@
          "iconUrl":"images/service-icons/srvc-news.png",
          "id":"0",
          "title":"News",
-         "url":"/mdot/news"
+         "url":"news"
       },
       {
          "badgeCount":"0",
@@ -80,15 +80,23 @@
          "iconUrl":"images/service-icons/srvc-events.png",
          "id":"0",
          "title":"Events",
-         "url":"/mdot/events"
+         "url":"events"
       },
+      {
+         "badgeCount":"0",
+         "description":"Calendar",
+         "iconUrl":"images/service-icons/srvc-events.png",
+         "id":"0",
+         "title":"Calendar",
+         "url":"calendar/month"
+      },      
       {
          "badgeCount":"0",
          "description":"Knowledge Base",
          "iconUrl":"images/service-icons/srvc-kb.png",
          "id":"0",
          "title":"Knowledge Base",
-         "url":"/mdot/knowledgebase"
+         "url":"knowledgebase"
       },
       {
          "badgeCount":"0",
@@ -96,7 +104,7 @@
          "iconUrl":"images/service-icons/srvc-askiu.png",
          "id":"0",
          "title":"Ask IU",
-         "url":"/mdot/askiu"
+         "url":"askiu"
       },
       {
          "badgeCount":"0",
@@ -104,7 +112,7 @@
          "iconUrl":"images/service-icons/srvc-dining.png",
          "id":"0",
          "title":"Dining Services",
-         "url":"/mdot/dining"
+         "url":"dining"
       },
       {
          "badgeCount":"0",
@@ -112,7 +120,7 @@
          "iconUrl":"images/service-icons/srvc-emergency.png",
          "id":"0",
          "title":"Emergency Contacts",
-         "url":"/mdot/emergencycontacts"
+         "url":"emergencycontacts"
       },
       {
          "badgeCount":"2",
@@ -120,7 +128,7 @@
          "iconUrl":"images/service-icons/srvc-alerts-green.png",
          "id":"0",
          "title":"Campus Alerts",
-         "url":"/mdot/alerts"
+         "url":"alerts"
       },
       {
          "badgeCount":"0",
@@ -128,7 +136,7 @@
          "iconUrl":"images/service-icons/srvc-feedback.png",
          "id":"0",
          "title":"Feedback",
-         "url":"/mdot/feedback"
+         "url":"feedback"
       },
       {
          "badgeCount":"0",

@@ -15,19 +15,17 @@
 <html>
 <head>
 <title><%= request.getParameter("siteTitle") %></title>
-<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
-
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 </head>
 
 <body>
 <div data-role="page" id="">
 	<div data-role="header">
-		<h1>Roster</h1><a href="/mdot/index.jsp" data-icon="home" class="ui-btn-right">home</a>
+		<h1>Roster</h1><a href="${pageContext.request.contextPath}/index.jsp" data-icon="home" class="ui-btn-right">home</a>
 	</div>
 	<!-- /header -->
 
@@ -40,7 +38,7 @@
 					  	<img src="http://localhost:9090/direct/profile/${item.displayID}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="pic">
 					</div>
 					<div class="ui-block-b" style="width:90%">
-					<a href="/mdot/sakaiparticipantdetails?siteId=
+					<a href="${pageContext.request.contextPath}/sakaiparticipantdetails?siteId=
 					<%= request.getParameter("siteId") %>&siteTitle=
 					<%= request.getParameter("siteTitle") %>&displayId=
 					${item.displayID}">

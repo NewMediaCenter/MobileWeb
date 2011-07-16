@@ -21,7 +21,7 @@
 <body>
 <div data-role="page" id="">
 	<div data-role="header" data-position="">
-		<a href="/mdot/news"  data-icon="arrow-l" data-direction="reverse">back</a>
+		<a href="${pageContext.request.contextPath}/news"  data-icon="arrow-l" data-direction="reverse">back</a>
 		<h1>${newsStream.title}</h1>
 	</div>
 	<!-- /header -->
@@ -31,7 +31,7 @@
 			<c:forEach items="${newsStream.articles}" var="day" varStatus="status">
 				<c:forEach items="${day.articles}" var="article" varStatus="status">
 					<li>
-						<a href="/mdot/news/${sourceId}?articleId=${article.articleId}&referrer=stream">
+						<a href="${pageContext.request.contextPath}/news/${sourceId}?articleId=${article.articleId}&referrer=stream">
 							<p class="news-title">${article.title}</p>
 						</a>
 					</li>

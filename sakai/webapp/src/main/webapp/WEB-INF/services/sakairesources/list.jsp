@@ -15,12 +15,11 @@
 <html>
 <head>
 <title><%= request.getParameter("siteTitle") %></title>
-<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 
 <script type="text/javascript">
 $("a[href*=.pdf]").click(function(){
@@ -43,7 +42,7 @@ $("a[href*=.doc]").click(function(){
 <body>
 <div data-role="page" id="">
 	<div data-role="header">
-		<h1>Resources</h1><a href="/mdot/index.jsp" data-icon="home" class="ui-btn-right">home</a>
+		<h1>Resources</h1><a href="${pageContext.request.contextPath}/index.jsp" data-icon="home" class="ui-btn-right">home</a>
 	</div>
 	<!-- /header -->
 
@@ -56,10 +55,10 @@ $("a[href*=.doc]").click(function(){
 				  <div class="ui-grid-a">
 					  <c:if test="${item.hasChild}">
 					  	<div class="ui-block-a" style="width:10%">
-					  	<img src="/mdot/images/service-icons/folder.png" width="70" height="70" alt="pic">
+					  	<img src="${pageContext.request.contextPath}/images/service-icons/folder.png" width="70" height="70" alt="pic">
 					  	</div>
 						<div class="ui-block-b" style="width:90%">
-							<a href="/mdot/sakairesourcedetails?siteId=
+							<a href="${pageContext.request.contextPath}/sakairesourcedetails?siteId=
 							<%= request.getParameter("siteId") %>&sessionId=${sessionId}&resId=
 							${item.id}">
 							<h3>${item.title}</h3>
@@ -70,7 +69,7 @@ $("a[href*=.doc]").click(function(){
 				  	<jsp:useBean id="extension" class="java.lang.String" />
 				  	<c:if test='<%=extension.equalsIgnoreCase("pdf")%>'>
 				  		<div class="ui-block-a" style="width:10%">
-				  		<img src="/mdot/images/service-icons/pdf.png" width="70" height="70" alt="pic">
+				  		<img src="${pageContext.request.contextPath}/images/service-icons/pdf.png" width="70" height="70" alt="pic">
 				  		</div>
 				  		<div class="ui-block-b" style="width:90%">
 							<a href="http://localhost:9090/direct/resources/getresource${item.id}?sakai.session=${sessionId}">
@@ -80,7 +79,7 @@ $("a[href*=.doc]").click(function(){
 				  	</c:if>
 				  	<c:if test='<%=extension.equalsIgnoreCase("rtf") || extension.equalsIgnoreCase("doc")%>'>
 				  		<div class="ui-block-a" style="width:10%">
-				  		<img src="/mdot/images/service-icons/ms_office_word.png" width="70" height="70" alt="pic">
+				  		<img src="${pageContext.request.contextPath}/images/service-icons/ms_office_word.png" width="70" height="70" alt="pic">
 				  		</div>
 				  		<div class="ui-block-b" style="width:90%">
 							<a href="http://localhost:9090/direct/resources/getresource${item.id}?sakai.session=${sessionId}">
@@ -90,7 +89,7 @@ $("a[href*=.doc]").click(function(){
 				  	</c:if>
 				  	<c:if test='<%=extension.equalsIgnoreCase("ppt") || extension.equalsIgnoreCase("pptx")%>'>
 				  		<div class="ui-block-a" style="width:10%">
-				  		<img src="/mdot/images/service-icons/ms_office_ppt.png" width="70" height="70" alt="pic">
+				  		<img src="${pageContext.request.contextPath}/images/service-icons/ms_office_ppt.png" width="70" height="70" alt="pic">
 				  		</div>
 				  		<div class="ui-block-b" style="width:90%">
 							<a href="http://localhost:9090/direct/resources/getresource${item.id}?sakai.session=${sessionId}">
@@ -102,7 +101,7 @@ $("a[href*=.doc]").click(function(){
 				  	<jsp:useBean id="title" class="java.lang.String" />
 				  	<c:if test='<%=extension.equalsIgnoreCase("URL")%>'>
 				  		<div class="ui-block-a" style="width:10%">
-				  		<img src="/mdot/images/service-icons/link.png" width="70" height="70" alt="pic">
+				  		<img src="${pageContext.request.contextPath}/images/service-icons/link.png" width="70" height="70" alt="pic">
 				  		</div>
 				  		<div class="ui-block-b" style="width:90%">
 							<a href="${item.title}">

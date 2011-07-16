@@ -15,19 +15,18 @@
 <html>
 <head>
 <title>My Classes</title>
-<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 
 </head>
 
 <body>
 <div data-role="page" id="">
 	<div data-role="header">
-		<h1><%= request.getParameter("siteTitle") %></h1><a href="/mdot/index.jsp" data-icon="home" class="ui-btn-right">home</a>
+		<h1><%= request.getParameter("siteTitle") %></h1><a href="${pageContext.request.contextPath}/index.jsp" data-icon="home" class="ui-btn-right">home</a>
 	</div>
 	<!-- /header -->
 
@@ -40,7 +39,7 @@
 					  	<img src="http://localhost:9090/direct/profile/${item.displayId}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="pic">
 					</div>
 					<div class="ui-block-b" style="width:90%">
-					<a href="/mdot/sakaiparticipantdetails?siteId=
+					<a href="${pageContext.request.contextPath}/sakaiparticipantdetails?siteId=
 					<%= request.getParameter("siteId") %>&siteTitle=
 					<%= request.getParameter("siteTitle") %>&displayId=
 					${item.displayId}">
@@ -52,49 +51,49 @@
 					</c:if>
 					<c:if test="${item.code=='0'}">
 				<li>
-					<a href="/mdot/sakaiannouncements?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
+					<a href="${pageContext.request.contextPath}/sakaiannouncements?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
 						<h3>${item.title}</h3>
 					</a>
 				</li>
 					</c:if>
 					<c:if test="${item.code=='1'}">
 				<li>
-					<a href="/mdot/sakaiassignments?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>&userId=${userId}">
+					<a href="${pageContext.request.contextPath}/sakaiassignments?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>&userId=${userId}">
 						<h3>${item.title}</h3>
 					</a>
 				</li>
 					</c:if>
 					<c:if test="${item.code=='2'}">
 				<li>					
-					<a href="/mdot/sakaigradebook?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
+					<a href="${pageContext.request.contextPath}/sakaigradebook?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
 						<h3>${item.title}</h3>
 					</a>
 				</li>
 					</c:if>	
 					<c:if test="${item.code=='3'}">
 				<li>
-					<a href="/mdot/roster?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
+					<a href="${pageContext.request.contextPath}/roster?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
 						<h3>${item.title}</h3>
 					</a>
 				</li>
 					</c:if>
 					<c:if test="${item.code=='4'}">
 				<li>
-					<a href="/mdot/forums?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
+					<a href="${pageContext.request.contextPath}/forums?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
 						<h3>${item.title}</h3>
 					</a>
 				</li>
 					</c:if>
 					<c:if test="${item.code=='5'}">
 				<li>
-					<a href="/mdot/resources?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
+					<a href="${pageContext.request.contextPath}/resources?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
 						<h3>${item.title}</h3>
 					</a>
 				</li>
 					</c:if>
 					<c:if test="${item.code=='6'}">
 				<li>
-					<a href="/mdot/sakaiprivatetopics?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
+					<a href="${pageContext.request.contextPath}/sakaiprivatetopics?siteId=<%= request.getParameter("siteId") %>&siteTitle=<%= request.getParameter("siteTitle") %>">
 						<h3>${item.title}</h3>
 					</a>
 				</li>

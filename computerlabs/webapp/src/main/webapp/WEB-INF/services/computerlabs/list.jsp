@@ -20,12 +20,12 @@
 	        <kme:definitionListView id="computerlablist" filter="false">
 	            <c:forEach items="${location.computerLabs}" var="computerlab" varStatus="status">
 	                <kme:definitionListTerm>
-	                    <a href="/mdot/maps?id=${computerlab.buildingCode}">
+	                    <a href="${pageContext.request.contextPath}/maps?id=${computerlab.buildingCode}">
                             ${computerlab.labCode}
                         </a>
 	                </kme:definitionListTerm>
 	                <kme:definitionListDefinition>
-		                <a href="/mdot/maps?id=${computerlab.buildingCode}">
+		                <a href="${pageContext.request.contextPath}/maps?id=${computerlab.buildingCode}">
 	                        ${computerlab.availability} seats available
 	                    </a>
 	                </kme:definitionListDefinition>

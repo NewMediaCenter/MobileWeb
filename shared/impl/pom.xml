@@ -126,7 +126,13 @@
 			<scope>provided</scope>
 			<type>tld</type>
 		</dependency>
-		<!-- Testing dependencies -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <type>jar</type>
+        </dependency>
+   		<!-- Testing dependencies -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

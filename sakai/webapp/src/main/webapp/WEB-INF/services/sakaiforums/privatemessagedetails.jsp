@@ -15,13 +15,11 @@
 <html>
 <head>
 <title><%= request.getParameter("messageTitle") %></title>
-<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
-
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 </head>
 
 <body>
@@ -46,11 +44,11 @@
 	
 	<div data-role="footer" class="ui-bar" data-position="fixed">
 	
-	<a href="/mdot/sakaiprivatemessagedetails/reply?messageId=
+	<a href="${pageContext.request.contextPath}/sakaiprivatemessagedetails/reply?messageId=
 					<%= request.getParameter("messageId") %>typeUuid=
 					<%= request.getParameter("typeUuid") %>" data-role="button" data-transition="pop">Reply</a>
 	
-	<a href="/mdot/sakaiprivatemessagedetails/forward?messageId=
+	<a href="${pageContext.request.contextPath}/sakaiprivatemessagedetails/forward?messageId=
 					<%= request.getParameter("messageId") %>typeUuid=
 					<%= request.getParameter("typeUuid") %>" data-role="button" data-transition="pop">Forward</a>
 	

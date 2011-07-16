@@ -18,6 +18,8 @@ package org.kuali.mobility.mdot.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.kuali.mobility.mdot.entity.HomeScreen;
 import org.kuali.mobility.mdot.entity.Tool;
 import org.kuali.mobility.util.HttpUtil;
@@ -37,10 +39,10 @@ public class HomeController {
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(HomeController.class);
 	
     @RequestMapping(method = RequestMethod.GET)
-    public String getList(Model uiModel) {      
+    public String getList(HttpServletRequest request, Model uiModel) {      
     	HomeScreen home = new HomeScreen();
 
-    	String json = HttpUtil.stringFromUrl("http://localhost:9999/mdot/testdata/home.json");           
+    	String json = HttpUtil.stringFromUrl(request.getScheme() + "://" + request.getRemoteHost() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/home.json");           
         if (json != null && !"".equals(json.trim())) {
             home = new JSONDeserializer<HomeScreen>().use(null, HomeScreen.class).deserialize(json);
         }

@@ -10,11 +10,11 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<link href="/mdot/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="/mdot/css/custom.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="/mdot/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="/mdot/js/custom.js"></script>
-<script type="text/javascript" src="/mdot/js/jquery.mobile-1.0b1.js"></script>
-<script type="text/javascript" src="/mdot/js/jquery.tmpl.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tmpl.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>

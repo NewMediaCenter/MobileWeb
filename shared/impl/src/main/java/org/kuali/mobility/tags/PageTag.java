@@ -22,20 +22,21 @@ public class PageTag extends SimpleTagSupport {
 
     public void doTag() throws JspException {
         PageContext pageContext = (PageContext) getJspContext();
+        String contextPath = pageContext.getServletContext().getContextPath();
         JspWriter out = pageContext.getOut();
         try {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>" + title + "</title>");
-            out.println("<link href=\"/mdot/css/jquery.mobile-1.0b1.css\" rel=\"stylesheet\" type=\"text/css\" />");
-            out.println("<link href=\"/mdot/css/custom.css\" rel=\"stylesheet\" type=\"text/css\" />");
-            out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery-1.6.1.min.js\"></script>");
-            out.println("<script type=\"text/javascript\" src=\"/mdot/js/custom.js\"></script>");
-            out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.mobile-1.0b1.js\"></script>");
-            out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.tmpl.js\"></script>");
-            out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.validate.js\"></script>");
-            out.println("<script type=\"text/javascript\" src=\"/mdot/js/jquery.validate.ready.js\"></script>");
+            out.println("<link href=\"" + contextPath + "/css/jquery.mobile-1.0b1.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            out.println("<link href=\"" + contextPath + "/css/custom.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery-1.6.1.min.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/custom.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.mobile-1.0b1.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.tmpl.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.validate.js\"></script>");
+            out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.validate.ready.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=true\"></script>");
             out.println("<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;\">");
             out.println("</head>");
@@ -46,7 +47,6 @@ public class PageTag extends SimpleTagSupport {
             out.println("</div>");
             getJspBody().invoke(out);
             out.println("</div>");
-            //out.println("</div>");
             out.println("</body>");
             out.println("</html>");
         } catch (Exception e) {

@@ -21,7 +21,7 @@
 <body>
 <div data-role="page" id="">
 	<div data-role="header">
-		<a href="/mdot"  data-icon="arrow-l" data-direction="reverse">back</a>
+		<a href="${pageContext.request.contextPath}"  data-icon="arrow-l" data-direction="reverse">back</a>
 		<h1>News</h1>
 	</div>
 	<!-- /header -->
@@ -30,7 +30,7 @@
 		<ul data-role="listview" data-theme="c" class="news-index">
 			<li class="news-topstory">
 		        <div class="bottom-fade"></div>
-		        <a href="/mdot/news/${topArticleSourceId}?articleId=${topArticle.articleId}&referrer=home">
+		        <a href="${pageContext.request.contextPath}/news/${topArticleSourceId}?articleId=${topArticle.articleId}&referrer=home">
 		        	<c:choose>
 		        		<c:when test="${!empty topArticle.thumbnailImageUrl}">
 					    	<img src="${topArticle.thumbnailImageUrl}" alt="topstory">
@@ -49,13 +49,13 @@
 			<c:forEach items="${newsStreams}" var="stream" varStatus="status">
 			
 				<li data-role="" class="" data-theme="b" data-icon="listview" >
-					<a href="/mdot/news/${stream.sourceId}">${stream.title}</a>
+					<a href="${pageContext.request.contextPath}/news/${stream.sourceId}">${stream.title}</a>
 				</li> 
 				
 				<c:forEach items="${stream.articles}" var="day" varStatus="status">
 					<c:forEach items="${day.articles}" var="article" varStatus="status">
 						<li>
-							<a href="/mdot/news/${stream.sourceId}?articleId=${article.articleId}&referrer=home">
+							<a href="${pageContext.request.contextPath}/news/${stream.sourceId}?articleId=${article.articleId}&referrer=home">
 				        		<p class="news-title">${article.title}</p>
 				        	</a>
 				        </li>

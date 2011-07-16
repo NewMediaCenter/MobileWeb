@@ -15,13 +15,11 @@
 <html>
 <head>
 <title><%= request.getParameter("topicTitle") %></title>
-<link href="css/jquery.mobile-1.0a4.1.css" rel="stylesheet" type="text/css" />
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.js"></script>
-
+<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 </head>
 
 <body>
@@ -40,7 +38,7 @@
 				</c:when>
 				<c:otherwise>
 				<li>
-					<a href="/mdot/sakaiforumsmessagedetails?siteId=
+					<a href="${pageContext.request.contextPath}/sakaiforumsmessagedetails?siteId=
 					<%= request.getParameter("siteId") %>&forumId=
 					<%= request.getParameter("forumId") %>&topicId=
 					<%= request.getParameter("topicId") %>&messageId=
@@ -56,7 +54,7 @@
 	</div>
 	<div data-role="footer" class="ui-bar" data-position="fixed">
 	
-	<a href="/mdot/sakaiforumsmessages/create?topicId=
+	<a href="${pageContext.request.contextPath}/sakaiforumsmessages/create?topicId=
 					<%= request.getParameter("topicId") %>&forumId=
 					<%= request.getParameter("forumId") %>" data-role="button" data-icon="plus" data-transition="pop">Add Thread</a>
 	

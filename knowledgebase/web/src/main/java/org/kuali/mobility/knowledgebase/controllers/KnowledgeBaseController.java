@@ -18,6 +18,8 @@ package org.kuali.mobility.knowledgebase.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.kuali.mobility.knowledgebase.entity.KnowledgeBaseSearchResultContainer;
 import org.kuali.mobility.knowledgebase.service.KnowledgeBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,13 +50,12 @@ public class KnowledgeBaseController {
     }
     
     @RequestMapping(value = "/{documentId}", method = RequestMethod.GET)
-    public String getKnowledgeBaseDocument(Model uiModel, @PathVariable("documentId") String documentId) {
+    public String getKnowledgeBaseDocument(HttpServletRequest request, Model uiModel, @PathVariable("documentId") String documentId) {
     	uiModel.addAttribute("test", "test2");
     	String kbdoc = null;
     	try {
 			Map<String, Object> transformerParameters = new HashMap<String, Object>();
-//			transformerParameters.put("linkurl", "http://localhost:8888/mdot/#/mdot/knowledgebase/");
-			transformerParameters.put("linkurl", "/mdot/knowledgebase/");
+			transformerParameters.put("linkurl", request.getContextPath() + "/knowledgebase/");
     		kbdoc = knowledgeBaseService.getConvertedKnowledgeBaseDocument(documentId, "knowledge_base", transformerParameters);
     		uiModel.addAttribute("kbdoc", kbdoc);
     	} catch (Exception e) {

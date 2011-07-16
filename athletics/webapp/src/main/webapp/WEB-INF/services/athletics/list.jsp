@@ -10,17 +10,12 @@
 --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-
-<kme:page title="Campus Alerts" id="campusalerts">
+<kme:page title="Athletics" id="athletics">
 	<kme:content>
-	    <kme:definitionListView id="alertlist" filter="false">
-	        <c:forEach items="${alerts}" var="alert" varStatus="status">
-	            <kme:definitionListTerm>${alert.campus} - ${alert.title}</kme:definitionListTerm>
-	            <kme:definitionListDefinition><p>${alert.mobileText}</p></kme:definitionListDefinition>
-			</c:forEach>
-	    </kme:definitionListView>
+	Athletics
 	</kme:content>
 </kme:page>
