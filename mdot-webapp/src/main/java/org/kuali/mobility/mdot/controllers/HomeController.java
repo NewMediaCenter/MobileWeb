@@ -38,7 +38,7 @@ public class HomeController {
 
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(HomeController.class);
 	
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "home", method = RequestMethod.GET)
     public String getList(HttpServletRequest request, Model uiModel) {      
     	HomeScreen home = new HomeScreen();
 
