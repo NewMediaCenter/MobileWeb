@@ -12,7 +12,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Classifieds",
+         "description":"Items for sale, jobs, apartments, and more.",
          "iconUrl":"images/service-icons/srvc-classifieds.png",
          "id":"0",
          "title":"Classifieds",
@@ -20,7 +20,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Bus Schedules",
+         "description":"Never miss a campus bus again.",
          "iconUrl":"images/service-icons/srvc-bus.png",
          "id":"0",
          "title":"Bus Schedules",
@@ -28,7 +28,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Campus Maps",
+         "description":"Get from here to there.",
          "iconUrl":"images/service-icons/srvc-maps.png",
          "id":"0",
          "title":"Campus Maps",
@@ -36,7 +36,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Athletics",
+         "description":"Live scores, rosters, news and schedules.",
          "iconUrl":"images/service-icons/srvc-athletics.png",
          "id":"0",
          "title":"Athletics",
@@ -44,7 +44,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"People",
+         "description":"Search for students, faculty, and staff.",
          "iconUrl":"images/service-icons/srvc-people.png",
          "id":"0",
          "title":"People",
@@ -52,7 +52,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Computer Labs",
+         "description":"Search campus labs for an open computer.",
          "iconUrl":"images/service-icons/srvc-stc.png",
          "id":"0",
          "title":"Computer Labs",
@@ -60,7 +60,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"IT Notices",
+         "description":"IT Alerts and announcements.",
          "iconUrl":"images/service-icons/srvc-itnotice.png",
          "id":"0",
          "title":"IT Notices",
@@ -68,7 +68,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"News",
+         "description":"The latest information on IU events.",
          "iconUrl":"images/service-icons/srvc-news.png",
          "id":"0",
          "title":"News",
@@ -76,7 +76,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Events",
+         "description":"See what's happening on campus.",
          "iconUrl":"images/service-icons/srvc-events.png",
          "id":"0",
          "title":"Events",
@@ -84,7 +84,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Calendar",
+         "description":"Your personal OneStart calendar.",
          "iconUrl":"images/service-icons/srvc-events.png",
          "id":"0",
          "title":"Calendar",
@@ -92,7 +92,7 @@
       },      
       {
          "badgeCount":"0",
-         "description":"Knowledge Base",
+         "description":"Find answers to your IT questions.",
          "iconUrl":"images/service-icons/srvc-kb.png",
          "id":"0",
          "title":"Knowledge Base",
@@ -100,7 +100,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Ask IU",
+         "description":"Ask a question and get an answer.",
          "iconUrl":"images/service-icons/srvc-askiu.png",
          "id":"0",
          "title":"Ask IU",
@@ -108,7 +108,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Dining Services",
+         "description":"Get up to date menus and prices.",
          "iconUrl":"images/service-icons/srvc-dining.png",
          "id":"0",
          "title":"Dining Services",
@@ -116,7 +116,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Emergency Contacts",
+         "description":"Police and medical phone numbers.",
          "iconUrl":"images/service-icons/srvc-emergency.png",
          "id":"0",
          "title":"Emergency Contacts",
@@ -124,7 +124,7 @@
       },
       {
          "badgeCount":"2",
-         "description":"Campus Alerts",
+         "description":"See a list of active campus alert messages.",
          "iconUrl":"images/service-icons/srvc-alerts-green.png",
          "id":"0",
          "title":"Campus Alerts",
@@ -132,7 +132,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Feedback",
+         "description":"Questions and comments about IU Mobile.",
          "iconUrl":"images/service-icons/srvc-feedback.png",
          "id":"0",
          "title":"Feedback",
@@ -140,7 +140,7 @@
       },
       {
          "badgeCount":"0",
-         "description":"Jaguar Athletics",
+         "description":"IUPUI Athletics information.",
          "iconUrl":"https://m.iu.edu/miu-prd/home/ip/images/ipicon-jag.png",
          "id":"0",
          "title":"Jaguar Athletics",

@@ -22,14 +22,12 @@
 	            	<a href="${tool.url}" style="background-image: url('${tool.iconUrl}');">
 			      	${tool.title}
 			      	<c:if test="${tool.badgeCount gt 0}"> 
-			      		<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">${tool.badgeCount}</span>
+			      		<span class="dl-dt-count ui-btn-up-c ui-btn-corner-all">${tool.badgeCount}</span>
 			      	</c:if>
 			      	</a>
 	            </kme:definitionListTerm>
 	            <kme:definitionListDefinition>
-	                <a href="${tool.url}">
-                       Short desc here: ${tool.title}
-                    </a>
+	                <a href="${tool.url}">${tool.description}</a>
 	            </kme:definitionListDefinition>
 			</c:forEach>
 	    </kme:definitionListView>
