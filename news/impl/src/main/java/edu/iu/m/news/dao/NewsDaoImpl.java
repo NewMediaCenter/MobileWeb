@@ -25,10 +25,12 @@ import javax.persistence.Query;
 
 import org.kuali.mobility.news.dao.NewsDao;
 import org.kuali.mobility.news.entity.NewsSource;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.MaintRss;
 
+@Repository
 public class NewsDaoImpl implements NewsDao {
 
     @PersistenceContext
@@ -43,7 +45,6 @@ public class NewsDaoImpl implements NewsDao {
     }
 
 	@Override
-	@Transactional
 	public List<NewsSource> getAllActiveNewsSourcesByLocationCode(String locationCode) {
 		Query query = entityManager.createQuery("select r from MaintRss r where r.active = 1 and r.type like 'NEWS' and (r.campus like :campusCode or r.campus like 'UA') order by r.order");
         query.setParameter("campusCode", locationCode);

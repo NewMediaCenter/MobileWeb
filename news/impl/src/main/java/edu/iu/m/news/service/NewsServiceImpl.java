@@ -22,26 +22,29 @@ import java.util.Collections;
 import java.util.List;
 
 import org.kuali.mobility.configparams.service.ConfigParamService;
+import org.kuali.mobility.news.dao.NewsDao;
 import org.kuali.mobility.news.entity.NewsArticle;
 import org.kuali.mobility.news.entity.NewsDay;
 import org.kuali.mobility.news.entity.NewsSource;
 import org.kuali.mobility.news.entity.NewsStream;
 import org.kuali.mobility.news.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import edu.iu.m.news.dao.NewsDaoImpl;
 import edu.iu.m.news.entity.LinkFeed;
 import edu.iu.m.news.entity.MaintRss;
 import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssItem;
 
+@Service
 public class NewsServiceImpl implements NewsService {
 	
 	@Autowired
     private RssService rssService;
 	
 	@Autowired
-	private NewsDaoImpl newsDao;
+	private NewsDao newsDao;
 	
 	@Autowired
     private RssCacheService rssCacheService;
@@ -62,18 +65,20 @@ public class NewsServiceImpl implements NewsService {
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(NewsServiceImpl.class);
 	
 	@Override
+	@Transactional	
 	public List<NewsSource> getAllNewsSourcesByLocation(String campusCode){
 		List<NewsSource> sources = newsDao.getAllActiveNewsSourcesByLocationCode(campusCode);
-		
 		return sources;
 	}
 	
 	@Override
+	@Transactional
 	public NewsSource getNewsSourceById(String sourceId) {
 		return newsDao.getNewsSourceById(sourceId);
 	}
 
 	@Override
+	@Transactional
 	public NewsStream getNewsStream(String rssShortCode, boolean sample) {
 		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", rssShortCode);
         if (maintRss != null) {
@@ -93,6 +98,7 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
+	@Transactional
 	public NewsArticle getNewsArticle(String sourceId, String articleId) {
 		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", sourceId);
         if (maintRss != null) {
@@ -115,6 +121,7 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
+	@Transactional
 	public String getDefaultNewsSourceId() {
 		return configParamService.findValueByName(NEWS_DEFAULT_SOURCE_ID);
 	}
@@ -193,11 +200,11 @@ public class NewsServiceImpl implements NewsService {
 		this.rssService = rssService;
 	}
 
-	public NewsDaoImpl getNewsDao() {
+	public NewsDao getNewsDao() {
 		return newsDao;
 	}
 
-	public void setNewsDao(NewsDaoImpl newsDao) {
+	public void setNewsDao(NewsDao newsDao) {
 		this.newsDao = newsDao;
 	}
 
