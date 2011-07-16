@@ -16,17 +16,24 @@
 
 <kme:page title="IU Mobile" id="home">
 	<kme:content>
-	    <kme:unorderedList>
+	    <kme:definitionListView id="homeserviceslist" filter="false">
 	        <c:forEach items="${home.tools}" var="tool" varStatus="status">	            
-	            <kme:listItem>
+	            <kme:definitionListTerm>
 	            	<a href="${tool.url}" style="background-image: url('${tool.iconUrl}');">
 			      	${tool.title}
 			      	<c:if test="${tool.badgeCount gt 0}"> 
 			      		<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">${tool.badgeCount}</span>
 			      	</c:if>
 			      	</a>
-	            </kme:listItem>
+	            </kme:definitionListTerm>
+	            <kme:definitionListDefinition>
+	                <a href="${tool.url}">
+                       Short desc here: ${tool.title}
+                    </a>
+	            </kme:definitionListDefinition>
 			</c:forEach>
-	    </kme:unorderedList>
+	    </kme:definitionListView>
 	</kme:content>
 </kme:page>
+
+
