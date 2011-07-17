@@ -10,12 +10,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.MaintRss;
 import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssItem;
 
+@Service
 public class RssCacheServiceImpl implements RssCacheService {
 	
 	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RssCacheServiceImpl.class);

@@ -108,15 +108,5 @@
 		<property name="password" value="${kerberos.password}" />
     </bean>
     
-    <bean class="edu.iu.m.news.service.NewsServiceImpl"></bean>
-    <bean class="edu.iu.m.news.service.RssServiceImpl"></bean>
-    <bean class="edu.iu.m.news.service.MaintRssServiceImpl"></bean>
-    <bean class="edu.iu.m.news.service.RssCacheServiceImpl"></bean>
-    <bean class="edu.iu.m.news.service.DynamicRssCacheServiceImpl"></bean>
-    <bean id="newsCacheService" class="edu.iu.m.news.service.CacheServiceImpl"></bean>
-    <bean class="edu.iu.m.news.dao.RssDaoImpl"></bean>
-    <bean class="edu.iu.m.news.dao.MaintRssDaoImpl"></bean>
-    <bean class="edu.iu.m.news.dao.NewsDaoImpl"></bean>
-    
 </beans>
  

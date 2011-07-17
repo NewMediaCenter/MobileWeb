@@ -37,6 +37,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -62,6 +63,7 @@ import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssCategory;
 import edu.iu.m.news.entity.RssItem;
 
+@Service
 public class RssServiceImpl implements RssService {
 	
 	@Autowired
@@ -81,11 +83,13 @@ public class RssServiceImpl implements RssService {
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RssServiceImpl.class);
 
+	@Transactional
 	public Rss fetch(String url) throws Exception {
 		Rss rss = parseRssFeed(url);
 		return rss;
 	}
 	
+	@Transactional
 	public Rss getRss(MaintRss maintRss, boolean useCache, Rss cachedRss) {
 		if (maintRss == null) {
 			return null;
@@ -582,14 +586,17 @@ public class RssServiceImpl implements RssService {
 	  	}
 	}
 	
+	@Transactional
 	public void saveRss(Rss rss) {
         rssDao.saveRss(rss);
     }
 
+	@Transactional
     public void updateRss(Rss rss) {
         saveRss(rss);
     }
     
+	@Transactional
     public Rss findRssById(Long rssId) {
     	Rss rss = null;
 		try {

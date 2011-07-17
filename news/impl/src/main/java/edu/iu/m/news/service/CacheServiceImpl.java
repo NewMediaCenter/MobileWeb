@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import edu.iu.m.news.entity.MaintRss;
 import edu.iu.m.news.entity.Rss;
 
-@Service
+@Service(value = "newsCacheService")
 public class CacheServiceImpl implements CacheService {
     
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(CacheServiceImpl.class);

@@ -6,8 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Repository;
+
 import edu.iu.m.news.entity.Rss;
 
+@Repository 
 public class RssDaoImpl implements RssDao {
 
 	@PersistenceContext

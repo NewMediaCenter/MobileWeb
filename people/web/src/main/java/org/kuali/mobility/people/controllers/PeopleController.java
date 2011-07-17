@@ -18,8 +18,9 @@ package org.kuali.mobility.people.controllers;
 import org.kuali.mobility.people.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller 
 @RequestMapping("/people")
@@ -31,10 +32,14 @@ public class PeopleController {
         this.peopleService = peopleService;
     }
     
-    @RequestMapping(headers = "Accept=application/json")
-    @ResponseBody
-    public String getTest() {
-        return "Test";
-    } 
+    @RequestMapping(method = RequestMethod.GET)
+    public String getList(Model uiModel) {
+    	try {
+    		//uiModel.addAttribute("people", people);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return "people/form";
+    }
     
 }

@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.iu.m.news.entity.Counter;
 import edu.iu.m.news.entity.DynamicRss;
@@ -16,6 +17,7 @@ import edu.iu.m.news.entity.LinkFeed;
 import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssItem;
 
+@Service
 public class DynamicRssCacheServiceImpl implements DynamicRssCacheService {
 	
 	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DynamicRssCacheServiceImpl.class);
