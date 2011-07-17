@@ -20,7 +20,7 @@
 	<bean id="config" class="org.kuali.rice.core.config.spring.ConfigFactoryBean">
 		<property name="configLocations">
 			<list>
-				<value>file:/opt/sa_forms/java/dev/edu/iu/uis/security/miu/miu-config.xml</value>
+				<value>file:${rice.config.file}</value>
 			</list>
 		</property>
 	</bean>

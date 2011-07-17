@@ -40,6 +40,9 @@
 		</dependency>
 	</dependencies>
 	<build>
+        <filters>
+            <filter>${user.home}/kme-filters.properties</filter>
+        </filters>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
@@ -48,7 +51,7 @@
 					<include>*.xml</include>
 					<include>*.properties</include>
 				</includes>
-				<filtering>false</filtering>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 	</build>

@@ -1050,6 +1050,6 @@
 	</reporting>
 	<modules>
 		<module>mdot-webapp</module>
-		<module>mdotadmin-webapp</module>
+		<!-- <module>mdotadmin-webapp</module> -->
 	</modules>
 </project>
