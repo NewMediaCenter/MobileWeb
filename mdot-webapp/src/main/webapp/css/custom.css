@@ -648,8 +648,9 @@
 -----------------------------------------------------------------------------------------------------------*/
 dl {
     padding: 0;
+    /*width: 90%;*/
     /* temporary adjustment for testing to remove page padding */
-    margin: -17px -15px -15px -15px;
+    /*margin: -17px -15px -15px -15px;*/
 }
 
 dl dt {
@@ -659,6 +660,7 @@ dl dt {
     clear: left;
     font-size: 17px;
     font-weight: bold;
+    /*width: 90%;*/
 }
 
 dl dt a {
@@ -666,17 +668,18 @@ dl dt a {
     text-decoration: none;
     font-weight: normal;
     display: block;
-    width: 100%;
+    /*width: 100%;*/
     margin: 0;
     padding: 5px 15px 5px 15px;
 }
 
 
 dl dd {
-    padding: 0; /* 15px 15px 15px;*/
+    padding: 0;
     margin: 0;
     font-size: 14px;
     font-weight: normal;
+    /*width: 90%;*/
 }
 
 dl dd a {
@@ -684,7 +687,7 @@ dl dd a {
     font-weight: bold;
     text-decoration: none;
     display: block;
-    width: 100%;
+    /*width: 90%;*/
     margin: 0;
     padding: 5px 15px 5px 15px;
 }
@@ -698,6 +701,20 @@ dl p {
 
 /* Home
 -----------------------------------------------------------------------------------------------------------*/
+/* testing some overrides */
+.ui-body-b {
+	border: none;
+}
+.ui-bar-a  {
+	border: none;
+}
+
+div#home {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
 div#home dl {
 	position: relative;
 }
@@ -705,20 +722,19 @@ div#home dl {
 div#home dt {
 	height: 80px;
 	display: block;
-	margin: 0 0 -30px 0;
+	margin: 0 0 -45px 0;
 }
 
 div#home dl dd:last-child {
-	margin-bottom: 5px;
+	margin-bottom: 15px;
 }
 
 div#home dt a {
     background-repeat: no-repeat;
     background-position: 8px 10px;
-    padding: 15px 0 0 80px;
+    padding: 7px 0 0 80px;
     position: relative;
-    height: 70px;
-    width: 99%;
+    height: 80px;
     color: #333;
 }
 
@@ -726,14 +742,15 @@ div#home dd {
 	position: relative;
 	display: block;
 	top: 0;
+	margin: 0 20px 0 80px;
 }
 
 div#home dd a {
-	height: 30px;
+	height: 40px;
 	color: #444;
 	font-weight: normal;
-	padding: 0 0 0 80px;
-	white-space:nowrap;
+	padding: 0;
+	margin: 0;
 }
 
 
