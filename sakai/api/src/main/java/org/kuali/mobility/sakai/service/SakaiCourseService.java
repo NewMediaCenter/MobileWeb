@@ -16,13 +16,15 @@
 package org.kuali.mobility.sakai.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.kuali.mobility.sakai.entity.SakaiAnnouncement;
 import org.kuali.mobility.sakai.entity.SakaiCourse;
 
 public interface SakaiCourseService {
-
-	public List<SakaiCourse> findAllSakaiCoursesByCampus(String campus, String json);
+	public Map<String,List<SakaiCourse>> findAllCourses(String campus, String user);
+	public SakaiCourse findCourse(String campus, String siteId, String user);
 	
-//	public String toJson(Collection<SakaiCourse> collection);
-//	
+	public List<SakaiAnnouncement> findAnnouncementDetails(String json);
+	public List<SakaiAnnouncement> findAllCourseAnnouncements(String siteId, String user);
 }

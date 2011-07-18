@@ -16,6 +16,7 @@
 package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import flexjson.JSONSerializer;
 
@@ -27,13 +28,30 @@ public class SakaiCourse implements Serializable, Comparable<SakaiCourse> {
     private String courseId;
     private String courseTitle;
     private String courseDesc;
-    private CreatedTime createdTime;
-    private ModifiedTime modifiedTime;
-    private SiteOwner siteOwner;
+    private String courseTerm;
+    private Timestamp createdTime;
+    private Timestamp modifiedTime;
     private boolean active;
+    private String instructorName;
+    private String instructorId;
     
- 
-    public SakaiCourse() {}
+    public String getInstructorName() {
+		return instructorName;
+	}
+
+	public void setInstructorName(String instructorName) {
+		this.instructorName = instructorName;
+	}
+
+	public String getInstructorId() {
+		return instructorId;
+	}
+
+	public void setInstructorId(String instructorId) {
+		this.instructorId = instructorId;
+	}
+
+	public SakaiCourse() {}
     
     public SakaiCourse(String campus, String courseId, String courseTitle, String courseDesc) {
         this.campus = campus;
@@ -96,90 +114,28 @@ public class SakaiCourse implements Serializable, Comparable<SakaiCourse> {
 	public String toJson() {
         return new JSONSerializer().exclude("*.class").serialize(this);
     }
-	
-	public void setCreatedTime(CreatedTime createdTime) {
-		this.createdTime = createdTime;
+
+	public String getCourseTerm() {
+		return courseTerm;
 	}
 
-	public CreatedTime getCreatedTime() {
+	public void setCourseTerm(String courseTerm) {
+		this.courseTerm = courseTerm;
+	}
+   
+	public Timestamp getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setModifiedTime(ModifiedTime modifiedTime) {
-		this.modifiedTime = modifiedTime;
+	public void setCreatedTime(Timestamp createdTime) {
+		this.createdTime = createdTime;
 	}
 
-	public ModifiedTime getModifiedTime() {
+	public Timestamp getModifiedTime() {
 		return modifiedTime;
 	}
 
-	public void setSiteOwner(SiteOwner siteOwner) {
-		this.siteOwner = siteOwner;
-	}
-
-	public SiteOwner getSiteOwner() {
-		return siteOwner;
-	}
-
-	private class CreatedTime {
-		private String display;
-		private String time;
-		public void setDisplay(String display) {
-			this.display = display;
-		}
-		public String getDisplay() {
-			return display;
-		}
-		public void setTime(String time) {
-			this.time = time;
-		}
-		public String getTime() {
-			return time;
-		}
-		
-	}
-	
-	private class ModifiedTime {
-		private String display;
-		private String time;
-		public void setDisplay(String display) {
-			this.display = display;
-		}
-		public String getDisplay() {
-			return display;
-		}
-		public void setTime(String time) {
-			this.time = time;
-		}
-		public String getTime() {
-			return time;
-		}
-		
-	}
-   
-	private class SiteOwner {
-		private String userDisplayName;
-		private String userEntityURL;
-		private String userId;
-		public void setUserDisplayName(String userDisplayName) {
-			this.userDisplayName = userDisplayName;
-		}
-		public String getUserDisplayName() {
-			return userDisplayName;
-		}
-		public void setUserId(String userId) {
-			this.userId = userId;
-		}
-		public String getUserId() {
-			return userId;
-		}
-		public void setUserEntityURL(String userEntityURL) {
-			this.userEntityURL = userEntityURL;
-		}
-		public String getUserEntityURL() {
-			return userEntityURL;
-		}
-		
-		
+	public void setModifiedTime(Timestamp modifiedTime) {
+		this.modifiedTime = modifiedTime;
 	}
 }

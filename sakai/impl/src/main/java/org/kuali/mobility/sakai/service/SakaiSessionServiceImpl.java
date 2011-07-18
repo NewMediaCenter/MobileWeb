@@ -15,15 +15,31 @@
  
 package org.kuali.mobility.sakai.service;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class SakaiSessionServiceImpl implements SakaiSessionService {
 
 	public String findSakaiSessionId(String json) {
-		SakaiSessionParser parser = new SakaiSessionParser();
-		String sakaiSessionId = parser.parseSession(json);
-		return sakaiSessionId;
-	}
+		try {
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("session_collection");
+            String id = null;
+            for (int i = 0; i < itemArray.size(); i++) {
+                id = itemArray.getJSONObject(i).getString("id");
+            }
+            return id;
 
+        } catch (JSONException e) {
+           
+        } catch (Exception e) {
+            
+        }
+		return null;
+	}
 }

@@ -22,10 +22,38 @@
         <version>1.0.0-ALPHA-1</version>
     </parent>
     <dependencies>
+    	<!-- IU OAuth dependencies -->
+        <dependency>
+          <groupId>edu.iu.es.espd</groupId>
+          <artifactId>oauth-consumer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.iu.es.esi</groupId>
+            <artifactId>casfilter</artifactId>
+            <version>1.11</version>
+        </dependency> 
         <!-- Internal dependencies -->
         <dependency>
             <groupId>org.kuali.mobility</groupId>
             <artifactId>sakai-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>configparams-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>configparams-impl</artifactId>
         </dependency>
         <!-- Persistence dependencies -->
         <dependency>

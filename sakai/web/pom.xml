@@ -22,7 +22,7 @@
         <version>1.0.0-ALPHA-1</version>
 	</parent>
 	<dependencies>
-	<!-- IU OAuth dependencies -->
+		<!-- IU OAuth dependencies -->
         <dependency>
           <groupId>edu.iu.es.espd</groupId>
           <artifactId>oauth-consumer</artifactId>

@@ -37,10 +37,7 @@
 				<li data-role="list-divider">${item.createdDate}</li>
 				</c:if>
 				<li>
-					<a href="${pageContext.request.contextPath}/sakaiannouncementdetails?siteId=
-					<%= request.getParameter("siteId") %>&siteTitle=
-					<%= request.getParameter("siteTitle") %>&annId=
-					${item.id}" data-direction="forward">
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/announcements/${item.id}" data-direction="forward">
 						<h3>${item.title}</h3>
 						<p>${item.createdOn}</p>
 					</a>
