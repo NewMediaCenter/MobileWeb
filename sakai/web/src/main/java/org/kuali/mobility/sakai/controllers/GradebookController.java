@@ -39,6 +39,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/sakaigradebook")
 public class GradebookController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(GradebookController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -78,7 +80,7 @@ public class GradebookController {
 			uiModel.addAttribute("courseGrade", courseGrade);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakaigrades/list";

@@ -52,12 +52,8 @@ public class FeedbackController{
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		uiModel.addAttribute("feedback", new Feedback());
-    		uiModel.addAttribute("deviceTypes", deviceTypes);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+   		uiModel.addAttribute("feedback", new Feedback());
+   		uiModel.addAttribute("deviceTypes", deviceTypes);
     	return "feedback/form";
     }
     
@@ -105,4 +101,5 @@ public class FeedbackController{
     public void setFeedbackService(FeedbackService feedbackService) {
         this.feedbackService = feedbackService;
     }
+    
 }

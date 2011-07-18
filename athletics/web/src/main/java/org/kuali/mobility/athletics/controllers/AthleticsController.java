@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller 
 @RequestMapping("/athletics")
@@ -35,11 +34,7 @@ public class AthleticsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		//uiModel.addAttribute("athletics", athletics);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+
     	return "athletics/list";
     }
     

@@ -41,6 +41,9 @@ import edu.iu.uis.cas.filter.CASFilter;
 @Controller
 @RequestMapping("/sakaiprivatemessages")
 public class PrivateMessagesController {
+	
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PrivateMessagesController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -78,7 +81,7 @@ public class PrivateMessagesController {
 			List<SakaiForumMessage> messages = sakaiPrivateTopicService.findPrivateMessages(json);
 			uiModel.addAttribute("sakaiprivatemessages", messages);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakaiforums/privatemessages";
@@ -116,11 +119,11 @@ public class PrivateMessagesController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", jsonString);
 			response = IOUtils.toString(is.getBody(), "UTF-8");
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		} catch (OAuthException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 		return response;
 	}

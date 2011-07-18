@@ -39,6 +39,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/sakaiassignments")
 public class AssignmentsController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(AssignmentsController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -70,7 +72,7 @@ public class AssignmentsController {
 			List<SakaiAssignment> assignments = sakaiAssignmentService.findAllCourseAssignments(json);
 			uiModel.addAttribute("sakaiassignments", assignments);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakaiassignments/list";

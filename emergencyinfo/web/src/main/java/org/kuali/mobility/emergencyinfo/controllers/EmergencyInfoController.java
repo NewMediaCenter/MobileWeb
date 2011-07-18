@@ -40,25 +40,8 @@ public class EmergencyInfoController {
         this.emergencyInfoService = emergencyInfoService;
     }
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ModelAndView getList(Model uiModel) {
-//    	ModelAndView mav = new ModelAndView("services/emergencycontacts/list");
-//    	ModelAndView mav = new ModelAndView("test");
-//    	return mav;
-//    }
-    
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-//        if (page != null || size != null) {
-//            int sizeNo = size == null ? 10 : size.intValue();
-//            uiModel.addAttribute("emergencycontacts", EmergencyContact.findEmergencyContactEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-//            float nrOfPages = (float) EmergencyContact.countEmergencyContacts() / sizeNo;
-//            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-//        } else {
-//            uiModel.addAttribute("emergencycontacts", EmergencyContact.findAllEmergencyContacts());
-//        }
-//        return "emergencycontacts/list";
-//		  return "redirect:/services/emergencycontacts/list";
     	uiModel.addAttribute("test", "test2");
     	List<EmergencyInfo> infos = emergencyInfoService.findAllEmergencyInfoByCampus("BL");
     	uiModel.addAttribute("emergencyinfos", infos);

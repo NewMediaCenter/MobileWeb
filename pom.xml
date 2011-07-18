@@ -51,6 +51,7 @@
 			<modules>
 				<module>shared</module>
 				<module>user</module>
+                <module>admin</module>
 				<module>alerts</module>
 				<module>askiu</module>
 				<module>athletics</module>
@@ -163,6 +164,27 @@
 				<artifactId>user-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+            <!-- Admin Service -->
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>admin-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>admin-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>admin-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>admin-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 			<!-- Alerts Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>

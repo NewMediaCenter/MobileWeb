@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.kuali.mobility.alerts.entity.Alert;
 import org.kuali.mobility.alerts.service.AlertsService;
-import org.kuali.mobility.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,12 +39,8 @@ public class AlertsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(HttpServletRequest request, Model uiModel) {
-    	try {    		
-    	    List<Alert> alerts = alertsService.findAllAlertsFromJson(request.getScheme() + "://" + request.getRemoteHost() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/alerts.json");
-    		uiModel.addAttribute("alerts", alerts);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+   	    List<Alert> alerts = alertsService.findAllAlertsFromJson(request.getScheme() + "://" + request.getRemoteHost() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/alerts.json");
+   		uiModel.addAttribute("alerts", alerts);
     	return "alerts/list";
     }
     

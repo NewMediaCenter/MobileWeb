@@ -34,11 +34,7 @@ public class DiningController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		//uiModel.addAttribute("dining", dining);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+
     	return "dining/list";
     }
     

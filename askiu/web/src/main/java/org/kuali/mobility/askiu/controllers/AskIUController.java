@@ -35,11 +35,7 @@ public class AskIUController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		uiModel.addAttribute("askiu", new AskIU());
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+   		uiModel.addAttribute("askiu", new AskIU());
     	return "askiu/form";
     }
     

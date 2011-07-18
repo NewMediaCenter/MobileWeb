@@ -38,6 +38,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/myclasses")
 public class SakaiController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -59,8 +61,6 @@ public class SakaiController {
 		this.oncourseOAuthService = oncourseOAuthService;
 	}
 	
-	
-
 	@RequestMapping(method = RequestMethod.GET)
 	public String getList(HttpServletRequest request, Model uiModel) {
 		try {
@@ -70,10 +70,8 @@ public class SakaiController {
 
 			List<SakaiCourse> courses = sakaiCourseService.findAllSakaiCoursesByCampus("BL", json);
 			uiModel.addAttribute("myclasses", courses);
-			
-			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "myclasses/list";

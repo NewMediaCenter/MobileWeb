@@ -40,6 +40,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/sakairesourcedetails")
 public class ResourceDetailsController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ResourceDetailsController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -88,10 +90,10 @@ public class ResourceDetailsController {
 			
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
-	return null;	
+		return null;	
 	}
 
 }

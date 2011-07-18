@@ -20,14 +20,6 @@
 	<description>mDot Webapp</description>
 
 	<context-param>
-		<param-name>FullPathToSecurity</param-name>
-		<param-value>/opt/sa_forms/java/dev/edu/iu/uis/security/miu/</param-value>
-	</context-param>
-	<context-param>
-		<param-name>FullPathToSettings</param-name>
-		<param-value>/opt/j2ee/dev/edu/iu/uis/settings/miu/</param-value>
-	</context-param>
-	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/SpringBeans.xml /WEB-INF/webmvc-config.xml</param-value> 
 	</context-param>
@@ -56,6 +48,7 @@
             <param-value>https://cas.iu.edu/cas/serviceValidate</param-value>
         </init-param>
     </filter>
+    
     <filter-mapping>
         <filter-name>cas</filter-name>
         <servlet-name>rest</servlet-name>
@@ -115,6 +108,5 @@
         <servlet-name>rest</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    
 
 </web-app>

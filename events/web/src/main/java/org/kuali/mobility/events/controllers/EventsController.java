@@ -26,11 +26,7 @@ public class EventsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		//uiModel.addAttribute("events", events);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+
     	return "events/list";
     }
     

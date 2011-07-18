@@ -42,6 +42,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/sakaiforumsmessagedetails")
 public class ForumsMessagesDetailsController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ForumsMessagesDetailsController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -83,7 +85,7 @@ public class ForumsMessagesDetailsController {
 			List<SakaiForumMessage> messages = sakaiForumService.findMessageDetails(json, messageId, messageTitle);
 			uiModel.addAttribute("sakaiforumsmessagedetails", messages);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakaiforums/forumsmessagedetails";
@@ -121,11 +123,11 @@ public class ForumsMessagesDetailsController {
 			response = IOUtils.toString(is.getBody(), "UTF-8");
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		} catch (OAuthException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 		return response;
 	}

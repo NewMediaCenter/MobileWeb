@@ -39,6 +39,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/sakaiannouncements")
 public class AnnouncementsController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(AnnouncementsController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -70,7 +72,7 @@ public class AnnouncementsController {
 			List<SakaiAnnouncement> announcements = sakaiAnnouncementService.findAllCourseAnnouncements(json);
 			uiModel.addAttribute("sakaiannouncements", announcements);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakaiannouncements/list";

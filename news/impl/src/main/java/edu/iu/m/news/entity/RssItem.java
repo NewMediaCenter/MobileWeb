@@ -28,6 +28,8 @@ public class RssItem implements Serializable, Comparable<RssItem> {
 
 	private static final long serialVersionUID = 5876069955013500644L;
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(Serializable.class);
+
     @Id
     @SequenceGenerator(name="rss_item_sequence", sequenceName="SEQ_RSS_ITM_T", initialValue=1000, allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="rss_item_sequence")
@@ -100,7 +102,7 @@ public class RssItem implements Serializable, Comparable<RssItem> {
 		try {
 			s = URLEncoder.encode(link, "UTF-8");	
 		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 		return s;
 	}

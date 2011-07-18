@@ -64,6 +64,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
+        <!-- Logging dependencies -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
 		<!-- Testing dependencies -->
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>

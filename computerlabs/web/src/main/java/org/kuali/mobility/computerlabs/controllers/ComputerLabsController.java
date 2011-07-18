@@ -46,12 +46,8 @@ public class ComputerLabsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		List<LabLocation> labLocations = computerLabsService.findAllLabLocationsByCampus("BL");
-    		uiModel.addAttribute("lablocations", labLocations);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+   		List<LabLocation> labLocations = computerLabsService.findAllLabLocationsByCampus("BL");
+   		uiModel.addAttribute("lablocations", labLocations);
     	return "computerlabs/list";
     }
 

@@ -22,8 +22,8 @@ import org.kuali.mobility.itnotices.entity.ITNotice;
 
 public interface ITNoticesService {
 
-	public List<ITNotice> findAllITNotices() throws Exception;
+	List<ITNotice> findAllITNotices();
 	
-    public String toJson(Collection<ITNotice> collection);
+    String toJson(Collection<ITNotice> collection);
 	
 }

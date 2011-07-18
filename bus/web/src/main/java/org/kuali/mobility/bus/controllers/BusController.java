@@ -34,11 +34,7 @@ public class BusController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		//uiModel.addAttribute("bus", bus);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+
     	return "bus/list";
     }
     

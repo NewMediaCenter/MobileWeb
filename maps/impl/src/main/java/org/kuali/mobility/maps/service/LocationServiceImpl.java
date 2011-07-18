@@ -60,7 +60,7 @@ import org.xml.sax.InputSource;
 @Service
 public class LocationServiceImpl implements LocationService {
 	
-//    private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(LocationServiceImpl.class);
+    private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(LocationServiceImpl.class);
 
     @Autowired
     private LocationDao locationDao;
@@ -508,7 +508,7 @@ public class LocationServiceImpl implements LocationService {
 			serializer.serialize(doc);
 			xml = out.toString();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 		return xml;
 	}

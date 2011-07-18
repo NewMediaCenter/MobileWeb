@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller 
 @RequestMapping("/itnotices")
 public class ITNoticesController {
-
+ 
     @Autowired
     private ITNoticesService itNoticesService;
     public void setComputerLabsService(ITNoticesService itNoticesService) {
@@ -40,37 +40,21 @@ public class ITNoticesController {
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public String findAllComputerLabsByCampus(@RequestParam(value = "campus", required = true) String campus) {
-    	String value = "";
-    	try {
-        	List<ITNotice> notices = itNoticesService.findAllITNotices();
-        	value = itNoticesService.toJson(notices);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	return value;
+       	List<ITNotice> notices = itNoticesService.findAllITNotices();
+		return itNoticesService.toJson(notices);
     }
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		List<ITNotice> notices = itNoticesService.findAllITNotices();
-    		uiModel.addAttribute("notices", notices);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	
+   		List<ITNotice> notices = itNoticesService.findAllITNotices();
+   		uiModel.addAttribute("notices", notices);
     	return "itnotices/list";
     }
     
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public String getDetails(Model uiModel, @RequestParam(required = true) int id) {
-        try {
-            List<ITNotice> notices = itNoticesService.findAllITNotices();
-            uiModel.addAttribute("notice", notices.get(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
+        List<ITNotice> notices = itNoticesService.findAllITNotices();
+        uiModel.addAttribute("notice", notices.get(id));
         return "itnotices/details";
     }
      

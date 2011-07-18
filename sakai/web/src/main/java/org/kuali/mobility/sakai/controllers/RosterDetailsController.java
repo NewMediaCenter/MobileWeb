@@ -40,6 +40,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/sakaiparticipantdetails")
 public class RosterDetailsController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RosterDetailsController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -83,7 +85,7 @@ public class RosterDetailsController {
 			String sessionId = sakaiSessionService.findSakaiSessionId(jsonSession);
 			uiModel.addAttribute("sessionId", sessionId);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakairoster/rosterDetails";

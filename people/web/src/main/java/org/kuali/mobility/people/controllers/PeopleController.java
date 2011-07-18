@@ -34,11 +34,7 @@ public class PeopleController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-    	try {
-    		//uiModel.addAttribute("people", people);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+
     	return "people/form";
     }
     

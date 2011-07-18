@@ -27,6 +27,8 @@ import org.kuali.mobility.sakai.entity.SakaiCourse;
 
 public class SakaiCourseParser {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiCourseParser.class);
+
 	public List<SakaiCourse> parseCourses(String campus, String json) {
 		List<SakaiCourse> courses = new ArrayList<SakaiCourse>();
 		courses = parse(campus, false, json);
@@ -52,10 +54,9 @@ public class SakaiCourseParser {
                 courses.add(item);
             }
     	} catch (JSONException e) {
-	    	e.printStackTrace();
+    		LOG.error(e.getMessage(), e);
 	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        //runOnUiThread(returnError);
+	    	LOG.error(e.getMessage(), e);
 	    }
 		return courses;
     }

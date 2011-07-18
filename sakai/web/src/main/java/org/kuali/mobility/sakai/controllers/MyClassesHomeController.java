@@ -46,6 +46,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/myclasseshome")
 public class MyClassesHomeController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(MyClassesHomeController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -107,7 +109,7 @@ public class MyClassesHomeController {
 			
 			uiModel.addAttribute("userId", CASFilter.getRemoteUser(request));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "myclasseshome/list";

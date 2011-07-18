@@ -28,12 +28,13 @@ import org.kuali.mobility.sakai.entity.SakaiAssignment;
 
 public class SakaiAssignmentParser {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiAssignmentParser.class);
+
 	public List<SakaiAssignment> parseAssignments(String json) {
 		List<SakaiAssignment> anns = new ArrayList<SakaiAssignment>();
 		anns = parse(false, json);
 		return anns;
 	}
-	
 		
 	public List<SakaiAssignment> parseAssignmentDetails(String json) {
 		
@@ -76,10 +77,9 @@ public class SakaiAssignmentParser {
 	            ass.add(trs);
             }
     	} catch (JSONException e) {
-	    	e.printStackTrace();
+    		LOG.error(e.getMessage(), e);
 	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        //runOnUiThread(returnError);
+	    	LOG.error(e.getMessage(), e);
 	    }
 		return ass;
 		
@@ -104,10 +104,9 @@ public class SakaiAssignmentParser {
             }
 
 		} catch (JSONException e) {
-	    	e.printStackTrace();
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        //runOnUiThread(returnError);
+			LOG.error(e.getMessage(), e);
+		} catch (Exception e) {
+	    	LOG.error(e.getMessage(), e);
 	    }
 		return anns;
     }
@@ -123,10 +122,9 @@ public class SakaiAssignmentParser {
             }
 
 		} catch (JSONException e) {
-	    	e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        //runOnUiThread(returnError);
+	    	LOG.error(e.getMessage(), e);
 	    }
 		return courseGrade;
     }

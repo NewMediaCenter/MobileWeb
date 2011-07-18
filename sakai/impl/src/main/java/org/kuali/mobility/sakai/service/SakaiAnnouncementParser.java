@@ -30,6 +30,8 @@ import org.kuali.mobility.sakai.entity.SakaiAnnouncement;
 
 public class SakaiAnnouncementParser {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiAnnouncementParser.class);
+
 	public List<SakaiAnnouncement> parseAnnouncements(String json) {
 		List<SakaiAnnouncement> anns = new ArrayList<SakaiAnnouncement>();
 		anns = parse(false, json);
@@ -59,10 +61,9 @@ public class SakaiAnnouncementParser {
             trs.setCreatedOn(createdOn);
             anns.add(trs);
     	} catch (JSONException e) {
-	    	e.printStackTrace();
+    		LOG.error(e.getMessage(), e);
 	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        //runOnUiThread(returnError);
+	    	LOG.error(e.getMessage(), e);
 	    }
 		return anns;
 		
@@ -122,10 +123,9 @@ public class SakaiAnnouncementParser {
             }
 
 		} catch (JSONException e) {
-	    	e.printStackTrace();
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        //runOnUiThread(returnError);
+			LOG.error(e.getMessage(), e);
+	    } catch (Exception e) {	    	
+	    	LOG.error(e.getMessage(), e);
 	    }
 		return anns;
     }

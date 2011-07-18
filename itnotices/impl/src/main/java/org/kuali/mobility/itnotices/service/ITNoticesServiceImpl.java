@@ -15,7 +15,6 @@
  
 package org.kuali.mobility.itnotices.service;
 
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.List;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.kuali.mobility.itnotices.entity.ITNotice;
 import org.springframework.stereotype.Service;
@@ -35,45 +33,50 @@ import flexjson.JSONSerializer;
 @Service
 public class ITNoticesServiceImpl implements ITNoticesService {
 
-	public List<ITNotice> findAllITNotices() throws Exception {
-		List<ITNotice> notices = this.getITNoticesFromFeed();
-		return notices;
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ITNoticesServiceImpl.class);
+
+	public List<ITNotice> findAllITNotices() {
+		return getITNoticesFromFeed();
 	}
 	
     public String toJson(Collection<ITNotice> collection) {
         return new JSONSerializer().exclude("*.class").serialize(collection);
     }
     
-    private List<ITNotice> getITNoticesFromFeed() throws JDOMException, IOException {
+    private List<ITNotice> getITNoticesFromFeed() {
 		List<ITNotice> notices = new ArrayList<ITNotice>();
 		SAXBuilder builder = new SAXBuilder();
 		Document doc = null;
-		URL urlObj = new URL("http://itnotices.iu.edu/rss.aspx");
-		URLConnection urlConnection = urlObj.openConnection();
-		urlConnection.setConnectTimeout(5000);
-		urlConnection.setReadTimeout(5000);
-		urlConnection.connect();
-		doc = builder.build(urlConnection.getInputStream());
-		
-		if (doc != null) {
-			Element root = doc.getRootElement();
-			List items = root.getChild("channel").getChildren("item");
-			for (Iterator iterator = items.iterator(); iterator.hasNext();) {
-				Element item = (Element) iterator.next();
-				String services = "";
-				List service = item.getChildren("service");
-				for (Iterator iterator2 = service.iterator(); iterator2.hasNext();) {
-					Element s = (Element) iterator2.next();
-					services += s.getContent(0).getValue() + ", ";					
-				}
-				if (services.endsWith(", ")) {
-					services = services.substring(0, services.length() - 2);
-				}
-				ITNotice notice = new ITNotice(item.getChildTextTrim("lastUpdated"), item.getChildTextTrim("noticeType"), item.getChildTextTrim("title"), services, item.getChildTextTrim("message"));
-				determineImage(notice);
-//				model.addNotice(notice);
-				notices.add(notice);
-			}				
+		URL urlObj;
+		try {
+			urlObj = new URL("http://itnotices.iu.edu/rss.aspx");
+			URLConnection urlConnection = urlObj.openConnection();
+			urlConnection.setConnectTimeout(5000);
+			urlConnection.setReadTimeout(5000);
+			urlConnection.connect();
+			doc = builder.build(urlConnection.getInputStream());
+			
+			if (doc != null) {
+				Element root = doc.getRootElement();
+				List items = root.getChild("channel").getChildren("item");
+				for (Iterator iterator = items.iterator(); iterator.hasNext();) {
+					Element item = (Element) iterator.next();
+					String services = "";
+					List service = item.getChildren("service");
+					for (Iterator iterator2 = service.iterator(); iterator2.hasNext();) {
+						Element s = (Element) iterator2.next();
+						services += s.getContent(0).getValue() + ", ";					
+					}
+					if (services.endsWith(", ")) {
+						services = services.substring(0, services.length() - 2);
+					}
+					ITNotice notice = new ITNotice(item.getChildTextTrim("lastUpdated"), item.getChildTextTrim("noticeType"), item.getChildTextTrim("title"), services, item.getChildTextTrim("message"));
+					determineImage(notice);
+					notices.add(notice);
+				}				
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
 		}
 		
 		return notices;

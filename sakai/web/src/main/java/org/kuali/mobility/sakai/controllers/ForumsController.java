@@ -39,6 +39,8 @@ import edu.iu.uis.cas.filter.CASFilter;
 @RequestMapping("/forums")
 public class ForumsController {
 
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ForumsController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -70,7 +72,7 @@ public class ForumsController {
 			List<SakaiForum> forums = sakaiForumService.findCourseForums(json);
 			uiModel.addAttribute("sakaiforums", forums);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakaiforums/list";

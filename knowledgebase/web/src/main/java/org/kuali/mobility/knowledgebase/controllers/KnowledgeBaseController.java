@@ -36,7 +36,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller 
 @RequestMapping("/knowledgebase")
 public class KnowledgeBaseController {
-    
+
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(KnowledgeBaseController.class);
+
     @Autowired
     private KnowledgeBaseService knowledgeBaseService;
     public void setEmergencyInfoService(KnowledgeBaseService knowledgeBaseService) {
@@ -59,7 +61,7 @@ public class KnowledgeBaseController {
     		kbdoc = knowledgeBaseService.getConvertedKnowledgeBaseDocument(documentId, "knowledge_base", transformerParameters);
     		uiModel.addAttribute("kbdoc", kbdoc);
     	} catch (Exception e) {
-    		
+    		LOG.error(e.getMessage(), e);
     	}
     	return "knowledgebase/document";
     }
@@ -67,14 +69,12 @@ public class KnowledgeBaseController {
     @RequestMapping(value = "/search", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public Object searchKnowledgeBaseDocuments(@RequestParam(value = "criteria", required = true) String criteria) {
-//    	List<ComputerLab> labs = computerLabsService.findAllComputerLabsByCampus(campus);
-//    	return computerLabsService.toJson(labs);
     	try {
     		KnowledgeBaseSearchResultContainer cont = knowledgeBaseService.searchKnowledgeBase(criteria, 0, 50);
     		cont.getNumberOfResults();
     		return knowledgeBaseService.toJson(cont);
     	} catch (Exception e) {
-    		
+    		LOG.error(e.getMessage(), e);
     	}
     	return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
@@ -82,16 +82,13 @@ public class KnowledgeBaseController {
     @RequestMapping(value = "/document", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public Object getKnowledgeBaseDocument(@RequestParam(value = "id", required = true) String documentId) {
-//    	List<ComputerLab> labs = computerLabsService.findAllComputerLabsByCampus(campus);
-//    	return computerLabsService.toJson(labs);
     	String kbdoc = null;
     	try {
     		kbdoc = knowledgeBaseService.getKnowledgeBaseDocument(documentId);
     		return kbdoc;
     	} catch (Exception e) {
-    		
+    		LOG.error(e.getMessage(), e);
     	}
-//    	return "id: " + id;
     	return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
     

@@ -38,6 +38,9 @@ import edu.iu.uis.cas.filter.CASFilter;
 @Controller
 @RequestMapping("/sakaiprivatetopics")
 public class PrivateTopicsController {
+	
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PrivateTopicsController.class);
+	
 	@Autowired
 	private ConfigParamService configParamService;
 
@@ -70,49 +73,10 @@ public class PrivateTopicsController {
 			List<SakaiForum> topics = sakaiPrivateTopicService.findPrivateTopics(json);
 			uiModel.addAttribute("sakaiprivatetopics", topics);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 
 		return "sakaiforums/privatetopics";
 	}
 
-//	@RequestMapping(method = RequestMethod.POST)
-//	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("title") String title, @RequestParam("body") String body, @RequestParam("topicId") String topicId, @RequestParam("forumId") String forumId) {
-//		submitData(title, body, topicId, forumId, CASFilter.getRemoteUser(request));
-//		return new ResponseEntity<String>(HttpStatus.CREATED);
-//	}
-//
-//	private String submitData(String subject, String comment, String topicId, String forumId, String userId) {
-//		String response = "";
-//		try {
-//			String jsonString = "{";
-//			jsonString += "\"attachments\": [],";
-//			jsonString += "\"authoredBy\":\"" + userId + "\", ";
-//			jsonString += "\"body\":\"" + comment + "\", ";
-//			jsonString += "\"label\":\"" + "" + "\", ";
-//			jsonString += "\"recipients\":\"" + "" + "\", ";
-//			jsonString += "\"replies\":" + "null" + ", ";
-//			jsonString += "\"replyTo\":" + "null" + ", ";
-//			jsonString += "\"title\":\"" + subject + "\", ";
-//			jsonString += "\"topicId\":\"" + topicId + "\", ";
-//			jsonString += "\"forumId\":\"" + forumId + "\", ";
-//			jsonString += "\"read\":" + "false" + ", ";
-//			jsonString += "\"entityReference\":\"" + "\\/forum_message" + "\", ";
-//			//jsonString += "\"entityURL\":\"" + "http:\\/\\/localhost:8080\\/direct\\/forum_message" + "\", ";
-//			//jsonString += "\"entityTitle\":\"" + subject + "\"";
-//
-//			jsonString += "}";
-//
-//			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/new.json";
-//			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", jsonString);
-//			response = IOUtils.toString(is.getBody(), "UTF-8");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (NullPointerException e) {
-//			e.printStackTrace();
-//		} catch (OAuthException e) {
-//			e.printStackTrace();
-//		}
-//		return response;
-//	}
 }
