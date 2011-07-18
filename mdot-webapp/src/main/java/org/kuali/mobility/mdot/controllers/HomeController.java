@@ -22,14 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.kuali.mobility.mdot.entity.HomeScreen;
 import org.kuali.mobility.mdot.entity.Tool;
-import org.kuali.mobility.util.HttpUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
 @Controller 
@@ -40,41 +38,170 @@ public class HomeController {
 	
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String getList(HttpServletRequest request, Model uiModel) {      
-    	HomeScreen home = new HomeScreen();
-
-    	String json = HttpUtil.stringFromUrl(request.getScheme() + "://" + request.getRemoteHost() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/home.json");           
-        if (json != null && !"".equals(json.trim())) {
-            home = new JSONDeserializer<HomeScreen>().use(null, HomeScreen.class).deserialize(json);
-        }
-        
-        uiModel.addAttribute("home", home);
-    	
+        uiModel.addAttribute("home", buildHomeScreen());    	
     	return "index";
     }
 
     @RequestMapping(value = "home.json", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public String getHomeScreenJson() {
+    	return new JSONSerializer().exclude("*.class").include("tools").serialize(buildHomeScreen());
+    }
+
+    private HomeScreen buildHomeScreen() {
     	HomeScreen home = new HomeScreen();
     	home.setPrincipalId("1234");
     	home.setPrincipalName("natjohns");
+    	
     	List<Tool> tools = new ArrayList<Tool>();
-    	Tool itnotices = new Tool();
-    	itnotices.setBadgeCount("0");
-    	itnotices.setDescription("Information about campus IT services.");
-    	itnotices.setIconUrl("srvc-itnotice.png");
-    	itnotices.setTitle("IT Notices");
-    	itnotices.setUrl("/itnotices");
-    	tools.add(itnotices);
-    	Tool myclasses = new Tool();
-    	myclasses.setBadgeCount("2");
-    	myclasses.setDescription("Class information; forums, grades, etc.");
-    	myclasses.setIconUrl("srvc-myclasses.png");
-    	myclasses.setTitle("My Classes");
-    	myclasses.setUrl("/myclasses");
-    	tools.add(myclasses);    	
+
+    	Tool tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Class information; forums, grades, etc.");
+    	tool.setIconUrl("images/service-icons/srvc-myclasses.png");
+    	tool.setTitle("My Classes");
+    	tool.setUrl("myclasses");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Items for sale, jobs, apartments, and more.");
+    	tool.setIconUrl("images/service-icons/srvc-classifieds.png");
+    	tool.setTitle("Classifieds");
+    	tool.setUrl("https://onestart.iu.edu/ccf2-prd/ClassifiedsMb.do");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Never miss a campus bus again.");
+    	tool.setIconUrl("images/service-icons/srvc-bus.png");
+    	tool.setTitle("Bus Schedules");
+    	tool.setUrl("bus");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Get from here to there.");
+    	tool.setIconUrl("images/service-icons/srvc-maps.png");
+    	tool.setTitle("Maps");
+    	tool.setUrl("maps");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Live scores, rosters, news and schedules.");
+    	tool.setIconUrl("images/service-icons/srvc-athletics.png");
+    	tool.setTitle("Athletics");
+    	tool.setUrl("athletics");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Search for students, faculty, and staff.");
+    	tool.setIconUrl("images/service-icons/srvc-people.png");
+    	tool.setTitle("People");
+    	tool.setUrl("people");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Search campus labs for an open computer.");
+    	tool.setIconUrl("images/service-icons/srvc-stc.png");
+    	tool.setTitle("Computer Labs");
+    	tool.setUrl("computerlabs");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("IT Alerts and announcements.");
+    	tool.setIconUrl("images/service-icons/srvc-itnotice.png");
+    	tool.setTitle("IT Notices");
+    	tool.setUrl("itnotices");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("The latest information on IU events.");
+    	tool.setIconUrl("images/service-icons/srvc-news.png");
+    	tool.setTitle("News");
+    	tool.setUrl("news");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("See what's happening on campus.");
+    	tool.setIconUrl("images/service-icons/srvc-events.png");
+    	tool.setTitle("Events");
+    	tool.setUrl("events");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Your personal OneStart calendar.");
+    	tool.setIconUrl("images/service-icons/srvc-events.png");
+    	tool.setTitle("Calendar");
+    	tool.setUrl("calendar/month");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Find answers to your IT questions.");
+    	tool.setIconUrl("images/service-icons/srvc-kb.png");
+    	tool.setTitle("Knowledge Base");
+    	tool.setUrl("knowledgebase");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Ask a question and get an answer.");
+    	tool.setIconUrl("images/service-icons/srvc-askiu.png");
+    	tool.setTitle("Ask IU");
+    	tool.setUrl("askiu");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Get up to date menus and prices.");
+    	tool.setIconUrl("images/service-icons/srvc-dining.png");
+    	tool.setTitle("Dining Services");
+    	tool.setUrl("dining");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Police and medical phone numbers.");
+    	tool.setIconUrl("images/service-icons/srvc-emergency.png");
+    	tool.setTitle("Emergency Contacts");
+    	tool.setUrl("emergencycontacts");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("2");
+    	tool.setDescription("See a list of active campus alert messages.");
+    	tool.setIconUrl("images/service-icons/srvc-alerts-green.png");
+    	tool.setTitle("Campus Alerts");
+    	tool.setUrl("alerts");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("Questions and comments about IU Mobile.");
+    	tool.setIconUrl("images/service-icons/srvc-feedback.png");
+    	tool.setTitle("Feedback");
+    	tool.setUrl("feedback");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
+    	tool.setDescription("IUPUI Athletics information.");
+    	tool.setIconUrl("https://m.iu.edu/miu-prd/home/ip/images/ipicon-jag.png");
+    	tool.setTitle("Jaguar Athletics");
+    	tool.setUrl("http://www.iupuijags.com");
+    	tools.add(tool);
+    	
     	home.setTools(tools);
-    	return new JSONSerializer().exclude("*.class").include("tools").serialize(home);
+    	
+    	return home;
     }
     
 }
