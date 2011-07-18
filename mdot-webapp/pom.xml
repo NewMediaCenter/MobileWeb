@@ -52,7 +52,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.1.0</version>
-			<scope>runtime</scope>
+			<!-- <scope>provided</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -63,27 +63,28 @@
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
-			<scope>provided</scope>
+			<!-- <scope>provided</scope> -->
 			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>c</artifactId>
 			<version>1.1.1</version>
-			<scope>provided</scope>
+			<!-- <scope>provided</scope> -->
 			<type>tld</type>
 		</dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>fmt</artifactId>
 			<version>1.1.1</version>
-			<scope>provided</scope>
+			<!-- <scope>provided</scope> -->
 			<type>tld</type>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
+			<scope>provided</scope>
 			<type>jar</type>
 		</dependency>
         <!-- Logging dependencies -->
