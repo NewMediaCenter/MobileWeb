@@ -12,51 +12,51 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="${course.courseTitle}" id="class_details">
+<kme:page title="${course.title}" id="class_details">
 	<kme:content>
-		<h3>${course.courseDesc}</h3>
+		<h3>${course.description}</h3>
 		<div>
 		  	<img src="http://localhost:9090/direct/profile/${course.instructorId}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="pic">
 		</div>
 		<div>
 			<h3>Instructor</h3>
-			<a href="${pageContext.request.contextPath}/sakaiparticipantdetails?siteId=${course.courseId}&siteTitle=${course.courseTitle}&displayId=${course.instructorId}">
+			<a href="${pageContext.request.contextPath}/myclasses/${course.id}/roster/${course.instructorId}">
 				<p>${course.instructorName}</p>
 			</a>
 		</div>
 		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
 			<li>
-				<a href="${pageContext.request.contextPath}/myclasses/${course.courseId}/announcements?siteTitle=${course.courseTitle}">
+				<a href="${pageContext.request.contextPath}/myclasses/${course.id}/announcements">
 					<h3>Announcements</h3>
 				</a>
 			</li>
 			<li>
-				<a href="${pageContext.request.contextPath}/sakaiassignments?siteId=${course.courseId}&siteTitle=${course.courseTitle}&userId=${userId}">
+				<a href="${pageContext.request.contextPath}/myclasses/${course.id}/assignments">
 					<h3>Assignments</h3>
 				</a>
 			</li>
 			<li>					
-				<a href="${pageContext.request.contextPath}/sakaigradebook?siteId=${course.courseId}&siteTitle=${course.courseTitle}">
+				<a href="${pageContext.request.contextPath}/myclasses/${course.id}/grades">
 					<h3>Gradebook</h3>
 				</a>
 			</li>
 			<li>
-				<a href="${pageContext.request.contextPath}/roster?siteId=${course.courseId}&siteTitle=${course.courseTitle}">
+				<a href="${pageContext.request.contextPath}/myclasses/${course.id}/roster">
 					<h3>Roster</h3>
 				</a>
 			</li>
 			<li>
-				<a href="${pageContext.request.contextPath}/forums?siteId=${course.courseId}&siteTitle=${course.courseTitle}">
+				<a href="${pageContext.request.contextPath}/myclasses/${course.id}/forums">
 					<h3>Forums</h3>
 				</a>
 			</li>
 			<li>
-				<a href="${pageContext.request.contextPath}/resources?siteId=${course.courseId}&siteTitle=${course.courseTitle}">
+				<a href="${pageContext.request.contextPath}/resources?siteId=${course.id}&siteTitle=${course.title}">
 					<h3>Resources</h3>
 				</a>
 			</li>
 			<li>
-				<a href="${pageContext.request.contextPath}/sakaiprivatetopics?siteId=${course.courseId}&siteTitle=${course.courseTitle}">
+				<a href="${pageContext.request.contextPath}/sakaiprivatetopics?siteId=${course.id}&siteTitle=${course.title}">
 					<h3>Messages</h3>
 				</a>
 			</li>

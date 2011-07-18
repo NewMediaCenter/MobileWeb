@@ -14,26 +14,38 @@
 
 <kme:page title="My Classes" id="myclasses">
 	<kme:content>
-		<c:forEach items="${myclasses}" var="termItem" varStatus="status">
-			<h3>${termItem.key}</h3>
+		<c:if test="${!empty home.courses}">
+		<h2>Classes</h2>
+			<c:forEach items="${home.courses}" var="termItem" varStatus="status">
+				<h3>${termItem.key}</h3>
+				<ul data-role="listview" data-theme="c" data-inset="true">
+					<c:forEach items="${termItem.value}" var="item" varStatus="status">
+						<li>
+							<a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+								<h3>${item.title}</h3>
+								<c:if test="${not empty item.description && item.description != 'null'}">
+									<p>${item.description}</p>
+								</c:if>
+							</a>
+						</li>
+					</c:forEach>
+				</ul>
+			</c:forEach>
+		</c:if>
+		<c:if test="${!empty home.projects}">
+			<h2>Projects</h2>
 			<ul data-role="listview" data-theme="c" data-inset="true">
-				<c:forEach items="${termItem.value}" var="item" varStatus="status">
+				<c:forEach items="${home.projects}" var="item" varStatus="status">
 					<li>
-						<a href="${pageContext.request.contextPath}/myclasses/${item.courseId}">
-							<h3>${item.courseTitle}</h3>
-							<p>${item.courseDesc}</p>
+						<a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+							<h3>${item.title}</h3>
+							<c:if test="${not empty item.description && item.description != 'null'}">
+								<p>${item.description}</p>
+							</c:if>
 						</a>
 					</li>
 				</c:forEach>
 			</ul>
-		</c:forEach>
-		<div data-role="footer" data-id="mcl-footer" data-position="fixed"  role="contentinfo"  data-theme="b">
-	    	<div data-role="navbar" role="navigation">
-		      	<ul class="ui-grid-a">
-			        <li class="ui-block-a"><a href="${pageContext.request.contextPath}/myclasses">My Classes</a></li>
-			        <li class="ui-block-b"><a href="mcl-prog.html">My Projects </a></li>
-		      	</ul>
-		    </div>
-		</div>
+		</c:if>
 	</kme:content>
 </kme:page>

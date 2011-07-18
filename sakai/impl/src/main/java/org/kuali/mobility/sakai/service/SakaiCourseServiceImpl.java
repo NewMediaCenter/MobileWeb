@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,10 @@ import net.sf.json.util.JSONTokener;
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.SakaiAnnouncement;
-import org.kuali.mobility.sakai.entity.SakaiCourse;
+import org.kuali.mobility.sakai.entity.SakaiAssignment;
+import org.kuali.mobility.sakai.entity.SakaiHome;
+import org.kuali.mobility.sakai.entity.SakaiRoster;
+import org.kuali.mobility.sakai.entity.SakaiSite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -51,23 +53,22 @@ public class SakaiCourseServiceImpl implements SakaiCourseService {
 	@Autowired
 	private OAuth2LegService oncourseOAuthService;
 	
-	public Map<String,List<SakaiCourse>> findAllCourses(String campus, String user) {
+	public SakaiHome findSakaiHome(String user) {
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "site.json";
 			ResponseEntity<InputStream> is;
 			is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 			
-			Map<String,List<SakaiCourse>> courses = parseCourses(campus, json);
-			return courses;
+			return parseCourses(json);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return new LinkedHashMap<String,List<SakaiCourse>>();
+			return new SakaiHome();
 		}
 	}
 	
-	public SakaiCourse findCourse(String campus, String siteId, String user) {
-		SakaiCourse course = new SakaiCourse();
+	public SakaiSite findCourse(String siteId, String user) {
+		SakaiSite course = new SakaiSite();
 		String instructorName = "Not Defined";
 		String instructorId = "";
 		String courseDescription = "";
@@ -92,45 +93,64 @@ public class SakaiCourseServiceImpl implements SakaiCourseService {
 					instructorName = itemArray.getJSONObject(j).getString("displayName");
 				}
 			}
+			
+			//we might be able to get the available tools from this feed
+//			url = configParamService.findValueByName("Sakai.Url.Base") + "site/" + siteId + "/pages.json";
+//			is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
+//			json = IOUtils.toString(is.getBody(), "UTF-8");
+//			jsonObj = (JSONObject) JSONSerializer.toJSON(json);
 
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}	
 		
-		course.setCourseId(siteId);
+		course.setId(siteId);
 		course.setInstructorId(instructorId);
 		course.setInstructorName(instructorName);
-		course.setCourseDesc(courseDescription);
-		course.setCourseTitle(courseTitle);
+		course.setDescription(courseDescription);
+		course.setTitle(courseTitle);
 		
 		return course;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Map<String,List<SakaiCourse>> parseCourses(String campus, String json) {
-		Map<String,List<SakaiCourse>> courses = new LinkedHashMap<String,List<SakaiCourse>>();
+	public SakaiHome parseCourses(String json) {
+		SakaiHome home = new SakaiHome();
+		Map<String,List<SakaiSite>> courses = home.getCourses();
+		List<SakaiSite> projects = home.getProjects();
     	try {
 			JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("site_collection");
             for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
             	JSONObject object = iter.next();
-                String courseDesc = object.getString("description");
-                courseDesc = courseDesc.replace("&nbsp;"," ");          
-                SakaiCourse item = new SakaiCourse();
-                item.setCourseId(object.getString("entityId"));
-                item.setCourseTitle(object.getString("title"));
-                
-                JSONObject props = (JSONObject) object.get("props");
-                String term = props.getString("term");
-                item.setCourseTerm(term);
-                item.setCourseDesc(courseDesc);
-                
-                List<SakaiCourse> courseList = courses.get(term);
-                if (courseList == null) {
-                	courseList = new ArrayList<SakaiCourse>();
-                	courses.put(term, courseList);
-                }
-                courseList.add(item);
+            	
+            	String type = object.getString("type");
+            	if (!"project".equals(type)) {
+	                String courseDesc = object.getString("description");
+	                courseDesc = courseDesc.replace("&nbsp;"," ");          
+	                SakaiSite item = new SakaiSite();
+	                item.setId(object.getString("entityId"));
+	                item.setTitle(object.getString("title"));
+	                
+	                JSONObject props = (JSONObject) object.get("props");
+	                String term = props.getString("term");
+	                item.setTerm(term);
+	                item.setDescription(courseDesc);
+	                
+	                List<SakaiSite> courseList = courses.get(term);
+	                if (courseList == null) {
+	                	courseList = new ArrayList<SakaiSite>();
+	                	courses.put(term, courseList);
+	                }
+	                courseList.add(item);
+            	} else {
+            		SakaiSite project = new SakaiSite();
+            		project.setId(object.getString("entityId"));
+            		project.setDescription(object.getString("shortDescription"));
+            		project.setTitle(object.getString("title"));
+            		
+            		projects.add(project);
+            	}
             }
     	} catch (JSONException e) {
 	    	e.printStackTrace();
@@ -138,7 +158,7 @@ public class SakaiCourseServiceImpl implements SakaiCourseService {
 	    	e.printStackTrace();
 	        //runOnUiThread(returnError);
 	    }
-		return courses;
+		return home;
 	}
 	
 	public List<SakaiAnnouncement> findAllCourseAnnouncements(String siteId, String user) {
@@ -227,4 +247,196 @@ public class SakaiCourseServiceImpl implements SakaiCourseService {
 		return anns;
 	}
 	
+	public List<SakaiAssignment> findAllCourseAssignments(String siteId, String userId) {
+		List<SakaiAssignment> anns = new ArrayList<SakaiAssignment>();
+    	try {
+    		String url = configParamService.findValueByName("Sakai.Url.Base") + "assignment.json?siteId=" + siteId + "&userId=" + userId;
+    		ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+    		String json = IOUtils.toString(is.getBody(), "UTF-8");
+    		
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json.toString());
+            JSONArray itemArray = jsonObj.getJSONArray("assignment_collection");
+            for (int i = 0; i < itemArray.size(); i++) {
+                String id = itemArray.getJSONObject(i).getString("id");
+                String title = itemArray.getJSONObject(i).getString("title");
+                String dropByDate = itemArray.getJSONObject(i).getString("dropByDate");
+                
+                SakaiAssignment trs = new SakaiAssignment();
+                trs.setId(id);
+                trs.setTitle(title);
+                trs.setDropByDate(dropByDate);
+                anns.add(trs);
+            }
+		} catch (Exception e) {
+	    	LOG.error(e.getMessage(), e);
+	    }
+		return anns;
+	}
+	
+	public List<SakaiAssignment> findAssignmentDetails(String json) {
+		List<SakaiAssignment> ass = new ArrayList<SakaiAssignment>();
+    	try {
+            JSONObject jsonObj = (JSONObject) new JSONTokener(json).nextValue();
+            
+            JSONArray itemArray = jsonObj.getJSONArray("assignment_collection");
+            for (int i = 0; i < itemArray.size(); i++) {
+	            String body = itemArray.getJSONObject(i).getString("body");
+	            String maxGradePoints = itemArray.getJSONObject(i).getString("gradeScale");
+	            String title = itemArray.getJSONObject(i).getString("title");
+	            String submittedStatus = null;
+	            String submittedText = null;
+	            String submittedAttachments = null;
+	            String graded = null;
+	            String submissionGrade = null;
+	            String submitted = itemArray.getJSONObject(i).getString("submittedStatus");
+	            if (submitted.equals("true")) {
+	            	submittedStatus = "Submitted";
+	            	submittedText = itemArray.getJSONObject(i).getString("submittedText");
+		            submittedAttachments = itemArray.getJSONObject(i).getString("submittedAttachments");
+		            
+		            graded = itemArray.getJSONObject(i).getString("submissionGraded");
+		            submissionGrade = itemArray.getJSONObject(i).getString("submissionGrade");
+	            }
+	            else {
+	            	submittedStatus = "Not Submitted";
+	            }
+	            
+	            SakaiAssignment trs = new SakaiAssignment();
+	            trs.setTitle(title);
+	            trs.setBody(body);
+	            trs.setGradeScale(maxGradePoints);
+	            trs.setSubmittedStatus(submittedStatus);
+	            trs.setSubmittedText(submittedText);
+	            trs.setSubmittedAttachments(submittedAttachments);
+	            trs.setSubmissionGraded(graded);
+	            trs.setSubmissionGrade(submissionGrade);
+	            ass.add(trs);
+            }
+    	} catch (Exception e) {
+	    	LOG.error(e.getMessage(), e);
+	    }
+		return ass;
+	}
+	
+	public String findCourseGrade(String json) {
+		String courseGrade = null;
+    	try {
+		
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json.toString());
+            JSONArray itemArray = jsonObj.getJSONArray("gradebook_collection");
+            for (int i = 0; i < itemArray.size(); i++) {
+                courseGrade = itemArray.getJSONObject(i).getString("courseGrade");
+            }
+
+		} catch (Exception e) {
+	    	LOG.error(e.getMessage(), e);
+	    }
+		return courseGrade;
+	}
+	
+	public List<SakaiRoster> findCourseRoster(String json) {
+		List<SakaiRoster> roster = new ArrayList<SakaiRoster>();
+    	try {
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("participant_collection");
+            for (int i = 0; i < itemArray.size(); i++) {
+            	String displayID = itemArray.getJSONObject(i).getString("displayID");
+                String displayName = itemArray.getJSONObject(i).getString("displayName");
+                String firstName = itemArray.getJSONObject(i).getString("firstName");
+                String lastName = itemArray.getJSONObject(i).getString("lastName");
+                String nickName = itemArray.getJSONObject(i).getString("nickName");
+                String department = itemArray.getJSONObject(i).getString("department");
+                String email = itemArray.getJSONObject(i).getString("email");
+                String homePage = itemArray.getJSONObject(i).getString("homePage");
+                String homePhone = itemArray.getJSONObject(i).getString("homePhone");
+                String workPhone = itemArray.getJSONObject(i).getString("workPhone");
+                String position = itemArray.getJSONObject(i).getString("position");
+                String roleTitle = itemArray.getJSONObject(i).getString("roleTitle");
+                String room = itemArray.getJSONObject(i).getString("room");
+                String school = itemArray.getJSONObject(i).getString("school");
+                String otherInformation = itemArray.getJSONObject(i).getString("otherInformation");
+                String entityReference = itemArray.getJSONObject(i).getString("entityReference");
+                String entityURL = itemArray.getJSONObject(i).getString("entityURL");
+                
+                SakaiRoster trs = new SakaiRoster();
+                trs.setDisplayID(displayID);
+                trs.setDisplayName(displayName);
+                trs.setFirstName(firstName);
+                trs.setLastName(lastName);
+                trs.setNickName(nickName);
+                trs.setDepartment(department);
+                trs.setEmail(email);
+                trs.setHomePage(homePage);
+                trs.setHomePhone(homePhone);
+                trs.setWorkPhone(workPhone);
+                trs.setPosition(position);
+                trs.setRoleTitle(roleTitle);
+                trs.setRoom(room);
+                trs.setSchool(school);
+                trs.setOtherInformation(otherInformation);
+                trs.setEntityReference(entityReference);
+                trs.setEntityURL(entityURL);
+                
+                roster.add(trs);
+            }
+    	} catch (JSONException e) {
+    		LOG.error(e.getMessage(), e);
+        }
+		return roster;
+	}
+	
+	public List<SakaiRoster> findCourseParticipantDetails(String json, String displayId) {
+		List<SakaiRoster> roster = new ArrayList<SakaiRoster>();
+    	try {
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("participant_collection");
+            for (int i = 0; i < itemArray.size(); i++) {
+            	String displayID = itemArray.getJSONObject(i).getString("displayID");
+            	if(!displayId.equalsIgnoreCase(displayID)){
+            		continue;
+            	}
+                String displayName = itemArray.getJSONObject(i).getString("displayName");
+                String firstName = itemArray.getJSONObject(i).getString("firstName");
+                String lastName = itemArray.getJSONObject(i).getString("lastName");
+                String nickName = itemArray.getJSONObject(i).getString("nickName");
+                String department = itemArray.getJSONObject(i).getString("department");
+                String email = itemArray.getJSONObject(i).getString("email");
+                String homePage = itemArray.getJSONObject(i).getString("homePage");
+                String homePhone = itemArray.getJSONObject(i).getString("homePhone");
+                String workPhone = itemArray.getJSONObject(i).getString("workPhone");
+                String position = itemArray.getJSONObject(i).getString("position");
+                String roleTitle = itemArray.getJSONObject(i).getString("roleTitle");
+                String room = itemArray.getJSONObject(i).getString("room");
+                String school = itemArray.getJSONObject(i).getString("school");
+                String otherInformation = itemArray.getJSONObject(i).getString("otherInformation");
+                String entityReference = itemArray.getJSONObject(i).getString("entityReference");
+                String entityURL = itemArray.getJSONObject(i).getString("entityURL");
+                
+                SakaiRoster trs = new SakaiRoster();
+                trs.setDisplayID(displayID);
+                trs.setDisplayName(displayName);
+                trs.setFirstName(firstName);
+                trs.setLastName(lastName);
+                trs.setNickName(nickName);
+                trs.setDepartment(department);
+                trs.setEmail(email);
+                trs.setHomePage(homePage);
+                trs.setHomePhone(homePhone);
+                trs.setWorkPhone(workPhone);
+                trs.setPosition(position);
+                trs.setRoleTitle(roleTitle);
+                trs.setRoom(room);
+                trs.setSchool(school);
+                trs.setOtherInformation(otherInformation);
+                trs.setEntityReference(entityReference);
+                trs.setEntityURL(entityURL);
+                
+                roster.add(trs);
+            }
+    	} catch (JSONException e) {
+    		LOG.error(e.getMessage(), e);
+        }
+		return roster;
+	}
+
 }

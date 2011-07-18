@@ -20,15 +20,15 @@ import java.sql.Timestamp;
 
 import flexjson.JSONSerializer;
 
-public class SakaiCourse implements Serializable, Comparable<SakaiCourse> {
+public class SakaiSite implements Serializable, Comparable<SakaiSite> {
 
 	private static final long serialVersionUID = -5535399038213510311L;
 	
 	private String campus;
-    private String courseId;
-    private String courseTitle;
-    private String courseDesc;
-    private String courseTerm;
+    private String id;
+    private String title;
+    private String description;
+    private String term;
     private Timestamp createdTime;
     private Timestamp modifiedTime;
     private boolean active;
@@ -51,13 +51,13 @@ public class SakaiCourse implements Serializable, Comparable<SakaiCourse> {
 		this.instructorId = instructorId;
 	}
 
-	public SakaiCourse() {}
+	public SakaiSite() {}
     
-    public SakaiCourse(String campus, String courseId, String courseTitle, String courseDesc) {
+    public SakaiSite(String campus, String courseId, String courseTitle, String courseDesc) {
         this.campus = campus;
-        this.setCourseId(courseId);
-        this.setCourseTitle(courseTitle);
-        this.setCourseDesc(courseDesc);
+        this.setId(courseId);
+        this.setTitle(courseTitle);
+        this.setDescription(courseDesc);
         this.active = true;
     }
     
@@ -71,11 +71,11 @@ public class SakaiCourse implements Serializable, Comparable<SakaiCourse> {
 
     
 
-    public int compareTo(SakaiCourse that) {
-        if (this == null || that == null || this.getCourseId() == null || that.getCourseId() == null) {
+    public int compareTo(SakaiSite that) {
+        if (this == null || that == null || this.getId() == null || that.getId() == null) {
             return -1;
         }
-        return this.getCourseId().compareTo(that.getCourseId());
+        return this.getId().compareTo(that.getId());
     }
 
 	
@@ -87,40 +87,40 @@ public class SakaiCourse implements Serializable, Comparable<SakaiCourse> {
 		this.active = active;
 	}
 
-	public void setCourseId(String courseId) {
-		this.courseId = courseId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getCourseId() {
-		return courseId;
+	public String getId() {
+		return id;
 	}
 
-	public void setCourseTitle(String courseTitle) {
-		this.courseTitle = courseTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getCourseTitle() {
-		return courseTitle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setCourseDesc(String courseDesc) {
-		this.courseDesc = courseDesc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getCourseDesc() {
-		return courseDesc;
+	public String getDescription() {
+		return description;
 	}
 
 	public String toJson() {
         return new JSONSerializer().exclude("*.class").serialize(this);
     }
 
-	public String getCourseTerm() {
-		return courseTerm;
+	public String getTerm() {
+		return term;
 	}
 
-	public void setCourseTerm(String courseTerm) {
-		this.courseTerm = courseTerm;
+	public void setTerm(String term) {
+		this.term = term;
 	}
    
 	public Timestamp getCreatedTime() {

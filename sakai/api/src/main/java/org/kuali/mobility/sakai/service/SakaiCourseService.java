@@ -19,12 +19,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.kuali.mobility.sakai.entity.SakaiAnnouncement;
-import org.kuali.mobility.sakai.entity.SakaiCourse;
+import org.kuali.mobility.sakai.entity.SakaiAssignment;
+import org.kuali.mobility.sakai.entity.SakaiSite;
+import org.kuali.mobility.sakai.entity.SakaiHome;
+import org.kuali.mobility.sakai.entity.SakaiRoster;
 
 public interface SakaiCourseService {
-	public Map<String,List<SakaiCourse>> findAllCourses(String campus, String user);
-	public SakaiCourse findCourse(String campus, String siteId, String user);
+	public SakaiHome findSakaiHome(String user);
+	public SakaiSite findCourse(String siteId, String user);
 	
 	public List<SakaiAnnouncement> findAnnouncementDetails(String json);
 	public List<SakaiAnnouncement> findAllCourseAnnouncements(String siteId, String user);
+	
+	public List<SakaiAssignment> findAllCourseAssignments(String siteId, String userId);
+	public List<SakaiAssignment> findAssignmentDetails(String json);
+	public String findCourseGrade(String json);
+	
+	public List<SakaiRoster> findCourseRoster(String json);
+	public List<SakaiRoster> findCourseParticipantDetails(String json, String displayId);
 }

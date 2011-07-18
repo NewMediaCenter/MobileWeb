@@ -67,12 +67,12 @@ public class ForumsMessagesDetailsController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String getCreateJsp(Model uiModel) {
-		return "sakaiforums/forumsmessagecreate";
+		return "sakai/forums/forumsmessagecreate";
 	}
 
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public String getReplyJsp(Model uiModel) {
-		return "sakaiforums/forumsmessagereply";
+		return "sakai/forums/forumsmessagereply";
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -88,7 +88,7 @@ public class ForumsMessagesDetailsController {
 			LOG.error(e.getMessage(), e);
 		}
 
-		return "sakaiforums/forumsmessagedetails";
+		return "sakai/forums/forumsmessagedetails";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

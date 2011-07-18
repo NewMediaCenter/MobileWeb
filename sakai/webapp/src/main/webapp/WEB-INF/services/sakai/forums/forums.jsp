@@ -24,28 +24,27 @@
 
 <body>
 <div data-role="page" id="">
-	<div data-role="header" data-position="">
-    <h1>Details</h1><a href="${pageContext.request.contextPath}/index.jsp" data-icon="home" class="ui-btn-right">home</a>
-  </div>
+	<div data-role="header">
+		<h1>Forums</h1>
+	</div>
 	<!-- /header -->
 
-	<div data-role="content" style="padding-top:0px">
-    <ul data-role="listview" data-theme="c"  data-dividertheme="b"  data-inset="true">
-			<c:forEach items="${roster}" var="item" varStatus="status">
+	<div data-role="content" data-theme="a">
+		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
+			<c:forEach items="${sakaiforums}" var="item" varStatus="status">
+				<c:choose>
+					<c:when test="${item.isForumHeader}">
+						<li data-role="list-divider">${item.title}</li>
+					</c:when>
+				<c:otherwise>
 				<li>
-		        <div class="ui-grid-a">
-		          <div class="ui-block-a" style="width:40%"> <img src="http://localhost:9090/direct/profile/${item.displayID}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="pic"></div>
-		          <div class="ui-block-b" style="width:60%">
-		            <h3 style="margin-top:0px">${item.lastName}, ${item.firstName}</h3>
-		            <p>${item.school}</p>
-		            <p>${item.roleTitle}</p>
-		          </div>
-		        </div>
-		        <!-- /grid-a --> 
-		        
-		      </li>
-		      <li><a href="mailto:${item.email}"> ${item.email} </a> </li>
-		      <li><a href="tel:${item.workPhone}"> ${item.workPhone} </a> </li>
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${item.forumId}/${item.id}?topicTitle=${item.title}">
+						<h3>${item.title}</h3>
+						<p>${item.description}</p>
+					</a>
+				</li>
+				</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</ul>
 	</div>

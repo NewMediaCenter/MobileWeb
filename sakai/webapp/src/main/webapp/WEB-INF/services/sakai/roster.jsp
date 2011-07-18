@@ -34,17 +34,14 @@
 			<c:forEach items="${roster}" var="item" varStatus="status">
 				
 				<li>
-					<div class="ui-block-a" style="width:10%">
+					<%--<div>
 					  	<img src="http://localhost:9090/direct/profile/${item.displayID}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="pic">
-					</div>
-					<div class="ui-block-b" style="width:90%">
-					<a href="${pageContext.request.contextPath}/sakaiparticipantdetails?siteId=
-					<%= request.getParameter("siteId") %>&siteTitle=
-					<%= request.getParameter("siteTitle") %>&displayId=
-					${item.displayID}">
-						<h3>${item.displayName}</h3>
+					</div>--%>
+					<div>
+						<a href="${pageContext.request.contextPath}/myclasses/${siteId}/roster/${item.displayID}">
+							<h3>${item.displayName}</h3>
+						</a>
 						<p>${item.roleTitle}</p>
-					</a>
 					</div>
 				</li>
 			</c:forEach>
