@@ -63,6 +63,13 @@ function refreshComputerLabs() {
 	}
 }
 
+$('[data-role=page][id=kb]').live("pagebeforeshow", function(event) {
+//	alert("test");
+	$('#kbsearch').keyup(function() {
+		lookup($('#kbsearch').val());
+	});	
+});
+
 $('[data-role=page]').live('pagecreate', function (event) {
 	var activekb = 0;
 	var activekbdoc = 0;
@@ -72,9 +79,9 @@ $('[data-role=page]').live('pagecreate', function (event) {
 		activekb = 1;
 		//alert('pagecreate');
 		
-		$('#kbsearch').keyup(function() {
-			lookup($('#kbsearch').val());
-		});	
+//		$('#kbsearch').keyup(function() {
+//			lookup($('#kbsearch').val());
+//		});	
 	} else if (this.id == "kbdoc" && activekbdoc == 0) {
 		activekbdoc = 1;
 //	    $('a.native-anchor').bind('click', function(ev) {
@@ -123,8 +130,13 @@ $('[data-role=page]').live('pagecreate', function (event) {
 	}
 });
 
+var kbRemoteCallCount = 0;
+var kbCurrentDisplayNumber = 0;
+
 function lookup(inputString) {
-	if(inputString.length < 2) {
+	kbRemoteCallCount++;
+	var kbRemoteCallCountAtStartOfRequest = kbRemoteCallCount;
+	if(inputString && inputString.length < 2) {
 		// Hide the suggestion box.
 		// $('#suggestions').hide();
 		$('#searchresults').html('');
@@ -136,15 +148,21 @@ function lookup(inputString) {
 			}
 		});
 */
-		$.getJSON('knowledgebase/search?criteria=' + inputString, function(data) {
-			var items = [];
-			$.each(data.results, function(key, val) {
-				//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
-				items.push('<a href="knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
-			});
-			var pagehtml = '<div id="resultdata"></div>'
-			$('#searchresults').html(pagehtml);
-			$("#resultdata").html(items.join('')).page();
+		var requestUrlString = 'knowledgebase/search?criteria=' + inputString;
+		$.getJSON(requestUrlString, function(data) {
+			console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
+			if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
+				kbCurrentDisplayNumber = kbRemoteCallCount;
+				// Show results
+				var items = [];
+				$.each(data.results, function(key, val) {
+					//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
+					items.push('<a href="knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
+				});
+				var pagehtml = '<div id="resultdata"></div>'
+				$('#searchresults').html(pagehtml);
+				$("#resultdata").html(items.join('')).page();
+			}
 			//$('#searchresults').html(pagehtml).page();
 			//alert(items.join(''));
 /* 				  $.each(data, function(key, val) {
