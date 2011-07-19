@@ -17,8 +17,10 @@ package org.kuali.mobility.knowledgebase.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +47,7 @@ import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.knowledgebase.entity.KnowledgeBaseSearchResult;
@@ -56,6 +59,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import flexjson.JSONSerializer;
 
 public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
+	
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(KnowledgeBaseServiceImpl.class);
 	
     @Autowired
     private XslDao xslDao;
@@ -87,80 +92,95 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 		return templates;
 	}
 	
-	public KnowledgeBaseSearchResultContainer searchKnowledgeBase(String query, int index, int size) throws Exception {
-		// We could probably just return a document for this and use an XSL to transform it in the mobile service implementation.
-//		String url = this.getCacheService().findConfigParamValueByName(PARAM_KB_URL_SEARCH);
-//		String url = "http://remote.kb.iu.edu/REST/v0.2/document/search//";
-		String url = this.configParamService.findValueByName(PARAM_KB_URL_SEARCH);
-		String content = "query=" + URLEncoder.encode(query, "UTF-8");
-		if (index > 0) {
-			content = content + "&start=" + index;
-		}
-		if (size > 0) {
-			content = content + "&size=" + size;
-		}
-		RequestEntity requestEntity = new StringRequestEntity(content, null, "UTF-8");
-		
-//		Document doc = this.callKnowledgeBase(url, requestEntity, true);
-		String searchXml = this.callKnowledgeBase(url, requestEntity, true);
-		
-		SAXBuilder builder = new SAXBuilder();
-		StringReader reader = new StringReader(searchXml);
-		Document doc = builder.build(reader);
+	public KnowledgeBaseSearchResultContainer searchKnowledgeBase(String query, int index, int size) {
+		KnowledgeBaseSearchResultContainer container = null;
+		try {
+			// We could probably just return a document for this and use an XSL to transform it in the mobile service implementation.
+//			String url = this.getCacheService().findConfigParamValueByName(PARAM_KB_URL_SEARCH);
+//			String url = "http://remote.kb.iu.edu/REST/v0.2/document/search//";
+			String url = this.configParamService.findValueByName(PARAM_KB_URL_SEARCH);
+			String content = "query=" + URLEncoder.encode(query, "UTF-8");
+			if (index > 0) {
+				content = content + "&start=" + index;
+			}
+			if (size > 0) {
+				content = content + "&size=" + size;
+			}
+			RequestEntity requestEntity = new StringRequestEntity(content, null, "UTF-8");
+			
+//			Document doc = this.callKnowledgeBase(url, requestEntity, true);
+			String searchXml = this.callKnowledgeBase(url, requestEntity, true);
+			
+			SAXBuilder builder = new SAXBuilder();
+			StringReader reader = new StringReader(searchXml);
+			Document doc = builder.build(reader);
 
-		KnowledgeBaseSearchResultContainer container = convertSearchDocument(doc);
-		container.setCount(size);
+			container = convertSearchDocument(doc);
+			container.setCount(size);
+		} catch (UnsupportedEncodingException e) {
+			LOG.error(e.getMessage(), e);
+		} catch (JDOMException e) {
+			LOG.error(e.getMessage(), e);
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
 		return container;
 	}
 
 
 	private KnowledgeBaseSearchResultContainer convertSearchDocument(Document doc) {
 		KnowledgeBaseSearchResultContainer container = new KnowledgeBaseSearchResultContainer();
-		if (doc != null) {
-			Element root = doc.getRootElement();
-			String numResultsStr = root.getChildText("numResults");
-			int numResults = 0;
-			try {
-				numResults = Integer.parseInt(numResultsStr);
-				if (numResults > 300) {
-					numResults = 300;
-				}
-				container.setNumberOfResults(numResults);
-			} catch (NumberFormatException e) {}
-			
-			String startStr = root.getChildText("start");
-			int start = 0;
-			try {
-				start = Integer.parseInt(startStr);
-				container.setStart(start);
-				container.setIndexLastInView(start);
-			} catch (NumberFormatException e) {}
-			
-			if (numResults > 0) {
-				Element results = root.getChild("results");
-				List resultList = results.getChildren("result");
-				boolean firstResult = true;
-				int count = 0;
-				for (Iterator iterator = resultList.iterator(); iterator.hasNext();) {
-					Element result = (Element) iterator.next();
-					String documentId = processChildText(result, "docid");
-					String title = processChildText(result, "title");
-					KnowledgeBaseSearchResult searchResult = new KnowledgeBaseSearchResult();
-					searchResult.setDocumentId(documentId);
-					searchResult.setTitle(title);
-					container.getResults().add(searchResult);
-					// Index of the last item in view should not increment for the first result.
-					if (firstResult) {
-						firstResult = false;
-					} else {
-						container.setIndexLastInView(container.getIndexLastInView() + 1);	
+		try {
+			if (doc != null) {
+				Element root = doc.getRootElement();
+				String numResultsStr = root.getChildText("numResults");
+				int numResults = 0;
+				try {
+					numResults = Integer.parseInt(numResultsStr);
+					if (numResults > 300) {
+						numResults = 300;
 					}
-					count++;
+					container.setNumberOfResults(numResults);
+				} catch (NumberFormatException e) {}
+				
+				String startStr = root.getChildText("start");
+				int start = 0;
+				try {
+					start = Integer.parseInt(startStr);
+					container.setStart(start);
+					container.setIndexLastInView(start);
+				} catch (NumberFormatException e) {}
+				
+				if (numResults > 0) {
+					Element results = root.getChild("results");
+					List resultList = results.getChildren("result");
+					boolean firstResult = true;
+					int count = 0;
+					for (Iterator iterator = resultList.iterator(); iterator.hasNext();) {
+						Element result = (Element) iterator.next();
+						String documentId = processChildText(result, "docid");
+						String title = processChildText(result, "title");
+						KnowledgeBaseSearchResult searchResult = new KnowledgeBaseSearchResult();
+						searchResult.setDocumentId(documentId);
+						searchResult.setTitle(title);
+						container.getResults().add(searchResult);
+						// Index of the last item in view should not increment for the first result.
+						if (firstResult) {
+							firstResult = false;
+						} else {
+							container.setIndexLastInView(container.getIndexLastInView() + 1);	
+						}
+						count++;
+					}
 				}
-			}
-			// TESTING
+				// TESTING
 //			String xml = new XMLOutputter().outputString(doc);
 //			LOG.info(xml);
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
 		}
 		return container;
 	}
@@ -171,16 +191,22 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 		return output;
 	}
 
-	public String getKnowledgeBaseDocument(String documentId) throws Exception {
-//		String urlFormat = "http://remote.kb.iu.edu/REST/v0.2/document/%s";
-//		String urlFormat = this.getCacheService().findConfigParamValueByName(PARAM_KB_URL_DOCUMENT);
-		String urlFormat = this.configParamService.findValueByName(PARAM_KB_URL_DOCUMENT);
-		String args[] = { documentId };
-		String url = String.format(Locale.US, urlFormat, (Object[]) args); //"http://remote.kb.iu.edu/REST/v0.2/document/" + documentId;
-		return this.callKnowledgeBase(url, null, false);
+	public String getKnowledgeBaseDocument(String documentId) {
+		String docStr = "";
+		try {
+//			String urlFormat = "http://remote.kb.iu.edu/REST/v0.2/document/%s";
+//			String urlFormat = this.getCacheService().findConfigParamValueByName(PARAM_KB_URL_DOCUMENT);
+			String urlFormat = this.configParamService.findValueByName(PARAM_KB_URL_DOCUMENT);
+			String args[] = { documentId };
+			String url = String.format(Locale.US, urlFormat, (Object[]) args); //"http://remote.kb.iu.edu/REST/v0.2/document/" + documentId;
+			docStr = this.callKnowledgeBase(url, null, false);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		return docStr;
 	}
 
-	public String getConvertedKnowledgeBaseDocument(String documentId, String templatesCode, Map<String, Object> transformerParameters) throws Exception {
+	public String getConvertedKnowledgeBaseDocument(String documentId, String templatesCode, Map<String, Object> transformerParameters) {
 		String xml = this.getKnowledgeBaseDocument(documentId);
 		String output = "";
 		try {
@@ -194,7 +220,7 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 	        transformer.transform(new StreamSource(new ByteArrayInputStream(xml.getBytes())), new StreamResult(byteArrayOutputStream));
 	        output = byteArrayOutputStream.toString();
 		} catch (Exception e) {
-//			LOG.error("Error in testText: ", e);
+			LOG.error(e.getMessage(), e);
 		}
 		return output;
 	}

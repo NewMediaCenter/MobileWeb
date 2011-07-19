@@ -22,8 +22,8 @@ import org.kuali.mobility.knowledgebase.entity.KnowledgeBaseSearchResultContaine
 public interface KnowledgeBaseService {
 
 	public String toJson(KnowledgeBaseSearchResultContainer container);
-	public KnowledgeBaseSearchResultContainer searchKnowledgeBase(String query, int index, int size) throws Exception;
-	public String getConvertedKnowledgeBaseDocument(String documentId, String templatesCode, Map<String, Object> transformerParameters) throws Exception;
-	public String getKnowledgeBaseDocument(String documentId) throws Exception;
+	public KnowledgeBaseSearchResultContainer searchKnowledgeBase(String query, int index, int size);
+	public String getConvertedKnowledgeBaseDocument(String documentId, String templatesCode, Map<String, Object> transformerParameters);
+	public String getKnowledgeBaseDocument(String documentId);
 	
 }
