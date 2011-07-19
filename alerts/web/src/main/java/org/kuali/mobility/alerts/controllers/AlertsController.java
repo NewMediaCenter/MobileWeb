@@ -39,7 +39,7 @@ public class AlertsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(HttpServletRequest request, Model uiModel) {
-   	    List<Alert> alerts = alertsService.findAllAlertsFromJson(request.getScheme() + "://" + request.getRemoteHost() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/alerts.json");
+   	    List<Alert> alerts = alertsService.findAllAlertsFromJson(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/alerts.json");
    		uiModel.addAttribute("alerts", alerts);
     	return "alerts/list";
     }
