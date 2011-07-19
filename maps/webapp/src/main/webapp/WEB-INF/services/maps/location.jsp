@@ -8,27 +8,18 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-<title>Maps</title>
 
-<jsp:include page="../resources.jsp" />
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-</head>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<body>
-<div data-role="page" id="mapslocation" class="page-map">
-	<div data-role="header">
-		<h1>Maps</h1>
-	</div>
-	<!-- /header -->
-
+<kme:page title="Maps" id="mapslocation">
+	<kme:content>
+	
+<div id="map_canvas" style="height:300px;"></div>
+	
 <script type="text/javascript">
 /* Maps */
 
@@ -77,7 +68,7 @@ function deleteOverlays(array) {
 }
 
 
-$('[data-role=page][id=mapslocation2]').live('pageshow',function(e, ui){ 
+/* $('[data-role=page][id=mapslocation2]').live('pageshow',function(e, ui){ 
 
 	//var page_name = e.target.id;
 	//if (page_name == 'mapslocation'){
@@ -108,7 +99,7 @@ $('[data-role=page][id=mapslocation2]').live('pageshow',function(e, ui){
 			});
 		}
 	//}
-});
+}); */
 
 // When map page opens get location and display map
 //$('.page-map').live("pagecreate", function() {
@@ -203,16 +194,5 @@ function centerOverAllLocations() {
 	map.fitBounds(bounds);
 }
 </script>
-
-	<div data-role="content" data-theme="a">
-		<div id="map_canvas" style="height:300px;"></div>
-	</div>
-	<!-- /content -->
-
-</div>
-<!-- /maps --> 
-
-<!-- /page -->
-
-</body>
-</html>
+	</kme:content>
+</kme:page>
