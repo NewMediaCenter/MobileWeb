@@ -22,7 +22,7 @@
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
 <script type="text/javascript">
-    $( document ).bind( "mobileinit", function(){ $.mobile.page.prototype.options.degradeInputs.date = 'text'; });	
+    $( document ).bind( "mobileinit", function(){ $.mobile.page.prototype.options.degradeInputs.date = 'text'; });
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
@@ -54,7 +54,7 @@
             <label for="allDay">All Day</label>
             <br/>
             <label for="startDate">Start Date</label>
-            <form:input path="startDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
+            <form:input path="startDate"  cssClass="genField textEntry date" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
             <form:errors path="startDate" />
             <br/>
             <c:choose>
@@ -87,15 +87,15 @@
             <br/>
             <label for="showAs">Show As</label>
              <form:select path="showAs"  cssClass="ui-widget-content ui-corner-all" data-native-menu="false">
-                    <form:option value="BUSY" label="Busy" />
-                    <form:option value="FREE" label="Free" />
+                <form:option value="BUSY" label="Busy" />
+                <form:option value="FREE" label="Free" />
             </form:select><form:errors path="showAs" />
             <br/>
             <label for="sharing">Sharing</label>
             <form:select path="sharing"  cssClass="ui-widget-content ui-corner-all" data-native-menu="false">
-                    <form:option value="PUBLIC" label="Public" />
-                    <form:option value="PRIVATE" label="Private" />
-                    <form:option value="CONFIDENTIAL" label="Confidential" />
+                <form:option value="PUBLIC" label="Public" />
+                <form:option value="PRIVATE" label="Private" />
+                <form:option value="CONFIDENTIAL" label="Confidential" />
             </form:select><form:errors path="sharing" />
             <br/>
             <label for="description">Description</label>
@@ -134,6 +134,35 @@
             	<form:input path="recurrenceUntilDate"  cssClass="text ui-widget-content ui-corner-all" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
             	<form:errors path="recurrenceUntilDate" /><br/>
             </c:if>
+            
+            <br/>
+            <label for="remindBy">Reminder Delivery</label>
+            <form:select path="remindBy" cssClass="ui-widget-content ui-corner-all" data-native-menu="false">
+            	<form:option value="NONE" label="Choose delivery" data-placeholder="true"/>
+            	<form:option value="EMAIL" label="Email Address" />
+            	<form:option value="SMS" label="SMS" />
+            </form:select><form:errors property="remindBy" />
+            <br/>
+            <label for="reminder">Send Reminder</label>
+            <form:select path="reminder"  cssClass="ui-widget-content ui-corner-all" data-native-menu="false">
+            	<form:option value="0" label="Choose option" data-placeholder="true"/>
+                <form:option value="300000" label="5 Minutes before event" />
+                <form:option value="900000" label="15 Minutes before event" />
+                <form:option value="1800000" label="30 Minutes before event" />
+                <form:option value="3600000" label="1 Hour before event" />
+                <form:option value="7200000" label="2 Hours before event" />
+                <form:option value="36000000" label="10 Hours before event" />
+                <form:option value="43200000" label="12 Hours before event" />
+                <form:option value="86400000" label="1 Day before event" />
+                <form:option value="172800000" label="2 Days before event" />
+                <form:option value="604800000" label="1 Week before event" />
+                <form:option value="1209600000" label="2 Weeks before event" />
+            </form:select><form:errors property="reminder" />
+            <br/>
+            <label for="invitations">Invite</label>
+            <form:textarea path="invitations" />
+            <form:errors path="invitations" />
+            <br/>
         </fieldset>
         <input name="save" type="image" value="Save" src="${pageContext.request.contextPath}/images/btn-save.gif" alt="save" />
     </form:form>

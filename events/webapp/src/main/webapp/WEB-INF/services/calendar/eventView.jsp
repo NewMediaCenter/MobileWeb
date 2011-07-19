@@ -26,10 +26,9 @@
 <body>
 <div data-role="page" id="Calendar-Events">
   <div data-role="header">
-    <h1>Event</h1><a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
+    <h1>Event</h1><a href="${pageContext.request.contextPath}/calendar/month" class="ui-btn-left" data-direction="reverse" data-transition="slide" data-ajax="false" >view calendar</a><a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
   </div>
   <div data-role="content" >
-  <c:if test="${event.meeting}"> <a href="${pageContext.request.contextPath}/calendar/invite?eventId=${event.eventId}" class="ui-btn-right" >view invites</a><br/><br/></c:if>
       <ul data-role="listview" data-theme="g">
           <li>
                 <h3 style="white-space:normal"><c:out value="${event.title}"/></h3>
@@ -68,24 +67,37 @@
                 <p><c:out value="${event.description}"/></p>
           </li>
       </ul>
-      <br/><br/>
-      <c:choose>
+  </div>
+  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b" class="ui-bar">
+  
+   <c:choose>
         <c:when test="${not empty event.seriesId}">
-            <a href="${pageContext.request.contextPath}/calendar/editEvent?eventId=${event.eventId}&seriesId=${event.seriesId}&date=${event.date}" class="ui-btn-right" data-ajax="false">edit</a> 
-            <a href="${pageContext.request.contextPath}/calendar/event?eventId=${event.seriesId}&occurrenceId=${event.eventId}&date=${event.date}" class="ui-btn-right" data-ajax="false">view series</a> 
-            <a href="${pageContext.request.contextPath}/calendar/deleteEvent?eventId=${event.eventId}&seriesId=${event.seriesId}&date=${event.date}" class="ui-btn-right" data-ajax="false">delete</a>  
+	        <div data-role="controlgroup" data-type="horizontal">
+	        	<c:if test="${event.meeting}"> <a href="${pageContext.request.contextPath}/calendar/invite?eventId=${event.eventId}&seriesId=${event.seriesId}&date=${event.date}" data-role="button" data-ajax="false">invites</a></c:if>
+	        	<c:if test="${event.writeAccess}">
+	            	<a href="${pageContext.request.contextPath}/calendar/editEvent?eventId=${event.eventId}&seriesId=${event.seriesId}&date=${event.date}" data-role="button" data-ajax="false">edit</a>
+	            </c:if> 
+	            <a href="${pageContext.request.contextPath}/calendar/event?eventId=${event.seriesId}&occurrenceId=${event.eventId}&date=${event.date}" data-role="button" data-ajax="false">series</a>
+	            <c:if test="${event.writeAccess}"> 
+	            	<a href="${pageContext.request.contextPath}/calendar/deleteEvent?eventId=${event.eventId}&seriesId=${event.seriesId}&date=${event.date}" data-role="button" data-ajax="false">delete</a>
+	            </c:if>
+            </div>  
         </c:when>
         <c:otherwise>
-            <a href="${pageContext.request.contextPath}/calendar/editEvent?eventId=${event.eventId}" class="ui-btn-right" data-ajax="false">edit</a> 
-            <c:if test="${not empty occurrenceId}">
-                <a href="${pageContext.request.contextPath}/calendar/event?eventId=${event.eventId}&date=${occurrenceDate}" class="ui-btn-right" data-ajax="false">view occurrence</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/calendar/deleteEvent?eventId=${event.eventId}" class="ui-btn-right" data-ajax="false">delete</a>
+			<div data-role="controlgroup" data-type="horizontal">
+	        	<c:if test="${event.meeting}"> <a href="${pageContext.request.contextPath}/calendar/invite?eventId=${event.eventId}&occurrenceId=${occurrenceId}&occurrenceDate=${occurrenceDate}" data-role="button" data-ajax="false" >invites</a></c:if>
+	        	<c:if test="${event.writeAccess}">
+	            	<a href="${pageContext.request.contextPath}/calendar/editEvent?eventId=${event.eventId}" data-role="button" data-ajax="false">edit</a>
+	            </c:if> 
+	            <c:if test="${not empty occurrenceId}">
+	                <a href="${pageContext.request.contextPath}/calendar/event?eventId=${event.eventId}&date=${occurrenceDate}" data-role="button" data-ajax="false">occurrence</a>
+	            </c:if>
+	            <c:if test="${event.writeAccess}">
+	            	<a href="${pageContext.request.contextPath}/calendar/deleteEvent?eventId=${event.eventId}" data-role="button" data-ajax="false">delete</a>
+	            </c:if>
+	       </div>
         </c:otherwise>
       </c:choose>
-      
-  </div>
-  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
   </div>
 </div>
 <!-- /page -->
