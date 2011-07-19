@@ -194,7 +194,7 @@ public class HomeController {
     	tool = new Tool();
     	tool.setBadgeCount("0");
     	tool.setDescription("IUPUI Athletics information.");
-    	tool.setIconUrl("https://m.iu.edu/miu-prd/home/ip/images/ipicon-jag.png");
+    	tool.setIconUrl("images/service-icons/srvc-jag.png");
     	tool.setTitle("Jaguar Athletics");
     	tool.setUrl("http://www.iupuijags.com");
     	tools.add(tool);

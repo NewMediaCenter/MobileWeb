@@ -31,6 +31,7 @@ public class PageTag extends SimpleTagSupport {
             out.println("<title>" + title + "</title>");
             out.println("<link href=\"" + contextPath + "/css/jquery.mobile-1.0b1.css\" rel=\"stylesheet\" type=\"text/css\" />");
             out.println("<link href=\"" + contextPath + "/css/custom.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            out.println("<link href=\"" + contextPath + "/css/retina.css\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (-webkit-min-device-pixel-ratio: 2)\" />");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery-1.6.1.min.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/custom.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.mobile-1.0b1.js\"></script>");
@@ -38,7 +39,7 @@ public class PageTag extends SimpleTagSupport {
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.validate.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.validate.ready.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=true\"></script>");
-            out.println("<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;\">");
+            out.println("<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\">");
             out.println("</head>");
             out.println("<body>");
             out.println("<div data-role=\"page\" id=\"" + id + "\">");

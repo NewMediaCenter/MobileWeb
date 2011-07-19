@@ -1,0 +1,7 @@
+/* "Retina Display" double-resolution styling
+-----------------------------------------------------------------------------------------------------------*/
+
+div#home a.ui-link {
+    background-position: 12px -40px;
+    -webkit-background-size: 50px 100px;
+}

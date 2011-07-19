@@ -701,7 +701,16 @@ dl p {
 
 /* Home
 -----------------------------------------------------------------------------------------------------------*/
-/* testing some overrides */
+/* start - testing some overrides */
+/*div.ui-header {
+	position: fixed !important;
+	z-index: 100;
+}
+
+.ui-content {
+	padding-top: 55px;
+}*/
+
 .ui-body-b {
 	border: none;
 }
@@ -714,6 +723,7 @@ div#home {
 	padding: 0;
 	margin: 0;
 }
+/* end - testing some overrides */
 
 div#home dl {
 	position: relative;
@@ -819,13 +829,6 @@ div#campusalerts dt, div#campusalerts dd {
 	padding: 7px 15px 7px 15px;
 }
 
-div#home span.dl-dt-count {
-	font-size: 14px;
-	padding: 3px 5px 1px 5px;
-	position: absolute;
-	right: 30%;
-}
-
 
 /* Emergency Info
 -----------------------------------------------------------------------------------------------------------*/
@@ -869,3 +872,31 @@ div#computerlabs dd a {
 	color: #333;
 	font-weight: normal;
 }
+
+/* Home Screen Badge Style Overrides
+-----------------------------------------------------------------------------------------------------------*/
+div#home span.dl-dt-count {
+    font-size: 14px;
+    padding: 2px 8px 3px 8px;
+    position: absolute;
+    left: 42px;
+    top: 3px;
+    background: -moz-linear-gradient(center top , #FF8888, #992222) repeat scroll 0 0 #992222;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FF8888), color-stop(1, #992222));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FF8888', EndColorStr='#992222')";
+    border: 3px solid #FFFFFF;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-shadow: 0 1px 1px #333333;
+    -moz-box-shadow: 1px 1px 3px #666;
+    -webkit-box-shadow: 1px 1px 3px #666;
+    box-shadow: 1px 1px 3px #666;
+}
+
+/*.ui-btn-up-c {
+    background: -moz-linear-gradient(center top , #FF8888, #992222) repeat scroll 0 0 #990000 !important;
+    border: 3px solid #FFFFFF;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-shadow: 0 1px 1px #333333;
+}*/

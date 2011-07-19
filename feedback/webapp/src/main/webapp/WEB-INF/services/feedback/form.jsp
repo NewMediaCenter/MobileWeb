@@ -16,50 +16,70 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <kme:page title="Feedback" id="feedback_page">
-	<kme:content>
-		<form:form action="${pageContext.request.contextPath}/feedback" commandName="feedback" data-ajax="false" method="post">
-			Do you have suggestions for other mobile services at Indiana University or ideas on how we can improve the current services? Let us know!
-			<%--hidden fields: <form:hidden path="eventId"/>--%>
-			<fieldset>
-				<div data-role="fieldcontain">
-					<label for="service" class="select">Subject:</label>
-			        <form:select path="service" data-native-menu="false">
-			          <%--<option value="N/A" selected="selected"> Select type:</option> --%>
-			          <form:option value="General Feedback" selected="selected">General Feedback</form:option>
-			          <form:option value="Bus Schedules">Bus Schedules</form:option>
-			          <form:option value="Campus Alerts">Campus Alerts</form:option>
-			          <form:option value="Campus Maps">Campus Maps</form:option>
-			          <form:option value="Emergency Contacts">Emergency Contacts</form:option>
-			          <form:option value="Events">Events</form:option>
-			          <form:option value="IT Notices">IT Notices</form:option>
-			          <form:option value="News">News</form:option>
-			          <form:option value="Oncourse">Oncourse</form:option>
-			          <form:option value="People">People</form:option>
-			          <form:option value="Search IU">Search IU</form:option>
-			          <form:option value="Computer Labs">Computer Labs</form:option>
-			        </form:select>
-			      </div>
-			      <div data-role="fieldcontain">
-					<label for="deviceType" class="select">Device Type:</label>
-					<form:select path="deviceType" multiple="false" items="${deviceTypes}" data-native-menu="false" class="required"/>
-					<form:errors path="deviceType"/>
-			      </div>
-			      <div data-role="fieldcontain">
-			        <label for="noteText">Message:</label>
-			        <form:textarea path="noteText" cols="40" rows="8" class="required" />
-			        <form:errors path="noteText"/>
-			      </div>
-			      <div data-role="fieldcontain">
-			        <label for="email">Your Email:</label>
-			        <form:input path="email" type="text" value="" class="email"  />
-			      </div>
-		      </fieldset>
-		      <div data-inline="true">
-		        <div class="ui-grid-a">
-		          <div class="ui-block-a"><a href="${pageContext.request.contextPath}" data-role="button">Cancel</a></div>
-		          <div class="ui-block-b"><input class="submit" type="submit" value="Submit" /></div>
-		        </div>
-		      </div>
-	    </form:form>
-	</kme:content>
+    <kme:content>
+        <form:form action="${pageContext.request.contextPath}/feedback" commandName="feedback" data-ajax="false" method="post"> Do you have suggestions for other mobile services at Indiana University or ideas on how we can improve the current services? Let us know!
+            <%--hidden fields: <form:hidden path="eventId"/>--%>
+            <fieldset>
+                <div data-role="fieldcontain">
+                    <label for="service" class="select">Subject:</label>
+                    <form:select path="service" data-native-menu="false">
+                        <%--<option value="N/A" selected="selected"> Select type:</option> --%>
+                        <form:option value="General Feedback" selected="selected">General Feedback</form:option>
+                        <form:option value="Bus Schedules">Bus Schedules</form:option>
+                        <form:option value="Campus Alerts">Campus Alerts</form:option>
+                        <form:option value="Campus Maps">Campus Maps</form:option>
+                        <form:option value="Emergency Contacts">Emergency Contacts</form:option>
+                        <form:option value="Events">Events</form:option>
+                        <form:option value="IT Notices">IT Notices</form:option>
+                        <form:option value="News">News</form:option>
+                        <form:option value="Oncourse">Oncourse</form:option>
+                        <form:option value="People">People</form:option>
+                        <form:option value="Search IU">Search IU</form:option>
+                        <form:option value="Computer Labs">Computer Labs</form:option>
+                    </form:select>
+                </div>
+            
+            <select name="test">
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+            </select>
+                
+                
+                    <label for="deviceType" class="select">Device Type:</label>
+                    <form:select path="deviceType" multiple="false" items="${deviceTypes}" data-native-menu="true" class="required"/>
+                    <form:errors path="deviceType"/>
+                
+                
+                <!-- <div data-role="fieldcontain">
+                    <label for="deviceType" class="select">Device Type:</label>
+                    <form:select path="deviceType" multiple="false" items="${deviceTypes}" data-native-menu="false" class="required"/>
+                    <form:errors path="deviceType"/>
+                </div> -->
+                
+                <!-- <div data-role="fieldcontain">  -->
+                    <label for="noteText">Message:</label>
+                    <form:textarea path="noteText" cols="40" rows="8" class="required" />
+                    <form:errors path="noteText"/>
+                <!-- </div> -->
+                <!-- <div data-role="fieldcontain"> -->
+                    <label for="email">Your Email:</label>
+                    <form:input path="email" type="text" value="" class="email"  />
+                <!-- </div> -->
+            </fieldset>
+            
+            <a href="${pageContext.request.contextPath}" data-role="button">Cancel</a>
+            <input class="submit" type="submit" value="Submit" />
+            
+            
+            <div data-inline="true">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a"><a href="${pageContext.request.contextPath}" data-role="button">Cancel</a></div>
+                    <div class="ui-block-b">
+                        <input class="submit" type="submit" value="Submit" />
+                    </div>
+                </div>
+            </div>
+        </form:form>
+    </kme:content>
 </kme:page>
