@@ -732,7 +732,7 @@ div#home dl {
 div#home dt {
 	height: 80px;
 	display: block;
-	margin: 0 0 -45px 0;
+	margin: 0 0 -50px 0;
 }
 
 div#home dl dd:last-child {
@@ -742,7 +742,7 @@ div#home dl dd:last-child {
 div#home dt a {
     background-repeat: no-repeat;
     background-position: 8px 10px;
-    padding: 7px 0 0 80px;
+    padding: 5px 0 0 80px;
     position: relative;
     height: 80px;
     color: #333;
@@ -756,7 +756,7 @@ div#home dd {
 }
 
 div#home dd a {
-	height: 40px;
+	height: 45px;
 	color: #444;
 	font-weight: normal;
 	padding: 0;

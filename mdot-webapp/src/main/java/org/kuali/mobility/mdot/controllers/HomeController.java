@@ -57,7 +57,7 @@ public class HomeController {
 
     	Tool tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Class information; forums, grades, etc.");
+    	tool.setDescription("Class information; forums, grades, and more.");
     	tool.setIconUrl("images/service-icons/srvc-myclasses.png");
     	tool.setTitle("My Classes");
     	tool.setUrl("myclasses");
@@ -65,7 +65,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Items for sale, jobs, apartments, and more.");
+    	tool.setDescription("Find furniture, books, an apartment, a job, and more.");
     	tool.setIconUrl("images/service-icons/srvc-classifieds.png");
     	tool.setTitle("Classifieds");
     	tool.setUrl("https://onestart.iu.edu/ccf2-prd/ClassifiedsMb.do");
@@ -73,7 +73,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Never miss a campus bus again.");
+    	tool.setDescription("Never miss an IU Bloomington campus bus again.");
     	tool.setIconUrl("images/service-icons/srvc-bus.png");
     	tool.setTitle("Bus Schedules");
     	tool.setUrl("bus");
@@ -81,7 +81,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Get from here to there.");
+    	tool.setDescription("Get from here to there. Search for buildings by name.");
     	tool.setIconUrl("images/service-icons/srvc-maps.png");
     	tool.setTitle("Maps");
     	tool.setUrl("maps");
@@ -89,7 +89,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Live scores, rosters, news and schedules.");
+    	tool.setDescription("Live scores, rosters, news and schedules for your IU teams.");
     	tool.setIconUrl("images/service-icons/srvc-athletics.png");
     	tool.setTitle("Athletics");
     	tool.setUrl("athletics");
@@ -97,7 +97,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Search for students, faculty, and staff.");
+    	tool.setDescription("Find contact information for IU students, faculty, and staff.");
     	tool.setIconUrl("images/service-icons/srvc-people.png");
     	tool.setTitle("People");
     	tool.setUrl("people");
@@ -105,7 +105,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Search campus labs for an open computer.");
+    	tool.setDescription("See which campus STC labs have an open computer.");
     	tool.setIconUrl("images/service-icons/srvc-stc.png");
     	tool.setTitle("Computer Labs");
     	tool.setUrl("computerlabs");
@@ -113,7 +113,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("IT Alerts and announcements.");
+    	tool.setDescription("Alerts and announcements affecting your technology.");
     	tool.setIconUrl("images/service-icons/srvc-itnotice.png");
     	tool.setTitle("IT Notices");
     	tool.setUrl("itnotices");
@@ -121,7 +121,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("The latest information on IU events.");
+    	tool.setDescription("The latest buzz on IU's exciting events and achievements.");
     	tool.setIconUrl("images/service-icons/srvc-news.png");
     	tool.setTitle("News");
     	tool.setUrl("news");
@@ -129,7 +129,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("See what's happening on campus.");
+    	tool.setDescription("See what's happening on campus today, this week, and year-round.");
     	tool.setIconUrl("images/service-icons/srvc-events.png");
     	tool.setTitle("Events");
     	tool.setUrl("events");
@@ -137,7 +137,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Your personal OneStart calendar.");
+    	tool.setDescription("Access and manage your personal OneStart calendar.");
     	tool.setIconUrl("images/service-icons/srvc-events.png");
     	tool.setTitle("Calendar");
     	tool.setUrl("calendar/month");
@@ -145,7 +145,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Find answers to your IT questions.");
+    	tool.setDescription("Find answers to questions about IU information technology.");
     	tool.setIconUrl("images/service-icons/srvc-kb.png");
     	tool.setTitle("Knowledge Base");
     	tool.setUrl("knowledgebase");
@@ -153,7 +153,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Ask a question and get an answer.");
+    	tool.setDescription("Take IU's popular question & answer service with you on the go.");
     	tool.setIconUrl("images/service-icons/srvc-askiu.png");
     	tool.setTitle("Ask IU");
     	tool.setUrl("askiu");
@@ -161,7 +161,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Get up to date menus and prices.");
+    	tool.setDescription("Get up to date menus and prices for campus dining services.");
     	tool.setIconUrl("images/service-icons/srvc-dining.png");
     	tool.setTitle("Dining Services");
     	tool.setUrl("dining");
@@ -185,7 +185,7 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Questions and comments about IU Mobile.");
+    	tool.setDescription("Submit questions and comments about IU Mobile.");
     	tool.setIconUrl("images/service-icons/srvc-feedback.png");
     	tool.setTitle("Feedback");
     	tool.setUrl("feedback");
