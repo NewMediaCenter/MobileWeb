@@ -39,7 +39,6 @@
 
     <security:http auto-config='true' entry-point-ref="oauthProcessingFilterEntryPoint">
         <security:intercept-url access="ROLE_USER" pattern="/oauth/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/emergencycontacts/**" />
         <security:intercept-url access="ROLE_USER" pattern="/events/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiannouncements/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiassignments/**" />
