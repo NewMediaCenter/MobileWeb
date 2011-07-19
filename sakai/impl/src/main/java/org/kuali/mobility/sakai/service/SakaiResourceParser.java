@@ -24,18 +24,18 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-import org.kuali.mobility.sakai.entity.SakaiResource;
+import org.kuali.mobility.sakai.entity.Resource;
 
 public class SakaiResourceParser {
 
-	List<SakaiResource> resources = new ArrayList<SakaiResource>();
-	public List<SakaiResource> parseResource(String json) {
-		List<SakaiResource> resources = new ArrayList<SakaiResource>();
+	List<Resource> resources = new ArrayList<Resource>();
+	public List<Resource> parseResource(String json) {
+		List<Resource> resources = new ArrayList<Resource>();
 		resources = parse(false, json);
 		return resources;
 	}
 	
-	public List<SakaiResource> parseChildResources(String json, String resId) {
+	public List<Resource> parseChildResources(String json, String resId) {
 		try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("resources_collection");
@@ -54,7 +54,7 @@ public class SakaiResourceParser {
         			continue;
         		}
         		
-        		SakaiResource item = new SakaiResource();
+        		Resource item = new Resource();
         		item.setHasChild(false);
         		if(strArr.length > 1) {
                 	item.setHasChild(true);
@@ -87,7 +87,7 @@ public class SakaiResourceParser {
 		return resources;
 	}
 	
-	private List<SakaiResource> parse(boolean convert, String json) {
+	private List<Resource> parse(boolean convert, String json) {
     	
 	     try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
@@ -106,7 +106,7 @@ public class SakaiResourceParser {
         			continue;
         		}
         		
-        		SakaiResource item = new SakaiResource();
+        		Resource item = new Resource();
         		item.setHasChild(false);
         		if(resArr.length > 1) {
                 	item.setHasChild(true);
@@ -137,11 +137,11 @@ public class SakaiResourceParser {
     }
 	
 	private Boolean alreadyExists(String id, String title, String childRes) {
-		Iterator<SakaiResource> iterator = resources.iterator();
+		Iterator<Resource> iterator = resources.iterator();
 		Boolean titleExists = false;
 		int i = 0;
 		while (iterator.hasNext()) {
-			SakaiResource res = iterator.next();
+			Resource res = iterator.next();
 			if(title.equals(res.getTitle())) {
 				titleExists = true;
 				if(childRes != null){

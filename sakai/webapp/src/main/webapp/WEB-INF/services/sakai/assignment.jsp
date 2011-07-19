@@ -8,28 +8,12 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Assignment Details</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
-</head>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<body>
-<div data-role="page" id="123">
-	<div data-role="header">
-		<h1>Assignment Details</h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" data-theme="a">
+<kme:page title="Assignment Details" id="assignment">
+	<kme:content>
 		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
 			<c:set var="lastCreatedDate" value=""/>
 			<c:forEach items="${sakaiassignments}" var="item" varStatus="status">
@@ -57,14 +41,5 @@
 				</li>
 			</c:forEach>
 		</ul>
-	</div>
-	<!-- /content -->
-
-	<!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+	</kme:content>
+</kme:page>

@@ -19,14 +19,15 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.SakaiAnnouncement;
-import org.kuali.mobility.sakai.entity.SakaiAssignment;
-import org.kuali.mobility.sakai.entity.SakaiHome;
-import org.kuali.mobility.sakai.entity.SakaiRoster;
-import org.kuali.mobility.sakai.entity.SakaiSite;
+import org.kuali.mobility.sakai.entity.Announcement;
+import org.kuali.mobility.sakai.entity.Assignment;
+import org.kuali.mobility.sakai.entity.Home;
+import org.kuali.mobility.sakai.entity.Roster;
+import org.kuali.mobility.sakai.entity.Site;
 import org.kuali.mobility.sakai.service.SakaiCourseService;
 import org.kuali.mobility.sakai.service.SakaiSessionService;
 import org.kuali.mobility.shared.Constants;
@@ -61,19 +62,19 @@ public class SakaiController {
 	private SakaiCourseService sakaiCourseService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getClasses(HttpServletRequest request, Model uiModel) {
+	public String getSites(HttpServletRequest request, Model uiModel) {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-		SakaiHome home = sakaiCourseService.findSakaiHome(user.getUserId());
+		Home home = sakaiCourseService.findSakaiHome(user.getUserId());
 		uiModel.addAttribute("home", home);
 		return "sakai/home";
 	}
 	
 	@RequestMapping(value="/{siteId}", method = RequestMethod.GET)
-	public String getClass(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
+	public String getSite(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
 		try {
 			String remoteUser = CASFilter.getRemoteUser(request);
-			SakaiSite course = sakaiCourseService.findCourse(siteId, remoteUser);
-			uiModel.addAttribute("course", course);
+			Site site = sakaiCourseService.findSite(siteId, remoteUser);
+			uiModel.addAttribute("site", site);
 			
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
 			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(remoteUser, url, "text/html");
@@ -90,32 +91,48 @@ public class SakaiController {
 	}
 	
 	@RequestMapping(value="/{siteId}/announcements", method = RequestMethod.GET)
-	public String getClassAnnouncements(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
+	public String getAnnouncements(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
 		try {
 			String remoteUser = CASFilter.getRemoteUser(request);
-			List<SakaiAnnouncement> announcements = sakaiCourseService.findAllCourseAnnouncements(siteId, remoteUser);
-			uiModel.addAttribute("sakaiannouncements", announcements);
+			List<Announcement> announcements = sakaiCourseService.findAllAnnouncements(siteId, remoteUser);
+			uiModel.addAttribute("announcements", announcements);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
-
+		uiModel.addAttribute("siteId", siteId);
 		return "sakai/announcements";
 	}
 	
 	@RequestMapping(value="/{siteId}/announcements/{annId}", method = RequestMethod.GET)
-	public String getAnnouncementDetails(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("annId") String annId, Model uiModel) {
+	public String getAnnouncement(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("annId") String annId, Model uiModel) {
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "announcement/message/" + siteId + "/" + annId + ".json";
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiAnnouncement> announcements = sakaiCourseService.findAnnouncementDetails(json);
-			uiModel.addAttribute("sakaiannouncements", announcements);
+			Announcement announcement = sakaiCourseService.findAnnouncementDetails(json);
+			uiModel.addAttribute("announcement", announcement);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
-
+		uiModel.addAttribute("siteId", siteId);
 		return "sakai/announcement";
+	}
+	
+	@RequestMapping(value="/attachment/{siteId}/Announcements/{attachId}/{attachName}", method = RequestMethod.GET)
+	public String getAnnouncementAttachment(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @PathVariable("attachId") String attachmentId, @PathVariable("attachName") String attachmentName, Model uiModel) {
+		try {
+			//doesn't work
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "announcement/attachment/" + siteId + "/Announcements/" + attachmentId;
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "application/pdf");
+			byte [] fileData = IOUtils.toByteArray(is.getBody());
+			response.setContentType("application/pdf");
+			response.setContentLength(fileData.length);
+			response.getOutputStream().write(fileData, 0, fileData.length);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		return null;
 	}
 
 	@RequestMapping(value="/{siteId}/assignments", method = RequestMethod.GET)
@@ -123,7 +140,7 @@ public class SakaiController {
 		try {
 			String userId = CASFilter.getRemoteUser(request);
 
-			List<SakaiAssignment> assignments = sakaiCourseService.findAllCourseAssignments(siteId, userId);
+			List<Assignment> assignments = sakaiCourseService.findAllAssignments(siteId, userId);
 			uiModel.addAttribute("sakaiassignments", assignments);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -139,7 +156,7 @@ public class SakaiController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiAssignment> assignments = sakaiCourseService.findAssignmentDetails(json);
+			List<Assignment> assignments = sakaiCourseService.findAssignmentDetails(json);
 			uiModel.addAttribute("sakaiassignments", assignments);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -155,7 +172,7 @@ public class SakaiController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiAssignment> assignments = sakaiCourseService.findAssignmentDetails(json);
+			List<Assignment> assignments = sakaiCourseService.findAssignmentDetails(json);
 			
 			url = configParamService.findValueByName("Sakai.Url.Base") + "gradebook/courseGrade/" + siteId + "/" + CASFilter.getRemoteUser(request) + ".json";
 			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
@@ -179,7 +196,7 @@ public class SakaiController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiRoster> roster = sakaiCourseService.findCourseRoster(json);
+			List<Roster> roster = sakaiCourseService.findRoster(json);
 			uiModel.addAttribute("roster", roster);
 			
 			url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
@@ -202,7 +219,7 @@ public class SakaiController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiRoster> roster = sakaiCourseService.findCourseParticipantDetails(json, displayId);
+			List<Roster> roster = sakaiCourseService.findParticipantDetails(json, displayId);
 			uiModel.addAttribute("roster", roster);
 			
 			url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";

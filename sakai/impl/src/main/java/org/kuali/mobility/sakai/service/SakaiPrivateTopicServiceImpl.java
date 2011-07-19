@@ -17,28 +17,28 @@ package org.kuali.mobility.sakai.service;
 
 import java.util.List;
 
-import org.kuali.mobility.sakai.entity.SakaiForum;
-import org.kuali.mobility.sakai.entity.SakaiForumMessage;
+import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 
-	public List<SakaiForum> findPrivateTopics(String json) {
+	public List<Forum> findPrivateTopics(String json) {
 		SakaiPrivateTopicParser parser = new SakaiPrivateTopicParser();
-		List<SakaiForum> forums = parser.parsePrivateTopics(json);
+		List<Forum> forums = parser.parsePrivateTopics(json);
 		return forums;
 	}
 	
-	public List<SakaiForumMessage> findPrivateMessages(String json) {
+	public List<ForumMessage> findPrivateMessages(String json) {
 		SakaiPrivateTopicParser parser = new SakaiPrivateTopicParser();
-		List<SakaiForumMessage> forums = parser.parsePrivateMessages(json);
+		List<ForumMessage> forums = parser.parsePrivateMessages(json);
 		return forums;
 	}
 	
-	public List<SakaiForumMessage> findPrivateMessageDetails(String json, String messageId, String messageTitle) {
+	public List<ForumMessage> findPrivateMessageDetails(String json, String messageId, String messageTitle) {
 		SakaiPrivateTopicParser parser = new SakaiPrivateTopicParser();
-		List<SakaiForumMessage> forums = parser.parsePrivateMessageDetails(json, messageId, messageTitle);
+		List<ForumMessage> forums = parser.parsePrivateMessageDetails(json, messageId, messageTitle);
 		return forums;
 	}
 

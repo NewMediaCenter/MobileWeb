@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 
 import flexjson.JSONSerializer;
 
-public class SakaiSite implements Serializable, Comparable<SakaiSite> {
+public class Site implements Serializable, Comparable<Site> {
 
 	private static final long serialVersionUID = -5535399038213510311L;
 	
@@ -34,6 +34,13 @@ public class SakaiSite implements Serializable, Comparable<SakaiSite> {
     private boolean active;
     private String instructorName;
     private String instructorId;
+    private boolean hasAnnouncementsTool;
+    private boolean hasAssignmentsTool;
+    private boolean hasForumsTool;
+    private boolean hasGradesTool;
+    private boolean hasRosterTool;
+    private boolean hasResourcesTool;
+    private boolean hasMessagesTool;
     
     public String getInstructorName() {
 		return instructorName;
@@ -51,9 +58,9 @@ public class SakaiSite implements Serializable, Comparable<SakaiSite> {
 		this.instructorId = instructorId;
 	}
 
-	public SakaiSite() {}
+	public Site() {}
     
-    public SakaiSite(String campus, String courseId, String courseTitle, String courseDesc) {
+    public Site(String campus, String courseId, String courseTitle, String courseDesc) {
         this.campus = campus;
         this.setId(courseId);
         this.setTitle(courseTitle);
@@ -71,7 +78,7 @@ public class SakaiSite implements Serializable, Comparable<SakaiSite> {
 
     
 
-    public int compareTo(SakaiSite that) {
+    public int compareTo(Site that) {
         if (this == null || that == null || this.getId() == null || that.getId() == null) {
             return -1;
         }
@@ -137,5 +144,61 @@ public class SakaiSite implements Serializable, Comparable<SakaiSite> {
 
 	public void setModifiedTime(Timestamp modifiedTime) {
 		this.modifiedTime = modifiedTime;
+	}
+
+	public boolean getHasAnnouncementsTool() {
+		return hasAnnouncementsTool;
+	}
+
+	public void setHasAnnouncementsTool(boolean hasAnnouncementsTool) {
+		this.hasAnnouncementsTool = hasAnnouncementsTool;
+	}
+
+	public boolean getHasAssignmentsTool() {
+		return hasAssignmentsTool;
+	}
+
+	public void setHasAssignmentsTool(boolean hasAssignmentsTool) {
+		this.hasAssignmentsTool = hasAssignmentsTool;
+	}
+
+	public boolean getHasForumsTool() {
+		return hasForumsTool;
+	}
+
+	public void setHasForumsTool(boolean hasForumsTool) {
+		this.hasForumsTool = hasForumsTool;
+	}
+
+	public boolean getHasGradesTool() {
+		return hasGradesTool;
+	}
+
+	public void setHasGradesTool(boolean hasGradesTool) {
+		this.hasGradesTool = hasGradesTool;
+	}
+
+	public boolean getHasRosterTool() {
+		return hasRosterTool;
+	}
+
+	public void setHasRosterTool(boolean hasRosterTool) {
+		this.hasRosterTool = hasRosterTool;
+	}
+
+	public boolean getHasResourcesTool() {
+		return hasResourcesTool;
+	}
+
+	public void setHasResourcesTool(boolean hasResourcesTool) {
+		this.hasResourcesTool = hasResourcesTool;
+	}
+
+	public boolean getHasMessagesTool() {
+		return hasMessagesTool;
+	}
+
+	public void setHasMessagesTool(boolean hasMessagesTool) {
+		this.hasMessagesTool = hasMessagesTool;
 	}
 }

@@ -8,52 +8,22 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title><%= request.getParameter("siteTitle") %></title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
-</head>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<body>
-<div data-role="page" id="">
-	<div data-role="header">
-		<h1>Roster</h1><a href="${pageContext.request.contextPath}/index.jsp" data-icon="home" class="ui-btn-right">home</a>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" data-theme="a">
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
+<kme:page title="Roster" id="roster">
+	<kme:content>
+		<ul data-role="listview" data-inset="false">
 			<c:forEach items="${roster}" var="item" varStatus="status">
-				
 				<li>
-					<%--<div>
-					  	<img src="http://localhost:9090/direct/profile/${item.displayID}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="pic">
-					</div>--%>
-					<div>
-						<a href="${pageContext.request.contextPath}/myclasses/${siteId}/roster/${item.displayID}">
-							<h3>${item.displayName}</h3>
-						</a>
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/roster/${item.displayID}">
+						<%--<img src="http://localhost:9090/direct/profile/${item.displayID}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="pic">--%>
+						<h3>${item.displayName}</h3>
 						<p>${item.roleTitle}</p>
-					</div>
+					</a>
 				</li>
 			</c:forEach>
 		</ul>
-	</div>
-	<!-- /content -->
-
-	<!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+	</kme:content>
+</kme:page>

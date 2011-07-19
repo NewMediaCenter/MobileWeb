@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.SakaiForum;
+import org.kuali.mobility.sakai.entity.Forum;
 import org.kuali.mobility.sakai.service.SakaiPrivateTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +70,7 @@ public class PrivateTopicsController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiForum> topics = sakaiPrivateTopicService.findPrivateTopics(json);
+			List<Forum> topics = sakaiPrivateTopicService.findPrivateTopics(json);
 			uiModel.addAttribute("sakaiprivatetopics", topics);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

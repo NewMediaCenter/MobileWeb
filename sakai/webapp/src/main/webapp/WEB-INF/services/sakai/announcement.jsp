@@ -8,48 +8,24 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title><%= request.getParameter("siteTitle") %></title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
-</head>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<body>
-<div data-role="page" id="123">
-	<div data-role="header">
-		<h1>Announcement Details</h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" data-theme="a">
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
-			<c:set var="lastCreatedDate" value=""/>
-			<c:forEach items="${sakaiannouncements}" var="item" varStatus="status">
-				<li data-role="list-divider">${item.title}</li>
-				<li>
-						<h3>${item.body}</h3>
-						<p>${item.createdOn}</p>
-						<p>${item.createdByDisplayName}</p>
-					
-				</li>
-			</c:forEach>
-		</ul>
-	</div>
-	<!-- /content -->
-
-	<!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+<kme:page title="Announcement Details" id="announcement">
+	<kme:content>
+		<h3>${announcement.title}</h3>
+		<h5>${announcement.createdByDisplayName} - ${announcement.createdOn}</h5>
+		<p>${announcement.body}</p>
+		<c:if test="${not empty announcement.attachments}">
+			Attachments:
+			<ul data-role="listview" data-inset="true">
+				<c:forEach items="${announcement.attachments}" var="attachment" varStatus="status">
+					<li>
+						<%-- <a href="${pageContext.request.contextPath}/myclasses${attachment.url}">--%>${attachment.title}<%--</a>--%>
+					</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+	</kme:content>
+</kme:page>

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.SakaiForumMessage;
+import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.kuali.mobility.sakai.service.SakaiPrivateTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,7 +78,7 @@ public class PrivateMessagesController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiForumMessage> messages = sakaiPrivateTopicService.findPrivateMessages(json);
+			List<ForumMessage> messages = sakaiPrivateTopicService.findPrivateMessages(json);
 			uiModel.addAttribute("sakaiprivatemessages", messages);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

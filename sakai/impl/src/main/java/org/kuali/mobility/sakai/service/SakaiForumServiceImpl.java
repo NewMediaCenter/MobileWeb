@@ -26,8 +26,8 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-import org.kuali.mobility.sakai.entity.SakaiForum;
-import org.kuali.mobility.sakai.entity.SakaiForumMessage;
+import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,8 +35,8 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiForumServiceImpl.class);
 
-	public List<SakaiForum> findCourseForums(String json) {
-		List<SakaiForum> forums = new ArrayList<SakaiForum>();
+	public List<Forum> findCourseForums(String json) {
+		List<Forum> forums = new ArrayList<Forum>();
     	try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_topic_collection");
@@ -44,7 +44,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
             for (int i = 0; i < itemArray.size(); i++) {
                 String id = itemArray.getJSONObject(i).getString("forumId");
                 String title = itemArray.getJSONObject(i).getString("forumTitle");
-                SakaiForum item = new SakaiForum();
+                Forum item = new Forum();
                 item.setId(id);
                 item.setTitle(title);
                 item.setIsForumHeader(true);
@@ -59,7 +59,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
                     	getString("messagesCount") + " messages, " 
                     	+ topicsArray.getJSONObject(j).getString("unreadMessagesCount")
                     	+ " unread";
-                    SakaiForum fTopic = new SakaiForum();
+                    Forum fTopic = new Forum();
                     fTopic.setId(topicId);
                     fTopic.setTitle(topicTitle);
                     fTopic.setDescription(topicDescription);
@@ -79,13 +79,13 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 		return forums;
 	}
 	
-	public List<SakaiForumMessage> findTopicMessages(String json, String topicTitle) {
-		List<SakaiForumMessage> messages = new ArrayList<SakaiForumMessage>();
+	public List<ForumMessage> findTopicMessages(String json, String topicTitle) {
+		List<ForumMessage> messages = new ArrayList<ForumMessage>();
     	try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
             
-            SakaiForumMessage headerItem = new SakaiForumMessage();
+            ForumMessage headerItem = new ForumMessage();
             headerItem.setTitle(topicTitle);
             headerItem.setMessageHeader(true);
             messages.add(headerItem);
@@ -109,7 +109,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
                 String createdDate = df.format(cDate);
                 
                 
-                SakaiForumMessage item = new SakaiForumMessage();
+                ForumMessage item = new ForumMessage();
                 item.setId(messageId);
                 item.setTitle(messageTitle);
                 item.setBody(messageBody);
@@ -127,8 +127,8 @@ public class SakaiForumServiceImpl implements SakaiForumService {
     	return messages;
 	}
 	
-	public List<SakaiForumMessage> findMessageDetails(String json, String messageId, String messageTitle) {
-		List<SakaiForumMessage> messages = new ArrayList<SakaiForumMessage>();
+	public List<ForumMessage> findMessageDetails(String json, String messageId, String messageTitle) {
+		List<ForumMessage> messages = new ArrayList<ForumMessage>();
     	try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
@@ -150,7 +150,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 	                String createdDate = df.format(cDate);
 	                
 	                
-	                SakaiForumMessage item = new SakaiForumMessage();
+	                ForumMessage item = new ForumMessage();
 	                item.setId(messageId);
 	                item.setTitle(messageTitle);
 	                item.setBody(messageBody);

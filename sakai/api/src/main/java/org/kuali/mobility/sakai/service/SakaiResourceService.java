@@ -17,10 +17,10 @@ package org.kuali.mobility.sakai.service;
 
 import java.util.List;
 
-import org.kuali.mobility.sakai.entity.SakaiResource;
+import org.kuali.mobility.sakai.entity.Resource;
 
 public interface SakaiResourceService {
 
-	public List<SakaiResource> findCourseResources(String json);
-	public List<SakaiResource> findChildResources(String json, String resId);
+	public List<Resource> findCourseResources(String json);
+	public List<Resource> findChildResources(String json, String resId);
 }

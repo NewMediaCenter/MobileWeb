@@ -17,7 +17,7 @@ package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
 
-public class SakaiResource implements Serializable, Comparable<SakaiResource> {
+public class Resource implements Serializable, Comparable<Resource> {
 
 private static final long serialVersionUID = -2272816569200642551L;
 	
@@ -68,7 +68,7 @@ private static final long serialVersionUID = -2272816569200642551L;
 		return hasChild;
 	}
 	
-    public int compareTo(SakaiResource that) {
+    public int compareTo(Resource that) {
         if (this == null || that == null || this.getId() == null || that.getId() == null) {
             return -1;
         }

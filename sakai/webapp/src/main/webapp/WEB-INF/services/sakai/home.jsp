@@ -18,7 +18,7 @@
 		<h2>Classes</h2>
 			<c:forEach items="${home.courses}" var="termItem" varStatus="status">
 				<h3>${termItem.key}</h3>
-				<ul data-role="listview" data-theme="c" data-inset="true">
+				<ul data-role="listview" data-inset="true">
 					<c:forEach items="${termItem.value}" var="item" varStatus="status">
 						<li>
 							<a href="${pageContext.request.contextPath}/myclasses/${item.id}">
@@ -34,7 +34,7 @@
 		</c:if>
 		<c:if test="${!empty home.projects}">
 			<h2>Projects</h2>
-			<ul data-role="listview" data-theme="c" data-inset="true">
+			<ul data-role="listview" data-inset="true">
 				<c:forEach items="${home.projects}" var="item" varStatus="status">
 					<li>
 						<a href="${pageContext.request.contextPath}/myclasses/${item.id}">

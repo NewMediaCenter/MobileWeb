@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.SakaiResource;
+import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.service.SakaiResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +73,7 @@ public class ResourceDetailsController {
 				String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
 				ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 				String json = IOUtils.toString(is.getBody(), "UTF-8");
-				List<SakaiResource> resources = sakaiResourceService.findChildResources(json, resId);
+				List<Resource> resources = sakaiResourceService.findChildResources(json, resId);
 				uiModel.addAttribute("resources", resources);
 				uiModel.addAttribute("sessionId", sessionId);
 				return "sakairesources/list";

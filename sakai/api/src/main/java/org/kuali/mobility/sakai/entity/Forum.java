@@ -17,7 +17,7 @@ package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
 
-public class SakaiForum implements Serializable, Comparable<SakaiForum> {
+public class Forum implements Serializable, Comparable<Forum> {
 
 	private static final long serialVersionUID = -5535393238213510311L;
 	
@@ -78,7 +78,7 @@ public class SakaiForum implements Serializable, Comparable<SakaiForum> {
 		return forumId;
 	}
 
-    public int compareTo(SakaiForum that) {
+    public int compareTo(Forum that) {
         if (this == null || that == null || this.getId() == null || that.getId() == null) {
             return -1;
         }

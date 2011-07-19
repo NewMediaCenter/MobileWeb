@@ -17,21 +17,21 @@ package org.kuali.mobility.sakai.service;
 
 import java.util.List;
 
-import org.kuali.mobility.sakai.entity.SakaiResource;
+import org.kuali.mobility.sakai.entity.Resource;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SakaiResourceServiceImpl implements SakaiResourceService {
 
-	public List<SakaiResource> findCourseResources(String json) {
+	public List<Resource> findCourseResources(String json) {
 		SakaiResourceParser parser = new SakaiResourceParser();
-		List<SakaiResource> resources = parser.parseResource(json);
+		List<Resource> resources = parser.parseResource(json);
 		return resources;
 	}
 
-	public List<SakaiResource> findChildResources(String json, String resId) {
+	public List<Resource> findChildResources(String json, String resId) {
 		SakaiResourceParser parser = new SakaiResourceParser();
-		List<SakaiResource> resources = parser.parseChildResources(json, resId);
+		List<Resource> resources = parser.parseChildResources(json, resId);
 		return resources;
 	}
 }

@@ -16,25 +16,24 @@
 package org.kuali.mobility.sakai.service;
 
 import java.util.List;
-import java.util.Map;
 
-import org.kuali.mobility.sakai.entity.SakaiAnnouncement;
-import org.kuali.mobility.sakai.entity.SakaiAssignment;
-import org.kuali.mobility.sakai.entity.SakaiSite;
-import org.kuali.mobility.sakai.entity.SakaiHome;
-import org.kuali.mobility.sakai.entity.SakaiRoster;
+import org.kuali.mobility.sakai.entity.Announcement;
+import org.kuali.mobility.sakai.entity.Assignment;
+import org.kuali.mobility.sakai.entity.Home;
+import org.kuali.mobility.sakai.entity.Roster;
+import org.kuali.mobility.sakai.entity.Site;
 
 public interface SakaiCourseService {
-	public SakaiHome findSakaiHome(String user);
-	public SakaiSite findCourse(String siteId, String user);
+	public Home findSakaiHome(String user);
+	public Site findSite(String siteId, String user);
 	
-	public List<SakaiAnnouncement> findAnnouncementDetails(String json);
-	public List<SakaiAnnouncement> findAllCourseAnnouncements(String siteId, String user);
+	public Announcement findAnnouncementDetails(String json);
+	public List<Announcement> findAllAnnouncements(String siteId, String user);
 	
-	public List<SakaiAssignment> findAllCourseAssignments(String siteId, String userId);
-	public List<SakaiAssignment> findAssignmentDetails(String json);
+	public List<Assignment> findAllAssignments(String siteId, String userId);
+	public List<Assignment> findAssignmentDetails(String json);
 	public String findCourseGrade(String json);
 	
-	public List<SakaiRoster> findCourseRoster(String json);
-	public List<SakaiRoster> findCourseParticipantDetails(String json, String displayId);
+	public List<Roster> findRoster(String json);
+	public List<Roster> findParticipantDetails(String json, String displayId);
 }

@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.SakaiForum;
-import org.kuali.mobility.sakai.entity.SakaiForumMessage;
+import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.kuali.mobility.sakai.service.SakaiForumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,7 +72,7 @@ public class ForumsController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiForum> forums = sakaiForumService.findCourseForums(json);
+			List<Forum> forums = sakaiForumService.findCourseForums(json);
 			uiModel.addAttribute("sakaiforums", forums);
 			uiModel.addAttribute("siteId", siteId);
 		} catch (Exception e) {
@@ -94,7 +94,7 @@ public class ForumsController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<SakaiForumMessage> messages = sakaiForumService.findTopicMessages(json, topicTitle);
+			List<ForumMessage> messages = sakaiForumService.findTopicMessages(json, topicTitle);
 			uiModel.addAttribute("sakaiforumsmessages", messages);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

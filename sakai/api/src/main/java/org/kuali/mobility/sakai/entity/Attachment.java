@@ -12,19 +12,31 @@
  * or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
- 
-package org.kuali.mobility.sakai.service;
 
-import java.util.List;
+package org.kuali.mobility.sakai.entity;
 
-import org.kuali.mobility.sakai.entity.Forum;
-import org.kuali.mobility.sakai.entity.ForumMessage;
+import java.io.Serializable;
 
-public interface SakaiForumService {
+public class Attachment implements Serializable {
 
-	public List<Forum> findCourseForums(String json);
-	public List<ForumMessage> findTopicMessages(String json, String topicTitle);
-	public List<ForumMessage> findMessageDetails(String json, String messageId, String messageTitle);
-//	public String toJson(Collection<SakaiCourse> collection);
-//	
+	private static final long serialVersionUID = 2853260455429749231L;
+	
+	private String title;
+	private String url;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

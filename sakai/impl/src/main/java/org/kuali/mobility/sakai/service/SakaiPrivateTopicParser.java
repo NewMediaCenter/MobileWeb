@@ -26,19 +26,19 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-import org.kuali.mobility.sakai.entity.SakaiForum;
-import org.kuali.mobility.sakai.entity.SakaiForumMessage;
+import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumMessage;
 
 public class SakaiPrivateTopicParser {
 
-	public List<SakaiForum> parsePrivateTopics(String json) {
-		List<SakaiForum> forums = new ArrayList<SakaiForum>();
+	public List<Forum> parsePrivateTopics(String json) {
+		List<Forum> forums = new ArrayList<Forum>();
 		forums = parse(false, json);
 		return forums;
 	}
 	
-    private List<SakaiForum> parse(boolean convert, String json) {
-    	List<SakaiForum> forums = new ArrayList<SakaiForum>();
+    private List<Forum> parse(boolean convert, String json) {
+    	List<Forum> forums = new ArrayList<Forum>();
     	try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_topic_collection");
@@ -46,7 +46,7 @@ public class SakaiPrivateTopicParser {
             for (int i = 0; i < itemArray.size(); i++) {
                 String id = itemArray.getJSONObject(i).getString("forumId");
                 String title = itemArray.getJSONObject(i).getString("forumTitle");
-                SakaiForum item = new SakaiForum();
+                Forum item = new Forum();
                 item.setId(id);
                 item.setTitle(title);
                 item.setIsForumHeader(true);
@@ -62,7 +62,7 @@ public class SakaiPrivateTopicParser {
                     	+ topicsArray.getJSONObject(j).getString("unreadMessagesCount")
                     	+ " unread";
                     String typeUuid = topicsArray.getJSONObject(j).getString("typeUuid");
-                    SakaiForum fTopic = new SakaiForum();
+                    Forum fTopic = new Forum();
                     fTopic.setId(topicId);
                     fTopic.setTitle(topicTitle);
                     fTopic.setDescription(topicDescription);
@@ -84,8 +84,8 @@ public class SakaiPrivateTopicParser {
 		return forums;
     }
     
-    public List<SakaiForumMessage> parsePrivateMessages(String json) {
-		List<SakaiForumMessage> messages = new ArrayList<SakaiForumMessage>();
+    public List<ForumMessage> parsePrivateMessages(String json) {
+		List<ForumMessage> messages = new ArrayList<ForumMessage>();
 		try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
@@ -104,7 +104,7 @@ public class SakaiPrivateTopicParser {
                 String createdDate = df.format(cDate);
                 
                 
-                SakaiForumMessage item = new SakaiForumMessage();
+                ForumMessage item = new ForumMessage();
                 item.setId(messageId);
                 item.setTitle(messageTitle);
                 item.setBody(messageBody);
@@ -122,8 +122,8 @@ public class SakaiPrivateTopicParser {
 		return messages;
 	}
 
-    public List<SakaiForumMessage> parsePrivateMessageDetails(String json, String mId, String mTitle) {
-		List<SakaiForumMessage> messages = new ArrayList<SakaiForumMessage>();
+    public List<ForumMessage> parsePrivateMessageDetails(String json, String mId, String mTitle) {
+		List<ForumMessage> messages = new ArrayList<ForumMessage>();
 		try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
@@ -145,7 +145,7 @@ public class SakaiPrivateTopicParser {
                 String createdDate = df.format(cDate);
                 
                 
-                SakaiForumMessage item = new SakaiForumMessage();
+                ForumMessage item = new ForumMessage();
                 item.setId(messageId);
                 item.setTitle(messageTitle);
                 item.setBody(messageBody);
