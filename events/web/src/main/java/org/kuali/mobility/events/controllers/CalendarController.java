@@ -26,6 +26,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -49,7 +51,6 @@ import edu.iu.es.espd.ccl.oauth.MeetingStatusChange;
 import edu.iu.es.espd.ccl.oauth.MonthViewEvents;
 import edu.iu.es.espd.ccl.oauth.PageLevelException;
 import edu.iu.es.espd.ccl.oauth.ViewDetailedEvent;
-import edu.iu.uis.cas.filter.CASFilter;
 
 @Controller
 @RequestMapping("/calendar")
@@ -64,6 +65,7 @@ public class CalendarController {
 
 	@RequestMapping(value = "/month", method = RequestMethod.GET)
 	public String month(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String date) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat my = new SimpleDateFormat("yyyyMM");
 		Calendar selectedDate = Calendar.getInstance();
@@ -76,7 +78,7 @@ public class CalendarController {
 		}
 		try {
 			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
-			MonthViewEvents monthEvents = calendarEventOAuthService.retrieveMonthEvents(CASFilter.getRemoteUser(request), selectedDate.getTime(), filter != null ? filter.getFilterId() : null);
+			MonthViewEvents monthEvents = calendarEventOAuthService.retrieveMonthEvents(user.getUserId(), selectedDate.getTime(), filter != null ? filter.getFilterId() : null);
 			uiModel.addAttribute("viewData", monthEvents.getViewData());
 			uiModel.addAttribute("appData", monthEvents.getAppData());
 
@@ -138,6 +140,7 @@ public class CalendarController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String date) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Calendar selectedDate = Calendar.getInstance();
 		try {
@@ -151,7 +154,7 @@ public class CalendarController {
 			Calendar endDate = (Calendar) selectedDate.clone();
 			Calendar previousDate = (Calendar) selectedDate.clone();
 			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
-			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(CASFilter.getRemoteUser(request), selectedDate.getTime(), filter != null ? filter.getFilterId() : null);
+			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(user.getUserId(), selectedDate.getTime(), filter != null ? filter.getFilterId() : null);
 
 			Calendar currentEndDate = (Calendar) selectedDate.clone();
 			currentEndDate.add(Calendar.DATE, listViewEvents.getAppData().getListViewFutureDaysLimit());
@@ -180,6 +183,7 @@ public class CalendarController {
 
 	@RequestMapping(value = "/listEvents", method = RequestMethod.GET)
 	public String listEvents(HttpServletRequest request, Model uiModel, @RequestParam(required = true) String date, @RequestParam(required = true) String beginDate, @RequestParam(required = true) String endDate) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Calendar selectedDate = Calendar.getInstance();
 		Calendar beginCalendar = Calendar.getInstance();
@@ -199,7 +203,7 @@ public class CalendarController {
 		}
 		try {
 			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
-			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(CASFilter.getRemoteUser(request), selectedDate.getTime(), beginCalendar.getTime(), endCalendar.getTime(), filter != null ? filter.getFilterId() : null);
+			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(user.getUserId(), selectedDate.getTime(), beginCalendar.getTime(), endCalendar.getTime(), filter != null ? filter.getFilterId() : null);
 
 			Calendar currentEndDate = (Calendar) endCalendar.clone();
 			Calendar previousDate = (Calendar) beginCalendar.clone();
@@ -227,8 +231,9 @@ public class CalendarController {
 
 	@RequestMapping(value = "/filters", method = RequestMethod.GET)
 	public String filters(HttpServletRequest request, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		try {
-			Filters filters = calendarEventOAuthService.retrieveFilters(CASFilter.getRemoteUser(request));
+			Filters filters = calendarEventOAuthService.retrieveFilters(user.getUserId());
 			uiModel.addAttribute("filters", filters.getFilters());
 
 			Filter filter = (Filter) request.getSession().getAttribute("calendar.event.filterId");
@@ -246,9 +251,10 @@ public class CalendarController {
 
 	@RequestMapping(value = "/selectFilter", method = RequestMethod.POST)
 	public String selectFilter(HttpServletRequest request, Model uiModel, @ModelAttribute("filter") Filter filter) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		try {
 			if (filter.getFilterId() != null && !"".equals(filter.getFilterId().trim())) {
-				Filter filterFound = calendarEventOAuthService.retrieveFilter(CASFilter.getRemoteUser(request), filter.getFilterId());
+				Filter filterFound = calendarEventOAuthService.retrieveFilter(user.getUserId(), filter.getFilterId());
 				request.getSession().setAttribute("calendar.event.filterId", filterFound);
 			}
 		} catch (PageLevelException pageLevelException) {
@@ -266,6 +272,7 @@ public class CalendarController {
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public String event(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = false) String date, @RequestParam(required = false) Long occurrenceId) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
 		Date selectedDate = null;
 		try {
@@ -280,7 +287,7 @@ public class CalendarController {
 
 		}
 		try {
-			ViewDetailedEvent event = calendarEventOAuthService.retrieveViewEventDetails(CASFilter.getRemoteUser(request), eventId, selectedDate);
+			ViewDetailedEvent event = calendarEventOAuthService.retrieveViewEventDetails(user.getUserId(), eventId, selectedDate);
 			// uiModel.addAttribute("selectedDate",
 			// sdf.format(selectedDate.getTime()));
 			if (occurrenceId != null) {
@@ -296,6 +303,7 @@ public class CalendarController {
 
 	@RequestMapping(value = "/createEvent", method = RequestMethod.GET)
 	public String createEvent(HttpServletRequest request, Model uiModel, @RequestParam(required = false) String date) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
 		Date selectedDate = null;
 		try {
@@ -306,7 +314,7 @@ public class CalendarController {
 
 		}
 		try {
-			EditEvent event = calendarEventOAuthService.retrieveNewEvent(CASFilter.getRemoteUser(request), selectedDate);
+			EditEvent event = calendarEventOAuthService.retrieveNewEvent(user.getUserId(), selectedDate);
 			uiModel.addAttribute("event", event);
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
@@ -317,6 +325,7 @@ public class CalendarController {
 
 	@RequestMapping(value = "/editEvent", method = RequestMethod.GET)
 	public String editEvent(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) String date) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
 		Date selectedDate = null;
 		try {
@@ -327,7 +336,7 @@ public class CalendarController {
 
 		}
 		try {
-			EditEvent event = calendarEventOAuthService.retrieveEditEvent(CASFilter.getRemoteUser(request), eventId, seriesId, selectedDate);
+			EditEvent event = calendarEventOAuthService.retrieveEditEvent(user.getUserId(), eventId, seriesId, selectedDate);
 			uiModel.addAttribute("event", event);
 			if (seriesId == null) {
 				uiModel.addAttribute("seriesId", event.getSeriesId());
@@ -343,9 +352,10 @@ public class CalendarController {
 
 	@RequestMapping(value = "/saveEvent", method = RequestMethod.POST)
 	public String saveEvent(HttpServletRequest request, @ModelAttribute("event") EditEvent event, BindingResult result, SessionStatus status, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		EditEvent eventReturned = null;
 		try {
-			eventReturned = calendarEventOAuthService.saveEvent(CASFilter.getRemoteUser(request), event, event.getEventId());
+			eventReturned = calendarEventOAuthService.saveEvent(user.getUserId(), event, event.getEventId());
 			if (eventReturned.getResponseCode() == HttpStatus.UNPROCESSABLE_ENTITY.value()) {
 				Errors errors = ((Errors) result);
 				for (Iterator iterator = eventReturned.getErrors().entrySet().iterator(); iterator.hasNext();) {
@@ -366,6 +376,7 @@ public class CalendarController {
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.GET)
 	public String deleteEvent(HttpServletRequest request, @RequestParam(required = true) Long eventId, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) String date, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
 		Date selectedDate = null;
 		try {
@@ -376,7 +387,7 @@ public class CalendarController {
 
 		}
 		try {
-			calendarEventOAuthService.deleteEvent(CASFilter.getRemoteUser(request), eventId, seriesId, selectedDate);
+			calendarEventOAuthService.deleteEvent(user.getUserId(), eventId, seriesId, selectedDate);
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -385,7 +396,8 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value = "/invite", method = RequestMethod.GET)
-	public String invite(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) String date) {
+	public String invite(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) Long occurrenceId, @RequestParam(required = false) String date, @RequestParam(required = false) String occurrenceDate) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
 		Date selectedDate = null;
 		try {
@@ -396,8 +408,20 @@ public class CalendarController {
 
 		}
 		try {
-			MeetingInvite invite = calendarEventOAuthService.retrieveMeeting(CASFilter.getRemoteUser(request), eventId, seriesId, selectedDate);
+			MeetingInvite invite = calendarEventOAuthService.retrieveMeeting(user.getUserId(), eventId, seriesId, selectedDate);
 			uiModel.addAttribute("invite", invite);
+			if (occurrenceId != null) {
+				uiModel.addAttribute("occurrenceId", occurrenceId);
+			}
+			if (occurrenceDate != null) {
+				Date occurDate = null;
+				try {
+					occurDate = sdf.parse(occurrenceDate);
+				} catch (ParseException e) {
+
+				}
+				uiModel.addAttribute("date", sdf.format(occurDate));
+			}
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -406,12 +430,13 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value = "/meetingAction", method = RequestMethod.GET)
-	public String meetingAction(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = true) String type, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) String date) {
+	public String meetingAction(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = true) String type, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) Long occurrenceId, @RequestParam(required = false) String date) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		try {
 			MeetingStatusChange meetingStatusChange = new MeetingStatusChange();
 			meetingStatusChange.setEventId(eventId);
 			meetingStatusChange.setStatus(type);
-			calendarEventOAuthService.updateMeetingStatus(CASFilter.getRemoteUser(request), meetingStatusChange);
+			calendarEventOAuthService.updateMeetingStatus(user.getUserId(), meetingStatusChange);
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -422,7 +447,7 @@ public class CalendarController {
 		} else if (seriesId != null && date != null) {
 			return "redirect:/calendar/invite?eventId=" + eventId + "&seriesId=" + seriesId + "&date=" + date;
 		}
-		return "redirect:/calendar/invite?eventId=" + eventId;
+		return "redirect:/calendar/invite?eventId=" + eventId + (occurrenceId != null ? "&occurrenceId=" + occurrenceId : "") + (date != null ? "&date=" + date : "");
 	}
 
 	@RequestMapping(value = "/options", method = RequestMethod.GET)
@@ -434,8 +459,9 @@ public class CalendarController {
 
 	@RequestMapping(value = "/refresh", method = RequestMethod.GET)
 	public String refresh(HttpServletRequest request, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		try {
-			calendarEventOAuthService.reloadPersonalCache(CASFilter.getRemoteUser(request));
+			calendarEventOAuthService.reloadPersonalCache(user.getUserId());
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
