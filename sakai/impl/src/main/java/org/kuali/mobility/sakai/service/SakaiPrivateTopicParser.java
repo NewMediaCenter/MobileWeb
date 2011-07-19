@@ -26,63 +26,9 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-import org.kuali.mobility.sakai.entity.Forum;
 import org.kuali.mobility.sakai.entity.ForumMessage;
 
 public class SakaiPrivateTopicParser {
-
-	public List<Forum> parsePrivateTopics(String json) {
-		List<Forum> forums = new ArrayList<Forum>();
-		forums = parse(false, json);
-		return forums;
-	}
-	
-    private List<Forum> parse(boolean convert, String json) {
-    	List<Forum> forums = new ArrayList<Forum>();
-    	try {
-            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
-            JSONArray itemArray = jsonObj.getJSONArray("forum_topic_collection");
-
-            for (int i = 0; i < itemArray.size(); i++) {
-                String id = itemArray.getJSONObject(i).getString("forumId");
-                String title = itemArray.getJSONObject(i).getString("forumTitle");
-                Forum item = new Forum();
-                item.setId(id);
-                item.setTitle(title);
-                item.setIsForumHeader(true);
-                forums.add(item);
-//                JSONObject topicsObj = new JSONObject(itemArray.getJSONObject(i).getJSONArray("topics"));
-                JSONArray topicsArray = itemArray.getJSONObject(i).getJSONArray("topics");
-//                List<ForumTopics> ftList = new ArrayList<ForumTopics>();
-                for (int j = 0; j < topicsArray.size(); j++) {
-                	String topicId = topicsArray.getJSONObject(j).getString("topicId");
-                    String topicTitle = topicsArray.getJSONObject(j).getString("topicTitle");
-                    String topicDescription = topicsArray.getJSONObject(j).
-                    	getString("messagesCount") + " messages, " 
-                    	+ topicsArray.getJSONObject(j).getString("unreadMessagesCount")
-                    	+ " unread";
-                    String typeUuid = topicsArray.getJSONObject(j).getString("typeUuid");
-                    Forum fTopic = new Forum();
-                    fTopic.setId(topicId);
-                    fTopic.setTitle(topicTitle);
-                    fTopic.setDescription(topicDescription);
-                    fTopic.setIsForumHeader(false);
-                    fTopic.setTypeUuid(typeUuid);
-                    forums.add(fTopic);
-//                    ftList.add(fTopic);
-                }
-//                item.setTopics(ftList);
-//                item.setDescription(description);
-                
-            }
-
-    	} catch (JSONException e) {
-           
-        } catch (Exception e) {
-            
-        }
-		return forums;
-    }
     
     public List<ForumMessage> parsePrivateMessages(String json) {
 		List<ForumMessage> messages = new ArrayList<ForumMessage>();

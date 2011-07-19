@@ -25,6 +25,8 @@ import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.kuali.mobility.sakai.service.SakaiForumService;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
 import edu.iu.es.espd.oauth.OAuthException;
-import edu.iu.uis.cas.filter.CASFilter;
 
 @Controller
 @RequestMapping("/sakaiforumsmessagedetails")
@@ -78,8 +79,9 @@ public class ForumsMessagesDetailsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getList(HttpServletRequest request, @RequestParam("siteId") String siteId, @RequestParam("topicId") String topicId, @RequestParam("messageId") String messageId, @RequestParam("messageTitle") String messageTitle, Model uiModel) {
 		try {
+			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/topic/" + topicId + ".json";
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
 			List<ForumMessage> messages = sakaiForumService.findMessageDetails(json, messageId, messageTitle);
@@ -93,7 +95,8 @@ public class ForumsMessagesDetailsController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("title") String title, @RequestParam("body") String body, @RequestParam("messageId") String messageId, @RequestParam("topicId") String topicId, @RequestParam("forumId") String forumId) {
-		submitData(title, body, messageId, topicId, forumId, CASFilter.getRemoteUser(request));
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		submitData(title, body, messageId, topicId, forumId, user.getUserId());
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 

@@ -25,6 +25,8 @@ import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Forum;
 import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.kuali.mobility.sakai.service.SakaiForumService;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
-import edu.iu.uis.cas.filter.CASFilter;
 
 @Controller
 @RequestMapping("/myclasses/{siteId}/forums")
@@ -68,8 +69,9 @@ public class ForumsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getForums(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
 		try {
+			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_topic/site/" + siteId + ".json";
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
 			List<Forum> forums = sakaiForumService.findCourseForums(json);
@@ -90,8 +92,9 @@ public class ForumsController {
 	@RequestMapping(value = "/{forumId}/{topicId}", method = RequestMethod.GET)
 	public String getForumMessages(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("topicId") String topicId, @RequestParam("topicTitle") String topicTitle, @PathVariable("forumId") String forumId, Model uiModel) {
 		try {
+			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/topic/" + topicId + ".json";
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
 			List<ForumMessage> messages = sakaiForumService.findTopicMessages(json, topicTitle);
@@ -105,11 +108,11 @@ public class ForumsController {
 
 	@RequestMapping(value = "/{forumId}/{topicId}", method = RequestMethod.POST)
 	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("title") String title, @RequestParam("body") String body, @PathVariable("topicId") String topicId, @PathVariable("forumId") String forumId) {
-		String userId = CASFilter.getRemoteUser(request);
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		try {
 			String jsonString = "{";
 			jsonString += "\"attachments\": [],";
-			jsonString += "\"authoredBy\":\"" + userId + "\", ";
+			jsonString += "\"authoredBy\":\"" + user.getUserId() + "\", ";
 			jsonString += "\"body\":\"" + body + "\", ";
 			jsonString += "\"label\":\"" + "" + "\", ";
 			jsonString += "\"recipients\":\"" + "" + "\", ";
@@ -126,7 +129,7 @@ public class ForumsController {
 			jsonString += "}";
 
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/new.json";
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", jsonString);
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(user.getUserId(), url, "text/html", jsonString);
 			return new ResponseEntity<String>(is.getStatusCode());
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

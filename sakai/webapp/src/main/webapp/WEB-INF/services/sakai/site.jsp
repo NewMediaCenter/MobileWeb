@@ -73,7 +73,7 @@
 			</c:if>
 			<c:if test="${site.hasMessagesTool}">
 				<li>
-					<a href="${pageContext.request.contextPath}/sakaiprivatetopics?siteId=${site.id}&siteTitle=${site.title}">
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/messages">
 						<h3>Messages</h3>
 					</a>
 				</li>

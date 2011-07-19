@@ -8,61 +8,29 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Messages</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
-</head>
-
-<body>
-<div data-role="page" id="">
-	<div data-role="header">
-		<h1>Messages</h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" data-theme="a">
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
+	
+<kme:page title="Messages" id="messages">
+	<kme:content>
+		<ul data-role="listview" data-inset="false">
 			<c:forEach items="${sakaiprivatetopics}" var="item" varStatus="status">
 				<c:choose>
-				<c:when test="${item.isForumHeader}">
-				<li data-role="list-divider">${item.title}</li>
-				</c:when>
-				<c:otherwise>
-				<li>
-					<a href="${pageContext.request.contextPath}/sakaiprivatemessages?siteId=
-					<%= request.getParameter("siteId") %>&typeUuid=
-					${item.typeUuid}">
-						<h3>${item.title}</h3>
-						<p>${item.description}</p>
-					</a>
-				</li>
-				</c:otherwise>
+					<c:when test="${item.isForumHeader}">
+						<li data-role="list-divider">${item.title}</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${item.typeUuid}">
+								<h3>${item.title}</h3>
+								<p>${item.description}</p>
+							</a>
+						</li>
+					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 		</ul>
-	</div>
-	<div data-role="footer" class="ui-bar" data-position="fixed">
-	
-	<a href="${pageContext.request.contextPath}/sakaiprivatemessages/create?siteId=
-					<%= request.getParameter("siteId") %>" data-role="button" data-icon="plus" data-transition="pop">Create Message</a>
-	
-	</div>
-	<!-- /content -->
-
-	<!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/create" data-role="button" data-icon="plus">Create Message</a>
+	</kme:content>
+</kme:page>

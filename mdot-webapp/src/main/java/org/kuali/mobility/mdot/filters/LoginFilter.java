@@ -49,25 +49,16 @@ public class LoginFilter implements Filter {
 	private boolean needsAuthenticated(final HttpServletRequest request) {
 		final String servletPath = request.getServletPath();
 		if (servletPath.startsWith("/oauth") 
-				|| servletPath.startsWith("/events") 
-				|| servletPath.startsWith("/sakaiannouncements")
-				|| servletPath.startsWith("/sakaiassignments")
-				|| servletPath.startsWith("/sakaiassignmentdetails")
-				|| servletPath.startsWith("/sakaigradebook")
-				|| servletPath.startsWith("/myclasseshome") 
 				|| servletPath.startsWith("/myclasses") 
 				|| servletPath.startsWith("/forums") 
-				|| servletPath.startsWith("/sakaiannouncementdetails") 
 				|| servletPath.startsWith("/sakaiforumsmessages") 
 				|| servletPath.startsWith("/sakaiforumsmessagedetails")
 				|| servletPath.startsWith("/sakaiprivatetopics") 
 				|| servletPath.startsWith("/sakaiprivatemessages") 
 				|| servletPath.startsWith("/sakaiprivatemessagedetails") 
-				|| servletPath.startsWith("/roster") 
 				|| servletPath.startsWith("/resources") 
 				|| servletPath.startsWith("/sakairesourcedetails") 
-				|| servletPath.startsWith("/calendar") 
-				|| servletPath.startsWith("/sakaiparticipantdetails")) {
+				|| servletPath.startsWith("/calendar")) {
 			return true;
 		}
 		return false;

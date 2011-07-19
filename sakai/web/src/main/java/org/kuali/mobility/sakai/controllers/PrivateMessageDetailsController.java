@@ -25,6 +25,8 @@ import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.kuali.mobility.sakai.service.SakaiPrivateTopicService;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
 import edu.iu.es.espd.oauth.OAuthException;
-import edu.iu.uis.cas.filter.CASFilter;
 
 @Controller
 @RequestMapping("/sakaiprivatemessagedetails")
@@ -73,9 +74,9 @@ public class PrivateMessageDetailsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getList(HttpServletRequest request, @RequestParam("siteId") String siteId, @RequestParam("typeUuid") String typeUuid, @RequestParam("messageId") String messageId, @RequestParam("messageTitle") String messageTitle, Model uiModel) {
 		try {
+			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
-			String user = CASFilter.getRemoteUser(request);
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
 			List<ForumMessage> messages = sakaiPrivateTopicService.findPrivateMessageDetails(json, messageId, messageTitle);
@@ -89,7 +90,8 @@ public class PrivateMessageDetailsController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("to") String to, @RequestParam("title") String title, @RequestParam("body") String body, @RequestParam("siteId") String siteId) {
-		submitData(to, title, body, siteId, CASFilter.getRemoteUser(request));
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		submitData(to, title, body, siteId, user.getUserId());
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 

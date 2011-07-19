@@ -39,25 +39,16 @@
 
     <security:http auto-config='true' entry-point-ref="oauthProcessingFilterEntryPoint">
         <security:intercept-url access="ROLE_USER" pattern="/oauth/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/events/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaiannouncements/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaiassignments/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaigradebook/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/myclasseshome/**" />
         <security:intercept-url access="ROLE_USER" pattern="/myclasses/**" />
         <security:intercept-url access="ROLE_USER" pattern="/forums/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaiannouncementdetails/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaiassignmentdetails/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiforumsmessages/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiforumsmessagedetails/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiprivatetopics/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiprivatemessages/**" />    
         <security:intercept-url access="ROLE_USER" pattern="/sakaiprivatemessagedetails/**" />     
-        <security:intercept-url access="ROLE_USER" pattern="/roster/**" />
         <security:intercept-url access="ROLE_USER" pattern="/resources/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakairesourcedetails/**" />
         <security:intercept-url access="ROLE_USER" pattern="/calendar/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaiparticipantdetails/**" />
         <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:anonymous granted-authority="ROLE_USER" />
     </security:http>

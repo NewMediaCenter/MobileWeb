@@ -25,6 +25,8 @@ import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.service.SakaiResourceService;
 import org.kuali.mobility.sakai.service.SakaiSessionService;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
-import edu.iu.uis.cas.filter.CASFilter;
 
 @Controller
 @RequestMapping("/resources")
@@ -73,15 +74,16 @@ public class ResourcesController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getList(HttpServletRequest request, @RequestParam("siteId") String siteId, Model uiModel) {
 		try {
+			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
 			List<Resource> resources = sakaiResourceService.findCourseResources(json);
 			uiModel.addAttribute("resources", resources);
 			
 			url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
-			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String jsonSession = IOUtils.toString(is1.getBody(), "UTF-8");
 			String sessionId = sakaiSessionService.findSakaiSessionId(jsonSession);
 			uiModel.addAttribute("sessionId", sessionId);

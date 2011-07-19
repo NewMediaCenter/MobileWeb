@@ -23,23 +23,26 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
+import org.kuali.mobility.sakai.entity.Forum;
 import org.kuali.mobility.sakai.entity.ForumMessage;
 import org.kuali.mobility.sakai.service.SakaiPrivateTopicService;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
 import edu.iu.es.espd.oauth.OAuthException;
-import edu.iu.uis.cas.filter.CASFilter;
 
 @Controller
-@RequestMapping("/sakaiprivatemessages")
+@RequestMapping("myclasses/{siteId}/messages")
 public class PrivateMessagesController {
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PrivateMessagesController.class);
@@ -47,35 +50,32 @@ public class PrivateMessagesController {
 	@Autowired
 	private ConfigParamService configParamService;
 
-	public void setConfigParamService(ConfigParamService configParamService) {
-		this.configParamService = configParamService;
-	}
-
 	@Autowired
 	private OAuth2LegService oncourseOAuthService;
-
-	public void setOncourseOAuthService(OAuth2LegService oncourseOAuthService) {
-		this.oncourseOAuthService = oncourseOAuthService;
-	}
 
 	@Autowired
 	private SakaiPrivateTopicService sakaiPrivateTopicService;
 
-	public void setSakaiPrivateTopicService(SakaiPrivateTopicService sakaiPrivateTopicService) {
-		this.sakaiPrivateTopicService = sakaiPrivateTopicService;
+	@RequestMapping(method = RequestMethod.GET)
+	public String getMessages(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		List<Forum> topics = sakaiPrivateTopicService.findPrivateTopics(siteId, user.getUserId());
+		uiModel.addAttribute("sakaiprivatetopics", topics);
+		uiModel.addAttribute("siteId", siteId);
+		return "sakai/forums/privatetopics";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String getCreateJsp(Model uiModel) {
-		return "sakaiforums/privatemessagecreate";
+		return "sakai/forums/privatemessagecreate";
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public String getList(HttpServletRequest request, @RequestParam("siteId") String siteId, @RequestParam("typeUuid") String typeUuid, Model uiModel) {
+	@RequestMapping(value = "/folder/{topicId}", method = RequestMethod.GET)
+	public String getFolder(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("topicId") String typeUuid, Model uiModel) {
 		try {
+			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
-			String user = CASFilter.getRemoteUser(request);
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
 			List<ForumMessage> messages = sakaiPrivateTopicService.findPrivateMessages(json);
@@ -84,12 +84,13 @@ public class PrivateMessagesController {
 			LOG.error(e.getMessage(), e);
 		}
 
-		return "sakaiforums/privatemessages";
+		return "sakai/forums/privatemessages";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("to") String to, @RequestParam("title") String title, @RequestParam("body") String body, @RequestParam("siteId") String siteId) {
-		submitData(to, title, body, siteId, CASFilter.getRemoteUser(request));
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		submitData(to, title, body, siteId, user.getUserId());
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
@@ -126,5 +127,17 @@ public class PrivateMessagesController {
 			LOG.error(e.getMessage(), e);
 		}
 		return response;
+	}
+	
+	public void setConfigParamService(ConfigParamService configParamService) {
+		this.configParamService = configParamService;
+	}
+	
+	public void setOncourseOAuthService(OAuth2LegService oncourseOAuthService) {
+		this.oncourseOAuthService = oncourseOAuthService;
+	}
+	
+	public void setSakaiPrivateTopicService(SakaiPrivateTopicService sakaiPrivateTopicService) {
+		this.sakaiPrivateTopicService = sakaiPrivateTopicService;
 	}
 }

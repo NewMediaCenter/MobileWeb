@@ -25,6 +25,8 @@ import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.service.SakaiResourceService;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
-import edu.iu.uis.cas.filter.CASFilter;
 
 @Controller
 @RequestMapping("/sakairesourcedetails")
@@ -66,12 +67,14 @@ public class ResourceDetailsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getList(HttpServletRequest request, HttpServletResponse response, @RequestParam("siteId") String siteId, @RequestParam("sessionId") String sessionId, @RequestParam("resId") String resId, Model uiModel) {
 		try {
+			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+			
 			//check if the last char is / that means it is a folder else its a file
 			char lastChar = resId.charAt(resId.length()-1);
 			
 			if(lastChar == '/'){
 				String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
-				ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "text/html");
+				ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 				String json = IOUtils.toString(is.getBody(), "UTF-8");
 				List<Resource> resources = sakaiResourceService.findChildResources(json, resId);
 				uiModel.addAttribute("resources", resources);
@@ -80,7 +83,7 @@ public class ResourceDetailsController {
 			}
 			else {
 				String url = configParamService.findValueByName("Sakai.Url.Base") + "resources/getresource" + resId;
-				ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(CASFilter.getRemoteUser(request), url, "application/pdf");
+				ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "application/pdf");
 				byte [] fileData = IOUtils.toByteArray(is.getBody());
 				response.setContentType("application/pdf");
 				response.setContentLength(fileData.length);

@@ -22,7 +22,7 @@ import org.kuali.mobility.sakai.entity.ForumMessage;
 
 public interface SakaiPrivateTopicService {
 
-	public List<Forum> findPrivateTopics(String json);
+	public List<Forum> findPrivateTopics(String siteId, String userId);
 	public List<ForumMessage> findPrivateMessages(String json);
 	public List<ForumMessage> findPrivateMessageDetails(String json, String messageId, String messageDetails);
 //	public List<SakaiForumMessage> findPrivateTopics(String json, String topicTitle);
