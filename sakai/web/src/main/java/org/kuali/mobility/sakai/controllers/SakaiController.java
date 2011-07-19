@@ -24,11 +24,13 @@ import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.SakaiAnnouncement;
 import org.kuali.mobility.sakai.entity.SakaiAssignment;
-import org.kuali.mobility.sakai.entity.SakaiSite;
 import org.kuali.mobility.sakai.entity.SakaiHome;
 import org.kuali.mobility.sakai.entity.SakaiRoster;
+import org.kuali.mobility.sakai.entity.SakaiSite;
 import org.kuali.mobility.sakai.service.SakaiCourseService;
 import org.kuali.mobility.sakai.service.SakaiSessionService;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -60,8 +62,8 @@ public class SakaiController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getClasses(HttpServletRequest request, Model uiModel) {
-		String remoteUser = CASFilter.getRemoteUser(request);
-		SakaiHome home = sakaiCourseService.findSakaiHome(remoteUser);
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		SakaiHome home = sakaiCourseService.findSakaiHome(user.getUserId());
 		uiModel.addAttribute("home", home);
 		return "sakai/home";
 	}

@@ -19,5 +19,6 @@ public interface User {
 
     Long getGuid();
     String getUserId();
-
+    void setUserId(String userId);
+    
 }
