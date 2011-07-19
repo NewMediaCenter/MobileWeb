@@ -7,9 +7,12 @@
 	color: 					#ffffff;
 	font-weight: bold;
 	text-shadow: 0 -1px 1px #000000;
-	background-image: -moz-linear-gradient(top, #cc0000, #990000);
+	/*background-image: -moz-linear-gradient(top, #cc0000, #990000);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #cc0000), color-stop(1, #990000));
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#cc0000', EndColorStr='#990000')";
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#cc0000', EndColorStr='#990000')";*/
+	background:#7D110C
+	
+	
 }
 .ui-bar-a, .ui-bar-a input, .ui-bar-a select, .ui-bar-a textarea, .ui-bar-a button {
 	font-family: Helvetica, Arial, sans-serif;
