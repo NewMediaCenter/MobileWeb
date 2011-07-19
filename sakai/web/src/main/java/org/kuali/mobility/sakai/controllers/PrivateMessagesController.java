@@ -70,8 +70,8 @@ public class PrivateMessagesController {
 		return "sakai/forums/privatemessagecreate";
 	}
 	
-	@RequestMapping(value = "/folder/{topicId}", method = RequestMethod.GET)
-	public String getFolder(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("topicId") String typeUuid, Model uiModel) {
+	@RequestMapping(value = "/folder/{typeUuid}", method = RequestMethod.GET)
+	public String getFolder(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("typeUuid") String typeUuid, Model uiModel) {
 		try {
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
@@ -83,7 +83,8 @@ public class PrivateMessagesController {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
-
+		uiModel.addAttribute("siteId", siteId);
+		uiModel.addAttribute("typeUuid", typeUuid);
 		return "sakai/forums/privatemessages";
 	}
 
@@ -92,6 +93,16 @@ public class PrivateMessagesController {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		submitData(to, title, body, siteId, user.getUserId());
 		return new ResponseEntity<String>(HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/folder/{typeUuid}/{messageId}", method = RequestMethod.GET)
+	public String getMessage(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("typeUuid") String typeUuid, @PathVariable("messageId") String messageId, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		ForumMessage message = sakaiPrivateTopicService.findPrivateMessageDetails(user.getUserId(), siteId, typeUuid, messageId);
+		uiModel.addAttribute("message", message);
+		uiModel.addAttribute("siteId", siteId);
+		uiModel.addAttribute("typeUuid", typeUuid);
+		return "sakai/forums/privatemessagedetails";
 	}
 
 	private String submitData(String to, String subject, String comment,String siteId, String userId) {

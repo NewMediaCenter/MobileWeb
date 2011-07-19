@@ -8,58 +8,15 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title><%= request.getParameter("messageTitle") %></title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
-</head>
-
-<body>
-<div data-role="page" id="">
-	<div data-role="header">
-		<h1><%= request.getParameter("messageTitle") %></h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" data-theme="a">
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
-			<c:forEach items="${sakaiprivatemessagedetails}" var="item" varStatus="status">
-				<li data-role="list-divider">${item.title}</li>
-				<li>
-					<h3>${item.body}</h3>
-					<p>${item.createdBy} ${item.createdDate}</p>
-					
-				</li>
-			</c:forEach>
-		</ul>
-	</div>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-	<div data-role="footer" class="ui-bar" data-position="fixed">
-	
-	<a href="${pageContext.request.contextPath}/sakaiprivatemessagedetails/reply?messageId=
-					<%= request.getParameter("messageId") %>typeUuid=
-					<%= request.getParameter("typeUuid") %>" data-role="button" data-transition="pop">Reply</a>
-	
-	<a href="${pageContext.request.contextPath}/sakaiprivatemessagedetails/forward?messageId=
-					<%= request.getParameter("messageId") %>typeUuid=
-					<%= request.getParameter("typeUuid") %>" data-role="button" data-transition="pop">Forward</a>
-	
-	</div>
-	<!-- /content -->
-
-	<!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+<kme:page title="${message.title}" id="message">
+	<kme:content>
+		<h3>${message.body}</h3>
+		<p>${message.createdBy} ${message.createdDate}</p>
+		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${typeUuid}/${message.id}/reply" data-role="button">Reply</a>
+		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${typeUuid}/${message.id}/forward" data-role="button">Forward</a>
+	</kme:content>
+</kme:page>

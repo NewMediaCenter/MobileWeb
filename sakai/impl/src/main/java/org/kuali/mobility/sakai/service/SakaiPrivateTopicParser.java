@@ -67,46 +67,4 @@ public class SakaiPrivateTopicParser {
         }
 		return messages;
 	}
-
-    public List<ForumMessage> parsePrivateMessageDetails(String json, String mId, String mTitle) {
-		List<ForumMessage> messages = new ArrayList<ForumMessage>();
-		try {
-            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
-            JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
-            
-            for (int i = 0; i < itemArray.size(); i++) {
-                String messageId = itemArray.getJSONObject(i).getString("messageId");
-                if(!mId.equalsIgnoreCase(messageId)) {
-                	continue;
-                }
-                String messageTitle = itemArray.getJSONObject(i).getString("title");
-                String messageBody = itemArray.getJSONObject(i).getString("body");
-                Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
-                
-                String messageAuthor = itemArray.getJSONObject(i).getString("authoredBy");
-//                String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
-//                String messageAuthorRole = messageAuthor[2];
-                Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
-                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                String createdDate = df.format(cDate);
-                
-                
-                ForumMessage item = new ForumMessage();
-                item.setId(messageId);
-                item.setTitle(messageTitle);
-                item.setBody(messageBody);
-                item.setCreatedBy(messageAuthor);
-                item.setRole(messageAuthor);
-                item.setCreatedDate(createdDate);
-                item.setMessageHeader(false);
-                item.setIsRead(isRead);
-                messages.add(item);
-                }
-		} catch (JSONException e) {
-            
-        } catch (Exception e) {
-        }
-		return messages;
-	}
-
 }

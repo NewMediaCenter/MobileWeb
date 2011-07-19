@@ -24,7 +24,7 @@ public interface SakaiPrivateTopicService {
 
 	public List<Forum> findPrivateTopics(String siteId, String userId);
 	public List<ForumMessage> findPrivateMessages(String json);
-	public List<ForumMessage> findPrivateMessageDetails(String json, String messageId, String messageDetails);
+	ForumMessage findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);
 //	public List<SakaiForumMessage> findPrivateTopics(String json, String topicTitle);
 //	public List<SakaiForumMessage> findMessageDetails(String json, String messageId, String messageTitle);
 //	public String toJson(Collection<SakaiCourse> collection);

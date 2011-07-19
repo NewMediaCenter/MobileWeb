@@ -70,23 +70,6 @@ public class PrivateMessageDetailsController {
 	public String getCreateJsp(Model uiModel) {
 		return "sakaiforums/privatemessagereply";
 	}
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String getList(HttpServletRequest request, @RequestParam("siteId") String siteId, @RequestParam("typeUuid") String typeUuid, @RequestParam("messageId") String messageId, @RequestParam("messageTitle") String messageTitle, Model uiModel) {
-		try {
-			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
-			String json = IOUtils.toString(is.getBody(), "UTF-8");
-
-			List<ForumMessage> messages = sakaiPrivateTopicService.findPrivateMessageDetails(json, messageId, messageTitle);
-			uiModel.addAttribute("sakaiprivatemessagedetails", messages);
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-		}
-
-		return "sakaiforums/privatemessagedetails";
-	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("to") String to, @RequestParam("title") String title, @RequestParam("body") String body, @RequestParam("siteId") String siteId) {

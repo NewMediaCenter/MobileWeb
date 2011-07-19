@@ -16,10 +16,14 @@
 package org.kuali.mobility.sakai.service;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
@@ -99,10 +103,46 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 		return forums;
 	}
 	
-	public List<ForumMessage> findPrivateMessageDetails(String json, String messageId, String messageTitle) {
-		SakaiPrivateTopicParser parser = new SakaiPrivateTopicParser();
-		List<ForumMessage> forums = parser.parsePrivateMessageDetails(json, messageId, messageTitle);
-		return forums;
+	public ForumMessage findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId) {
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
+            ForumMessage item = new ForumMessage();
+            
+            for (int i = 0; i < itemArray.size(); i++) {
+                String mId = itemArray.getJSONObject(i).getString("messageId");
+                if(!messageId.equalsIgnoreCase(mId)) {
+                	continue;
+                }
+                String messageTitle = itemArray.getJSONObject(i).getString("title");
+                String messageBody = itemArray.getJSONObject(i).getString("body");
+                Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
+                
+                String messageAuthor = itemArray.getJSONObject(i).getString("authoredBy");
+//                String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
+//                String messageAuthorRole = messageAuthor[2];
+                Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                String createdDate = df.format(cDate);
+                
+                item.setId(messageId);
+                item.setTitle(messageTitle);
+                item.setBody(messageBody);
+                item.setCreatedBy(messageAuthor);
+                item.setRole(messageAuthor);
+                item.setCreatedDate(createdDate);
+                item.setMessageHeader(false);
+                item.setIsRead(isRead);
+            }
+            return item;
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return null;
+		}
 	}
 
 	public void setConfigParamService(ConfigParamService configParamService) {
