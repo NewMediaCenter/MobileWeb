@@ -24,9 +24,10 @@ public class Forum implements Serializable, Comparable<Forum> {
 	private String id;
     private String title;
     private String description;
-    private Boolean isForumHeader;
     private String typeUuid;
     private String forumId;
+    private int unreadCount;
+    private int messageCount;
     
 	public String getTitle() {
 		return title;
@@ -51,16 +52,6 @@ public class Forum implements Serializable, Comparable<Forum> {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
-	public void setIsForumHeader(Boolean isForumHeader) {
-		this.isForumHeader = isForumHeader;
-	}
-
-	public Boolean getIsForumHeader() {
-		return isForumHeader;
-	}
-
 	
 	public void setTypeUuid(String typeUuid) {
 		this.typeUuid = typeUuid;
@@ -84,6 +75,22 @@ public class Forum implements Serializable, Comparable<Forum> {
         }
         return this.getId().compareTo(that.getId());
     }
+
+	public int getUnreadCount() {
+		return unreadCount;
+	}
+
+	public void setUnreadCount(int unreadCount) {
+		this.unreadCount = unreadCount;
+	}
+
+	public int getMessageCount() {
+		return messageCount;
+	}
+
+	public void setMessageCount(int messageCount) {
+		this.messageCount = messageCount;
+	}
 
 		
 }

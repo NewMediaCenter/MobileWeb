@@ -23,14 +23,14 @@ import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Forum;
-import org.kuali.mobility.sakai.entity.ForumMessage;
+import org.kuali.mobility.sakai.entity.Message;
+import org.kuali.mobility.sakai.entity.MessageFolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -60,35 +60,30 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 
             forums = new ArrayList<Forum>();
             for (int i = 0; i < itemArray.size(); i++) {
-                String id = itemArray.getJSONObject(i).getString("forumId");
-                String title = itemArray.getJSONObject(i).getString("forumTitle");
-                Forum item = new Forum();
-                item.setId(id);
-                item.setTitle(title);
-                item.setIsForumHeader(true);
-                forums.add(item);
-//	            JSONObject topicsObj = new JSONObject(itemArray.getJSONObject(i).getJSONArray("topics"));
-                JSONArray topicsArray = itemArray.getJSONObject(i).getJSONArray("topics");
-//	            List<ForumTopics> ftList = new ArrayList<ForumTopics>();
+            	JSONObject object = itemArray.getJSONObject(i);
+//                String id = object.getString("forumId");
+//                String title = object.getString("forumTitle");
+//                Forum item = new Forum();
+//                item.setId(id);
+//                item.setTitle(title);
+//                item.setIsForumHeader(true);
+//                forums.add(item);
+                JSONArray topicsArray = object.getJSONArray("topics");
                 for (int j = 0; j < topicsArray.size(); j++) {
-                	String topicId = topicsArray.getJSONObject(j).getString("topicId");
-                    String topicTitle = topicsArray.getJSONObject(j).getString("topicTitle");
-                    String topicDescription = topicsArray.getJSONObject(j).
-                    	getString("messagesCount") + " messages, " 
-                    	+ topicsArray.getJSONObject(j).getString("unreadMessagesCount")
-                    	+ " unread";
-                    String typeUuid = topicsArray.getJSONObject(j).getString("typeUuid");
+                	JSONObject topic = topicsArray.getJSONObject(j);
                     Forum fTopic = new Forum();
-                    fTopic.setId(topicId);
-                    fTopic.setTitle(topicTitle);
-                    fTopic.setDescription(topicDescription);
-                    fTopic.setIsForumHeader(false);
-                    fTopic.setTypeUuid(typeUuid);
+                    String title = topic.getString("topicTitle");
+                    if (title.startsWith("pvt_")) {
+                    	title = title.substring(4);
+                    }
+                    fTopic.setId(topic.getString("topicId"));
+                    fTopic.setTitle(title);
+                    fTopic.setDescription(null);
+                    fTopic.setMessageCount(topic.getInt("messagesCount"));
+                    fTopic.setUnreadCount(topic.getInt("unreadMessagesCount"));
+                    fTopic.setTypeUuid(topic.getString("typeUuid"));
                     forums.add(fTopic);
-//	                ftList.add(fTopic);
                 }
-//	            item.setTopics(ftList);
-//	            item.setDescription(description);
             }
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -97,13 +92,12 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 		return forums;
 	}
 	
-	public List<ForumMessage> findPrivateMessages(String json) {
-		SakaiPrivateTopicParser parser = new SakaiPrivateTopicParser();
-		List<ForumMessage> forums = parser.parsePrivateMessages(json);
-		return forums;
-	}
-	
-	public ForumMessage findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId) {
+	public MessageFolder findPrivateMessages(String siteId, String typeUuid, String userId) {
+		MessageFolder messageFolder = new MessageFolder();
+		List<Message> messages = messageFolder.getMessages();
+		
+		messageFolder.setTypeUuid(typeUuid);
+		
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
@@ -111,7 +105,47 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 			
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
-            ForumMessage item = new ForumMessage();
+            
+            for (int i = 0; i < itemArray.size(); i++) {
+                String messageId = itemArray.getJSONObject(i).getString("messageId");
+                String messageTitle = itemArray.getJSONObject(i).getString("title");
+                String messageBody = itemArray.getJSONObject(i).getString("body");
+                Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
+                
+                String messageAuthor = itemArray.getJSONObject(i).getString("authoredBy");
+//              String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
+//              String messageAuthorRole = messageAuthor[2];
+                Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                String createdDate = df.format(cDate);
+                
+                
+                Message item = new Message();
+                item.setId(messageId);
+                item.setTitle(messageTitle);
+                item.setBody(messageBody);
+                item.setCreatedBy(messageAuthor);
+                item.setRole(messageAuthor);
+                item.setCreatedDate(createdDate);
+                item.setMessageHeader(false);
+                item.setIsRead(isRead);
+                messages.add(item);
+            }
+		}catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		return messageFolder;
+	}
+	
+	public Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId) {
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
+            Message item = new Message();
             
             for (int i = 0; i < itemArray.size(); i++) {
                 String mId = itemArray.getJSONObject(i).getString("messageId");
@@ -123,8 +157,8 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
                 Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
                 
                 String messageAuthor = itemArray.getJSONObject(i).getString("authoredBy");
-//                String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
-//                String messageAuthorRole = messageAuthor[2];
+//              String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
+//              String messageAuthorRole = messageAuthor[2];
                 Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
                 String createdDate = df.format(cDate);

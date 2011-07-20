@@ -18,13 +18,13 @@ package org.kuali.mobility.sakai.service;
 import java.util.List;
 
 import org.kuali.mobility.sakai.entity.Forum;
-import org.kuali.mobility.sakai.entity.ForumMessage;
+import org.kuali.mobility.sakai.entity.Message;
 
 public interface SakaiForumService {
 
 	public List<Forum> findCourseForums(String json);
-	public List<ForumMessage> findTopicMessages(String json, String topicTitle);
-	public List<ForumMessage> findMessageDetails(String json, String messageId, String messageTitle);
+	public List<Message> findTopicMessages(String json, String topicTitle);
+	public List<Message> findMessageDetails(String json, String messageId, String messageTitle);
 //	public String toJson(Collection<SakaiCourse> collection);
 //	
 }

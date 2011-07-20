@@ -8,85 +8,40 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Page Title</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.blockUI.js"></script>
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<script type="text/javascript">
-$(function(){
-	$("#jQPrivateMessageForm").submit(function(){
-		$.blockUI({ message: '<h1>Sending Message...</h1>' });
-		var $form = $( this ),
-		to = $form.find( 'input[name="to_r"]' ).val(),
-		title = $form.find( 'input[name="title_r"]' ).val(),
-        body = $form.find( 'textArea[name="body_r"]' ).val();
-		siteId = "<%= request.getParameter("siteId") %>";
-		var referrer = document.referrer;
-		$.post("${pageContext.request.contextPath}/sakaiprivatemessages", { 'to': to, 'title': title, 'body': body, 'siteId': siteId},
-				   function(data) {
-				     //alert("Sent " + data);
-				     $.unblockUI();
-				     $.mobile.changePage(referrer, "slide", false, true);
-				   });
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-		//$.post("${pageContext.request.contextPath}/sakaiforumsmessages", forumThreadForm, function(data){
-		//    confirmationVar.text(data);
-		//    hideContentTransition();
-		//    showConfirmation();
-		//  });
-		  return false;
-	});
-});
-</script>
-</head>
-
-<body>
-<div data-role="page" id="">
-  <div data-role="header" data-position="">
-    <h1>Create Message</h1>
-  </div>
-  <!-- /header -->
- 
-  <div data-role="content" style="padding-top:0px" >
-    <form id="jQPrivateMessageForm" method="post">
-        <fieldset>
-        <div data-role="fieldcontain" >
-         <label for="to">To:</label>
-         <input type="text" name="to_r" id="to" />
-        
-        <label for="title">Subject:</label>
-        <input type="text" name="title_r" id="title" />
-     
-        <label for="body">Message:</label>
-        <textarea cols="40" rows="8" name="body_r" id="body"></textarea>
-     </div>
-     	
-     	<div data-inline="true">
-        <div class="ui-grid-a">
-          <div class="ui-block-b"><button type="submit" data-theme="a" name="submit" value="Create" class="ui-btn-hidden" aria-disabled="false">Create</button></div>
-        </div>
-     	 </div>
-     	</fieldset>
-     </form>
-  </div>
-  <!-- /content --> 
-  
-  <!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+<kme:page title="Compose Message" id="compose_message">
+    <kme:content>
+    	<form:form action="${pageContext.request.contextPath}/myclasses/${siteId}/messages/compose" commandName="message" data-ajax="false" method="post">
+	        <fieldset>
+	        	<form:hidden path="inReplyTo"/>
+	        
+	        	<label for="recipients">To:</label>
+                <form:input path="recipients" type="text" value="" class="required"  />
+                <form:errors path="recipients"/>
+	        
+		        <label for="title">Subject:</label>
+		        <form:input path="title" type="text" value="" class="required"  />
+		        <form:errors path="title"/>
+		        
+		        <label for="body">Message:</label>
+                <form:textarea path="body" cols="40" rows="8" class="required" />
+                <form:errors path="body"/>
+		     	
+		     	<div data-inline="true">
+	                <div class="ui-grid-a">
+	                    <div class="ui-block-a"><a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages" data-role="button">Cancel</a></div>
+	                    <div class="ui-block-b">
+	                        <input class="submit" type="submit" value="Submit" />
+	                    </div>
+	                </div>
+	            </div>
+	     	</fieldset>
+		</form:form>
+	</kme:content>
+</kme:page>

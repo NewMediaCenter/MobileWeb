@@ -27,7 +27,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 import org.kuali.mobility.sakai.entity.Forum;
-import org.kuali.mobility.sakai.entity.ForumMessage;
+import org.kuali.mobility.sakai.entity.Message;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,7 +47,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
                 Forum item = new Forum();
                 item.setId(id);
                 item.setTitle(title);
-                item.setIsForumHeader(true);
+//                item.setIsForumHeader(true);
                 forums.add(item);
 //                JSONObject topicsObj = new JSONObject(itemArray.getJSONObject(i).getJSONArray("topics"));
                 JSONArray topicsArray = itemArray.getJSONObject(i).getJSONArray("topics");
@@ -64,7 +64,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
                     fTopic.setTitle(topicTitle);
                     fTopic.setDescription(topicDescription);
                     fTopic.setForumId(id);
-                    fTopic.setIsForumHeader(false);
+//                    fTopic.setIsForumHeader(false);
                     forums.add(fTopic);
 //                    ftList.add(fTopic);
                 }
@@ -79,13 +79,13 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 		return forums;
 	}
 	
-	public List<ForumMessage> findTopicMessages(String json, String topicTitle) {
-		List<ForumMessage> messages = new ArrayList<ForumMessage>();
+	public List<Message> findTopicMessages(String json, String topicTitle) {
+		List<Message> messages = new ArrayList<Message>();
     	try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
             
-            ForumMessage headerItem = new ForumMessage();
+            Message headerItem = new Message();
             headerItem.setTitle(topicTitle);
             headerItem.setMessageHeader(true);
             messages.add(headerItem);
@@ -109,7 +109,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
                 String createdDate = df.format(cDate);
                 
                 
-                ForumMessage item = new ForumMessage();
+                Message item = new Message();
                 item.setId(messageId);
                 item.setTitle(messageTitle);
                 item.setBody(messageBody);
@@ -127,8 +127,8 @@ public class SakaiForumServiceImpl implements SakaiForumService {
     	return messages;
 	}
 	
-	public List<ForumMessage> findMessageDetails(String json, String messageId, String messageTitle) {
-		List<ForumMessage> messages = new ArrayList<ForumMessage>();
+	public List<Message> findMessageDetails(String json, String messageId, String messageTitle) {
+		List<Message> messages = new ArrayList<Message>();
     	try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
@@ -150,7 +150,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 	                String createdDate = df.format(cDate);
 	                
 	                
-	                ForumMessage item = new ForumMessage();
+	                Message item = new Message();
 	                item.setId(messageId);
 	                item.setTitle(messageTitle);
 	                item.setBody(messageBody);

@@ -17,21 +17,17 @@ package org.kuali.mobility.sakai.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.ForumMessage;
-import org.kuali.mobility.sakai.service.SakaiPrivateTopicService;
 import org.kuali.mobility.shared.Constants;
 import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,18 +53,6 @@ public class PrivateMessageDetailsController {
 
 	public void setOncourseOAuthService(OAuth2LegService oncourseOAuthService) {
 		this.oncourseOAuthService = oncourseOAuthService;
-	}
-
-	@Autowired
-	private SakaiPrivateTopicService sakaiPrivateTopicService;
-
-	public void setSakaiPrivateTopicService(SakaiPrivateTopicService sakaiPrivateTopicService) {
-		this.sakaiPrivateTopicService = sakaiPrivateTopicService;
-	}
-
-	@RequestMapping(value = "/reply", method = RequestMethod.GET)
-	public String getCreateJsp(Model uiModel) {
-		return "sakaiforums/privatemessagereply";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

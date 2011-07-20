@@ -12,9 +12,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="${message.title}" id="message">
+<kme:page title="Message Details" id="message">
 	<kme:content>
-		<h3>${message.body}</h3>
+		<h3>${message.title}</h3>
+		<p>${message.body}</p>
 		<p>${message.createdBy} ${message.createdDate}</p>
 		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${typeUuid}/${message.id}/reply" data-role="button">Reply</a>
 		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${typeUuid}/${message.id}/forward" data-role="button">Forward</a>

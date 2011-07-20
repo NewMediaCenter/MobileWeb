@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.ForumMessage;
+import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.service.SakaiForumService;
 import org.kuali.mobility.shared.Constants;
 import org.kuali.mobility.user.entity.User;
@@ -84,7 +84,7 @@ public class ForumsMessagesDetailsController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<ForumMessage> messages = sakaiForumService.findMessageDetails(json, messageId, messageTitle);
+			List<Message> messages = sakaiForumService.findMessageDetails(json, messageId, messageTitle);
 			uiModel.addAttribute("sakaiforumsmessagedetails", messages);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

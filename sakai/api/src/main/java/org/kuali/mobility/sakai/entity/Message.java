@@ -17,20 +17,22 @@ package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
 
-public class ForumMessage implements Serializable, Comparable<ForumMessage> {
+public class Message implements Serializable, Comparable<Message> {
 
 	private static final long serialVersionUID = -5533393238213510311L;
 	
 	private String id;
+	private String recipients;
+	private String title;
+	private String body;
     private String createdBy;
     private String createdDate;
-    private String title;
     private Boolean messageHeader;
-    private String body;
     private String role;
     private Boolean isRead;
     private String inReplyTo;
     private String topicTitle;
+    
 
 	public String getTitle() {
 		return title;
@@ -103,7 +105,7 @@ public class ForumMessage implements Serializable, Comparable<ForumMessage> {
 	public String getTopicTitle() {
 		return topicTitle;
 	}
-    public int compareTo(ForumMessage that) {
+    public int compareTo(Message that) {
         if (this == null || that == null || this.getId() == null || that.getId() == null) {
             return -1;
         }
@@ -118,5 +120,11 @@ public class ForumMessage implements Serializable, Comparable<ForumMessage> {
 		return inReplyTo;
 	}
 
-		
+	public String getRecipients() {
+		return recipients;
+	}
+
+	public void setRecipients(String recipients) {
+		this.recipients = recipients;
+	}	
 }

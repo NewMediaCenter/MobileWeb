@@ -14,23 +14,16 @@
 	
 <kme:page title="Messages" id="messages">
 	<kme:content>
-		<ul data-role="listview" data-inset="false">
+		<ul data-role="listview">
 			<c:forEach items="${sakaiprivatetopics}" var="item" varStatus="status">
-				<c:choose>
-					<c:when test="${item.isForumHeader}">
-						<li data-role="list-divider">${item.title}</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${item.typeUuid}">
-								<h3>${item.title}</h3>
-								<p>${item.description}</p>
-							</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
+				<li>
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${item.typeUuid}?title=${item.title}">
+						${item.title}
+						<span class="ui-li-count">${item.unreadCount}</span>
+					</a>
+				</li>
 			</c:forEach>
 		</ul>
-		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/create" data-role="button" data-icon="plus">Create Message</a>
+		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/compose" data-role="button" data-icon="plus">Compose Message</a>
 	</kme:content>
 </kme:page>
