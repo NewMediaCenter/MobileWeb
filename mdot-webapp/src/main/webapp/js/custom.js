@@ -65,8 +65,8 @@ function refreshComputerLabs() {
 
 $('[data-role=page][id=kb]').live("pagebeforeshow", function(event) {
 //	alert("test");
-	$('#kbsearch').keyup(function() {
-		lookup($('#kbsearch').val());
+	$('#searchText').keyup(function() {
+		lookup($('#searchText').val());
 	});	
 });
 
@@ -148,33 +148,34 @@ function lookup(inputString) {
 			}
 		});
 */
-		var requestUrlString = 'knowledgebase/search?criteria=' + inputString;
-		$.getJSON(requestUrlString, function(data) {
+		var requestUrlString = 'search?criteria=' + inputString;
+		$.get(requestUrlString, function(data) {
 			console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
 			if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
 				kbCurrentDisplayNumber = kbRemoteCallCount;
 				// Show results
-				var items = [];
-				$.each(data.results, function(key, val) {
-					//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
-					items.push('<a href="knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
-				});
 				var pagehtml = '<div id="resultdata"></div>'
 				$('#searchresults').html(pagehtml);
-				$("#resultdata").html(items.join('')).page();
+				$("#resultdata").html(data).page();
 			}
-			//$('#searchresults').html(pagehtml).page();
-			//alert(items.join(''));
-/* 				  $.each(data, function(key, val) {
-			    items.push('<li id="' + key + '">' + val + '</li>');
-			  });
-*/
-/* 				  $('<ul/>', {
-			    'class': 'my-new-list',
-			    html: items.join('')
-			  }).appendTo('body'); */
-			});
-		}
+		});
+	}
+//		$.getJSON(requestUrlString, function(data) {
+//			console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
+//			if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
+//				kbCurrentDisplayNumber = kbRemoteCallCount;
+//				// Show results
+//				var items = [];
+//				$.each(data.results, function(key, val) {
+//					//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
+//					items.push('<a href="knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
+//				});
+//				var pagehtml = '<div id="resultdata"></div>'
+//				$('#searchresults').html(pagehtml);
+//				$("#resultdata").html(items.join('')).page();
+//			}
+//			});
+//		}
 } // lookup
 
 /* Begin Calendar js*/
