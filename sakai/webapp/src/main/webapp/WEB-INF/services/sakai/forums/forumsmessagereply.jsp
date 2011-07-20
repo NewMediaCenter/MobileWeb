@@ -17,10 +17,13 @@
 
 <kme:page title="Reply" id="reply">
     <kme:content>
-    	<form:form action="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${forumId}/reply" commandName="message" data-ajax="false" method="post">
+    	<form:form action="${pageContext.request.contextPath}/myclasses/${siteId}/forums/reply" commandName="message" data-ajax="false" method="post">
 	        <fieldset>
 	        	<form:hidden path="inReplyTo"/>
 	        	<form:hidden path="title"/>
+	        	<form:hidden path="forumId"/>
+	        	<form:hidden path="topicId"/>
+	        	<form:hidden path="threadId"/>
 	        	
 		        <div class="forum-reply">
 	        		<label for="body">Message:</label>
@@ -29,7 +32,7 @@
 	      		</div>
 				<div data-inline="true">
 					<div class="ui-grid-a">
-				    	<div class="ui-block-a"><a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${forumId}/${message.topicId}/${message.threadId}" data-role="button" data-theme="c" data-direction="reverse">Cancel</a></div>
+				    	<div class="ui-block-a"><a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${message.forumId}/${message.topicId}/${message.threadId}" data-role="button" data-theme="c" data-direction="reverse">Cancel</a></div>
 				    	<div class="ui-block-b"><input class="submit" type="submit" value="Post" data-theme="a" /></div>
 					</div>
 				</div>

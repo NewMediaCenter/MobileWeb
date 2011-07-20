@@ -37,10 +37,12 @@ import org.kuali.mobility.sakai.entity.ForumThread;
 import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
+import edu.iu.es.espd.oauth.OAuthException;
 
 @Service
 public class SakaiForumServiceImpl implements SakaiForumService {
@@ -314,6 +316,39 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 		return m;
 	}
 	
+	@Override
+	public ResponseEntity<String> postMessage(Message message, String userId) {
+		try {
+			String jsonString = "{";
+			jsonString += "\"attachments\": [],";
+			jsonString += "\"authoredBy\":\"" + userId + "\", ";
+			jsonString += "\"body\":\"" + message.getBody() + "\", ";
+			jsonString += "\"label\":\"" + "" + "\", ";
+			jsonString += "\"recipients\":\"" + "" + "\", ";
+			jsonString += "\"replies\":" + "null" + ", ";
+			jsonString += "\"replyTo\":" + message.getInReplyTo() + ", ";
+			jsonString += "\"title\":\"" + message.getTitle() + "\", ";
+			jsonString += "\"topicId\":\"" + message.getTopicId() + "\", ";
+			jsonString += "\"forumId\":\"" + message.getForumId() + "\", ";
+			jsonString += "\"read\":" + "false" + ", ";
+			jsonString += "\"entityReference\":\"" + "\\/forum_message" + "\"";
+			//jsonString += "\"entityURL\":\"" + "http:\\/\\/localhost:8080\\/direct\\/forum_message" + "\", ";
+			//jsonString += "\"entityTitle\":\"" + subject + "\"";
+
+			jsonString += "}";
+
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", jsonString);
+			return new ResponseEntity<String>(is.getStatusCode());
+		} catch (OAuthException e) {
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<String>(HttpStatus.valueOf(e.getResponseCode()));
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<String>(HttpStatus.METHOD_FAILURE);
+		}
+	}
+	
 	public void setConfigParamService(ConfigParamService configParamService) {
 		this.configParamService = configParamService;
 	}
@@ -321,6 +356,4 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 	public void setOncourseOAuthService(OAuth2LegService oncourseOAuthService) {
 		this.oncourseOAuthService = oncourseOAuthService;
 	}
-
-	
 }

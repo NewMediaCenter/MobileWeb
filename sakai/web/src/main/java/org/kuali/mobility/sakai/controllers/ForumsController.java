@@ -27,8 +27,12 @@ import org.kuali.mobility.sakai.service.SakaiForumService;
 import org.kuali.mobility.shared.Constants;
 import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -112,6 +116,7 @@ public class ForumsController {
 			Message message = sakaiForumService.findMessage(messageId, topicId, user.getUserId());
 			message.setTopicId(topicId);
 			message.setThreadId(threadId);
+			message.setForumId(forumId);
 			message.setTitle("Re: " + message.getTitle());
 			message.setInReplyTo(messageId);
 			message.setBody(null);
@@ -120,42 +125,25 @@ public class ForumsController {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
-		uiModel.addAttribute("forumId", forumId);
 		uiModel.addAttribute("siteId", siteId);
 		return "sakai/forums/forumsmessagereply";
 	}
-
-//	@RequestMapping(value = "/{forumId}/{topicId}", method = RequestMethod.POST)
-//	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("title") String title, @RequestParam("body") String body, @PathVariable("topicId") String topicId, @PathVariable("forumId") String forumId) {
-//		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-//		try {
-//			String jsonString = "{";
-//			jsonString += "\"attachments\": [],";
-//			jsonString += "\"authoredBy\":\"" + user.getUserId() + "\", ";
-//			jsonString += "\"body\":\"" + body + "\", ";
-//			jsonString += "\"label\":\"" + "" + "\", ";
-//			jsonString += "\"recipients\":\"" + "" + "\", ";
-//			jsonString += "\"replies\":" + "null" + ", ";
-//			jsonString += "\"replyTo\":" + "null" + ", ";
-//			jsonString += "\"title\":\"" + title + "\", ";
-//			jsonString += "\"topicId\":\"" + topicId + "\", ";
-//			jsonString += "\"forumId\":\"" + forumId + "\", ";
-//			jsonString += "\"read\":" + "false" + ", ";
-//			jsonString += "\"entityReference\":\"" + "\\/forum_message" + "\", ";
-//			//jsonString += "\"entityURL\":\"" + "http:\\/\\/localhost:8080\\/direct\\/forum_message" + "\", ";
-//			//jsonString += "\"entityTitle\":\"" + subject + "\"";
-//
-//			jsonString += "}";
-//
-//			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/new.json";
-//			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(user.getUserId(), url, "text/html", jsonString);
-//			return new ResponseEntity<String>(is.getStatusCode());
-//		} catch (Exception e) {
-//			LOG.error(e.getMessage(), e);
-//			return new ResponseEntity<String>(HttpStatus.METHOD_FAILURE);
-//		}
-//	}
 	
+	@RequestMapping(value = "/reply", method = RequestMethod.POST)
+	public String reply(HttpServletRequest request, @PathVariable("siteId") String siteId, @ModelAttribute("message") Message message, BindingResult result, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		ResponseEntity<String> response = sakaiForumService.postMessage(message, user.getUserId());
+		
+		if (response.getStatusCode().value() < 200 || response.getStatusCode().value() >= 300) {
+			Errors errors = ((Errors) result);
+	    	errors.rejectValue("body", "", "There was an error posting your reply. Please try again later.");
+	    	uiModel.addAttribute("siteId", siteId);
+	    	return "sakai/forums/forumsmessagereply";
+		}
+		
+		return getForumTopicThread(request, siteId, message.getTopicId(), message.getForumId(), message.getThreadId(), uiModel);
+	}
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String getCreateJsp(Model uiModel) {
 		return "sakai/forums/forumsthreadcreate";

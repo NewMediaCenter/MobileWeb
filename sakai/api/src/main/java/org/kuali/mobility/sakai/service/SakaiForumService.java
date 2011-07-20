@@ -21,6 +21,7 @@ import org.kuali.mobility.sakai.entity.Forum;
 import org.kuali.mobility.sakai.entity.ForumThread;
 import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
+import org.springframework.http.ResponseEntity;
 
 public interface SakaiForumService {
 	public List<Forum> findForums(String siteId, String userId);
@@ -28,4 +29,5 @@ public interface SakaiForumService {
 	public ForumTopic findTopic(String topicId, String userId, String topicTitle);
 	public ForumThread findThread(String topicId, String threadId, String userId);
 	public Message findMessage(String messageId, String topicId, String userId);
+	public ResponseEntity<String> postMessage(Message message, String userId);
 }

@@ -43,9 +43,6 @@
     <security:http auto-config='true' entry-point-ref="oauthProcessingFilterEntryPoint">
         <security:intercept-url access="ROLE_USER" pattern="/oauth/**" />
         <security:intercept-url access="ROLE_USER" pattern="/myclasses/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/forums/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaiforumsmessages/**" />
-        <security:intercept-url access="ROLE_USER" pattern="/sakaiforumsmessagedetails/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiprivatetopics/**" />
         <security:intercept-url access="ROLE_USER" pattern="/sakaiprivatemessages/**" />    
         <security:intercept-url access="ROLE_USER" pattern="/sakaiprivatemessagedetails/**" />     

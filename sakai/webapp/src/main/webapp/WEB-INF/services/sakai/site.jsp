@@ -15,12 +15,14 @@
 <kme:page title="${site.title}" id="class_details">
 	<kme:content>
 		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
-			<li>
-				<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster/${site.instructorId}">
-					Instructor<br />
-					<span style=" font-weight:normal; font-size:.8em">${site.instructorName}</span>
-				</a>
-			</li>
+			<c:if test="${site.instructorName != null && site.instructorName != 'null'}">
+				<li>
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster/${site.instructorId}">
+						Instructor<br />
+						<span style=" font-weight:normal; font-size:.8em">${site.instructorName}</span>
+					</a>
+				</li>
+			</c:if>
 			<c:if test="${site.hasAnnouncementsTool}">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/announcements">
