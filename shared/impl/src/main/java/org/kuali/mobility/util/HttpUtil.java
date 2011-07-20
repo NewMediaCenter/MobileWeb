@@ -31,4 +31,20 @@ public class HttpUtil {
         return response;
 	}
 	
+	public static boolean needsAuthenticated(String path) {
+		if (path.startsWith("/oauth") 
+				|| path.startsWith("/myclasses") 
+				|| path.startsWith("/forums") 
+				|| path.startsWith("/sakaiforumsmessages") 
+				|| path.startsWith("/sakaiforumsmessagedetails")
+				|| path.startsWith("/sakaiprivatetopics") 
+				|| path.startsWith("/sakaiprivatemessages") 
+				|| path.startsWith("/resources") 
+				|| path.startsWith("/sakairesourcedetails") 
+				|| path.startsWith("/calendar")) {
+			return true;
+		}
+		return false;
+	}
+	
 }

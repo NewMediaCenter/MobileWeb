@@ -15,6 +15,7 @@
 
 package org.kuali.mobility.alerts.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +40,27 @@ public class AlertsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(HttpServletRequest request, Model uiModel) {
-   	    List<Alert> alerts = alertsService.findAllAlertsFromJson(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/alerts.json");
-   		uiModel.addAttribute("alerts", alerts);
+   	    //List<Alert> alerts = alertsService.findAllAlertsFromJson(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/testdata/alerts.json");
+    	List<Alert> alerts = new ArrayList<Alert>();
+   	    Alert alert = new Alert();
+   	    alert.setCampus("IUB");
+   	    alert.setKey(294);
+   	    alert.setMobileText("This is Ken's test 12.18.09");
+   	    alert.setPriority("1");
+   	    alert.setTitle("Disease Outbreak Emergency");
+   	    alert.setType("Emergency");
+   	    alert.setUrl("http://emergency.iub.edu/");
+   	    alerts.add(alert);
+   	    alert = new Alert();
+	    alert.setCampus("IUB");
+	    alert.setKey(295);
+	    alert.setMobileText("Testing Advisory Information: Class cancellation on IUB 2/2/22");
+	    alert.setPriority("1");
+	    alert.setTitle("Class Cancellations");
+	    alert.setType("Advisory");
+	    alert.setUrl("http://indianauniversity.info");
+	    alerts.add(alert);
+   	    uiModel.addAttribute("alerts", alerts);
     	return "alerts/list";
     }
     

@@ -17,9 +17,7 @@ package org.kuali.mobility.mdot.filters;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -28,47 +26,30 @@ import javax.servlet.http.HttpServletRequest;
 import org.kuali.mobility.shared.Constants;
 import org.kuali.mobility.user.entity.User;
 import org.kuali.mobility.user.entity.UserImpl;
+import org.kuali.mobility.util.HttpUtil;
 
 import edu.iu.uis.cas.filter.CASFilter;
 
-public class LoginFilter implements Filter {
+public class LoginFilter extends CASFilter {
 
 	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
 		final HttpServletRequest hrequest = (HttpServletRequest) request;
-		if (needsAuthenticated(hrequest)) {
-			User user = (User) hrequest.getSession(true).getAttribute(Constants.KME_USER_KEY);
-			if (user == null) {
-				user = new UserImpl();
-				user.setUserId(CASFilter.getRemoteUser(hrequest));
-				hrequest.getSession().setAttribute(Constants.KME_USER_KEY, user);
-			}
+		if (HttpUtil.needsAuthenticated(hrequest.getServletPath())) {
+			super.doFilter(request, response, chain);
+			//login(hrequest);
+		} else {
+			chain.doFilter(request, response);
 		}
-		chain.doFilter(request, response);
 	}
 
-	private boolean needsAuthenticated(final HttpServletRequest request) {
-		final String servletPath = request.getServletPath();
-		if (servletPath.startsWith("/oauth") 
-				|| servletPath.startsWith("/myclasses") 
-				|| servletPath.startsWith("/forums") 
-				|| servletPath.startsWith("/sakaiforumsmessages") 
-				|| servletPath.startsWith("/sakaiforumsmessagedetails")
-				|| servletPath.startsWith("/sakaiprivatetopics") 
-				|| servletPath.startsWith("/sakaiprivatemessages") 
-				|| servletPath.startsWith("/sakaiprivatemessagedetails") 
-				|| servletPath.startsWith("/resources") 
-				|| servletPath.startsWith("/sakairesourcedetails") 
-				|| servletPath.startsWith("/calendar")) {
-			return true;
+	private User login(HttpServletRequest request) {		
+		User user = (User) request.getSession(true).getAttribute(Constants.KME_USER_KEY);
+		if (user == null) {
+			user = new UserImpl();
+			user.setUserId(CASFilter.getRemoteUser(request));
+			request.getSession().setAttribute(Constants.KME_USER_KEY, user);
 		}
-		return false;
+		return user;
 	}
-
-
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {}
-
-	@Override
-	public void destroy() {}
 	
 }

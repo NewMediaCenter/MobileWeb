@@ -29,8 +29,11 @@
     <context:component-scan base-package="edu.iu.m" />
 
     <mvc:annotation-driven />
+    <mvc:interceptors>
+    	<bean class="org.kuali.mobility.mdot.interceptors.LoginInterceptor" />
+    </mvc:interceptors>
     <mvc:default-servlet-handler />
-
+	
     <tx:annotation-driven proxy-target-class="true" transaction-manager="jpaTransactionManager" />
 
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver" />
