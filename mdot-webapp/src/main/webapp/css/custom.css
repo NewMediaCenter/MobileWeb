@@ -903,3 +903,21 @@ div#home span.dl-dt-count {
     font-weight: bold;
     text-shadow: 0 1px 1px #333333;
 }*/
+
+
+
+
+/* Custom Link Disclosure Icons
+-----------------------------------------------------------------------------------------------------------*/
+
+
+.link-email .ui-icon.ui-icon-arrow-r {
+	background: url(images/icon-email.png);
+	background-color:#939393
+}
+
+
+.link-phone .ui-icon.ui-icon-arrow-r {
+	background: url(images/icon-phone.png);
+	background-color:#939393
+}
