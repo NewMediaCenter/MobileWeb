@@ -15,156 +15,312 @@
  
 package org.kuali.mobility.sakai.service;
 
+import java.io.InputStream;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
+import org.apache.commons.io.IOUtils;
+import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumThread;
+import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import edu.iu.es.espd.oauth.OAuth2LegService;
 
 @Service
 public class SakaiForumServiceImpl implements SakaiForumService {
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiForumServiceImpl.class);
+	
+	@Autowired
+	private ConfigParamService configParamService;
+	
+	@Autowired
+	private OAuth2LegService oncourseOAuthService;
 
-	public List<Forum> findCourseForums(String json) {
+	public List<Forum> findForums(String siteId, String userId) {
 		List<Forum> forums = new ArrayList<Forum>();
     	try {
+    		String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_topic/site/" + siteId + ".json";
+    		ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+    		String json = IOUtils.toString(is.getBody(), "UTF-8");
+    		
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_topic_collection");
 
             for (int i = 0; i < itemArray.size(); i++) {
-                String id = itemArray.getJSONObject(i).getString("forumId");
-                String title = itemArray.getJSONObject(i).getString("forumTitle");
+            	JSONObject object = itemArray.getJSONObject(i);
                 Forum item = new Forum();
-                item.setId(id);
-                item.setTitle(title);
-//                item.setIsForumHeader(true);
-                forums.add(item);
-//                JSONObject topicsObj = new JSONObject(itemArray.getJSONObject(i).getJSONArray("topics"));
-                JSONArray topicsArray = itemArray.getJSONObject(i).getJSONArray("topics");
-//                List<ForumTopics> ftList = new ArrayList<ForumTopics>();
-                for (int j = 0; j < topicsArray.size(); j++) {
-                	String topicId = topicsArray.getJSONObject(j).getString("topicId");
-                    String topicTitle = topicsArray.getJSONObject(j).getString("topicTitle");
-                    String topicDescription = topicsArray.getJSONObject(j).
-                    	getString("messagesCount") + " messages, " 
-                    	+ topicsArray.getJSONObject(j).getString("unreadMessagesCount")
-                    	+ " unread";
-                    Forum fTopic = new Forum();
-                    fTopic.setId(topicId);
-                    fTopic.setTitle(topicTitle);
-                    fTopic.setDescription(topicDescription);
-                    fTopic.setForumId(id);
-//                    fTopic.setIsForumHeader(false);
-                    forums.add(fTopic);
-//                    ftList.add(fTopic);
-                }
-//                item.setTopics(ftList);
-//                item.setDescription(description);
+                item.setForumId(object.getString("forumId"));
+                item.setTitle(object.getString("forumTitle"));
                 
+                JSONArray topicsArray = object.getJSONArray("topics");
+                int unreadCount = 0;
+                for (int j = 0; j < topicsArray.size(); j++) {
+                    unreadCount += topicsArray.getJSONObject(j).getInt("unreadMessagesCount");
+                }
+                item.setUnreadCount(unreadCount);
+                forums.add(item);
             }
 
-    	} catch (JSONException e) {
+    	} catch (Exception e) {
     		LOG.error(e.getMessage(), e);
         }
 		return forums;
 	}
 	
-	public List<Message> findTopicMessages(String json, String topicTitle) {
-		List<Message> messages = new ArrayList<Message>();
+	public Forum findForum(String forumId, String userId) {
+		Forum forum = new Forum();
     	try {
+    		String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_topic/forum/" + forumId + ".json";
+    		ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+    		String json = IOUtils.toString(is.getBody(), "UTF-8");
+    		
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
-            JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
-            
-            Message headerItem = new Message();
-            headerItem.setTitle(topicTitle);
-            headerItem.setMessageHeader(true);
-            messages.add(headerItem);
-            
+            JSONArray itemArray = jsonObj.getJSONArray("forum_topic_collection");
+
             for (int i = 0; i < itemArray.size(); i++) {
-            	String inReplyTo = itemArray.getJSONObject(i).getString("replyTo");
-            	if(!inReplyTo.equals("null")) {
-            		continue;
-            	}
-            	String messageId = itemArray.getJSONObject(i).getString("messageId");
-                String messageTitle = itemArray.getJSONObject(i).getString("title");
-                String messageBody = itemArray.getJSONObject(i).getString("body");
-                Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
+            	JSONObject object = itemArray.getJSONObject(i);
+                forum.setForumId(object.getString("forumId"));
+                forum.setTitle(object.getString("forumTitle"));
                 
-//                String [] messageAuthor = new String[3];
-                String messageAuthorName = itemArray.getJSONObject(i).getString("authoredBy");
-//                String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
-//                String messageAuthorRole = messageAuthor[2];
-                Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
-                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-                String createdDate = df.format(cDate);
-                
-                
-                Message item = new Message();
-                item.setId(messageId);
-                item.setTitle(messageTitle);
-                item.setBody(messageBody);
-                item.setCreatedBy(messageAuthorName);
-//                item.setRole(messageAuthorRole);
-                item.setCreatedDate(createdDate);
-                item.setMessageHeader(false);
-                item.setIsRead(isRead);
-                item.setTopicTitle(topicTitle);
-                messages.add(item);
+                JSONArray topicsArray = object.getJSONArray("topics");
+                List<ForumTopic> topics = forum.getTopics();
+                for (int j = 0; j < topicsArray.size(); j++) {
+                	JSONObject topic = topicsArray.getJSONObject(j);
+                	ForumTopic forumTopic = new ForumTopic();
+                	forumTopic.setId(topic.getString("topicId"));
+                    forumTopic.setTitle(topic.getString("topicTitle"));
+                    forumTopic.setUnreadCount(topic.getInt("unreadMessagesCount"));
+                    forumTopic.setMessageCount(topic.getInt("messagesCount"));
+                    topics.add(forumTopic);
                 }
-        } catch (JSONException e) {
-        	LOG.error(e.getMessage(), e);
+            }
+
+    	} catch (Exception e) {
+    		LOG.error(e.getMessage(), e);
         }
-    	return messages;
+		return forum;
 	}
 	
-	public List<Message> findMessageDetails(String json, String messageId, String messageTitle) {
-		List<Message> messages = new ArrayList<Message>();
+	public ForumTopic findTopic(String topicId, String userId, String topicTitle) {
+		ForumTopic topic = new ForumTopic();
+		topic.setTitle(topicTitle);
+		topic.setId(topicId);
     	try {
+    		String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/topic/" + topicId + ".json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
+            
+            List<ForumThread> threads = topic.getThreads();
+            Set<String> unreadMessages = new HashSet<String>();
+            Map<String, List<String>> messageReplies = new HashMap<String, List<String>>();
+            for (int i = 0; i < itemArray.size(); i++) {
+            	JSONObject message = itemArray.getJSONObject(i);
+            	if (message.getInt("indentIndex") == 0) {
+            		ForumThread thread = new ForumThread();
+            		thread.setId(message.getString("messageId"));
+            		thread.setTopicId(message.getString("topicId"));
+            		thread.setCreatedBy(message.getString("authoredBy"));
+            		thread.setTitle(message.getString("title"));
+            		
+            		Date cDate = new Date(message.getLong("createdOn"));
+	                DateFormat df = new SimpleDateFormat("MM/dd/yyyy  h:mm a");
+	                thread.setCreatedDate(df.format(cDate));
+	                
+	                if (!message.getBoolean("read")) {
+	                	unreadMessages.add(thread.getId());
+	                }
+            		
+            		threads.add(thread);
+            		
+            		if (messageReplies.get(thread.getId()) == null) {
+            			messageReplies.put(thread.getId(), new ArrayList<String>());
+            		}
+            	} else {
+            		String replyToId = message.getString("replyTo");
+            		String messageId = message.getString("messageId");
+            		List<String> replyList = messageReplies.get(replyToId);
+            		if (replyList == null) {
+            			replyList = new ArrayList<String>();
+            			messageReplies.put(replyToId, replyList);
+            		}
+            		replyList.add(messageId);
+            		
+            		if (!message.getBoolean("read")) {
+	                	unreadMessages.add(messageId);
+	                }
+            	}
+            }
+            computeUnreadCounts(threads, messageReplies, unreadMessages);
+        } catch (Exception e) {
+        	LOG.error(e.getMessage(), e);
+        }
+    	return topic;
+	}
+	
+	private void computeUnreadCounts(List<ForumThread> threads, Map<String, List<String>> messageReplies, Set<String> unreadMessages) {
+		for (ForumThread thread : threads) {
+			thread.setUnreadCount(computeUnreadCount(thread.getId(), messageReplies, unreadMessages, 0));
+		}
+	}
+	
+	private int computeUnreadCount(String messageId, Map<String, List<String>> messageReplies, Set<String> unreadMessages, int currentCount) {
+		List<String> replies = messageReplies.get(messageId);
+		
+		if (replies != null && !replies.isEmpty()) {
+			for (String message : replies) {
+				if (unreadMessages.contains(message)) {
+					currentCount++;
+				}
+				currentCount += computeUnreadCount(message, messageReplies, unreadMessages, currentCount);
+			}
+		}
+		
+		return currentCount;
+	}
+
+	@Override
+	public ForumThread findThread(String topicId, String threadId, String userId) {
+		ForumThread thread = new ForumThread();
+		thread.setId(threadId);
+		thread.setTopicId(topicId);
+    	try {
+    		String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/topic/" + topicId + ".json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
+            
+            Map<String, Message> allMessages = new HashMap<String, Message>();
+            Map<String, List<String>> messageReplies = new HashMap<String, List<String>>();
+            for (int i = 0; i < itemArray.size(); i++) {
+            	JSONObject message = itemArray.getJSONObject(i);
+            	Message m = new Message();
+
+        		m.setId(message.getString("messageId"));
+        		m.setTopicId(message.getString("topicId"));
+        		m.setCreatedBy(message.getString("authoredBy"));
+        		m.setTitle(message.getString("title"));
+        		m.setBody(message.getString("body"));
+        		
+        		if (m.getBody().equals("null")) {
+        			m.setBody("(No message)");
+        		}
+        		
+        		Date cDate = new Date(message.getLong("createdOn"));
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy  h:mm a");
+                m.setCreatedDate(df.format(cDate));
+        		
+        		allMessages.put(m.getId(), m);
+        		
+        		if (message.getInt("indentIndex") == 0) {
+	        		if (messageReplies.get(thread.getId()) == null) {
+	        			messageReplies.put(thread.getId(), new ArrayList<String>());
+	        		}
+        		} else {
+        			String replyToId = message.getString("replyTo");
+        			m.setIndentIndex(message.getInt("indentIndex"));
+        			m.setInReplyTo(replyToId);
+        			
+            		List<String> replyList = messageReplies.get(replyToId);
+            		if (replyList == null) {
+            			replyList = new ArrayList<String>();
+            			messageReplies.put(replyToId, replyList);
+            		}
+            		replyList.add(m.getId());
+        		}
+            }
+            
+            Message m = allMessages.get(threadId);
+            thread.setTitle(m.getTitle());
+            
+            getThreadMessages(threadId, messageReplies, allMessages, thread.getMessages());
+        } catch (Exception e) {
+        	LOG.error(e.getMessage(), e);
+        }
+    	return thread;
+	}
+	
+	private void getThreadMessages(String messageId, Map<String, List<String>> messageReplies, Map<String, Message> allMessages, List<Message> threadMessages) {
+		Message m = allMessages.get(messageId);
+		
+		if (m != null) {
+			threadMessages.add(m);
+			
+			List<String> replies = messageReplies.get(m.getId());
+			if (replies != null && !replies.isEmpty()) {
+				for (String reply : replies) {
+					getThreadMessages(reply, messageReplies, allMessages, threadMessages);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public Message findMessage(String messageId, String topicId, String userId) {
+		Message m = new Message();
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/topic/" + topicId + ".json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
             
             for (int i = 0; i < itemArray.size(); i++) {
-            	String inReplyTo = itemArray.getJSONObject(i).getString("replyTo");
-            	String jMessageId = itemArray.getJSONObject(i).getString("messageId");
-            	if(jMessageId.equals(messageId) || inReplyTo.equals(messageId)) {
-            	
-	                String messageBody = itemArray.getJSONObject(i).getString("body");
-	                Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
-	                
-	//                String [] messageAuthor = new String[3];
-	                String messageAuthorName = itemArray.getJSONObject(i).getString("authoredBy");
-	//                String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
-	//                String messageAuthorRole = messageAuthor[2];
-	                Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
-	                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-	                String createdDate = df.format(cDate);
-	                
-	                
-	                Message item = new Message();
-	                item.setId(messageId);
-	                item.setTitle(messageTitle);
-	                item.setBody(messageBody);
-	                item.setCreatedBy(messageAuthorName);
-	//                item.setRole(messageAuthorRole);
-	                item.setCreatedDate(createdDate);
-	                item.setMessageHeader(false);
-	                item.setIsRead(isRead);
-	                messages.add(item);
+            	JSONObject message = itemArray.getJSONObject(i);
+
+            	if (message.getString("messageId").equals(messageId)) {
+	        		m.setId(message.getString("messageId"));
+	        		m.setTopicId(message.getString("topicId"));
+	        		m.setCreatedBy(message.getString("authoredBy"));
+	        		m.setTitle(message.getString("title"));
+	        		m.setBody(message.getString("body"));
+	        		
+	        		if (m.getBody().equals("null")) {
+	        			m.setBody("(No message)");
+	        		}
+	        		
+	        		Date cDate = new Date(message.getLong("createdOn"));
+	                DateFormat df = new SimpleDateFormat("MM/dd/yyyy  h:mm a");
+	                m.setCreatedDate(df.format(cDate));
+	                break;
             	}
             }
-        } catch (JSONException e) {
-        	LOG.error(e.getMessage(), e);
-        } 
-    	return messages;   
+            
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		return m;
 	}
+	
+	public void setConfigParamService(ConfigParamService configParamService) {
+		this.configParamService = configParamService;
+	}
+	
+	public void setOncourseOAuthService(OAuth2LegService oncourseOAuthService) {
+		this.oncourseOAuthService = oncourseOAuthService;
+	}
+
+	
 }

@@ -15,7 +15,7 @@
 <kme:page title="Messages" id="messages">
 	<kme:content>
 		<ul data-role="listview">
-			<c:forEach items="${sakaiprivatetopics}" var="item" varStatus="status">
+			<c:forEach items="${privatetopics}" var="item" varStatus="status">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${item.typeUuid}?title=${item.title}">
 						${item.title}

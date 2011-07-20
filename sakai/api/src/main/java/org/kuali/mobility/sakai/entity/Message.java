@@ -22,16 +22,17 @@ public class Message implements Serializable, Comparable<Message> {
 	private static final long serialVersionUID = -5533393238213510311L;
 	
 	private String id;
+	private String threadId;
+	private String topicId;
 	private String recipients;
 	private String title;
 	private String body;
     private String createdBy;
     private String createdDate;
-    private Boolean messageHeader;
     private String role;
     private Boolean isRead;
     private String inReplyTo;
-    private String topicTitle;
+    private int indentIndex;
     
 
 	public String getTitle() {
@@ -66,14 +67,6 @@ public class Message implements Serializable, Comparable<Message> {
 		return createdDate;
 	}
 
-	public void setMessageHeader(Boolean messageHeader) {
-		this.messageHeader = messageHeader;
-	}
-
-	public Boolean getMessageHeader() {
-		return messageHeader;
-	}
-
 	public void setBody(String body) {
 		this.body = body;
 	}
@@ -97,14 +90,7 @@ public class Message implements Serializable, Comparable<Message> {
 	public Boolean getIsRead() {
 		return isRead;
 	}
-
-	public void setTopicTitle(String topicTitle) {
-		this.topicTitle = topicTitle;
-	}
-
-	public String getTopicTitle() {
-		return topicTitle;
-	}
+	
     public int compareTo(Message that) {
         if (this == null || that == null || this.getId() == null || that.getId() == null) {
             return -1;
@@ -126,5 +112,29 @@ public class Message implements Serializable, Comparable<Message> {
 
 	public void setRecipients(String recipients) {
 		this.recipients = recipients;
+	}
+
+	public int getIndentIndex() {
+		return indentIndex;
+	}
+
+	public void setIndentIndex(int indentIndex) {
+		this.indentIndex = indentIndex;
+	}
+
+	public String getTopicId() {
+		return topicId;
+	}
+
+	public void setTopicId(String topicId) {
+		this.topicId = topicId;
+	}
+
+	public String getThreadId() {
+		return threadId;
+	}
+
+	public void setThreadId(String threadId) {
+		this.threadId = threadId;
 	}	
 }

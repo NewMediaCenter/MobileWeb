@@ -16,18 +16,23 @@
 package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Forum implements Serializable, Comparable<Forum> {
 
 	private static final long serialVersionUID = -5535393238213510311L;
 	
-	private String id;
     private String title;
-    private String description;
     private String typeUuid;
     private String forumId;
     private int unreadCount;
     private int messageCount;
+    private List<ForumTopic> topics;
+    
+    public Forum() {
+    	topics = new ArrayList<ForumTopic>();
+    }
     
 	public String getTitle() {
 		return title;
@@ -35,22 +40,6 @@ public class Forum implements Serializable, Comparable<Forum> {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 	
 	public void setTypeUuid(String typeUuid) {
@@ -70,10 +59,10 @@ public class Forum implements Serializable, Comparable<Forum> {
 	}
 
     public int compareTo(Forum that) {
-        if (this == null || that == null || this.getId() == null || that.getId() == null) {
+        if (this == null || that == null || this.getForumId() == null || that.getForumId() == null) {
             return -1;
         }
-        return this.getId().compareTo(that.getId());
+        return this.getForumId().compareTo(that.getForumId());
     }
 
 	public int getUnreadCount() {
@@ -90,6 +79,14 @@ public class Forum implements Serializable, Comparable<Forum> {
 
 	public void setMessageCount(int messageCount) {
 		this.messageCount = messageCount;
+	}
+
+	public List<ForumTopic> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(List<ForumTopic> topics) {
+		this.topics = topics;
 	}
 
 		

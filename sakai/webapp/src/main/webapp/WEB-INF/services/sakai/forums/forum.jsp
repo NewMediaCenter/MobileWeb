@@ -12,14 +12,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="Forums" id="forums">
+<kme:page title="${forum.title}" id="forum">
 	<kme:content>
 		<ul data-role="listview">
-			<c:forEach items="${forums}" var="item" varStatus="status">
+			<c:forEach items="${forum.topics}" var="topic" varStatus="status">
 				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${item.forumId}">
-						${item.title}
-						<span class="ui-li-count">${item.unreadCount}</span>
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${forum.forumId}/${topic.id}?title=${topic.title}">
+						${topic.title}
+						<span class="ui-li-count">${topic.unreadCount}</span>
 					</a>
 				</li>
 			</c:forEach>

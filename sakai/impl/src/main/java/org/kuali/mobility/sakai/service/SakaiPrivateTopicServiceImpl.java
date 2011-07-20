@@ -28,7 +28,7 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,8 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 	@Autowired
 	private OAuth2LegService oncourseOAuthService;
 	
-	public List<Forum> findPrivateTopics(String siteId, String userId) {
-		List<Forum> forums = null;
+	public List<ForumTopic> findPrivateTopics(String siteId, String userId) {
+		List<ForumTopic> forumTopics = null;
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_topic/private/" + siteId + ".json";
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
@@ -58,38 +58,30 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_topic_collection");
 
-            forums = new ArrayList<Forum>();
+            forumTopics = new ArrayList<ForumTopic>();
             for (int i = 0; i < itemArray.size(); i++) {
             	JSONObject object = itemArray.getJSONObject(i);
-//                String id = object.getString("forumId");
-//                String title = object.getString("forumTitle");
-//                Forum item = new Forum();
-//                item.setId(id);
-//                item.setTitle(title);
-//                item.setIsForumHeader(true);
-//                forums.add(item);
                 JSONArray topicsArray = object.getJSONArray("topics");
                 for (int j = 0; j < topicsArray.size(); j++) {
                 	JSONObject topic = topicsArray.getJSONObject(j);
-                    Forum fTopic = new Forum();
+                    ForumTopic fTopic = new ForumTopic();
                     String title = topic.getString("topicTitle");
                     if (title.startsWith("pvt_")) {
                     	title = title.substring(4);
                     }
                     fTopic.setId(topic.getString("topicId"));
                     fTopic.setTitle(title);
-                    fTopic.setDescription(null);
                     fTopic.setMessageCount(topic.getInt("messagesCount"));
                     fTopic.setUnreadCount(topic.getInt("unreadMessagesCount"));
                     fTopic.setTypeUuid(topic.getString("typeUuid"));
-                    forums.add(fTopic);
+                    forumTopics.add(fTopic);
                 }
             }
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
 		
-		return forums;
+		return forumTopics;
 	}
 	
 	public MessageFolder findPrivateMessages(String siteId, String typeUuid, String userId) {
@@ -127,7 +119,6 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
                 item.setCreatedBy(messageAuthor);
                 item.setRole(messageAuthor);
                 item.setCreatedDate(createdDate);
-                item.setMessageHeader(false);
                 item.setIsRead(isRead);
                 messages.add(item);
             }
@@ -169,7 +160,6 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
                 item.setCreatedBy(messageAuthor);
                 item.setRole(messageAuthor);
                 item.setCreatedDate(createdDate);
-                item.setMessageHeader(false);
                 item.setIsRead(isRead);
             }
             return item;

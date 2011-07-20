@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
-import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
 import org.kuali.mobility.sakai.service.SakaiPrivateTopicService;
@@ -60,8 +60,8 @@ public class PrivateMessagesController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getMessages(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-		List<Forum> topics = sakaiPrivateTopicService.findPrivateTopics(siteId, user.getUserId());
-		uiModel.addAttribute("sakaiprivatetopics", topics);
+		List<ForumTopic> topics = sakaiPrivateTopicService.findPrivateTopics(siteId, user.getUserId());
+		uiModel.addAttribute("privatetopics", topics);
 		uiModel.addAttribute("siteId", siteId);
 		return "sakai/forums/privatetopics";
 	}

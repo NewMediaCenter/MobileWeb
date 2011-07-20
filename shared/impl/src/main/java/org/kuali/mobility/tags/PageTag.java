@@ -30,6 +30,7 @@ public class PageTag extends SimpleTagSupport {
             out.println("<head>");
             out.println("<title>" + title + "</title>");
             out.println("<link href=\"" + contextPath + "/css/jquery.mobile-1.0b1.css\" rel=\"stylesheet\" type=\"text/css\" />");
+            out.println("<link href=\"" + contextPath + "/css/jquery-mobile-fluid960.css\" rel=\"stylesheet\" type=\"text/css\" />");
             out.println("<link href=\"" + contextPath + "/css/custom.css\" rel=\"stylesheet\" type=\"text/css\" />");
             out.println("<link href=\"" + contextPath + "/css/retina.css\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (-webkit-min-device-pixel-ratio: 2)\" />");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery-1.6.1.min.js\"></script>");

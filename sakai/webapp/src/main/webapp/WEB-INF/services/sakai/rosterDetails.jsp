@@ -14,30 +14,28 @@
 
 <kme:page title="Details" id="roster_details">
 	<kme:content>
-    <ul data-role="listview" data-theme="c"  data-dividertheme="b"  data-inset="true">
+    	<ul data-role="listview" data-theme="c"  data-dividertheme="b"  data-inset="true">
 			<c:forEach items="${roster}" var="item" varStatus="status">
 				<li>
-		        <div class="ui-grid-a">
-		          <div class="ui-block-a" style="width:40%"> <img src="http://localhost:9090/direct/profile/${item.displayID}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="image"></div>
-		          <div class="ui-block-b" style="width:60%">
-		            <h3 style="margin-top:0px">${item.lastName}, ${item.firstName}</h3>
-		            <c:if test="${not empty item.school && item.school != 'null'}">
-		            	<p>${item.school}</p>
-		            </c:if>
-		            <c:if test="${not empty item.roleTitle && item.roleTitle != 'null'}">
-		            	<p>${item.roleTitle}</p>
-		            </c:if>
-		          </div>
-		        </div>
-		        <!-- /grid-a --> 
-		        
-		      </li>
-		      <c:if test="${not empty item.email && item.email != 'null'}">
-		      	<li><a href="mailto:${item.email}"> ${item.email} </a> </li>
-		      </c:if>
-		      <c:if test="${not empty item.workPhone && item.workPhone != 'null'}">
-		      	<li><a href="tel:${item.workPhone}"> ${item.workPhone} </a> </li>
-		      </c:if>
+					<div class="container_12">
+			        	<div class="grid_3"><img src="http://localhost:9090/direct/profile/${item.displayID}/image/thumb?sakai.session=${sessionId}" width="70" height="70" alt="image"></div>
+			        	<div class="grid_9">
+			            	<h3>${item.lastName}, ${item.firstName}</h3>
+			            	<c:if test="${not empty item.school && item.school != 'null'}">
+				            	<p>${item.school}</p>
+				            </c:if>
+				            <c:if test="${not empty item.roleTitle && item.roleTitle != 'null'}">
+				            	<p>${item.roleTitle}</p>
+				            </c:if>
+			          	</div>
+			        </div>
+			    </li>
+		      	<c:if test="${not empty item.email && item.email != 'null'}">
+			      	<li class="link-email"><a href="mailto:${item.email}"> ${item.email} </a> </li>
+			    </c:if>
+			    <c:if test="${not empty item.workPhone && item.workPhone != 'null'}">
+			      	<li class="link-phone"><a href="tel:${item.workPhone}"> ${item.workPhone} </a> </li>
+			    </c:if>
 			</c:forEach>
 		</ul>
 	</kme:content>

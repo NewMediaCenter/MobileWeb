@@ -17,17 +17,12 @@ package org.kuali.mobility.sakai.service;
 
 import java.util.List;
 
-import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
 
 public interface SakaiPrivateTopicService {
-
-	public List<Forum> findPrivateTopics(String siteId, String userId);
+	public List<ForumTopic> findPrivateTopics(String siteId, String userId);
 	public MessageFolder findPrivateMessages(String siteId, String typeUuid, String userId);
-	Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);
-//	public List<SakaiForumMessage> findPrivateTopics(String json, String topicTitle);
-//	public List<SakaiForumMessage> findMessageDetails(String json, String messageId, String messageTitle);
-//	public String toJson(Collection<SakaiCourse> collection);
-//	
+	Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);	
 }
