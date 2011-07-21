@@ -11,6 +11,9 @@ public class PageTag extends SimpleTagSupport {
 
     private String id;
     private String title;
+    private boolean homeButton;
+    private boolean backButton;
+    private String backButtonURL;
     
     public void setId(String id) {
         this.id = id;
@@ -18,6 +21,18 @@ public class PageTag extends SimpleTagSupport {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    public void setHomeButton(boolean homeButton) {
+        this.homeButton = homeButton;
+    }
+    
+    public void setBackButton(boolean backButton) {
+        this.backButton = backButton;
+    }
+    
+    public void setBackButtonURL(String backButtonURL) {
+        this.backButtonURL = backButtonURL;
     }
 
     public void doTag() throws JspException {
@@ -45,7 +60,14 @@ public class PageTag extends SimpleTagSupport {
             out.println("<body>");
             out.println("<div data-role=\"page\" id=\"" + id + "\">");
             out.println("<div data-role=\"header\">");
+            if (backButton) {
+                out.println("<a href=\"" + (backButtonURL != null ? backButtonURL : "javascript: history.go(-1)") + "\" class=\"ui-btn-left\" data-icon=\"back\" data-iconpos=\"notext\">Back</a>");
+            }
+            //out.println("<h1>" + title + "-" + backButton + "</h1>");
             out.println("<h1>" + title + "</h1>");
+            if (homeButton) {
+                out.println("<a href=\"/mdot/home\" class=\"ui-btn-right\" data-icon=\"home\" data-iconpos=\"notext\">Home</a>");
+            }
             out.println("</div>");
             getJspBody().invoke(out);
             out.println("</div>");

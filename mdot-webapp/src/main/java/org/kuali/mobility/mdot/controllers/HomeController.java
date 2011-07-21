@@ -57,7 +57,7 @@ public class HomeController {
 
     	Tool tool = new Tool();
     	tool.setBadgeCount("0");
-    	tool.setDescription("Class information; forums, grades, and more.");
+    	tool.setDescription("Class information; forums, grades, and more!");
     	tool.setIconUrl("images/service-icons/srvc-myclasses.png");
     	tool.setTitle("My Classes");
     	tool.setUrl("myclasses");

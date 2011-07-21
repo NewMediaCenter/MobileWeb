@@ -15,7 +15,7 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Feedback" id="feedback_page">
+<kme:page title="Feedback" id="feedback_page" backButton="true" homeButton="true">
     <kme:content>
         <form:form action="${pageContext.request.contextPath}/feedback" commandName="feedback" data-ajax="false" method="post"> Do you have suggestions for other mobile services at Indiana University or ideas on how we can improve the current services? Let us know!
             <%--hidden fields: <form:hidden path="eventId"/>--%>
@@ -38,39 +38,23 @@
                         <form:option value="Computer Labs">Computer Labs</form:option>
                     </form:select>
                 </div>
-            
-            <select name="test">
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-            </select>
-                
-                
-                    <label for="deviceType" class="select">Device Type:</label>
-                    <form:select path="deviceType" multiple="false" items="${deviceTypes}" data-native-menu="true" class="required"/>
-                    <form:errors path="deviceType"/>
-                
-                
-                <!-- <div data-role="fieldcontain">
+                        
+                <div data-role="fieldcontain">
                     <label for="deviceType" class="select">Device Type:</label>
                     <form:select path="deviceType" multiple="false" items="${deviceTypes}" data-native-menu="false" class="required"/>
                     <form:errors path="deviceType"/>
-                </div> -->
+                </div> 
                 
-                <!-- <div data-role="fieldcontain">  -->
+                <div data-role="fieldcontain">
                     <label for="noteText">Message:</label>
                     <form:textarea path="noteText" cols="40" rows="8" class="required" />
                     <form:errors path="noteText"/>
-                <!-- </div> -->
-                <!-- <div data-role="fieldcontain"> -->
+                </div>
+                <div data-role="fieldcontain">
                     <label for="email">Your Email:</label>
                     <form:input path="email" type="text" value="" class="email"  />
-                <!-- </div> -->
+                </div>
             </fieldset>
-            
-            <a href="${pageContext.request.contextPath}" data-role="button">Cancel</a>
-            <input class="submit" type="submit" value="Submit" />
-            
             
             <div data-inline="true">
                 <div class="ui-grid-a">

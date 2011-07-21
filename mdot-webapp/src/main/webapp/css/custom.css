@@ -784,7 +784,7 @@ dl.itnoticeslist dd a {
     width: 60%;
 }
 
-div#itnotices span, div#itnotices span.itNoticeIcon-Announcement, div#itnotices span.itNoticeIcon-Critical, div#itnotices span.itNoticeIcon-Error, div#itnotices span.itNoticeIcon-News, div#itnotices span.itNoticeIcon-Warning {
+div#itnotices div.ui-content span, div#itnotices div.ui-content span.itNoticeIcon-Announcement, div#itnotices div.ui-content span.itNoticeIcon-Critical, div#itnotices div.ui-content span.itNoticeIcon-Error, div#itnotices div.ui-content span.itNoticeIcon-News, div#itnotices div.ui-content span.itNoticeIcon-Warning {
     margin: 0;
     padding: 0;
     position: absolute;
@@ -800,27 +800,27 @@ div#itnotices span, div#itnotices span.itNoticeIcon-Announcement, div#itnotices 
 }
 
 /* default icon */
-div#itnotices span {
+div#itnotices div.ui-content span {
 	background-image: url('../images/itnotices/announcement.png');
 }
 
-div#itnotices span.itNoticeIcon-Announcement {
+div#itnotices div.ui-content span.itNoticeIcon-Announcement {
     background-image: url('../images/itnotices/announcement.png');
 }
 
-div#itnotices span.itNoticeIcon-Critical {
+div#itnotices div.ui-content span.itNoticeIcon-Critical {
     background-image: url('../images/itnotices/critical.png');
 }
 
-div#itnotices span.itNoticeIcon-Error {
+div#itnotices div.ui-content span.itNoticeIcon-Error {
     background-image: url('../images/itnotices/error.png');
 }
 
-div#itnotices span.itNoticeIcon-News {
+div#itnotices div.ui-content span.itNoticeIcon-News {
     background-image: url('../images/itnotices/news.png');
 }
 
-div#itnotices span.itNoticeIcon-Warning {
+div#itnotices div.ui-content span.itNoticeIcon-Warning {
     background-image: url('../images/itnotices/warning.png');
 }
 
