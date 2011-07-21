@@ -50,6 +50,7 @@ import edu.iu.es.espd.ccl.oauth.MeetingInvite;
 import edu.iu.es.espd.ccl.oauth.MeetingStatusChange;
 import edu.iu.es.espd.ccl.oauth.MonthViewEvents;
 import edu.iu.es.espd.ccl.oauth.PageLevelException;
+import edu.iu.es.espd.ccl.oauth.PendingMeetings;
 import edu.iu.es.espd.ccl.oauth.ViewDetailedEvent;
 
 @Controller
@@ -396,7 +397,7 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value = "/invite", method = RequestMethod.GET)
-	public String invite(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) Long occurrenceId, @RequestParam(required = false) String date, @RequestParam(required = false) String occurrenceDate) {
+	public String invite(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = false) String referer, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) Long occurrenceId, @RequestParam(required = false) String date, @RequestParam(required = false) String occurrenceDate) {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
 		Date selectedDate = null;
@@ -422,6 +423,7 @@ public class CalendarController {
 				}
 				uiModel.addAttribute("date", sdf.format(occurDate));
 			}
+			uiModel.addAttribute("referer", referer);
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
@@ -430,24 +432,44 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value = "/meetingAction", method = RequestMethod.GET)
-	public String meetingAction(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = true) String type, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) Long occurrenceId, @RequestParam(required = false) String date) {
+	public String meetingAction(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long eventId, @RequestParam(required = true) String type, @RequestParam(required = false) Long seriesId, @RequestParam(required = false) Long occurrenceId, @RequestParam(required = false) String date, @RequestParam(required = false) String referer) {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		try {
-			MeetingStatusChange meetingStatusChange = new MeetingStatusChange();
-			meetingStatusChange.setEventId(eventId);
-			meetingStatusChange.setStatus(type);
-			calendarEventOAuthService.updateMeetingStatus(user.getUserId(), meetingStatusChange);
+			if (type != null) {
+				if (type.equals("R")) {
+					calendarEventOAuthService.removeMeeting(user.getUserId(), eventId);
+				} else if (type.equals("K")) {
+					calendarEventOAuthService.keepMeeting(user.getUserId(), eventId);
+				} else {
+					MeetingStatusChange meetingStatusChange = new MeetingStatusChange();
+					meetingStatusChange.setEventId(eventId);
+					meetingStatusChange.setStatus(type);
+					calendarEventOAuthService.updateMeetingStatus(user.getUserId(), meetingStatusChange);
+				}
+			}
 		} catch (PageLevelException pageLevelException) {
 			uiModel.addAttribute("message", pageLevelException.getMessage());
 			return "calendar/message";
 		}
-
-		if ("D".equals(type)) {
+		if ("D".equals(type) || "R".equals(type) || "K".equals(type)) {
 			return "redirect:/calendar/month";
 		} else if (seriesId != null && date != null) {
-			return "redirect:/calendar/invite?eventId=" + eventId + "&seriesId=" + seriesId + "&date=" + date;
+			return "redirect:/calendar/invite?eventId=" + eventId + "&seriesId=" + seriesId + "&date=" + date + (referer != null ? "&referer=" + referer : "");
 		}
-		return "redirect:/calendar/invite?eventId=" + eventId + (occurrenceId != null ? "&occurrenceId=" + occurrenceId : "") + (date != null ? "&date=" + date : "");
+		return "redirect:/calendar/invite?eventId=" + eventId + (occurrenceId != null ? "&occurrenceId=" + occurrenceId : "") + (date != null ? "&date=" + date : "") + (referer != null ? "&referer=" + referer : "");
+	}
+
+	@RequestMapping(value = "/pendingMeetings", method = RequestMethod.GET)
+	public String pendingMeetings(HttpServletRequest request, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		try {
+			PendingMeetings pendingMeetings = calendarEventOAuthService.retrievePendingMeetings(user.getUserId());
+			uiModel.addAttribute("pendingMeetings", pendingMeetings.getPendingMeetings());
+		} catch (PageLevelException pageLevelException) {
+			uiModel.addAttribute("message", pageLevelException.getMessage());
+			return "calendar/message";
+		}
+		return "calendar/pendingMeetings";
 	}
 
 	@RequestMapping(value = "/options", method = RequestMethod.GET)

@@ -26,24 +26,24 @@
 	<div data-role="page" id="Calendar-Events">
 		<div data-role="header">
 			<h1>Options</h1>
-			<a href="${pageContext.request.contextPath}/calendar/month" class="ui-btn-left" data-direction="reverse" data-transition="slide" data-ajax="false" >view calendar</a> <a href="${pageContext.request.contextPath}/calendar/createEvent" class="ui-btn-right" data-ajax="false">Add Event</a>
+			<a href="${pageContext.request.contextPath}/calendar/month" class="ui-btn-left" data-direction="reverse" data-transition="slide" data-ajax="false">view calendar</a> <a href="${pageContext.request.contextPath}/calendar/createEvent" class="ui-btn-right" data-ajax="false">Add Event</a>
 		</div>
 		<div data-role="content">
 			<ul data-role="listview" data-theme="g">
 				<li><a data-ajax="false" href="${pageContext.request.contextPath}/calendar/filters">
 						<h3>Filters</h3>
-						<p>Filter your events.</p> </a>
-				</li>
+						<p>Filter your events.</p> </a></li>
 				<c:if test="${not empty filter}">
 					<li><a data-ajax="false" href="${pageContext.request.contextPath}/calendar/removeFilter">
 							<h3>Remove Filter ${filter.filterName}</h3>
-							<p>Remove your filter.</p> </a>
-					</li>
+							<p>Remove your filter.</p> </a></li>
 				</c:if>
 				<li><a data-ajax="false" href="${pageContext.request.contextPath}/calendar/refresh">
 						<h3>Refresh My Calendar</h3>
-						<p>This will refresh your calendar.</p> </a>
-				</li>
+						<p>This will refresh your calendar.</p> </a></li>
+				<li><a data-ajax="false" href="${pageContext.request.contextPath}/calendar/pendingMeetings">
+						<h3>Pending Meetings</h3>
+						<p>New, updated, or cancelled meetings.</p> </a></li>
 			</ul>
 		</div>
 		<div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b"></div>

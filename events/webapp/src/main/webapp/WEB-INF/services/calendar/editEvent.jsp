@@ -40,6 +40,8 @@
         <form:hidden path="lockingNumber"/>
         <form:hidden path="seriesId"/>
         <form:hidden path="date"/>
+        <form:hidden path="foursquareVenueId"/>
+        <form:hidden path="locationId"/>
         
         <fieldset>
             <label for="title">Title</label>

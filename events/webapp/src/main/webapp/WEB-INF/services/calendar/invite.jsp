@@ -8,9 +8,8 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,62 +23,93 @@
 </head>
 
 <body>
-<div data-role="page" id="Calendar-Events">
-  <div data-role="header">
-    <h1>Invite</h1><a href="${pageContext.request.contextPath}/calendar/event?eventId=${invite.eventId}&date=${date}&occurrenceId=${occurrenceId}" class="ui-btn-left" data-ajax="false">view event</a><a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
-  </div>
-  <div data-role="content" >
-      <ul data-role="listview" data-theme="g">
-          <li>
-                <h3 style="white-space:normal"><c:out value="${invite.title}"/></h3>
-                <p style="white-space:normal"><c:out value="${invite.start}"/> - <c:out value="${invite.end}"/></p>
-          </li>
-          <li>
-                <h3>Host</h3>
-                <p><c:out value="${invite.hostName}"/></p>
-          </li>
-          <li>
-                <h3>Accepted</h3>
-                <c:forEach var="accepted" items="${invite.acceptedAttendees}">
-                    <p>
-                        <c:out value="${accepted.name}"/>
-                    </p>
-                </c:forEach>
-          </li>
-          <li>
-                <h3>Tentative</h3>
-                <c:forEach var="tentative" items="${invite.tentativeAttendees}">
-                    <p>
-                        <c:out value="${tentative.name}"/>
-                    </p>
-                </c:forEach>
-          </li>
-          <li>
-                <h3>Declined</h3>
-                <c:forEach var="declined" items="${invite.declinedAttendees}">
-                    <p>
-                        <c:out value="${declined.name}"/>
-                    </p>
-                </c:forEach>
-          </li>
-          <li>
-                <h3>No Reply</h3>
-                <c:forEach var="noReply" items="${invite.noReplyAttendees}">
-                    <p>
-                        <c:out value="${noReply.name}"/>
-                    </p>
-                </c:forEach>
-          </li>
-      </ul>
-      <br/>
-  </div>
-  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
-  	<div data-role="controlgroup" data-type="horizontal">
-  		<a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=A&occurrenceId=${occurrenceId}&occurrenceDate=${date}" data-role="button" data-ajax="false">accept</a> <a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=T&occurrenceId=${occurrenceId}&occurrenceDate=${date}" data-role="button" data-ajax="false">tentative</a> <a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=D&occurrenceId=${occurrenceId}&occurrenceDate=${date}" data-role="button" data-ajax="false">decline</a>
-  	</div>
-  </div>
-</div>
-<!-- /page -->
+	<div data-role="page" id="Calendar-Events">
+		<div data-role="header">
+			<h1>Invite</h1>
+			<c:choose>
+				<c:when test="${referer eq 'pending'}">
+					<a href="${pageContext.request.contextPath}/calendar/pendingMeetings" class="ui-btn-left" data-ajax="false">meetings</a>
+				</c:when>
+				<c:otherwise>
+					<a href="${pageContext.request.contextPath}/calendar/event?eventId=${invite.eventId}&date=${date}&occurrenceId=${occurrenceId}" class="ui-btn-left" data-ajax="false">view event</a>
+				</c:otherwise>
+			</c:choose>
+			<a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-theme="g">
+				<li>
+					<h3 style="white-space: normal">
+						<c:out value="${invite.title}" />
+					</h3>
+					<p style="white-space: normal">
+						<c:choose>
+							<c:when test="${invite.allDay}">
+								<c:out value="${invite.start}" /> all day
+							</c:when>
+							<c:otherwise>
+								<c:out value="${invite.start}" />
+								-
+								<c:out value="${invite.end}" />
+							</c:otherwise>
+						</c:choose>
+					</p></li>
+				<c:if test="${not empty invite.recurrenceMessage}">
+					<li>
+						<h3>Recurrence</h3>
+						<p style="white-space: normal">
+							<c:out value="${invite.recurrenceMessage}" />
+						</p></li>
+				</c:if>
+				<li>
+					<h3>Host</h3>
+					<p>
+						<c:out value="${invite.hostName}" />
+					</p></li>
+				<li>
+					<h3>Accepted</h3> <c:forEach var="accepted" items="${invite.acceptedAttendees}">
+						<p>
+							<c:out value="${accepted.name}" />
+						</p>
+					</c:forEach></li>
+				<li>
+					<h3>Tentative</h3> <c:forEach var="tentative" items="${invite.tentativeAttendees}">
+						<p>
+							<c:out value="${tentative.name}" />
+						</p>
+					</c:forEach></li>
+				<li>
+					<h3>Declined</h3> <c:forEach var="declined" items="${invite.declinedAttendees}">
+						<p>
+							<c:out value="${declined.name}" />
+						</p>
+					</c:forEach></li>
+				<li>
+					<h3>No Reply</h3> <c:forEach var="noReply" items="${invite.noReplyAttendees}">
+						<p>
+							<c:out value="${noReply.name}" />
+						</p>
+					</c:forEach></li>
+			</ul>
+			<br />
+		</div>
+		<div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
+			<div data-role="controlgroup" data-type="horizontal">
+				<c:choose>
+					<c:when test="${invite.cancelation}">
+						<a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=R&occurrenceId=${occurrenceId}&occurrenceDate=${date}&referer=${referer}" data-role="button" data-ajax="false">delete</a>
+						<a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=K&occurrenceId=${occurrenceId}&occurrenceDate=${date}&referer=${referer}" data-role="button" data-ajax="false">keep</a>
+					</c:when>
+					<c:otherwise>
+						<a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=A&occurrenceId=${occurrenceId}&occurrenceDate=${date}&referer=${referer}" data-role="button" data-ajax="false">accept</a>
+						<a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=T&occurrenceId=${occurrenceId}&occurrenceDate=${date}&referer=${referer}" data-role="button" data-ajax="false">tentative</a>
+						<a href="${pageContext.request.contextPath}/calendar/meetingAction?eventId=${invite.eventId}&type=D&occurrenceId=${occurrenceId}&occurrenceDate=${date}&referer=${referer}" data-role="button" data-ajax="false">decline</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+	<!-- /page -->
 
 </body>
 </html>

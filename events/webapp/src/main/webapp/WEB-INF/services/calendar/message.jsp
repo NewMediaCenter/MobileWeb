@@ -26,9 +26,9 @@
 <body>
 <div data-role="page" id="Calendar-Events">
   <div data-role="header">
-    <h1>Message</h1>
+    <h1>Message</h1><a href="${pageContext.request.contextPath}/calendar/month" class="ui-btn-left" data-direction="reverse" data-transition="slide" data-ajax="false">view calendar</a> <a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
   </div>
-  <div data-role="content" ><a href="${pageContext.request.contextPath}/calendar/options" data-ajax="false" class="ui-btn-left">options</a>
+  <div data-role="content" >
       <c:out value="${message}"/>
   </div>
   <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
