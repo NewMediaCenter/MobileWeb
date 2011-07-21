@@ -62,7 +62,7 @@
 			</c:if>
 			<c:if test="${site.hasResourcesTool}">
 				<li>
-					<a href="${pageContext.request.contextPath}/resources?siteId=${site.id}&siteTitle=${site.title}">
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources">
 						Resources
 					</a>
 				</li>

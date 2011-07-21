@@ -15,13 +15,10 @@
  
 package org.kuali.mobility.sakai.controllers;
 
-import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.IOUtils;
-import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
@@ -40,19 +37,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.iu.es.espd.oauth.OAuth2LegService;
-
 @Controller
 @RequestMapping("myclasses/{siteId}/messages")
 public class PrivateMessagesController {
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PrivateMessagesController.class);
-	
-	@Autowired
-	private ConfigParamService configParamService;
-
-	@Autowired
-	private OAuth2LegService oncourseOAuthService;
 
 	@Autowired
 	private SakaiPrivateTopicService sakaiPrivateTopicService;
@@ -101,10 +90,18 @@ public class PrivateMessagesController {
 	public String postMesssage(HttpServletRequest request, Model uiModel, @ModelAttribute("message") Message message, BindingResult result, @PathVariable("siteId") String siteId) {
 		if (isValidMessage(message, result)) {
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-			submitMessage(message, siteId, user.getUserId());
-			return "feedback/thanks";                	
+			ResponseEntity<String> response = sakaiPrivateTopicService.postMessage(message, siteId, user.getUserId());
+			
+			if (response.getStatusCode().value() < 200 || response.getStatusCode().value() >= 300) {
+				Errors errors = ((Errors) result);
+		    	errors.rejectValue("body", "", "There was an error posting your message. Please try again later.");
+		    	uiModel.addAttribute("siteId", siteId);
+		    	return "sakai/forums/privatemessagecreate";  
+			}
+			
+			return getMessages(request, siteId, uiModel);
 		} else {
-			return "feedback/form";    	
+			return "sakai/forums/privatemessagecreate";  
 		}
 	}
 	
@@ -113,13 +110,6 @@ public class PrivateMessagesController {
 		uiModel.addAttribute("siteId", siteId);
 		return "sakai/forums/privatemessagereply";
 	}
-	
-//	@RequestMapping(method = RequestMethod.POST)
-//	public ResponseEntity<String> post(HttpServletRequest request, @RequestParam("to") String to, @RequestParam("title") String title, @RequestParam("body") String body, @RequestParam("siteId") String siteId) {
-//		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-//		submitData(to, title, body, siteId, user.getUserId());
-//		return new ResponseEntity<String>(HttpStatus.CREATED);
-//	}
 	
 	private boolean isValidMessage(Message m, BindingResult result) {
     	boolean hasErrors = false;
@@ -138,45 +128,6 @@ public class PrivateMessagesController {
      	}
     	return !hasErrors;
     }
-
-	private String submitMessage(Message message,String siteId, String userId) {
-		String response = "";
-		try {
-			String jsonString = "{";
-			jsonString += "\"attachments\": [],";
-			jsonString += "\"authoredBy\":\"" + userId + "\", ";
-			jsonString += "\"body\":\"" + message.getBody() + "\", ";
-			jsonString += "\"label\":\"" + "" + "\", ";
-			jsonString += "\"recipients\":\"" + message.getRecipients() + "\", ";
-			jsonString += "\"replies\":" + "null" + ", ";
-			jsonString += "\"replyTo\":" + "null" + ", ";
-			jsonString += "\"title\":\"" + message.getTitle() + "\", ";
-//			jsonString += "\"topicId\":\"" + null + "\", ";
-//			jsonString += "\"typeUuid\":\""+ "4d9593ed-aaee-4826-b74a-b3c3432b384c" + "\", ";
-			jsonString += "\"siteId\":\""+ siteId + "\", ";
-			jsonString += "\"read\":" + "false" + ", ";
-//			jsonString += "\"entityReference\":\"" + "\\/forum_message" + "\", ";
-			//jsonString += "\"entityURL\":\"" + "http:\\/\\/localhost:8080\\/direct\\/forum_message" + "\", ";
-			//jsonString += "\"entityTitle\":\"" + subject + "\"";
-
-			jsonString += "}";
-
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/new.json";
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", jsonString);
-			response = IOUtils.toString(is.getBody(), "UTF-8");
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-		}
-		return response;
-	}
-	
-	public void setConfigParamService(ConfigParamService configParamService) {
-		this.configParamService = configParamService;
-	}
-	
-	public void setOncourseOAuthService(OAuth2LegService oncourseOAuthService) {
-		this.oncourseOAuthService = oncourseOAuthService;
-	}
 	
 	public void setSakaiPrivateTopicService(SakaiPrivateTopicService sakaiPrivateTopicService) {
 		this.sakaiPrivateTopicService = sakaiPrivateTopicService;

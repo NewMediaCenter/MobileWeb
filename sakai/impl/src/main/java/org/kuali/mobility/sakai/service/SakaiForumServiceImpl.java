@@ -15,7 +15,10 @@
  
 package org.kuali.mobility.sakai.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -337,11 +340,17 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 
 			jsonString += "}";
 
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message";
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", jsonString);
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/new.json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "application/json", jsonString);
 			return new ResponseEntity<String>(is.getStatusCode());
 		} catch (OAuthException e) {
-			LOG.error(e.getMessage(), e);
+			BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
+			String body = "";
+			try {
+				body = br.readLine();
+			} catch (IOException e1) {
+			}
+			LOG.error(e.getResponseCode() + ", " + body, e);
 			return new ResponseEntity<String>(HttpStatus.valueOf(e.getResponseCode()));
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

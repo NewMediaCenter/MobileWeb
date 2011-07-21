@@ -15,7 +15,10 @@
  
 package org.kuali.mobility.sakai.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +38,7 @@ import org.kuali.mobility.sakai.entity.Announcement;
 import org.kuali.mobility.sakai.entity.Assignment;
 import org.kuali.mobility.sakai.entity.Attachment;
 import org.kuali.mobility.sakai.entity.Home;
+import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +46,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
+import edu.iu.es.espd.oauth.OAuthException;
 
 @Service
-public class SakaiCourseServiceImpl implements SakaiCourseService {
+public class SakaiSiteServiceImpl implements SakaiSiteService {
 
-	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiCourseServiceImpl.class);
+	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SakaiSiteServiceImpl.class);
 	
 	@Autowired
 	private ConfigParamService configParamService;
@@ -470,5 +475,195 @@ public class SakaiCourseServiceImpl implements SakaiCourseService {
         }
 		return roster;
 	}
+	
+	public List<Resource> findSiteResources(String siteId, String userId, String resId) {
+		List<Resource> resources = new ArrayList<Resource>();
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("resources_collection");
 
+            for (int i = 0; i < itemArray.size(); i++) {
+                String id = itemArray.getJSONObject(i).getString("resourceID");
+                
+                String originalId = new String(id);
+                String resArr[];
+                if (resId != null) {
+                	if (!id.contains(resId) || id.equals(resId)){
+                		continue;
+                	}
+	                id = id.replace(resId, "");
+	                resArr = id.split("/");
+                } else {
+                	String strArr[] = id.split("/");
+                    resArr = new String[strArr.length-3];
+                    for(int j=0; j<(strArr.length-3); j++) {
+            			resArr[j] = strArr[j+3];
+            		}
+                }
+
+        		if(resourceAlreadyExists(id, resArr[0], resArr.length==1?null:resArr[1], resources)) {
+        			continue;
+        		}
+        		
+        		Resource item = new Resource();
+        		item.setHasChild(false);
+        		if(resArr.length > 1) {
+                	item.setHasChild(true);
+                	item.setChildResource(resArr[1]);
+                }
+        		item.setId(originalId);
+        		
+        		String title = resArr[0];
+        		title = title.replace("http:__", "");
+        		int dotIndex = title.lastIndexOf(".");
+        		if (dotIndex > 0) {
+        			item.setTitle(title.substring(0, dotIndex));
+        		} else {
+        			item.setTitle(title);
+        		}
+                
+                if (!item.getHasChild()){
+                	char lastChar = id.charAt(id.length()-1);
+        			if(lastChar == '/'){
+        				item.setExtension("fldr");
+        			} else {
+	                	String resExt [] = resArr[resArr.length-1].split("\\.");
+	                	if(resExt!=null && resExt.length!=0) {
+	                		item.setExtension(resExt[resExt.length-1].toLowerCase());
+	                	}
+	                	else {
+	                		item.setExtension(null);
+	                	}
+        			}
+                } else {
+                	item.setExtension("fldr");
+                }
+                
+                resources.add(item);
+                
+            }
+
+        } catch (Exception e) {
+        	LOG.error(e.getMessage(), e);
+        }
+		return resources;
+	}
+
+	public List<Resource> findChildResources(String siteId, String resId, String userId) {
+		List<Resource> resources = new ArrayList<Resource>();
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
+            JSONArray itemArray = jsonObj.getJSONArray("resources_collection");
+
+            for (int i = 0; i < itemArray.size(); i++) {
+                String id = itemArray.getJSONObject(i).getString("resourceID");
+                
+                if(!id.contains(resId)){
+                	continue;
+                }
+                String originalId = id;
+                id = id.replace(resId, "");
+                String strArr [] = id.split("/");
+                
+        		if(resourceAlreadyExists(id, strArr[0], strArr.length==1?null:strArr[1], resources) || strArr[0].equals("")) {
+        			continue;
+        		}
+        		
+        		Resource item = new Resource();
+        		item.setHasChild(false);
+        		if(strArr.length > 1) {
+                	item.setHasChild(true);
+                	item.setChildResource(strArr[1]);
+                }
+        		item.setId(originalId);
+        		
+        		String title = strArr[0];
+        		title = title.replace("http:__", "");
+        		int dotIndex = title.lastIndexOf(".");
+        		if (dotIndex > 0) {
+        			item.setTitle(title.substring(0, dotIndex));
+        		} else {
+        			item.setTitle(title);
+        		}
+        		
+                if (!item.getHasChild()){
+                	char lastChar = id.charAt(id.length()-1);
+        			if(lastChar == '/'){
+        				item.setExtension("fldr");
+        			} else {
+	                	String resExt [] = strArr[strArr.length-1].split("\\.");
+	                	if(resExt!=null && resExt.length!=0) {
+	                		item.setExtension(resExt[resExt.length-1]);
+	                		if((resExt[resExt.length-1]).equalsIgnoreCase("URL")){
+	                			item.setTitle(strArr[0].replace("\\.URL", ""));
+	                		}
+	                	}
+	                	else {
+	                		item.setExtension(null);
+	                	}
+	                }
+                } else {
+                	item.setExtension("fldr");
+                }
+                
+                resources.add(item);
+                
+            }
+
+        } catch (Exception e) {
+        	LOG.error(e.getMessage(), e);
+        }
+		return resources;
+	}
+
+	private Boolean resourceAlreadyExists(String id, String title, String childRes, List<Resource> resources) {
+		Iterator<Resource> iterator = resources.iterator();
+		Boolean titleExists = false;
+		int i = 0;
+		while (iterator.hasNext()) {
+			Resource res = iterator.next();
+			if(title.equals(res.getTitle())) {
+				titleExists = true;
+				if(childRes != null){
+					res.setHasChild(true);
+					String itemChild = res.getChildResource();
+					res.setChildResource(itemChild + "," + childRes);
+				}
+				res.setId(id);
+				resources.set(i, res);
+				
+			}
+			i++;
+		}
+		return titleExists;
+	}
+
+	@Override
+	public byte[] getResource(String resId, String userId) {
+		try {
+			resId = resId.replaceAll(" ", "%20");
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources/getresource" + resId;
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "application/pdf");
+			return IOUtils.toByteArray(is.getBody());
+		} catch (OAuthException e) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
+			String body = "";
+			try {
+				body = br.readLine();
+			} catch (IOException e1) {
+			}
+			LOG.error(e.getResponseCode() + ", " + body, e);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		return null;
+	}
 }

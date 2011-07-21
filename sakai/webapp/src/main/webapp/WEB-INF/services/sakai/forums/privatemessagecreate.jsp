@@ -36,9 +36,7 @@
 		     	<div data-inline="true">
 	                <div class="ui-grid-a">
 	                    <div class="ui-block-a"><a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages" data-role="button">Cancel</a></div>
-	                    <div class="ui-block-b">
-	                        <input class="submit" type="submit" value="Submit" />
-	                    </div>
+	                    <div class="ui-block-b"><input class="submit" type="submit" value="Submit" /></div>
 	                </div>
 	            </div>
 	     	</fieldset>

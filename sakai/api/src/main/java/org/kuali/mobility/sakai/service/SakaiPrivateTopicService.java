@@ -20,9 +20,11 @@ import java.util.List;
 import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
+import org.springframework.http.ResponseEntity;
 
 public interface SakaiPrivateTopicService {
 	public List<ForumTopic> findPrivateTopics(String siteId, String userId);
 	public MessageFolder findPrivateMessages(String siteId, String typeUuid, String userId);
-	Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);	
+	Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);
+	public ResponseEntity<String> postMessage(Message message,String siteId, String userId);
 }

@@ -20,10 +20,11 @@ import java.util.List;
 import org.kuali.mobility.sakai.entity.Announcement;
 import org.kuali.mobility.sakai.entity.Assignment;
 import org.kuali.mobility.sakai.entity.Home;
+import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
 
-public interface SakaiCourseService {
+public interface SakaiSiteService {
 	public Home findSakaiHome(String user);
 	public Site findSite(String siteId, String user);
 	
@@ -36,4 +37,8 @@ public interface SakaiCourseService {
 	
 	public List<Roster> findRoster(String json);
 	public List<Roster> findParticipantDetails(String json, String displayId);
+	
+	public List<Resource> findSiteResources(String siteId, String userId, String resId);
+//	public List<Resource> findChildResources(String siteId, String resId, String userId);
+	public byte[] getResource(String resId, String userId);
 }

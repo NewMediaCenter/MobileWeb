@@ -15,7 +15,10 @@
  
 package org.kuali.mobility.sakai.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,10 +35,12 @@ import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.iu.es.espd.oauth.OAuth2LegService;
+import edu.iu.es.espd.oauth.OAuthException;
 
 @Service
 public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
@@ -169,6 +174,45 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 		}
 	}
 
+	public ResponseEntity<String> postMessage(Message message,String siteId, String userId) {
+		try {
+			String jsonString = "{";
+			jsonString += "\"attachments\": [],";
+			jsonString += "\"authoredBy\":\"" + userId + "\", ";
+			jsonString += "\"body\":\"" + message.getBody() + "\", ";
+			jsonString += "\"label\":\"" + "" + "\", ";
+			jsonString += "\"recipients\":\"" + message.getRecipients() + "\", ";
+			jsonString += "\"replies\":" + "null" + ", ";
+			jsonString += "\"replyTo\":" + message.getInReplyTo() + ", ";
+			jsonString += "\"title\":\"" + message.getTitle() + "\", ";
+//			jsonString += "\"topicId\":\"" + null + "\", ";
+//			jsonString += "\"typeUuid\":\""+ "4d9593ed-aaee-4826-b74a-b3c3432b384c" + "\", ";
+			jsonString += "\"siteId\":\""+ siteId + "\", ";
+			jsonString += "\"read\":" + "false" + ", ";
+//			jsonString += "\"entityReference\":\"" + "\\/forum_message" + "\", ";
+			//jsonString += "\"entityURL\":\"" + "http:\\/\\/localhost:8080\\/direct\\/forum_message" + "\", ";
+			//jsonString += "\"entityTitle\":\"" + subject + "\"";
+
+			jsonString += "}";
+
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/new.json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", jsonString);
+			return new ResponseEntity<String>(is.getStatusCode());
+		} catch (OAuthException e) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
+			String body = "";
+			try {
+				body = br.readLine();
+			} catch (IOException e1) {
+			}
+			LOG.error(e.getResponseCode() + ", " + body, e);
+			return new ResponseEntity<String>(HttpStatus.valueOf(e.getResponseCode()));
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<String>(HttpStatus.METHOD_FAILURE);
+		}
+	}
+	
 	public void setConfigParamService(ConfigParamService configParamService) {
 		this.configParamService = configParamService;
 	}
