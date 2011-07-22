@@ -37,7 +37,7 @@
             <kme:definitionListView id="classlist" filter="false">
                 <c:forEach items="${home.projects}" var="item" varStatus="status">
                     <kme:definitionListTerm>
-                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">${item.title}</a><span class="ui-icon ui-icon-arrow-r"></span>
+                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">${item.title}</a>
                     </kme:definitionListTerm>
                     <c:if test="${not empty item.description && item.description != 'null'}">
                         <kme:definitionListDefinition>
