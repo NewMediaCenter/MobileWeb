@@ -846,6 +846,10 @@ dl.emergencylist dd a {
 
 /* Computer Labs
 -----------------------------------------------------------------------------------------------------------*/
+div#computerlabs div.ui-content {
+	padding-top: 0;
+}
+
 div#computerlabs h3 {
 	margin: 0 -15px 0 -15px;
 	padding: 7px 15px 7px 15px;
@@ -853,8 +857,8 @@ div#computerlabs h3 {
 	text-shadow: none;
 	display: block;
 	width: 100%;
-	border: 1px solid #456f9a;
-    background: #000;
+	border: 1px solid #333;
+    background-color: #000;
     color: #fff;
     font-weight: bold;
     background: -moz-linear-gradient(center top , #484848, #000000) repeat scroll 0 0 #000000;

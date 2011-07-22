@@ -14,7 +14,7 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
 
-<kme:page title="Campus Alerts" id="campusalerts">
+<kme:page title="Campus Alerts" id="campusalerts" backButton="true" homeButton="true">
 	<kme:content>
 	    <kme:definitionListView id="alertlist" filter="false">
 	        <c:forEach items="${alerts}" var="alert" varStatus="status">

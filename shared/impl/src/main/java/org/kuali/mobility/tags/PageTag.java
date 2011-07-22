@@ -59,14 +59,13 @@ public class PageTag extends SimpleTagSupport {
             out.println("</head>");
             out.println("<body>");
             out.println("<div data-role=\"page\" id=\"" + id + "\">");
-            out.println("<div data-role=\"header\">");
+            out.println("<div data-role=\"header\" class=\"test\">");
             if (backButton) {
                 out.println("<a href=\"" + (backButtonURL != null ? backButtonURL : "javascript: history.go(-1)") + "\" class=\"ui-btn-left\" data-icon=\"back\" data-iconpos=\"notext\">Back</a>");
             }
-            //out.println("<h1>" + title + "-" + backButton + "</h1>");
             out.println("<h1>" + title + "</h1>");
             if (homeButton) {
-                out.println("<a href=\"/mdot/home\" class=\"ui-btn-right\" data-icon=\"home\" data-iconpos=\"notext\">Home</a>");
+                out.println("<a href=\"" + contextPath + "/home\" class=\"ui-btn-right\" data-icon=\"home\" data-iconpos=\"notext\">Home</a>");
             }
             out.println("</div>");
             getJspBody().invoke(out);

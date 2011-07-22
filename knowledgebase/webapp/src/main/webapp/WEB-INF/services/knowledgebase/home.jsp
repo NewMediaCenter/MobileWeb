@@ -13,7 +13,7 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Knowledge Base" id="kb">
+<kme:page title="Knowledge Base" id="kb" backButton="true" homeButton="true">
 	<kme:content>
 		<form:form action="${pageContext.request.contextPath}/knowledgebase/search" commandName="kbsearchform" data-ajax="false">
 			<fieldset>

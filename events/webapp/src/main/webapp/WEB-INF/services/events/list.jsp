@@ -14,7 +14,7 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Events" id="events">
+<kme:page title="Events" id="events" backButton="true" homeButton="true">
 	<kme:content>
 	Events
 	</kme:content>
