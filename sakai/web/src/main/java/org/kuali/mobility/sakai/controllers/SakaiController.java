@@ -101,6 +101,8 @@ public class SakaiController {
 			
 			uiModel.addAttribute("sessionId", sessionId);
 			uiModel.addAttribute("siteId", siteId);
+			uiModel.addAttribute("forumCount", 0);
+			uiModel.addAttribute("messageCount", 0);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}

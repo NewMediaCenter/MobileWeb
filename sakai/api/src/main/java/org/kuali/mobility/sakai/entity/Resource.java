@@ -27,6 +27,7 @@ private static final long serialVersionUID = -2272816569200642551L;
     private String childResource;
     private String sessionId;
     private Boolean hasChild;
+    private FileType fileType;
     
 	public String getTitle() {
 		return title;
@@ -81,6 +82,14 @@ private static final long serialVersionUID = -2272816569200642551L;
 
 	public String getSessionId() {
 		return sessionId;
+	}
+
+	public FileType getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(FileType fileType) {
+		this.fileType = fileType;
 	}
 
 		

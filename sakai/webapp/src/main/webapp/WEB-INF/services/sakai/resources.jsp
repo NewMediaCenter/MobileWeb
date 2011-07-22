@@ -16,33 +16,48 @@
 	<kme:content>
 		<ul data-role="listview">
 			<c:forEach items="${resources}" var="item" varStatus="status">
-				<li>
+				<c:choose>
+					<c:when test="${item.fileType == 'FOLDER'}">
+						<li>
+					</c:when>
+					<c:otherwise>
+						<li class="link-view">
+					</c:otherwise>
+				</c:choose>
 					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.id}" >
-						<div class="ui-block-a" style="width:10%">
-							<c:choose>
-								<c:when test="${item.extension == 'fldr'}">
-									<img src="${pageContext.request.contextPath}/images/service-icons/folder.png" width="32" height="32" alt="image" />
-								</c:when>
-								<c:when test="${item.extension == 'pdf'}">
-									<img src="${pageContext.request.contextPath}/images/service-icons/pdf.png" width="32" height="32" alt="image" />
-								</c:when>
-								<c:when test="${item.extension == 'rtf' || item.extension == 'txt' || item.extension == 'doc' || item.extension == 'docx'}">
-									<img src="${pageContext.request.contextPath}/images/service-icons/ms_office_word.png" width="32" height="32" alt="image" />
-								</c:when>
-								<c:when test="${item.extension == 'ppt' || item.extension == 'pptx'}">
-									<img src="${pageContext.request.contextPath}/images/service-icons/ms_office_ppt.png" width="32" height="32" alt="image" />
-								</c:when>
-								<c:when test="${item.extension == 'url'}">
-									<img src="${pageContext.request.contextPath}/images/service-icons/link.png" width="32" height="32" alt="image" />
-								</c:when>
-								<c:otherwise>
-									<img src="${pageContext.request.contextPath}/images/service-icons/file.png" width="32" height="32" alt="image" />
-								</c:otherwise>
-							</c:choose>
-						</div>
-						<div class="ui-block-b" style="width:90%">
-							${item.title}
-						</div>
+						<c:choose>
+							<c:when test="${item.fileType == 'FOLDER'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-folder.png" class="ui-li-icon ui-li-thumb" alt="folder" />
+							</c:when>
+							<c:when test="${item.fileType == 'IMAGE'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-image.png" class="ui-li-icon ui-li-thumb" alt="image" />
+							</c:when>
+							<c:when test="${item.fileType == 'VIDEO'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-movie.png" class="ui-li-icon ui-li-thumb" alt="video" />
+							</c:when>
+							<c:when test="${item.fileType == 'TEXT'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-doc.png" class="ui-li-icon ui-li-thumb" alt="text file" />
+							</c:when>
+							<c:when test="${item.fileType == 'PRESENTATION'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-powerpoint.png" class="ui-li-icon ui-li-thumb" alt="presentation" />
+							</c:when>
+							<c:when test="${item.fileType == 'SPREADSHEET'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-spreadsheet.png" class="ui-li-icon ui-li-thumb" alt="spreadsheet" />
+							</c:when>
+							<c:when test="${item.fileType == 'PDF'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-pdf.png" class="ui-li-icon ui-li-thumb" alt="pdf file" />
+							</c:when>
+							<c:when test="${item.fileType == 'AUDIO'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-audio.png" class="ui-li-icon ui-li-thumb" alt="audio" />
+							</c:when>
+							<c:when test="${item.fileType == 'LINK'}">
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-weblink.png" class="ui-li-icon ui-li-thumb" alt="website" />
+							</c:when>
+							<c:otherwise>
+								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-file.png" class="ui-li-icon ui-li-thumb" alt="file" />
+							</c:otherwise>
+						</c:choose>
+						${item.title}
 				  	</a>
 				</li>
 			</c:forEach>

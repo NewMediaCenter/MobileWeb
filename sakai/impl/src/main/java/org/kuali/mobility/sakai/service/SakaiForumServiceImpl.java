@@ -191,11 +191,11 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 	private int computeUnreadCount(String messageId, Map<String, List<String>> messageReplies, Set<String> unreadMessages, int currentCount) {
 		List<String> replies = messageReplies.get(messageId);
 		
+		if (unreadMessages.contains(messageId)) {
+			currentCount++;
+		}
 		if (replies != null && !replies.isEmpty()) {
 			for (String message : replies) {
-				if (unreadMessages.contains(message)) {
-					currentCount++;
-				}
 				currentCount += computeUnreadCount(message, messageReplies, unreadMessages, currentCount);
 			}
 		}

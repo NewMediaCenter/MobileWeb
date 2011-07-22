@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Announcement;
 import org.kuali.mobility.sakai.entity.Assignment;
 import org.kuali.mobility.sakai.entity.Attachment;
+import org.kuali.mobility.sakai.entity.FileType;
 import org.kuali.mobility.sakai.entity.Home;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
@@ -58,6 +60,54 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	
 	@Autowired
 	private OAuth2LegService oncourseOAuthService;
+	
+	private static final Map<String, FileType> fileTypes;
+	private static final String FOLDER_EXTENSION = "fldr";
+	private static final String URL_EXTENSION = "url";
+	
+	static {
+		fileTypes = new HashMap<String, FileType>();
+		fileTypes.put("txt", FileType.TEXT);
+		fileTypes.put("rtf", FileType.TEXT);
+		fileTypes.put("doc", FileType.TEXT);
+		fileTypes.put("docx", FileType.TEXT);
+		fileTypes.put("odt", FileType.TEXT);
+		fileTypes.put("wpd", FileType.TEXT);
+		fileTypes.put("jpg", FileType.IMAGE);
+		fileTypes.put("jpeg", FileType.IMAGE);
+		fileTypes.put("png", FileType.IMAGE);
+		fileTypes.put("gif", FileType.IMAGE);
+		fileTypes.put("bmp", FileType.IMAGE);
+		fileTypes.put("psd", FileType.IMAGE);
+		fileTypes.put("tiff", FileType.IMAGE);
+		fileTypes.put("wav", FileType.AUDIO);
+		fileTypes.put("wma", FileType.AUDIO);
+		fileTypes.put("mpa", FileType.AUDIO);
+		fileTypes.put("mp3", FileType.AUDIO);
+		fileTypes.put("mid", FileType.AUDIO);
+		fileTypes.put("midi", FileType.AUDIO);
+		fileTypes.put("m4a", FileType.AUDIO);
+		fileTypes.put("m3u", FileType.AUDIO);
+		fileTypes.put("aif", FileType.AUDIO);
+		fileTypes.put("avi", FileType.VIDEO);
+		fileTypes.put("flv", FileType.VIDEO);
+		fileTypes.put("mov", FileType.VIDEO);
+		fileTypes.put("mp4", FileType.VIDEO);
+		fileTypes.put("mpg", FileType.VIDEO);
+		fileTypes.put("swf", FileType.VIDEO);
+		fileTypes.put("vob", FileType.VIDEO);
+		fileTypes.put("wmv", FileType.VIDEO);
+		fileTypes.put("wks", FileType.SPREADSHEET);
+		fileTypes.put("xls", FileType.SPREADSHEET);
+		fileTypes.put("xlsx", FileType.SPREADSHEET);
+		fileTypes.put("ods", FileType.SPREADSHEET);
+		fileTypes.put("ppt", FileType.PRESENTATION);
+		fileTypes.put("pptx", FileType.PRESENTATION);
+		fileTypes.put("odp", FileType.PRESENTATION);
+		fileTypes.put("pdf", FileType.PDF);
+		fileTypes.put(URL_EXTENSION, FileType.LINK);
+		fileTypes.put(FOLDER_EXTENSION, FileType.FOLDER);
+	}
 	
 	public Home findSakaiHome(String user) {
 		try {
@@ -220,7 +270,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
                 if (attachments != null && !attachments.isEmpty()) {
                 	for (int j = 0; j < attachments.size(); j++) {
                 		Attachment attachment = new Attachment();
-                		attachment.setTitle(attachments.getString(j));
+                		attachment.setTitle(attachments.getJSONObject(j).getString("name"));
                 		attach.add(attachment);
                 	}
                 }
@@ -267,12 +317,10 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             if (attachmentArray != null && !attachmentArray.isEmpty()) {
             	List<Attachment> attachments = new ArrayList<Attachment>();
             	for (int i = 0; i < attachmentArray.size(); i++) {
-            		String attach = attachmentArray.getString(i);
+            		JSONObject attach = attachmentArray.getJSONObject(i);
             		Attachment attachment = new Attachment();
-            		attachment.setUrl(attach);
-            		
-            		attach = attach.substring(attach.lastIndexOf("/") + 1);
-            		attachment.setTitle(attach);
+            		attachment.setUrl(attach.getString("id"));
+            		attachment.setTitle(attach.getString("name"));
             		attachments.add(attachment);
             	}
             	anns.setAttachments(attachments);
@@ -488,6 +536,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 
             for (int i = 0; i < itemArray.size(); i++) {
                 String id = itemArray.getJSONObject(i).getString("resourceID");
+                String name = itemArray.getJSONObject(i).getString("resourceName");
                 
                 String originalId = new String(id);
                 String resArr[];
@@ -517,19 +566,12 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
                 }
         		item.setId(originalId);
         		
-        		String title = resArr[0];
-        		title = title.replace("http:__", "");
-        		int dotIndex = title.lastIndexOf(".");
-        		if (dotIndex > 0) {
-        			item.setTitle(title.substring(0, dotIndex));
-        		} else {
-        			item.setTitle(title);
-        		}
+        		item.setTitle(name);
                 
                 if (!item.getHasChild()){
                 	char lastChar = id.charAt(id.length()-1);
         			if(lastChar == '/'){
-        				item.setExtension("fldr");
+        				item.setExtension(FOLDER_EXTENSION);
         			} else {
 	                	String resExt [] = resArr[resArr.length-1].split("\\.");
 	                	if(resExt!=null && resExt.length!=0) {
@@ -540,79 +582,10 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	                	}
         			}
                 } else {
-                	item.setExtension("fldr");
+                	item.setExtension(FOLDER_EXTENSION);
                 }
                 
-                resources.add(item);
-                
-            }
-
-        } catch (Exception e) {
-        	LOG.error(e.getMessage(), e);
-        }
-		return resources;
-	}
-
-	public List<Resource> findChildResources(String siteId, String resId, String userId) {
-		List<Resource> resources = new ArrayList<Resource>();
-		try {
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
-			String json = IOUtils.toString(is.getBody(), "UTF-8");
-			
-            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
-            JSONArray itemArray = jsonObj.getJSONArray("resources_collection");
-
-            for (int i = 0; i < itemArray.size(); i++) {
-                String id = itemArray.getJSONObject(i).getString("resourceID");
-                
-                if(!id.contains(resId)){
-                	continue;
-                }
-                String originalId = id;
-                id = id.replace(resId, "");
-                String strArr [] = id.split("/");
-                
-        		if(resourceAlreadyExists(id, strArr[0], strArr.length==1?null:strArr[1], resources) || strArr[0].equals("")) {
-        			continue;
-        		}
-        		
-        		Resource item = new Resource();
-        		item.setHasChild(false);
-        		if(strArr.length > 1) {
-                	item.setHasChild(true);
-                	item.setChildResource(strArr[1]);
-                }
-        		item.setId(originalId);
-        		
-        		String title = strArr[0];
-        		title = title.replace("http:__", "");
-        		int dotIndex = title.lastIndexOf(".");
-        		if (dotIndex > 0) {
-        			item.setTitle(title.substring(0, dotIndex));
-        		} else {
-        			item.setTitle(title);
-        		}
-        		
-                if (!item.getHasChild()){
-                	char lastChar = id.charAt(id.length()-1);
-        			if(lastChar == '/'){
-        				item.setExtension("fldr");
-        			} else {
-	                	String resExt [] = strArr[strArr.length-1].split("\\.");
-	                	if(resExt!=null && resExt.length!=0) {
-	                		item.setExtension(resExt[resExt.length-1]);
-	                		if((resExt[resExt.length-1]).equalsIgnoreCase("URL")){
-	                			item.setTitle(strArr[0].replace("\\.URL", ""));
-	                		}
-	                	}
-	                	else {
-	                		item.setExtension(null);
-	                	}
-	                }
-                } else {
-                	item.setExtension("fldr");
-                }
+                item.setFileType(determineFileType(item.getExtension()));
                 
                 resources.add(item);
                 
@@ -644,6 +617,15 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			i++;
 		}
 		return titleExists;
+	}
+	
+	private FileType determineFileType(String fileExtension) {
+		FileType type = fileTypes.get(fileExtension.toLowerCase());
+		if (type != null) {
+			return type;
+		} else {
+			return FileType.GENERIC;
+		}
 	}
 
 	@Override

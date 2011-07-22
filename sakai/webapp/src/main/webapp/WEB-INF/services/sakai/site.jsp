@@ -18,6 +18,7 @@
 			<c:if test="${site.instructorName != null && site.instructorName != 'null'}">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster/${site.instructorId}">
+						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-teacher.png" class="ui-li-icon ui-li-thumb" alt="instructor">
 						Instructor<br />
 						<span style=" font-weight:normal; font-size:.8em">${site.instructorName}</span>
 					</a>
@@ -26,6 +27,7 @@
 			<c:if test="${site.hasAnnouncementsTool}">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/announcements">
+						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-announce.png"  class="ui-li-icon ui-li-thumb" alt="announcements">
 						Announcements
 					</a>
 				</li>
@@ -47,6 +49,7 @@
 			<c:if test="${site.hasRosterTool}">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster">
+						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-roster.png"  class="ui-li-icon ui-li-thumb" alt="roster">
 						Roster
 					</a>
 				</li>
@@ -54,13 +57,16 @@
 			<c:if test="${site.hasForumsTool}">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/forums">
+						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-forums.png"  class="ui-li-icon ui-li-thumb" alt="forums">
 						Forums
+						<span class="ui-li-count">${forumCount}</span>
 					</a>
 				</li>
 			</c:if>
 			<c:if test="${site.hasResourcesTool}">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources">
+						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-resources.png"  class="ui-li-icon ui-li-thumb" alt="resources">
 						Resources
 					</a>
 				</li>
@@ -68,7 +74,9 @@
 			<c:if test="${site.hasMessagesTool}">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/messages">
+						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-messages.png"  class="ui-li-icon ui-li-thumb" alt="messages">
 						Messages
+						<span class="ui-li-count">${messageCount}</span>
 					</a>
 				</li>
 			</c:if>
