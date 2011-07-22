@@ -489,56 +489,6 @@
 
 
 
-/* MCL FORUMS
------------------------------------------------------------------------------------------------------------*/
-
-
-.ui-li-rightcont {
-	position: absolute;
-	font-size: 11px;
-	font-weight: normal;
-	padding: .2em .5em;
-	top: 50%;
-	margin-top: -.9em;
-	right: 38px;
-	color:#FFF;
-	border-style: none;
-	background:none;
-	text-shadow:none;
-}
-.ui-li-divider .ui-li-rightcont, .ui-li-static .ui-li-rightcont {
-	right: 10px;
-}
-.forum-thread {
-	overflow:visible;
-	white-space:normal;
-	margin-bottom: 1em;
-}
-.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
-	/* [disabled]padding: 0.7em 40px 0.7em 15px;
-*/
-	display: block;
-}
-.forum-quote {
-	padding: 1em;
-	color:#666;
-	font-style: italic;
-	overflow:visible;
-	white-space:normal;
-}
-.forum-quote p:first-child {
-	color:#000;
-	font-weight: bold;
-	overflow:visible;
-	white-space:normal;
-}
-.forum-quote p {
-	overflow:visible;
-	white-space:normal;
-}
-.forum-reply textarea.ui-input-text {
-	height: 200px;
-}
 
 /* MISC STUFF
 -----------------------------------------------------------------------------------------------------------*/
