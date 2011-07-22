@@ -649,9 +649,8 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	@Override
 	public byte[] getResource(String resId, String userId) {
 		try {
-			resId = resId.replaceAll(" ", "%20");
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources/getresource" + resId;
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "application/pdf");
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "application/octet-stream");
 			return IOUtils.toByteArray(is.getBody());
 		} catch (OAuthException e) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));

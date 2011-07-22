@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="${site.title}" id="class_details">
+<kme:page title="${site.title}" id="class_details" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses">
 	<kme:content>
 		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
 			<c:if test="${site.instructorName != null && site.instructorName != 'null'}">
@@ -27,7 +27,6 @@
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/announcements">
 						Announcements
-						<span class="ui-li-count">count</span>
 					</a>
 				</li>
 			</c:if>
@@ -56,7 +55,6 @@
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/forums">
 						Forums
-						<span class="ui-li-count">count</span>
 					</a>
 				</li>
 			</c:if>
@@ -71,7 +69,6 @@
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/messages">
 						Messages
-						<span class="ui-li-count">count</span>
 					</a>
 				</li>
 			</c:if>

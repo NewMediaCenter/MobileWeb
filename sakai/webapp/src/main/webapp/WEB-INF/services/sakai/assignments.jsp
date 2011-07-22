@@ -12,9 +12,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Assignments" id="assignments">
+<kme:page title="Assignments" id="assignments" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}">
 	<kme:content>
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
+		<ul data-role="listview">
 			<c:set var="lastCreatedDate" value=""/>
 			<li>
 				<h3>Course Grade: ${courseGrade}</h3>

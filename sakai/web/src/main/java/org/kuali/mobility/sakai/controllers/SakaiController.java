@@ -18,6 +18,7 @@ package org.kuali.mobility.sakai.controllers;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -61,6 +62,22 @@ public class SakaiController {
 	
 	@Autowired
 	private SakaiSiteService sakaiSiteService;
+	
+	private static final MimetypesFileTypeMap mimeTypesMap;
+	private static final String urlMimeType = "url";
+	
+	static {
+		mimeTypesMap = new MimetypesFileTypeMap();
+		
+		mimeTypesMap.addMimeTypes("application/pdf pdf");
+		mimeTypesMap.addMimeTypes("application/msword doc");
+		mimeTypesMap.addMimeTypes("application/vnd.openxmlformats-officedocument.wordprocessingml.document docx");
+		mimeTypesMap.addMimeTypes("application/vnd.ms-excel xla xls xlt xlw");
+		mimeTypesMap.addMimeTypes("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx");
+		mimeTypesMap.addMimeTypes("application/vnd.ms-powerpoint ppt pps");
+		mimeTypesMap.addMimeTypes("pplication/vnd.openxmlformats-officedocument.presentationml.presentation pptx");
+		mimeTypesMap.addMimeTypes(urlMimeType + " url URL Url");
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getSites(HttpServletRequest request, Model uiModel) {
@@ -259,10 +276,18 @@ public class SakaiController {
 				}
 				else {
 					byte [] fileData = sakaiSiteService.getResource(resId, user.getUserId());
-					response.setContentType("application/pdf");
-					response.setContentLength(fileData.length);
-					response.getOutputStream().write(fileData, 0, fileData.length);
-					return null;
+					String mimeType = mimeTypesMap.getContentType(resId);
+					
+					if (mimeType.equals(urlMimeType)) {
+						String url = new String(fileData);
+						response.sendRedirect(response.encodeRedirectURL(url));
+					} else {
+						response.setContentType(mimeType);
+						response.setContentLength(fileData.length);
+						response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(resId) + "\"" );
+						response.getOutputStream().write(fileData, 0, fileData.length);
+						return null;
+					}
 				}
 			}
 			
@@ -276,6 +301,15 @@ public class SakaiController {
 		}
 		uiModel.addAttribute("siteId", siteId);
 		return "sakai/resources";
+	}
+	
+	private String getFileName(String resourceId) {
+		int index = resourceId.lastIndexOf("/");
+		if (index == -1) {
+			return resourceId;
+		} else {
+			return resourceId.substring(index +1 );
+		}
 	}
 	
 	public void setSakaiSiteService(SakaiSiteService sakaiSiteService) {
