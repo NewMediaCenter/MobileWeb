@@ -12,267 +12,626 @@
 <html>
 <head>
 <title>Page Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript"src="../../mdot-webapp/src/main/webapp/js/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.mobile-1.0b1.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/custom.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.validate.js"></script>
 <link href="../../mdot-webapp/src/main/webapp/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="../../mdot-webapp/src/main/webapp/css/jquery.mobile-fluid960.css" rel="stylesheet" type="text/css" />
+<link href="../../mdot-webapp/src/main/webapp/css/jquery-mobile-fluid960.css" rel="stylesheet" type="text/css" />
 <link href="../../mdot-webapp/src/main/webapp/css/custom.css" rel="stylesheet" type="text/css" />
+<link href="../../events/webapp/src/main/webapp/css/events.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-<div data-role="page" id="test">
-  <div data-role="header" data-position="">
+<script type="text/javascript">
+	calendarSelectedDate = 20110715;
+	calendarSelectedMonthYear = 201107;
+</script>
+<div data-role="page" id="Calendar-Events">
+  <div data-role="header">
     <h1>Events</h1>
-    <a href="evt-filter.html" class="ui-btn-right" data-transition="flip">filter</a> </div>
+    <a href="/mdot/calendar/options" class="ui-btn-right" data-icon="home" data-iconpos="notext">Home</a> </div>
   <!-- /header -->
-  
   <div data-role="content" class="monthgrid">
-    <div class="cal-container shadow">
-      <div class="cal-header"> 
-        
-        <!--Grid for nav arrows and month/year indicator-->
-        
-        <div class="ui-grid-20-60-20">
-          <div class="ui-block-1">
-            <div class="cal-arrow-left"><img src="images/arrow-left.png" width="16" height="16" alt="back"></div>
-          </div>
-          <div class="ui-block-2">
-            <div class="month-year"> September 2011 </div>
-          </div>
-          <div class="ui-block-3">
-            <div class="cal-arrow-right"> <img src="images/arrow-right.png" width="16" height="16" alt="forward"></div>
-          </div>
-        </div>
-        <div class="ui-grid-evt-month"> 
-          
-          <!--Days of Week Key-->
-          
-          <div class="ui-block-1">
-            <div class="daysofweek"> Sun </div>
-          </div>
-          <div class="ui-block-2">
-            <div class="daysofweek"> Mon </div>
-          </div>
-          <div class="ui-block-3">
-            <div class="daysofweek"> Tue </div>
-          </div>
-          <div class="ui-block-4">
-            <div class="daysofweek"> Wed </div>
-          </div>
-          <div class="ui-block-5">
-            <div class="daysofweek"> Thu </div>
-          </div>
-          <div class="ui-block-6">
-            <div class="daysofweek"> Fri </div>
-          </div>
-          <div class="ui-block-7">
-            <div class="daysofweek"> Sat </div>
-          </div>
-        </div>
-      </div>
-      <div class="ui-grid-evt-month"> 
-        
-        <!--Week 1-->
-        <div class="ui-block-1"> <a href="asdf.html">
-          <div class="datebox-false">
-            <div class="event-false">29</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-2"><a href="asdf.html">
-          <div class="datebox-false">
-            <div class="event-true">30</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-3"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true-today">1</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-4"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">2</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-5"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false-selected">3</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-6"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">4</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-7"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">5</div>
-          </div>
-          </a> </div>
-        <!--Week 2-->
-        <div class="ui-block-1"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">6</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-2"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">7</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-3"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">8</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-4"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">9</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-5"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">10</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-6"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">11</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-7"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">12</div>
-          </div>
-          </a> </div>
-        <!--Week 3-->
-        <div class="ui-block-1"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">13</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-2"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">14</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-3"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">15</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-4"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">16</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-5"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">17</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-6"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">18</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-7"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">19</div>
-          </div>
-          </a> </div>
-        <!--Week 4-->
-        <div class="ui-block-1"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">20</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-2"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">21</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-3"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">22</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-4"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">23</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-5"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">24</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-6"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">25</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-7"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">26</div>
-          </div>
-          </a> </div>
-        <!--Week 5-->
-        <div class="ui-block-1"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">27</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-2"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">28</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-3"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">29</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-4"> <a href="evt-daylist.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-true">30</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-5"> <a href="evt-daylist-blank.html" data-transition="pop">
-          <div class="datebox-true">
-            <div class="event-false">31</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-6"><a href="asdf.html">
-          <div class="datebox-false">
-            <div class="event-false">1</div>
-          </div>
-          </a> </div>
-        <div class="ui-block-7"><a href="asdf.html">
-          <div class="datebox-false">
-            <div class="event-false">2</div>
-          </div>
-          </a> </div>
-      </div>
-    </div>
-    <div style="padding:15px" >
-      <h4  style="padding:0px; margin:0px">Currently Viewing </h4>
+    <div data-role="navbar" class="tabs">
       <ul>
-        <li>Alumni Events</li>
-        <li>Arts &amp; Entertainment</li>
-        <li>Information Technology Events</li>
+        <li ><a class="selected" href="mcl-classes.html" data-theme="" data-transition="none">Grid</a></li>
+        <li><a href="mcl-projects.html" data-theme="" data-transition="none" >List</a></li>
+        <li><a href="mcl-projects.html" data-theme="" data-transition="none" >Options</a></li>
+        <li><a href="mcl-projects.html" data-theme="" data-transition="none" >Add Event</a></li>
+      </ul>
+    </div>
+    <div class="cal-header" >
+      <div class="ui-grid-20-60-20">
+        <div class="ui-block-a">
+          <div class="cal-arrow-left"> <a href="/mdot/calendar/month?date=201106" onclick="javascript:setCalendarSelectedDate(20110601, 201106); return true;" data-direction="reverse"> <img src="../../events/webapp/src/main/webapp/images/arrow-left.png" width="16" height="16" alt="back"> </a> </div>
+        </div>
+        <div class="ui-block-b">
+          <div class="month-year">July 2011</div>
+        </div>
+        <div class="ui-block-c">
+          <div class="cal-arrow-right"> <a href="/mdot/calendar/month?date=201108" onclick="javascript:setCalendarSelectedDate(20110801, 201108);return true;"> <img src="../../events/webapp/src/main/webapp/images/arrow-right.png" width="16" height="16" alt="forward"> </a> </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-grid-evt-month"> 
+      <!--Days of Week-->
+      <div class="ui-block-1">
+        <div class="daysofweek"> Sun </div>
+      </div>
+      <div class="ui-block-2">
+        <div class="daysofweek"> Mon </div>
+      </div>
+      <div class="ui-block-3">
+        <div class="daysofweek"> Tue </div>
+      </div>
+      <div class="ui-block-4">
+        <div class="daysofweek"> Wed </div>
+      </div>
+      <div class="ui-block-5">
+        <div class="daysofweek"> Thu </div>
+      </div>
+      <div class="ui-block-6">
+        <div class="daysofweek"> Fri </div>
+      </div>
+      <div class="ui-block-7">
+        <div class="daysofweek"> Sat </div>
+      </div>
+    </div>
+    <div class="ui-grid-evt-month">
+      <div class="ui-block-1">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110626 event-false201107">26</div>
+        </div>
+      </div>
+      <div class="ui-block-2">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110627 event-false201107">27</div>
+        </div>
+      </div>
+      <div class="ui-block-3">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110628 event-false201107">28</div>
+        </div>
+      </div>
+      <div class="ui-block-4">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110629 event-false201107">29</div>
+        </div>
+      </div>
+      <div class="ui-block-5">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110630 event-false201107">30</div>
+        </div>
+      </div>
+      <div class="ui-block-6">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110701);return false;'>
+          <div class="event-false event-false20110720110701 event-false201107 ">1</div>
+        </div>
+      </div>
+      <div class="ui-block-7">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110702);return false;'>
+          <div class="event-false event-false20110720110702 event-false201107 ">2</div>
+        </div>
+      </div>
+      <div class="ui-block-1">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110703);return false;'>
+          <div class="event-false event-false20110720110703 event-false201107 ">3</div>
+        </div>
+      </div>
+      <div class="ui-block-2">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110704);return false;'>
+          <div class="event-false event-false20110720110704 event-false201107 ">4</div>
+        </div>
+      </div>
+      <div class="ui-block-3">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110705);return false;'>
+          <div class="event-true event-true20110720110705 event-true201107 ">5</div>
+        </div>
+      </div>
+      <div class="ui-block-4">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110706);return false;'>
+          <div class="event-false event-false20110720110706 event-false201107 ">6</div>
+        </div>
+      </div>
+      <div class="ui-block-5">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110707);return false;'>
+          <div class="event-true event-true20110720110707 event-true201107 ">7</div>
+        </div>
+      </div>
+      <div class="ui-block-6">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110708);return false;'>
+          <div class="event-false event-false20110720110708 event-false201107 ">8</div>
+        </div>
+      </div>
+      <div class="ui-block-7">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110709);return false;'>
+          <div class="event-false event-false20110720110709 event-false201107 ">9</div>
+        </div>
+      </div>
+      <div class="ui-block-1">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110710);return false;'>
+          <div class="event-false event-false20110720110710 event-false201107 ">10</div>
+        </div>
+      </div>
+      <div class="ui-block-2">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110711);return false;'>
+          <div class="event-false event-false20110720110711 event-false201107 ">11</div>
+        </div>
+      </div>
+      <div class="ui-block-3">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110712);return false;'>
+          <div class="event-false event-false20110720110712 event-false201107 ">12</div>
+        </div>
+      </div>
+      <div class="ui-block-4">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110713);return false;'>
+          <div class="event-false event-false20110720110713 event-false201107 ">13</div>
+        </div>
+      </div>
+      <div class="ui-block-5">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110714);return false;'>
+          <div class="event-false event-false20110720110714 event-false201107 ">14</div>
+        </div>
+      </div>
+      <div class="ui-block-6">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110715);return false;'>
+          <div class="event-false-selected event-false20110720110715 event-false-selected201107 event-false-today">15</div>
+        </div>
+      </div>
+      <div class="ui-block-7">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110716);return false;'>
+          <div class="event-false event-false20110720110716 event-false201107 ">16</div>
+        </div>
+      </div>
+      <div class="ui-block-1">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110717);return false;'>
+          <div class="event-false event-false20110720110717 event-false201107 ">17</div>
+        </div>
+      </div>
+      <div class="ui-block-2">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110718);return false;'>
+          <div class="event-false event-false20110720110718 event-false201107 ">18</div>
+        </div>
+      </div>
+      <div class="ui-block-3">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110719);return false;'>
+          <div class="event-false event-false20110720110719 event-false201107 ">19</div>
+        </div>
+      </div>
+      <div class="ui-block-4">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110720);return false;'>
+          <div class="event-false event-false20110720110720 event-false201107 ">20</div>
+        </div>
+      </div>
+      <div class="ui-block-5">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110721);return false;'>
+          <div class="event-false event-false20110720110721 event-false201107 ">21</div>
+        </div>
+      </div>
+      <div class="ui-block-6">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110722);return false;'>
+          <div class="event-false event-false20110720110722 event-false201107 ">22</div>
+        </div>
+      </div>
+      <div class="ui-block-7">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110723);return false;'>
+          <div class="event-false event-false20110720110723 event-false201107 ">23</div>
+        </div>
+      </div>
+      <div class="ui-block-1">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110724);return false;'>
+          <div class="event-false event-false20110720110724 event-false201107 ">24</div>
+        </div>
+      </div>
+      <div class="ui-block-2">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110725);return false;'>
+          <div class="event-false event-false20110720110725 event-false201107 ">25</div>
+        </div>
+      </div>
+      <div class="ui-block-3">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110726);return false;'>
+          <div class="event-false event-false20110720110726 event-false201107 ">26</div>
+        </div>
+      </div>
+      <div class="ui-block-4">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110727);return false;'>
+          <div class="event-false event-false20110720110727 event-false201107 ">27</div>
+        </div>
+      </div>
+      <div class="ui-block-5">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110728);return false;'>
+          <div class="event-false event-false20110720110728 event-false201107 ">28</div>
+        </div>
+      </div>
+      <div class="ui-block-6">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110729);return false;'>
+          <div class="event-false event-false20110720110729 event-false201107 ">29</div>
+        </div>
+      </div>
+      <div class="ui-block-7">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110730);return false;'>
+          <div class="event-false event-false20110720110730 event-false201107 ">30</div>
+        </div>
+      </div>
+      <div class="ui-block-1">
+        <div class="datebox-true" onclick='javascript:hideCalendarDay(201107);showCalendarDay(201107, 20110731);return false;'>
+          <div class="event-false event-false20110720110731 event-false201107 ">31</div>
+        </div>
+      </div>
+     
+      <div class="ui-block-2">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110801 event-false201107">1</div>
+        </div>
+      </div>
+      <div class="ui-block-3">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110802 event-false201107">2</div>
+        </div>
+      </div>
+      <div class="ui-block-4">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110803 event-false201107">3</div>
+        </div>
+      </div>
+      <div class="ui-block-5">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110804 event-false201107">4</div>
+        </div>
+      </div>
+      <div class="ui-block-6">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110805 event-false201107">5</div>
+        </div>
+      </div>
+      <div class="ui-block-7">
+        <div class="datebox-false">
+          <div class="event-false event-false-20110806 event-false201107">6</div>
+        </div>
+      </div>
+    </div> <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="container_12">
+        
+        <div class="grid_8">
+          <h3>Events</h3>
+        </div>
+        <div class="grid_4" style=" text-align:right"><a data-role="button" data-icon="plus" data-iconpos="notext">add</a></div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110626" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110627" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110628" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110629" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110630" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110701" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110702" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110703" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110704" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110705" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li> <a href="/mdot/calendar/event?eventId=114121&date=07052011">
+          <h3 style="white-space:normal">asdf asdf </h3>
+          <p style="white-space:normal"></p>
+          <p>8:00 AM</p>
+          </a> </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110706" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="" style="display: block; margin-left:15px; margin-right:30px;">
+      <ul data-role="listview" data-theme="g">
+        <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
+          <h3 style="white-space:normal">asdf </h3>
+          <p style="white-space:normal"></p>
+          <p>8:00 AM</p>
+          </a> </li>
+        <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
+          <h3 style="white-space:normal">asdf </h3>
+          <p style="white-space:normal"></p>
+          <p>8:00 AM</p>
+          </a> </li>
+        <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
+          <h3 style="white-space:normal">asdf </h3>
+          <p style="white-space:normal"></p>
+          <p>8:00 AM</p>
+          </a> </li>
+        <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
+          <h3 style="white-space:normal">asdf </h3>
+          <p style="white-space:normal"></p>
+          <p>8:00 AM</p>
+          </a> </li>
+        <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
+          <h3 style="white-space:normal">asdf </h3>
+          <p style="white-space:normal"></p>
+          <p>8:00 AM</p>
+          </a> </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110708" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110709" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110710" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110711" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110712" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110713" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110714" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110715" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110716" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110717" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110718" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110719" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110720" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110721" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110722" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110723" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110724" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110725" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110726" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110727" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110728" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110729" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110730" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110731" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110801" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110802" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110803" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110804" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110805" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="Calendar-Day-201107 Calendar-Day-201107-20110806" style="display: none;">
+      <ul data-role="listview" data-theme="g">
+        <li>
+          <h3>There are no events on this day.</h3>
+        </li>
       </ul>
     </div>
   </div>
-  <div data-role="footer" data-id="events-footer" data-position="fixed"  role="contentinfo"  data-theme="b">
-    <div data-role="navbar" role="navigation">
-      <ul class="ui-grid-a">
-        <li class="ui-block-1"><a href="evt.html">Month View</a></li>
-        <li class="ui-block-2"><a href="listview.html">List View</a></li>
-      </ul>
-    </div>
-  </div>
+  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b"> </div>
 </div>
+<!-- /stc --> 
+
+<!-- /page -->
+
 </body>
 </html>

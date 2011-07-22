@@ -72,6 +72,8 @@
 	text-align: center;
 	padding-top: .1em;
 	padding-bottom: .1em;
+	background: #FFC;
+	border-bottom: 1px solid #CCC;
 }
 .monthgrid .ui-grid-evt-month .datebox-true {
 	border-bottom: 1px solid #D6D6D6;
@@ -81,28 +83,9 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#f6f6f6')";
 	font-weight:bold;
 	text-align: center;
-	font-size: 1.5em;
-	/* [disabled]border-top: 1px solid #FFF;
-*/
-	/* [disabled]border-right: 1px solid #FFF;
-*/
+	font-size: 1.2em;
 	text-shadow: 0px 1px 0px #e5e5ee;
 }
-/*.ui-grid-evt-month .datebox-true-current {
-	border-bottom:none;
-	border-left:none;
-	background-image: -moz-linear-gradient(top, #cc0000, #990000);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #cc0000), color-stop(1, #990000));
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#cc0000', EndColorStr='#990000')";
-	font-weight: normal;
-	text-align: center;
-	font-size: 1.5em;
-	border-top: none;
-	border-right:none;
-	
-	color: #FFF;
-}
-*/
 
 
 
@@ -140,15 +123,14 @@
 	background:#900;
 }
 .monthgrid .ui-grid-evt-month .datebox-false {
-	border-bottom: 1px solid #D6D6D6;
 	border-left: 1px solid #D6D6D6;
 	background-image: -moz-linear-gradient(top, #ffffff, #f6f6f6);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #f6f6f6));
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#f6f6f6')";
 	font-weight:bold;
 	text-align: center;
-	font-size: 1.5em;
-	border-top: 1px solid #FFF;
+	font-size: 1.2em;
+	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #FFF;
 	filter: alpha(opacity=50);
 	-moz-opacity:0.5;
@@ -176,27 +158,15 @@
 	-webkit-box-shadow: inset 0px 0px 6px #DDD;
 	box-shadow: inner 0 0 6px #DDD;
 }
-/*.selected-day.datebox-true-current .event-true {
-	padding-top: 0.27em;
-	padding-bottom: 0.35em;
-	background: url(../images/eventdot-current.png) no-repeat center 1.45em;
-	
-	-moz-box-shadow: none;
-	-webkit-box-shadow:none;
-	box-shadow: none;
-	font-weight:normal
-}*/
-
-
 
 .monthgrid .event-false {
 	padding-top: 0.27em;
 	padding-bottom: 0.35em;
 }
 .monthgrid .month-year {
-	font-size:1.4em;
+	font-size:1.2em;
 	font-weight: bold;
-	padding-top: .2em;
+	padding-top: 0.2em;
 	padding-bottom: 0em;
 }
 .monthgrid .cal-arrow-left {
@@ -225,3 +195,36 @@
 	color:#000;
 	text-decoration: none;
 }
+
+.monthgrid .tabs ul {
+	margin-right:2px;
+	margin-left:;
+	
+}
+
+
+.monthgrid .tabs ul li a {
+	margin-left:2px;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-right: 1px solid #CCC;
+	background:#666;
+	color:#ffffff;
+	text-shadow:none;
+}
+
+.monthgrid .tabs ul li a.selected {
+	border-bottom-style: none;
+	background:#FFF;
+	color:#000;
+}
+
+.monthgrid .tabs {
+	margin-top:2px;
+}
+
+.monthgrid .ui-navbar-noicons li .ui-btn .ui-btn-inner, .ui-navbar-noicons .ui-navbar-toggle .ui-btn-inner { padding-top: .4em; padding-bottom: .4em; }
