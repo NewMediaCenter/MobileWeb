@@ -2712,7 +2712,7 @@ $.widget( "mobile.page", $.mobile.widget, {
 					$.mobile.hidePageLoadingMsg();
 
 					//show error message
-					$( "<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h1>"+ $.mobile.pageLoadErrorMessage +"</h1><a href="asdf.html" data-role="button" data-icon="arrow-l" data-iconpos="notext">Back</a></div>" )
+					$( "<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h1>"+ $.mobile.pageLoadErrorMessage +"</h1></div>" )
 						.css({ "display": "block", "opacity": 0.96, "top": $window.scrollTop() + 100 })
 						.appendTo( settings.pageContainer )
 						.delay( 800 )
@@ -5537,7 +5537,7 @@ $.fn.grid = function(options){
 
 	//loading div which appears during Ajax requests
 	//will not appear if $.mobile.loadingMessage is false
-	var $loader = $.mobile.loadingMessage ?		$( "<div class='ui-loader ui-body-a ui-corner-all'>" + "<span class='ui-icon ui-icon-loading spin'></span>" + "<h1>" + $.mobile.loadingMessage + "</h1><a href="asdf.html" data-role="button" data-icon="arrow-l" data-iconpos="notext">Back</a>" + "</div>" )	: undefined;
+	var $loader = $.mobile.loadingMessage ?		$( "<div class='ui-loader ui-body-a ui-corner-all'>" + "<span class='ui-icon ui-icon-loading spin'></span>" + "<h1>" + $.mobile.loadingMessage + "</h1>" + "</div>" )	: undefined;
 
 	$.extend($.mobile, {
 		// turn on/off page loading message.
