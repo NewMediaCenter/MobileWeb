@@ -14,7 +14,11 @@
 <title>Page Title</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript"src="../../mdot-webapp/src/main/webapp/js/jquery-1.6.1.min.js"></script>
+<!--
+7/24/11 - this is curently broken
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.mobile-1.0b1.js"></script>
+-->
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/custom.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.validate.js"></script>
 <link href="../../mdot-webapp/src/main/webapp/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
@@ -31,17 +35,23 @@
 <div data-role="page" id="Calendar-Events">
   <div data-role="header">
     <h1>Events</h1>
-    <a href="/mdot/calendar/options" class="ui-btn-right" data-icon="home" data-iconpos="notext">Home</a> </div>
+    <a href="index.html" data-icon="home" class="ui-btn-right" data-iconpos="notext" data-transition="slideup">Home</a></div>
   <!-- /header -->
-  <div data-role="content" class="monthgrid">
+  <div data-role="content" class="">
     <div data-role="navbar" class="tabs">
       <ul>
-        <li ><a class="selected" href="mcl-classes.html" data-theme="" data-transition="none">Grid</a></li>
-        <li><a href="mcl-projects.html" data-theme="" data-transition="none" >List</a></li>
-        <li><a href="mcl-projects.html" data-theme="" data-transition="none" >Options</a></li>
-        <li><a href="mcl-projects.html" data-theme="" data-transition="none" >Add Event</a></li>
+        <li ><a class="selected" href="evt.html" data-theme="" data-transition="none">Grid</a></li>
+        <li><a href="evt-daylist.html" data-theme="" data-transition="none" >List</a></li>
+        <li><a href="evt-options.html" data-theme="" data-transition="none" >Options</a></li>
+        <li><a href="evt-addevent.html" data-theme="" data-transition="none" >Add Event</a></li>
       </ul>
     </div>
+    
+    
+    
+    
+    
+    <div class="monthgrid">
     <div class="cal-header" >
       <div class="ui-grid-20-60-20">
         <div class="ui-block-a">
@@ -260,7 +270,6 @@
           <div class="event-false event-false20110720110731 event-false201107 ">31</div>
         </div>
       </div>
-     
       <div class="ui-block-2">
         <div class="datebox-false">
           <div class="event-false event-false-20110801 event-false201107">1</div>
@@ -291,343 +300,45 @@
           <div class="event-false event-false-20110806 event-false201107">6</div>
         </div>
       </div>
-    </div> <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <div class="container_12">
-        
-        <div class="grid_8">
-          <h3>Events</h3>
-        </div>
-        <div class="grid_4" style=" text-align:right"><a data-role="button" data-icon="plus" data-iconpos="notext">add</a></div>
-      </div>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110626" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
     </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110627" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110628" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110629" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110630" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110701" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110702" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110703" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110704" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110705" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li> <a href="/mdot/calendar/event?eventId=114121&date=07052011">
-          <h3 style="white-space:normal">asdf asdf </h3>
-          <p style="white-space:normal"></p>
-          <p>8:00 AM</p>
-          </a> </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110706" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="" style="display: block; margin-left:15px; margin-right:30px;">
-      <ul data-role="listview" data-theme="g">
+    
+    
+    
+    
+    
+    
+
+    
+    <div class="" style="display: block; margin-left:; margin-right: ; margin-top:;">
+      <h3> Events for 7/15</h3>
+      <ul data-role="listview" data-theme="c" data-inset="true" class="event-list">
         <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
-          <h3 style="white-space:normal">asdf </h3>
-          <p style="white-space:normal"></p>
+          <h3>This Event </h3>
           <p>8:00 AM</p>
           </a> </li>
         <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
-          <h3 style="white-space:normal">asdf </h3>
-          <p style="white-space:normal"></p>
+          <h3 >That Event </h3>
           <p>8:00 AM</p>
           </a> </li>
         <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
-          <h3 style="white-space:normal">asdf </h3>
-          <p style="white-space:normal"></p>
+          <h3>This Event </h3>
           <p>8:00 AM</p>
           </a> </li>
         <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
-          <h3 style="white-space:normal">asdf </h3>
-          <p style="white-space:normal"></p>
+          <h3 >That Event </h3>
           <p>8:00 AM</p>
           </a> </li>
         <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
-          <h3 style="white-space:normal">asdf </h3>
-          <p style="white-space:normal"></p>
+          <h3>This Event </h3>
           <p>8:00 AM</p>
           </a> </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110708" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110709" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110710" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110711" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110712" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110713" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110714" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110715" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110716" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110717" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110718" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110719" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110720" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110721" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110722" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110723" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110724" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110725" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110726" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110727" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110728" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110729" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110730" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110731" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110801" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110802" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110803" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110804" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110805" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
-      </ul>
-    </div>
-    <div class="Calendar-Day-201107 Calendar-Day-201107-20110806" style="display: none;">
-      <ul data-role="listview" data-theme="g">
-        <li>
-          <h3>There are no events on this day.</h3>
-        </li>
+        <li> <a href="/mdot/calendar/event?eventId=114120&date=07072011">
+          <h3 >That Event </h3>
+          <p>8:00 AM</p>
+          </a> </li>
       </ul>
     </div>
   </div>
-  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b"> </div>
 </div>
 <!-- /stc --> 
 

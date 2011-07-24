@@ -1,4 +1,3 @@
-
 /* MCL FORUMS
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -19,17 +18,17 @@
 .ui-li-divider .ui-li-rightcont, .ui-li-static .ui-li-rightcont {
 	right: 10px;
 }
-.forum-thread {
+/*.forum-thread {
 	overflow:visible;
 	white-space:normal;
 	margin-bottom: 1em;
-}
+}*/
 .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
 	/* [disabled]padding: 0.7em 40px 0.7em 15px;
 */
 	display: block;
 }
-.forum-quote {
+/*.forum-quote {
 	padding: 1em;
 	color:#666;
 	font-style: italic;
@@ -48,4 +47,27 @@
 }
 .forum-reply textarea.ui-input-text {
 	height: 200px;
+	}
+	*/
+
+
+.forum ul li a i {
+	font-size:12px;
+	font-weight: normal;
+	white-space: normal;
+	display:block;
+	border-left: 1px dashed #999;
+	margin-left: 20px;
+	padding-left: 5px;
+	color: #545454;
+}
+.forum ul li {
+	font-size:12px;
+	white-space:normal;
+	font-weight: normal;
+}
+
+.forum .ui-li .ui-btn-text a.ui-link-inherit { text-overflow: ellipsis; overflow: hidden; white-space: normal;  }.forum ul li a b i {
+	font-weight:bold;
+	color:#990000;
 }

@@ -12,8 +12,13 @@
 <html>
 <head>
 <title>Page Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript"src="../../mdot-webapp/src/main/webapp/js/jquery-1.6.1.min.js"></script>
+<!--
+7/24/11 - this is curently broken
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.mobile-1.0b1.js"></script>
+-->
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/custom.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.validate.js"></script>
 <link href="../../mdot-webapp/src/main/webapp/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
@@ -25,16 +30,16 @@
 <body>
 <div data-role="page" id="">
   <div data-role="header" data-position="">
-    <h1>Details</h1>
-    <a href="index.html" data-icon="home" class="ui-btn-right"  data-iconpos="notext">home</a> </div>
+    <h1>Details</h1><a href="mcl-classhome-roster.html" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-direction="reverse">Back</a>
+    <a href="index.html" data-icon="home" class="ui-btn-right" data-iconpos="notext" data-transition="slideup">Home</a> </div>
   <!-- /header -->
   
-  <div data-role="content" style="padding-top:0px">
+  <div data-role="content">
     <ul data-role="listview" data-theme="c"  data-dividertheme="b"  data-inset="true">
       <li>
         <div class="container_12">
-          <div class="grid_3"><img src="../images/profilepics/20.jpg" width="70" height="70" alt="pic"></div>
-          <div class="grid_9">
+          <div class="grid_5"><img src="../images/profilepics/20.jpg" alt="pic"></div>
+          <div class="grid_7">
             <h3>Albarado, Jami </h3>
             <p>IUPUI</p>
             <p> Student</p>

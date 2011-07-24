@@ -12,8 +12,13 @@
 <html>
 <head>
 <title>Page Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript"src="../../mdot-webapp/src/main/webapp/js/jquery-1.6.1.min.js"></script>
+<!--
+7/24/11 - this is curently broken
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.mobile-1.0b1.js"></script>
+-->
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/custom.js"></script>
 <script type="text/javascript" src="../../mdot-webapp/src/main/webapp/js/jquery.validate.js"></script>
 
@@ -26,8 +31,8 @@
 <body>
 <div data-role="page" id="test">
   <div data-role="header" data-position="">
-    <h1>M592 Announcements</h1>
-    <a href="index.html" data-icon="home" class="ui-btn-right" data-iconpos="notext">home</a> </div>
+    <h1>M592 Announcements</h1><a href="mcl-ann.html" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-direction="reverse">Back</a>
+    <a href="index.html" data-icon="home" class="ui-btn-right" data-iconpos="notext" data-transition="slideup">Home</a> </div>
   <!-- /header -->
   
   <div data-role="content" class="news-story">
