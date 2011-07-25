@@ -135,10 +135,29 @@
         <dependency>
             <groupId>org.kuali.mobility</groupId>
             <artifactId>dining-web</artifactId>
-        </dependency>
+        </dependency> 
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>dining-webapp</artifactId>
+            <version>1.0.0-ALPHA-1</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>   
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>socialmedia-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>socialmedia-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>socialmedia-web</artifactId>
+        </dependency>
+        <dependency> 
+            <groupId>org.kuali.mobility</groupId>
+            <artifactId>socialmedia-webapp</artifactId>
             <version>1.0.0-ALPHA-1</version>
             <type>war</type>
             <scope>runtime</scope>

@@ -68,6 +68,7 @@
 				<module>news</module>
 				<module>people</module>
 				<module>sakai</module>
+				<module>socialmedia</module>
 				<module>mdot-webapp</module>
 			</modules>
 		</profile>
@@ -95,6 +96,7 @@
 				<module>news</module>
 				<module>people</module>
 				<module>sakai</module>
+				<module>socialmedia</module>
 				<module>mdotadmin-webapp</module>
 			</modules>
 		</profile>
@@ -514,6 +516,27 @@
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>sakai-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+			<!-- Social Media Service -->
+			<dependency>
+				<groupId>org.kuali.mobility</groupId>
+				<artifactId>socialmedia-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.kuali.mobility</groupId>
+				<artifactId>socialmedia-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.kuali.mobility</groupId>
+				<artifactId>socialmedia-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>org.kuali.mobility</groupId>
+                <artifactId>socialmedia-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
 			<!-- Spring dependencies -->

@@ -97,6 +97,14 @@ public class HomeController {
 
     	tool = new Tool();
     	tool.setBadgeCount("0");
+    	tool.setDescription("Stay up to date with the IU twitter feeds.");
+    	tool.setIconUrl("images/service-icons/srvc-athletics.png");
+    	tool.setTitle("Twitter");
+    	tool.setUrl("twitter");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("0");
     	tool.setDescription("Find contact information for IU students, faculty, and staff.");
     	tool.setIconUrl("images/service-icons/srvc-people.png");
     	tool.setTitle("People");
