@@ -174,6 +174,24 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 		}
 	}
 
+	@Override
+	public void markMessageRead(String siteId, String messageId, String userId) {
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/markread/" + messageId + "/site/" + siteId;
+			oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", "");
+		} catch (OAuthException e) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
+			String body = "";
+			try {
+				body = br.readLine();
+			} catch (IOException e1) {
+			}
+			LOG.error(e.getResponseCode() + ", " + body, e);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+	}
+	
 	public ResponseEntity<String> postMessage(Message message,String siteId, String userId) {
 		try {
 			String jsonString = "{";

@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 public interface SakaiPrivateTopicService {
 	public List<ForumTopic> findPrivateTopics(String siteId, String userId);
 	public MessageFolder findPrivateMessages(String siteId, String typeUuid, String userId);
-	Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);
+	public Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);
 	public ResponseEntity<String> postMessage(Message message,String siteId, String userId);
+	public void markMessageRead(String siteId, String messageId, String userId);
 }

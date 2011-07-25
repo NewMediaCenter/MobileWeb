@@ -18,6 +18,7 @@
 			<c:forEach items="${messageFolder.messages}" var="item" varStatus="status">
 				<li data-role="list-divider">${item.createdBy}<span class="ui-li-rightcont ui-btn-up-c ui-btn-corner-all">${item.createdDate}</span> </li>
 				<li>
+					<%--<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${messageFolder.typeUuid}/${item.id}/markread?title=${messageFolder.title}">--%>
 					<%--<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${messageFolder.typeUuid}/${item.id}">--%>
 						<h3>${item.title}</h3>
 						<p>${item.body}</p>
