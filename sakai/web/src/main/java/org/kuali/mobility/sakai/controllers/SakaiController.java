@@ -17,6 +17,7 @@ package org.kuali.mobility.sakai.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -265,7 +266,8 @@ public class SakaiController {
 	
 	@RequestMapping(value="/{siteId}/resources", method = RequestMethod.GET)
 	public String getResources(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @RequestParam(value="resId", required=false) String resId, Model uiModel) {
-		try {
+	    try {
+	        //resId = URLEncoder.encode(resId, "UTF-8");
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			if (resId == null || resId.isEmpty()) {
 				List<Resource> resources = sakaiSiteService.findSiteResources(siteId, user.getUserId());

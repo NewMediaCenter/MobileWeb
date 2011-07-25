@@ -32,6 +32,7 @@
                 </kme:listView>
             </c:forEach>
         </c:if>
+        
         <c:if test="${!empty home.projects}">
             <h2>Projects</h2>
             <kme:listView dataTheme="c">

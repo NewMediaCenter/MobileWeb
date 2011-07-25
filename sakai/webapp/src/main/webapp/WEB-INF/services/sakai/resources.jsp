@@ -14,19 +14,29 @@
 	
 <kme:page title="Resources" id="class_details" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}">
 	<kme:content>
+	<style type="text/css">
+    <!--
+	div.ui-li { border:none !important; }
+	-->
+	</style>
 		<ul data-role="listview">
 			<c:forEach items="${resources}" var="item">
-				<li>
+				
+				<li data-icon="false" style="padding-top:12px; border:0px solid #aaa; background:none;">
+				
 					<c:choose>
-						<c:when test="${item.fileType == 'FOLDER'}">
-							<a href="">
+						<c:when test="${item.fileType eq 'FOLDER'}">
+							<!-- <XXXa href=""> -->
 								<img src="${pageContext.request.contextPath}/images/service-icons/mcl-folder.png" class="ui-li-icon ui-li-thumb" alt="folder" />
 								${item.title}
-								<ul data-role="listview">
+							<!-- <XXX/a> -->
+								<!--  <XXXXul XXXXdata-role="listview"> -->
+								<!-- <ul> -->
 									<c:forEach items="${item.children}" var="childItem">
-										<li>
-											<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${childItem.id}" >
-												<c:choose>
+										<!-- <li> -->
+										<div style="padding: 12px 0 12px 0;">
+											<a style="border:none; text-decoration: none; padding: 0;" href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${childItem.id}" >
+												<!-- <c:choose>
 													<c:when test="${childItem.fileType == 'IMAGE'}">
 														<img src="${pageContext.request.contextPath}/images/service-icons/mcl-image.png" class="ui-li-icon ui-li-thumb" alt="image" />
 													</c:when>
@@ -54,16 +64,51 @@
 													<c:otherwise>
 														<img src="${pageContext.request.contextPath}/images/service-icons/mcl-file.png" class="ui-li-icon ui-li-thumb" alt="file" />
 													</c:otherwise>
-												</c:choose>
+												</c:choose> -->
+												<c:choose>
+                                                    <c:when test="${childItem.fileType == 'IMAGE'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-image.png" class="resources-sub-list-icon" alt="image" />
+                                                    </c:when>
+                                                    <c:when test="${childItem.fileType == 'VIDEO'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-movie.png" class="resources-sub-list-icon" alt="video" />
+                                                    </c:when>
+                                                    <c:when test="${childItem.fileType == 'TEXT'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-doc.png" class="resources-sub-list-icon" alt="text file" />
+                                                    </c:when>
+                                                    <c:when test="${childItem.fileType == 'PRESENTATION'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-powerpoint.png" class="resources-sub-list-icon" alt="presentation" />
+                                                    </c:when>
+                                                    <c:when test="${childItem.fileType == 'SPREADSHEET'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-spreadsheet.png" cclass="resources-sub-list-icon" alt="spreadsheet" />
+                                                    </c:when>
+                                                    <c:when test="${childItem.fileType == 'PDF'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-pdf.png" class="resources-sub-list-icon" alt="pdf file" />
+                                                    </c:when>
+                                                    <c:when test="${childItem.fileType == 'AUDIO'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-audio.png" class="resources-sub-list-icon" alt="audio" />
+                                                    </c:when>
+                                                    <c:when test="${childItem.fileType == 'LINK'}">
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-weblink.png" class="resources-sub-list-icon" alt="website" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img src="${pageContext.request.contextPath}/images/service-icons/mcl-file.png" class="resources-sub-list-icon" alt="file" />
+                                                    </c:otherwise>
+                                                </c:choose>
 												${childItem.title}
 										  	</a>
-										</li>
+										  	</div>
+										<!-- </li> -->
 									</c:forEach>
-								</ul>
-							</a>
+								<!-- </ul> -->
+							<!-- XXXXX</a> -->
+							<c:if test="${empty item.children}">
+                                <div style="padding: 3px;">(Empty)</div>
+                            </c:if>
 						</c:when>
+						
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.id}" >
+						  
+							<a style="border:none;" href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.id}" >
 								<c:choose>
 									<c:when test="${item.fileType == 'IMAGE'}">
 										<img src="${pageContext.request.contextPath}/images/service-icons/mcl-image.png" class="ui-li-icon ui-li-thumb" alt="image" />
@@ -95,9 +140,12 @@
 								</c:choose>
 								${item.title}
 						  	</a>
+						 
 						</c:otherwise>
 					</c:choose>
+				
 				</li>
+				
 			</c:forEach>
 		</ul>
 	</kme:content>
