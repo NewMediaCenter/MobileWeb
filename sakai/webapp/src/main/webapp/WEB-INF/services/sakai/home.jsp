@@ -15,37 +15,37 @@
 <kme:page title="My Classes" id="myclasses" homeButton="true" cssFilename="sakai">
     <kme:content>
         <c:if test="${!empty home.courses}">
-            <h2>Classes</h2>
+        <h2>Classes</h2>
             <c:forEach items="${home.courses}" var="termItem" varStatus="status">
                 <h3>${termItem.key}</h3>
-                <kme:definitionListView id="classlist" filter="false">
+                <kme:listView dataTheme="c">
                     <c:forEach items="${termItem.value}" var="item" varStatus="status">
-                        <kme:definitionListTerm>
-                            <a href="${pageContext.request.contextPath}/myclasses/${item.id}">${item.title}</a>
-                        </kme:definitionListTerm>
-                        <c:if test="${not empty item.description && item.description != 'null'}">
-                            <kme:definitionListDefinition>
-                                <a href="${pageContext.request.contextPath}/myclasses/${item.id}">${item.description}</a>
-                            </kme:definitionListDefinition>
-                        </c:if>
+                        <kme:listItem>
+                            <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+                                <h3>${item.title}</h3>
+                                <c:if test="${not empty item.description && item.description != 'null'}">
+                                    <p>${item.description}</p>
+                                </c:if>
+                            </a>
+                        </kme:listItem>
                     </c:forEach>
-                </kme:definitionListView>
+                </kme:listView>
             </c:forEach>
         </c:if>
         <c:if test="${!empty home.projects}">
             <h2>Projects</h2>
-            <kme:definitionListView id="classlist" filter="false">
+            <kme:listView dataTheme="c">
                 <c:forEach items="${home.projects}" var="item" varStatus="status">
-                    <kme:definitionListTerm>
-                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">${item.title}</a>
-                    </kme:definitionListTerm>
-                    <c:if test="${not empty item.description && item.description != 'null'}">
-                        <kme:definitionListDefinition>
-                            <a href="${pageContext.request.contextPath}/myclasses/${item.id}">${item.description}</a>
-                        </kme:definitionListDefinition>
-                    </c:if>
+                    <kme:listItem>
+                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+                            <h3>${item.title}</h3>
+                            <c:if test="${not empty item.description && item.description != 'null'}">
+                                <p>${item.description}</p>
+                            </c:if>
+                        </a>
+                    </kme:listItem>
                 </c:forEach>
-            </kme:definitionListView>
+            </kme:listView>
         </c:if>
     </kme:content>
 </kme:page>

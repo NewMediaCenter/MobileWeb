@@ -65,6 +65,35 @@
     </tag>
 
     <tag>
+        <name>listView</name>
+        <tag-class>org.kuali.mobility.tags.ListViewTag</tag-class>
+        <body-content>scriptless</body-content>
+        <description>This tag is for jQuery Mobility general list views, ListView</description>
+        <attribute>
+            <name>filter</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <name>dataTheme</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>dataDividerTheme</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>dataInset</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+    </tag>
+
+    <tag>
         <name>definitionListView</name>
         <tag-class>org.kuali.mobility.tags.DefinitionListViewTag</tag-class>
         <body-content>scriptless</body-content>
