@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.dao.MaintRssDao;
 import edu.iu.m.news.entity.MaintRss;
 
 @Service
+@Transactional 
 public class MaintRssServiceImpl implements MaintRssService {
 
     //private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RssServiceImpl.class);

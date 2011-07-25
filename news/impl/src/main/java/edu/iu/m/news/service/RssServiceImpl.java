@@ -64,6 +64,7 @@ import edu.iu.m.news.entity.RssCategory;
 import edu.iu.m.news.entity.RssItem;
 
 @Service
+@Transactional 
 public class RssServiceImpl implements RssService {
 	
 	@Autowired
@@ -83,13 +84,11 @@ public class RssServiceImpl implements RssService {
 	
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RssServiceImpl.class);
 
-	@Transactional
 	public Rss fetch(String url) throws Exception {
 		Rss rss = parseRssFeed(url);
 		return rss;
 	}
 	
-	@Transactional
 	public Rss getRss(MaintRss maintRss, boolean useCache, Rss cachedRss) {
 		if (maintRss == null) {
 			return null;
@@ -578,7 +577,6 @@ public class RssServiceImpl implements RssService {
         return timeout;
     }
 
-	@Transactional
 	public void deleteRss(Rss rss) {
 	  	Rss rssToDelete = this.getRssFromDatabase(rss.getRssMaintId());
 	  	if (rssToDelete != null && rssToDelete.getRssId() != null) {
@@ -586,17 +584,14 @@ public class RssServiceImpl implements RssService {
 	  	}
 	}
 	
-	@Transactional
 	public void saveRss(Rss rss) {
         rssDao.saveRss(rss);
     }
 
-	@Transactional
     public void updateRss(Rss rss) {
         saveRss(rss);
     }
     
-	@Transactional
     public Rss findRssById(Long rssId) {
     	Rss rss = null;
 		try {

@@ -11,11 +11,13 @@ import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.rice.ksb.service.KSBServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.MaintRss;
 import edu.iu.m.news.entity.Rss;
 
 @Service(value = "newsCacheService")
+@Transactional 
 public class CacheServiceImpl implements CacheService {
     
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(CacheServiceImpl.class);

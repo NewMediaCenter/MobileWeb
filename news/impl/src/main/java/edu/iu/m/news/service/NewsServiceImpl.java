@@ -38,6 +38,7 @@ import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssItem;
 
 @Service
+@Transactional 
 public class NewsServiceImpl implements NewsService {
 	
 	@Autowired
@@ -65,20 +66,17 @@ public class NewsServiceImpl implements NewsService {
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(NewsServiceImpl.class);
 	
 	@Override
-	@Transactional	
 	public List<NewsSource> getAllNewsSourcesByLocation(String campusCode){
 		List<NewsSource> sources = newsDao.getAllActiveNewsSourcesByLocationCode(campusCode);
 		return sources;
 	}
 	
 	@Override
-	@Transactional
 	public NewsSource getNewsSourceById(String sourceId) {
 		return newsDao.getNewsSourceById(sourceId);
 	}
 
 	@Override
-	@Transactional
 	public NewsStream getNewsStream(String rssShortCode, boolean sample) {
 		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", rssShortCode);
         if (maintRss != null) {
@@ -98,7 +96,6 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	@Transactional
 	public NewsArticle getNewsArticle(String sourceId, String articleId) {
 		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", sourceId);
         if (maintRss != null) {
@@ -121,7 +118,6 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	@Transactional
 	public String getDefaultNewsSourceId() {
 		return configParamService.findValueByName(NEWS_DEFAULT_SOURCE_ID);
 	}

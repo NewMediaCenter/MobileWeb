@@ -18,6 +18,7 @@ import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssItem;
 
 @Service
+@Transactional 
 public class RssCacheServiceImpl implements RssCacheService {
 	
 	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(RssCacheServiceImpl.class);

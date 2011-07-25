@@ -8,10 +8,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.MaintRss;
 
 @Service
+@Transactional 
 public class MaintRssCacheImpl implements MaintRssCache {
 
 	// String represents the maintenance Rss's short code
