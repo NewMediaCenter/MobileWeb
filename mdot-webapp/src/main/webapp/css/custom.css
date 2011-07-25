@@ -660,7 +660,7 @@ dl dd {
 
 dl dd a {
     color: #333;
-    font-weight: bold;
+    font-weight: normal;
     text-decoration: none;
     display: block;
     /*width: 90%;*/

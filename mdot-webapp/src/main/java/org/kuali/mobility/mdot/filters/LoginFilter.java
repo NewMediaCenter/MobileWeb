@@ -23,9 +23,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.kuali.mobility.shared.Constants;
-import org.kuali.mobility.user.entity.User;
-import org.kuali.mobility.user.entity.UserImpl;
 import org.kuali.mobility.util.HttpUtil;
 
 import edu.iu.uis.cas.filter.CASFilter;
@@ -36,20 +33,8 @@ public class LoginFilter extends CASFilter {
 		final HttpServletRequest hrequest = (HttpServletRequest) request;
 		if (HttpUtil.needsAuthenticated(hrequest.getServletPath())) {
 			super.doFilter(request, response, chain);
-			//login(hrequest);
 		} else {
 			chain.doFilter(request, response);
 		}
 	}
-
-	private User login(HttpServletRequest request) {		
-		User user = (User) request.getSession(true).getAttribute(Constants.KME_USER_KEY);
-		if (user == null) {
-			user = new UserImpl();
-			user.setUserId(CASFilter.getRemoteUser(request));
-			request.getSession().setAttribute(Constants.KME_USER_KEY, user);
-		}
-		return user;
-	}
-	
 }

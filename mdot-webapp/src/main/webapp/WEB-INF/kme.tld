@@ -52,6 +52,16 @@
         <tag-class>org.kuali.mobility.tags.ContentTag</tag-class>
         <body-content>scriptless</body-content>
         <description>This tag is for content</description>
+        <attribute>
+            <name>cssClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>dataTheme</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
 
     <tag>
