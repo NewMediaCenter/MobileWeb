@@ -12,16 +12,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="${messageFolder.title}" id="messages" cssFilename="sakai">
+<kme:page title="${messageFolder.title}" id="messages" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/messages">
 	<kme:content>
 		<ul data-role="listview">
 			<c:forEach items="${messageFolder.messages}" var="item" varStatus="status">
 				<li data-role="list-divider">${item.createdBy}<span class="ui-li-rightcont ui-btn-up-c ui-btn-corner-all">${item.createdDate}</span> </li>
 				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${messageFolder.typeUuid}/${item.id}">
-						<p>${item.title}</p>
+					<%--<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${messageFolder.typeUuid}/${item.id}">--%>
+						<h3>${item.title}</h3>
 						<p>${item.body}</p>
-					</a>
+					<%--</a>--%>
 				</li>
 			</c:forEach>
 		</ul>

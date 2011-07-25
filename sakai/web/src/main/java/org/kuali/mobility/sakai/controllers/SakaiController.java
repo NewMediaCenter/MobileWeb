@@ -27,11 +27,14 @@ import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Announcement;
 import org.kuali.mobility.sakai.entity.Assignment;
+import org.kuali.mobility.sakai.entity.Forum;
+import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Home;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
-import org.kuali.mobility.sakai.service.SakaiSessionService;
+import org.kuali.mobility.sakai.service.SakaiForumService;
+import org.kuali.mobility.sakai.service.SakaiPrivateTopicService;
 import org.kuali.mobility.sakai.service.SakaiSiteService;
 import org.kuali.mobility.shared.Constants;
 import org.kuali.mobility.user.entity.User;
@@ -56,13 +59,16 @@ public class SakaiController {
 	private ConfigParamService configParamService;
 
 	@Autowired
-	private SakaiSessionService sakaiSessionService;
-
-	@Autowired
 	private OAuth2LegService oncourseOAuthService;
 	
 	@Autowired
 	private SakaiSiteService sakaiSiteService;
+	
+	@Autowired
+	private SakaiForumService sakaiForumService;
+	
+	@Autowired
+	private SakaiPrivateTopicService sakaiPrivateTopicService;
 	
 	private static final MimetypesFileTypeMap mimeTypesMap;
 	private static final String urlMimeType = "url";
@@ -95,15 +101,21 @@ public class SakaiController {
 			Site site = sakaiSiteService.findSite(siteId, user.getUserId());
 			uiModel.addAttribute("site", site);
 			
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
-			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
-			String jsonSession = IOUtils.toString(is1.getBody(), "UTF-8");
-			String sessionId = sakaiSessionService.findSakaiSessionId(jsonSession);
+			List<Forum> forums = sakaiForumService.findForums(siteId, user.getUserId());
+			int forumCount = 0;
+			for (Forum forum : forums) {
+				forumCount += forum.getUnreadCount();
+			}
 			
-			uiModel.addAttribute("sessionId", sessionId);
+			List<ForumTopic> topics = sakaiPrivateTopicService.findPrivateTopics(siteId, user.getUserId());
+			int messageCount = 0;
+			for (ForumTopic topic : topics) {
+				messageCount += topic.getUnreadCount();
+			}
+
 			uiModel.addAttribute("siteId", siteId);
-			uiModel.addAttribute("forumCount", 0);
-			uiModel.addAttribute("messageCount", 0);
+			uiModel.addAttribute("forumCount", forumCount);
+			uiModel.addAttribute("messageCount", messageCount);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
@@ -299,5 +311,21 @@ public class SakaiController {
 	
 	public void setOncourseOAuthService(OAuth2LegService oncourseOAuthService) {
 		this.oncourseOAuthService = oncourseOAuthService;
+	}
+
+	public SakaiForumService getSakaiForumService() {
+		return sakaiForumService;
+	}
+
+	public void setSakaiForumService(SakaiForumService sakaiForumService) {
+		this.sakaiForumService = sakaiForumService;
+	}
+
+	public SakaiPrivateTopicService getSakaiPrivateTopicService() {
+		return sakaiPrivateTopicService;
+	}
+
+	public void setSakaiPrivateTopicService(SakaiPrivateTopicService sakaiPrivateTopicService) {
+		this.sakaiPrivateTopicService = sakaiPrivateTopicService;
 	}
 }

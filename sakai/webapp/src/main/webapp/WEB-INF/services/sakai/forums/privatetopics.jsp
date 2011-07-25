@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="Messages" id="messages" cssFilename="sakai">
+<kme:page title="Messages" id="messages" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}">
 	<kme:content>
 		<ul data-role="listview">
 			<c:forEach items="${privatetopics}" var="item" varStatus="status">
