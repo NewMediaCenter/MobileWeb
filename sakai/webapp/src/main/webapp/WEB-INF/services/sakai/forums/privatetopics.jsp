@@ -24,6 +24,6 @@
 				</li>
 			</c:forEach>
 		</ul>
-		<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/compose" data-role="button" data-icon="plus">Compose Message</a>
+		<%--<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/compose" data-role="button" data-icon="plus">Compose Message</a>--%>
 	</kme:content>
 </kme:page>

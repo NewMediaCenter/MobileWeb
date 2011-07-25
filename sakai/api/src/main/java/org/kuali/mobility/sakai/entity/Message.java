@@ -24,6 +24,7 @@ public class Message implements Serializable, Comparable<Message> {
 	private String id;
 	private String threadId;
 	private String topicId;
+	private String topicTitle;
 	private String forumId;
 	private String recipients;
 	private String title;
@@ -145,5 +146,13 @@ public class Message implements Serializable, Comparable<Message> {
 
 	public void setForumId(String forumId) {
 		this.forumId = forumId;
+	}
+
+	public String getTopicTitle() {
+		return topicTitle;
+	}
+
+	public void setTopicTitle(String topicTitle) {
+		this.topicTitle = topicTitle;
 	}	
 }

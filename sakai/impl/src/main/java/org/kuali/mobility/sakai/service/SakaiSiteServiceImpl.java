@@ -439,52 +439,39 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		return courseGrade;
 	}
 	
-	public List<Roster> findRoster(String json) {
+	public List<Roster> findRoster(String siteId, String userId) {
 		List<Roster> roster = new ArrayList<Roster>();
     	try {
+    		String url = configParamService.findValueByName("Sakai.Url.Base") + "participant.json?siteId=" + siteId;
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
+			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("participant_collection");
             for (int i = 0; i < itemArray.size(); i++) {
-            	String displayID = itemArray.getJSONObject(i).getString("displayID");
-                String displayName = itemArray.getJSONObject(i).getString("displayName");
-                String firstName = itemArray.getJSONObject(i).getString("firstName");
-                String lastName = itemArray.getJSONObject(i).getString("lastName");
-                String nickName = itemArray.getJSONObject(i).getString("nickName");
-                String department = itemArray.getJSONObject(i).getString("department");
-                String email = itemArray.getJSONObject(i).getString("email");
-                String homePage = itemArray.getJSONObject(i).getString("homePage");
-                String homePhone = itemArray.getJSONObject(i).getString("homePhone");
-                String workPhone = itemArray.getJSONObject(i).getString("workPhone");
-                String position = itemArray.getJSONObject(i).getString("position");
-                String roleTitle = itemArray.getJSONObject(i).getString("roleTitle");
-                String room = itemArray.getJSONObject(i).getString("room");
-                String school = itemArray.getJSONObject(i).getString("school");
-                String otherInformation = itemArray.getJSONObject(i).getString("otherInformation");
-                String entityReference = itemArray.getJSONObject(i).getString("entityReference");
-                String entityURL = itemArray.getJSONObject(i).getString("entityURL");
-                
-                Roster trs = new Roster();
-                trs.setDisplayID(displayID);
-                trs.setDisplayName(displayName);
-                trs.setFirstName(firstName);
-                trs.setLastName(lastName);
-                trs.setNickName(nickName);
-                trs.setDepartment(department);
-                trs.setEmail(email);
-                trs.setHomePage(homePage);
-                trs.setHomePhone(homePhone);
-                trs.setWorkPhone(workPhone);
-                trs.setPosition(position);
-                trs.setRoleTitle(roleTitle);
-                trs.setRoom(room);
-                trs.setSchool(school);
-                trs.setOtherInformation(otherInformation);
-                trs.setEntityReference(entityReference);
-                trs.setEntityURL(entityURL);
-                
+            	Roster trs = new Roster();
+            	JSONObject rosterObject = itemArray.getJSONObject(i);
+            	trs.setDisplayID(rosterObject.getString("displayID"));
+            	trs.setDisplayName(rosterObject.getString("displayName"));
+            	trs.setFirstName(rosterObject.getString("firstName"));
+            	trs.setLastName(rosterObject.getString("lastName"));
+            	trs.setNickName(rosterObject.getString("nickName"));
+            	trs.setImageUrl(rosterObject.getString("imageUrl"));
+            	trs.setDepartment(rosterObject.getString("department"));
+            	trs.setEmail(rosterObject.getString("email"));
+            	trs.setHomePage(rosterObject.getString("homePage"));
+            	trs.setHomePhone(rosterObject.getString("homePhone"));
+            	trs.setWorkPhone(rosterObject.getString("workPhone"));
+            	trs.setPosition(rosterObject.getString("position"));
+            	trs.setRoleTitle(rosterObject.getString("roleTitle"));
+            	trs.setRoom(rosterObject.getString("room"));
+            	trs.setSchool(rosterObject.getString("school"));
+            	trs.setOtherInformation(rosterObject.getString("otherInformation"));
+            	trs.setEntityReference(rosterObject.getString("entityReference"));
+            	trs.setEntityURL(rosterObject.getString("entityURL"));
                 roster.add(trs);
             }
-    	} catch (JSONException e) {
+    	} catch (Exception e) {
     		LOG.error(e.getMessage(), e);
         }
 		return roster;
@@ -500,42 +487,25 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             	if(!displayId.equalsIgnoreCase(displayID)){
             		continue;
             	}
-                String displayName = participant.getString("displayName");
-                String firstName = participant.getString("firstName");
-                String lastName = participant.getString("lastName");
-                String nickName = participant.getString("nickName");
-                String department = participant.getString("department");
-                String email = participant.getString("email");
-                String homePage = participant.getString("homePage");
-                String homePhone = participant.getString("homePhone");
-                String workPhone = participant.getString("workPhone");
-                String position = participant.getString("position");
-                String roleTitle = participant.getString("roleTitle");
-                String room = participant.getString("room");
-                String school = participant.getString("school");
-                String otherInformation = participant.getString("otherInformation");
-                String entityReference = participant.getString("entityReference");
-                String entityURL = participant.getString("entityURL");
-                
                 Roster trs = new Roster();
-                trs.setDisplayID(displayID);
-                trs.setDisplayName(displayName);
-                trs.setFirstName(firstName);
-                trs.setLastName(lastName);
-                trs.setNickName(nickName);
-                trs.setDepartment(department);
-                trs.setEmail(email);
-                trs.setHomePage(homePage);
-                trs.setHomePhone(homePhone);
-                trs.setWorkPhone(workPhone);
-                trs.setPosition(position);
-                trs.setRoleTitle(roleTitle);
-                trs.setRoom(room);
-                trs.setSchool(school);
-                trs.setOtherInformation(otherInformation);
-                trs.setEntityReference(entityReference);
-                trs.setEntityURL(entityURL);
-                
+                trs.setDisplayID(participant.getString("displayID"));
+            	trs.setDisplayName(participant.getString("displayName"));
+            	trs.setFirstName(participant.getString("firstName"));
+            	trs.setLastName(participant.getString("lastName"));
+            	trs.setNickName(participant.getString("nickName"));
+            	trs.setImageUrl(participant.getString("imageUrl"));
+            	trs.setDepartment(participant.getString("department"));
+            	trs.setEmail(participant.getString("email"));
+            	trs.setHomePage(participant.getString("homePage"));
+            	trs.setHomePhone(participant.getString("homePhone"));
+            	trs.setWorkPhone(participant.getString("workPhone"));
+            	trs.setPosition(participant.getString("position"));
+            	trs.setRoleTitle(participant.getString("roleTitle"));
+            	trs.setRoom(participant.getString("room"));
+            	trs.setSchool(participant.getString("school"));
+            	trs.setOtherInformation(participant.getString("otherInformation"));
+            	trs.setEntityReference(participant.getString("entityReference"));
+            	trs.setEntityURL(participant.getString("entityURL"));
                 return trs;
             }
     	} catch (JSONException e) {

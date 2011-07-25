@@ -12,28 +12,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Details" id="roster_details" backButton="true" homeButton="true">
+<kme:page title="Details" id="roster_details" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/roster" cssFilename="sakai">
 	<kme:content>
-    	<ul data-role="listview" data-theme="c"  data-dividertheme="b"  data-inset="true">
+    	<ul data-role="listview" data-inset="true">
 			<li>
 				<div class="container_12">
-		        	<div class="grid_5"><img src="http://localhost:9090/direct/profile/${roster.displayID}/image/thumb?sakai.session=${sessionId}" alt="image"></div>
+		        	<div class="grid_5"><img src="${roster.imageUrl}" width="80px" alt="image"></div>
 		        	<div class="grid_7">
-		            	<h3>${roster.lastName}, ${roster.firstName}</h3>
-		            	<c:if test="${not empty item.school && item.school != 'null'}">
+		            	<c:choose>
+			            	<c:when test="${not empty roster.lastName && roster.lastName != 'null' && not empty roster.firstName && roster.firstName != 'null'}">
+				            	<h3>${roster.lastName}, ${roster.firstName}</h3>
+				            </c:when>
+				            <c:otherwise>
+				            	<h3>${roster.displayName}</h3>
+				            </c:otherwise>
+			            </c:choose>
+		            	<c:if test="${not empty roster.school && roster.school != 'null'}">
 			            	<p>${roster.school}</p>
 			            </c:if>
-			            <c:if test="${not empty item.roleTitle && item.roleTitle != 'null'}">
-			            	<p>${roster.roleTitle}</p>
+			            <c:if test="${not empty roster.department && roster.department != 'null'}">
+			            	<p>${roster.department}</p>
 			            </c:if>
+			            <c:if test="${not empty roster.position && roster.position != 'null'}">
+			            	<p>${roster.position}</p>
+			            </c:if>
+			            <c:if test="${not empty roster.room && roster.room != 'null'}">
+			            	<p>${roster.room}</p>
+			            </c:if>
+			            <%--
+			            <c:if test="${not empty roster.otherInformation && roster.otherInformation != 'null'}">
+			            	<p>${roster.otherInformation}</p>
+			            </c:if>
+			            --%>
 		          	</div>
 		        </div>
 		    </li>
-	      	<c:if test="${not empty item.email && item.email != 'null'}">
+	      	<c:if test="${not empty roster.email && roster.email != 'null'}">
 		      	<li class="link-email"><a href="mailto:${roster.email}"> ${roster.email} </a> </li>
 		    </c:if>
-		    <c:if test="${not empty item.workPhone && item.workPhone != 'null'}">
+		    <c:if test="${not empty roster.workPhone && roster.workPhone != 'null'}">
 		      	<li class="link-phone"><a href="tel:${roster.workPhone}"> ${roster.workPhone} </a> </li>
+		    </c:if>
+		    <c:if test="${not empty roster.homePage && roster.homePage != 'null'}">
+		      	<li><a href="${roster.homePage}">Home Page</a></li>
 		    </c:if>
 		</ul>
 	</kme:content>

@@ -12,12 +12,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="${topic.title}" id="forum" cssFilename="sakai">
+<kme:page title="${topic.title}" id="forum" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${topic.forumId}">
 	<kme:content>
 		<ul data-role="listview">
 			<c:forEach items="${topic.threads}" var="thread" varStatus="status">
 				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${topic.forumId}/${topic.id}/${thread.id}">
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${topic.forumId}/${topic.id}/${thread.id}?topicTitle=${topic.title}">
 						${thread.title}
 						<span class="ui-li-count">${thread.unreadCount}</span>
 					</a>

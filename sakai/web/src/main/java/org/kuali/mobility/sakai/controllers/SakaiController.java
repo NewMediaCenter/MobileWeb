@@ -162,7 +162,6 @@ public class SakaiController {
 		} catch (IOException e) {
 			LOG.error(e.getMessage(), e);
 		}
-
 		return null;
 	}
 
@@ -226,23 +225,12 @@ public class SakaiController {
 	public String getRoster(HttpServletRequest request, @PathVariable("siteId") String siteId, Model uiModel) {
 		try {
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "participant.json?siteId=" + siteId;
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
-			String json = IOUtils.toString(is.getBody(), "UTF-8");
-
-			List<Roster> roster = sakaiSiteService.findRoster(json);
+			List<Roster> roster = sakaiSiteService.findRoster(siteId, user.getUserId());
 			uiModel.addAttribute("roster", roster);
-			
-//			url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
-//			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
-//			String jsonSession = IOUtils.toString(is1.getBody(), "UTF-8");
-//			String sessionId = sakaiSessionService.findSakaiSessionId(jsonSession);
-//			uiModel.addAttribute("sessionId", sessionId);
 			uiModel.addAttribute("siteId", siteId);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
-
 		return "sakai/roster";
 	}
 	
@@ -256,16 +244,10 @@ public class SakaiController {
 
 			Roster roster = sakaiSiteService.findParticipantDetails(json, displayId);
 			uiModel.addAttribute("roster", roster);
-			
-//			url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
-//			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
-//			String jsonSession = IOUtils.toString(is1.getBody(), "UTF-8");
-//			String sessionId = sakaiSessionService.findSakaiSessionId(jsonSession);
-//			uiModel.addAttribute("sessionId", sessionId);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
-
+		uiModel.addAttribute("siteId", siteId);
 		return "sakai/rosterDetails";
 	}
 	

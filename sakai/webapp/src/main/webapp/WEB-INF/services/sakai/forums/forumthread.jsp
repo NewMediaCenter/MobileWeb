@@ -12,15 +12,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="${thread.title}" id="forum" cssFilename="sakai">
+<kme:page title="${thread.title}" id="forum" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}?title=${thread.topicTitle}">
 	<kme:content>
-		<ul data-role="listview">
+		<ul data-role="listview" data-theme="c"  data-dividertheme="b">
 			<c:forEach items="${thread.messages}" var="message" varStatus="status">
 				<li data-role="list-divider">${message.createdBy}<span class="ui-li-rightcont ui-btn-up-c ui-btn-corner-all">${message.createdDate}</span> </li>
       			<li>
-      				<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}/${thread.id}/${message.id}/reply">
+      				<%--<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}/${thread.id}/${message.id}/reply">--%>
         				<p class="forum-thread">${message.body}</p>
-        			</a>
+        			<%--</a>--%>
         		</li>
 			</c:forEach>
 		</ul>

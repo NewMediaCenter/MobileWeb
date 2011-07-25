@@ -96,11 +96,12 @@ public class ForumsController {
 	}
 	
 	@RequestMapping(value = "/{forumId}/{topicId}/{threadId}", method = RequestMethod.GET)
-	public String getForumTopicThread(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("topicId") String topicId, @PathVariable("forumId") String forumId, @PathVariable("threadId") String threadId, Model uiModel) {
+	public String getForumTopicThread(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("topicId") String topicId, @RequestParam("topicTitle") String topicTitle, @PathVariable("forumId") String forumId, @PathVariable("threadId") String threadId, Model uiModel) {
 		try {
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			ForumThread thread = sakaiForumService.findThread(topicId, threadId, user.getUserId());
 			thread.setForumId(forumId);
+			thread.setTopicTitle(topicTitle);
 			uiModel.addAttribute("thread", thread);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -110,12 +111,13 @@ public class ForumsController {
 	}
 	
 	@RequestMapping(value = "/{forumId}/{topicId}/{threadId}/{messageId}/reply", method = RequestMethod.GET)
-	public String reply(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("forumId") String forumId, @PathVariable("topicId") String topicId, @PathVariable("threadId") String threadId, @PathVariable("messageId") String messageId, Model uiModel) {
+	public String reply(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("forumId") String forumId, @PathVariable("topicId") String topicId, @RequestParam("topicTitle") String topicTitle, @PathVariable("threadId") String threadId, @PathVariable("messageId") String messageId, Model uiModel) {
 		try {
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			Message message = sakaiForumService.findMessage(messageId, topicId, user.getUserId());
 			message.setTopicId(topicId);
 			message.setThreadId(threadId);
+			message.setTopicTitle(topicTitle);
 			message.setForumId(forumId);
 			message.setTitle("Re: " + message.getTitle());
 			message.setInReplyTo(messageId);
@@ -141,7 +143,7 @@ public class ForumsController {
 	    	return "sakai/forums/forumsmessagereply";
 		}
 		
-		return getForumTopicThread(request, siteId, message.getTopicId(), message.getForumId(), message.getThreadId(), uiModel);
+		return getForumTopicThread(request, siteId, message.getTopicId(), message.getTopicTitle(), message.getForumId(), message.getThreadId(), uiModel);
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

@@ -10,6 +10,7 @@ public class ForumThread implements Serializable {
 	
 	private String id;
 	private String topicId;
+	private String topicTitle;
 	private String forumId;
 	private String title;
     private String createdBy;
@@ -70,6 +71,14 @@ public class ForumThread implements Serializable {
 
 	public void setForumId(String forumId) {
 		this.forumId = forumId;
+	}
+
+	public String getTopicTitle() {
+		return topicTitle;
+	}
+
+	public void setTopicTitle(String topicTitle) {
+		this.topicTitle = topicTitle;
 	}
 
 }

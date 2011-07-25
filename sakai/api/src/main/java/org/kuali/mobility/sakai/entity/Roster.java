@@ -21,7 +21,7 @@ public class Roster implements Serializable, Comparable<Roster> {
 
 	private static final long serialVersionUID = -5535399238213510311L;
 	
-	private String displayID,displayName,firstName,lastName,nickName;
+	private String displayID,displayName,firstName,lastName,nickName, imageUrl;
 	private String department,email,homePage,homePhone,workPhone;
 	private String position,roleTitle,room,school,otherInformation;
 	private String entityReference,entityURL;
@@ -135,6 +135,12 @@ public class Roster implements Serializable, Comparable<Roster> {
         }
         return this.getDisplayID().compareTo(that.getDisplayID());
     }
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 		
 }
