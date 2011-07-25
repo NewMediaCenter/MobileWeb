@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="My Classes" id="myclasses" homeButton="true">
+<kme:page title="My Classes" id="myclasses" homeButton="true" cssFilename="sakai">
     <kme:content>
         <c:if test="${!empty home.courses}">
             <h2>Classes</h2>

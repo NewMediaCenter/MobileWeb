@@ -14,6 +14,7 @@ public class PageTag extends SimpleTagSupport {
     private boolean homeButton;
     private boolean backButton;
     private String backButtonURL;
+    private String cssFilename;
     
     public void setId(String id) {
         this.id = id;
@@ -34,8 +35,12 @@ public class PageTag extends SimpleTagSupport {
     public void setBackButtonURL(String backButtonURL) {
         this.backButtonURL = backButtonURL;
     }
+    
+    public void setCssFilename(String cssFilename) {
+		this.cssFilename = cssFilename;
+	}
 
-    public void doTag() throws JspException {
+	public void doTag() throws JspException {
         PageContext pageContext = (PageContext) getJspContext();
         String contextPath = pageContext.getServletContext().getContextPath();
         JspWriter out = pageContext.getOut();
@@ -48,6 +53,9 @@ public class PageTag extends SimpleTagSupport {
             out.println("<link href=\"" + contextPath + "/css/jquery-mobile-fluid960.css\" rel=\"stylesheet\" type=\"text/css\" />");
             out.println("<link href=\"" + contextPath + "/css/custom.css\" rel=\"stylesheet\" type=\"text/css\" />");
             out.println("<link href=\"" + contextPath + "/css/retina.css\" rel=\"stylesheet\" type=\"text/css\" media=\"only screen and (-webkit-min-device-pixel-ratio: 2)\" />");
+            if (cssFilename != null && !cssFilename.trim().equals("")) {
+            	out.println("<link href=\"" + contextPath + "/css/" + cssFilename + ".css\" rel=\"stylesheet\" type=\"text/css\" />");
+            }
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery-1.6.1.min.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/custom.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.mobile-1.0b1.js\"></script>");
