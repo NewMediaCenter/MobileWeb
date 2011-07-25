@@ -16,6 +16,8 @@
 package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Resource implements Serializable, Comparable<Resource> {
 
@@ -24,10 +26,12 @@ private static final long serialVersionUID = -2272816569200642551L;
     private String id;
     private String title;
     private String extension;
-    private String childResource;
-    private String sessionId;
-    private Boolean hasChild;
     private FileType fileType;
+    private List<Resource> children;
+    
+    public Resource() {
+    	children = new ArrayList<Resource>();
+    }
     
 	public String getTitle() {
 		return title;
@@ -52,37 +56,10 @@ private static final long serialVersionUID = -2272816569200642551L;
 	public String getExtension() {
 		return extension;
 	}
-
-	public void setChildResource(String childResource) {
-		this.childResource = childResource;
-	}
-
-	public String getChildResource() {
-		return childResource;
-	}
-
-	public void setHasChild(Boolean hasChild) {
-		this.hasChild = hasChild;
-	}
-
-	public Boolean getHasChild() {
-		return hasChild;
-	}
 	
     public int compareTo(Resource that) {
-        if (this == null || that == null || this.getId() == null || that.getId() == null) {
-            return -1;
-        }
-        return this.getId().compareTo(that.getId());
+        return this.getTitle().compareTo(that.getTitle());
     }
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-
-	public String getSessionId() {
-		return sessionId;
-	}
 
 	public FileType getFileType() {
 		return fileType;
@@ -90,6 +67,14 @@ private static final long serialVersionUID = -2272816569200642551L;
 
 	public void setFileType(FileType fileType) {
 		this.fileType = fileType;
+	}
+
+	public List<Resource> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Resource> children) {
+		this.children = children;
 	}
 
 		

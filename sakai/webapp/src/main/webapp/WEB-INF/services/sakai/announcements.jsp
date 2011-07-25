@@ -14,24 +14,14 @@
 
 <kme:page title="Announcements" id="announcements" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}">
 	<kme:content>
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
-			<c:set var="lastCreatedDate" value=""/>
+		<ul data-role="listview">
 			<c:forEach items="${announcements}" var="item" varStatus="status">
-				<c:if test="${item.createdDate != lastCreatedDate}">
-				<li data-role="list-divider">${item.createdDate}</li>
-				</c:if>
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/announcements/${item.id}" data-direction="forward">
-						<h3>${item.title}</h3>
+						<h3 style="white-space:normal">${item.title}</h3>
+						<p>${item.createdOn}</p>
+						<p>${item.createdByDisplayName}</p>
 					</a>
-					<p>${item.createdOn}</p>
-					<c:if test="${not empty item.attachments}">
-						<c:set var="firstItem"><c:out value="false"/></c:set>
-						<p>Attachments:
-						<c:forEach items="${item.attachments}" var="attach" varStatus="status"><c:if test="${firstItem == 'true'}">, </c:if><c:out value="${attach.title}"/><c:set var="firstItem"><c:out value="true"/></c:set></c:forEach>
-						</p>
-					</c:if>
-					<c:set var="lastCreatedDate" value="${item.createdDate}"/>
 				</li>
 			</c:forEach>
 		</ul>

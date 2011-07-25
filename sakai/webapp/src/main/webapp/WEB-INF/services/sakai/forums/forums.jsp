@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="Forums" id="forums">
+<kme:page title="Forums" id="forums" cssFilename="sakai">
 	<kme:content>
 		<ul data-role="listview">
 			<c:forEach items="${forums}" var="item" varStatus="status">

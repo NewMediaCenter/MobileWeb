@@ -30,15 +30,15 @@ public interface SakaiSiteService {
 	
 	public Announcement findAnnouncementDetails(String json);
 	public List<Announcement> findAllAnnouncements(String siteId, String user);
+	public byte[] findAnnouncementAttachment(String siteId, String attachmentId, String userId);
 	
 	public List<Assignment> findAllAssignments(String siteId, String userId);
 	public List<Assignment> findAssignmentDetails(String json);
 	public String findCourseGrade(String json);
 	
 	public List<Roster> findRoster(String json);
-	public List<Roster> findParticipantDetails(String json, String displayId);
+	public Roster findParticipantDetails(String json, String displayId);
 	
-	public List<Resource> findSiteResources(String siteId, String userId, String resId);
-//	public List<Resource> findChildResources(String siteId, String resId, String userId);
+	public List<Resource> findSiteResources(String siteId, String userId);
 	public byte[] getResource(String resId, String userId);
 }

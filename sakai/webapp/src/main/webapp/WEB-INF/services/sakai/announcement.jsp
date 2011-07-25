@@ -15,14 +15,15 @@
 <kme:page title="Announcement Details" id="announcement" backButton="true" homeButton="true">
 	<kme:content>
 		<h3>${announcement.title}</h3>
-		<h5>${announcement.createdByDisplayName} - ${announcement.createdOn}</h5>
+		<p>Posted: ${announcement.createdByDisplayName}</p>
+		<p>Date: ${announcement.createdOn}</p>
 		<p>${announcement.body}</p>
 		<c:if test="${not empty announcement.attachments}">
 			Attachments:
 			<ul data-role="listview" data-inset="true">
 				<c:forEach items="${announcement.attachments}" var="attachment" varStatus="status">
 					<li>
-						<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${attachment.url}" >
+						<a href="${pageContext.request.contextPath}/myclasses/${siteId}/attachment?attachmentId=${attachment.url}" >
 							${attachment.title}
 						</a>
 					</li>

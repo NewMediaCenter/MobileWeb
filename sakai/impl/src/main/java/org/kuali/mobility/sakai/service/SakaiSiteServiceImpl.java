@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -332,6 +333,25 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		return anns;
 	}
 	
+	public byte[] findAnnouncementAttachment(String siteId, String attachmentId, String userId) {
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "announcement" + attachmentId;
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "application/octet-stream");
+			return IOUtils.toByteArray(is.getBody());
+		} catch (OAuthException e) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
+			String body = "";
+			try {
+				body = br.readLine();
+			} catch (IOException e1) {
+			}
+			LOG.error(e.getResponseCode() + ", " + body, e);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		return null;
+	}
+	
 	public List<Assignment> findAllAssignments(String siteId, String userId) {
 		List<Assignment> anns = new ArrayList<Assignment>();
     	try {
@@ -470,32 +490,32 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		return roster;
 	}
 	
-	public List<Roster> findParticipantDetails(String json, String displayId) {
-		List<Roster> roster = new ArrayList<Roster>();
+	public Roster findParticipantDetails(String json, String displayId) {
     	try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("participant_collection");
             for (int i = 0; i < itemArray.size(); i++) {
-            	String displayID = itemArray.getJSONObject(i).getString("displayID");
+            	JSONObject participant = itemArray.getJSONObject(i);
+            	String displayID = participant.getString("displayID");
             	if(!displayId.equalsIgnoreCase(displayID)){
             		continue;
             	}
-                String displayName = itemArray.getJSONObject(i).getString("displayName");
-                String firstName = itemArray.getJSONObject(i).getString("firstName");
-                String lastName = itemArray.getJSONObject(i).getString("lastName");
-                String nickName = itemArray.getJSONObject(i).getString("nickName");
-                String department = itemArray.getJSONObject(i).getString("department");
-                String email = itemArray.getJSONObject(i).getString("email");
-                String homePage = itemArray.getJSONObject(i).getString("homePage");
-                String homePhone = itemArray.getJSONObject(i).getString("homePhone");
-                String workPhone = itemArray.getJSONObject(i).getString("workPhone");
-                String position = itemArray.getJSONObject(i).getString("position");
-                String roleTitle = itemArray.getJSONObject(i).getString("roleTitle");
-                String room = itemArray.getJSONObject(i).getString("room");
-                String school = itemArray.getJSONObject(i).getString("school");
-                String otherInformation = itemArray.getJSONObject(i).getString("otherInformation");
-                String entityReference = itemArray.getJSONObject(i).getString("entityReference");
-                String entityURL = itemArray.getJSONObject(i).getString("entityURL");
+                String displayName = participant.getString("displayName");
+                String firstName = participant.getString("firstName");
+                String lastName = participant.getString("lastName");
+                String nickName = participant.getString("nickName");
+                String department = participant.getString("department");
+                String email = participant.getString("email");
+                String homePage = participant.getString("homePage");
+                String homePhone = participant.getString("homePhone");
+                String workPhone = participant.getString("workPhone");
+                String position = participant.getString("position");
+                String roleTitle = participant.getString("roleTitle");
+                String room = participant.getString("room");
+                String school = participant.getString("school");
+                String otherInformation = participant.getString("otherInformation");
+                String entityReference = participant.getString("entityReference");
+                String entityURL = participant.getString("entityURL");
                 
                 Roster trs = new Roster();
                 trs.setDisplayID(displayID);
@@ -516,15 +536,15 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
                 trs.setEntityReference(entityReference);
                 trs.setEntityURL(entityURL);
                 
-                roster.add(trs);
+                return trs;
             }
     	} catch (JSONException e) {
     		LOG.error(e.getMessage(), e);
         }
-		return roster;
+		return null;
 	}
 	
-	public List<Resource> findSiteResources(String siteId, String userId, String resId) {
+	public List<Resource> findSiteResources(String siteId, String userId) {
 		List<Resource> resources = new ArrayList<Resource>();
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
@@ -533,90 +553,58 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("resources_collection");
+            
+            Map<String, Resource> resourceMap = new HashMap<String, Resource>();
 
             for (int i = 0; i < itemArray.size(); i++) {
-                String id = itemArray.getJSONObject(i).getString("resourceID");
-                String name = itemArray.getJSONObject(i).getString("resourceName");
-                
-                String originalId = new String(id);
-                String resArr[];
-                if (resId != null) {
-                	if (!id.contains(resId) || id.equals(resId)){
-                		continue;
-                	}
-	                id = id.replace(resId, "");
-	                resArr = id.split("/");
-                } else {
-                	String strArr[] = id.split("/");
-                    resArr = new String[strArr.length-3];
-                    for(int j=0; j<(strArr.length-3); j++) {
-            			resArr[j] = strArr[j+3];
-            		}
-                }
+            	JSONObject resourceObject = itemArray.getJSONObject(i);
+            	String id = resourceObject.getString("resourceID");
+            	
+            	Resource item = resourceMap.get(id);
+            	if (item == null)item = new Resource();
+            	
+            	item.setId(id);
+            	item.setTitle(resourceObject.getString("resourceName"));
 
-        		if(resourceAlreadyExists(id, resArr[0], resArr.length==1?null:resArr[1], resources)) {
-        			continue;
-        		}
-        		
-        		Resource item = new Resource();
-        		item.setHasChild(false);
-        		if(resArr.length > 1) {
-                	item.setHasChild(true);
-                	item.setChildResource(resArr[1]);
-                }
-        		item.setId(originalId);
-        		
-        		item.setTitle(name);
-                
-                if (!item.getHasChild()){
-                	char lastChar = id.charAt(id.length()-1);
-        			if(lastChar == '/'){
-        				item.setExtension(FOLDER_EXTENSION);
-        			} else {
-	                	String resExt [] = resArr[resArr.length-1].split("\\.");
-	                	if(resExt!=null && resExt.length!=0) {
-	                		item.setExtension(resExt[resExt.length-1].toLowerCase());
-	                	}
-	                	else {
-	                		item.setExtension(null);
-	                	}
-        			}
-                } else {
-                	item.setExtension(FOLDER_EXTENSION);
-                }
+                String strippedId = id.substring(1); //remove the leading slash
+            	String strArr[] = strippedId.split("/");
+            	if (strArr.length > 3) {
+            		//this is a sub-item in a folder
+            		String folderId = "/" + strArr[0] + "/" +  strArr[1] + "/" +  strArr[2] + "/";
+            		Resource folder = resourceMap.get(folderId);
+            		if (folder == null) {
+            			folder = new Resource();
+            			folder.setId(folderId);
+            			resourceMap.put(folderId, folder);
+            		}
+            		folder.getChildren().add(item);
+            	} else {
+            		resourceMap.put(item.getId(), item);
+            	}
+
+            	char lastChar = id.charAt(id.length()-1);
+    			if(lastChar == '/'){
+    				item.setExtension(FOLDER_EXTENSION);
+    			} else {
+                	String resExt [] = strArr[strArr.length-1].split("\\.");
+                	if(resExt!=null && resExt.length!=0) {
+                		item.setExtension(resExt[resExt.length-1].toLowerCase());
+                	}
+                	else {
+                		item.setExtension(null);
+                	}
+    			}
                 
                 item.setFileType(determineFileType(item.getExtension()));
-                
-                resources.add(item);
-                
             }
-
+            for (Map.Entry<String, Resource> entries : resourceMap.entrySet()) {
+            	resources.add(entries.getValue());
+            }
+            Collections.sort(resources);
         } catch (Exception e) {
         	LOG.error(e.getMessage(), e);
         }
 		return resources;
-	}
-
-	private Boolean resourceAlreadyExists(String id, String title, String childRes, List<Resource> resources) {
-		Iterator<Resource> iterator = resources.iterator();
-		Boolean titleExists = false;
-		int i = 0;
-		while (iterator.hasNext()) {
-			Resource res = iterator.next();
-			if(title.equals(res.getTitle())) {
-				titleExists = true;
-				if(childRes != null){
-					res.setHasChild(true);
-					String itemChild = res.getChildResource();
-					res.setChildResource(itemChild + "," + childRes);
-				}
-				res.setId(id);
-				resources.set(i, res);
-				
-			}
-			i++;
-		}
-		return titleExists;
 	}
 	
 	private FileType determineFileType(String fileExtension) {

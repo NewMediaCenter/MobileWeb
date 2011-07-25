@@ -15,6 +15,7 @@
  
 package org.kuali.mobility.sakai.controllers;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -30,8 +31,8 @@ import org.kuali.mobility.sakai.entity.Home;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
-import org.kuali.mobility.sakai.service.SakaiSiteService;
 import org.kuali.mobility.sakai.service.SakaiSessionService;
+import org.kuali.mobility.sakai.service.SakaiSiteService;
 import org.kuali.mobility.shared.Constants;
 import org.kuali.mobility.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class SakaiController {
 		mimeTypesMap.addMimeTypes("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx");
 		mimeTypesMap.addMimeTypes("application/vnd.ms-powerpoint ppt pps");
 		mimeTypesMap.addMimeTypes("pplication/vnd.openxmlformats-officedocument.presentationml.presentation pptx");
-		mimeTypesMap.addMimeTypes(urlMimeType + " url URL Url");
+		mimeTypesMap.addMimeTypes(urlMimeType + " url URL Url com edu net org gov info biz us");
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -140,20 +141,28 @@ public class SakaiController {
 		return "sakai/announcement";
 	}
 	
-	@RequestMapping(value="/attachment/{siteId}/Announcements/{attachId}/{attachName}", method = RequestMethod.GET)
-	public String getAnnouncementAttachment(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @PathVariable("attachId") String attachmentId, @PathVariable("attachName") String attachmentName, Model uiModel) {
+	@RequestMapping(value="/{siteId}/attachment", method = RequestMethod.GET)
+	public String getAnnouncementAttachment(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @RequestParam(value="attachmentId", required=false) String attachmentId, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		
+		byte [] fileData = sakaiSiteService.findAnnouncementAttachment(siteId, attachmentId, user.getUserId());
+		String mimeType = mimeTypesMap.getContentType(attachmentId);
+		
 		try {
-			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-			//doesn't work
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "announcement/attachment/" + siteId + "/Announcements/" + attachmentId;
-			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "application/pdf");
-			byte [] fileData = IOUtils.toByteArray(is.getBody());
-			response.setContentType("application/pdf");
-			response.setContentLength(fileData.length);
-			response.getOutputStream().write(fileData, 0, fileData.length);
-		} catch (Exception e) {
+			if (mimeType.equals(urlMimeType)) {
+				String url = new String(fileData);
+				response.sendRedirect(response.encodeRedirectURL(url));
+			} else {
+				response.setContentType(mimeType);
+				response.setContentLength(fileData.length);
+				response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(attachmentId) + "\"" );
+				response.getOutputStream().write(fileData, 0, fileData.length);
+				return null;
+			}
+		} catch (IOException e) {
 			LOG.error(e.getMessage(), e);
 		}
+
 		return null;
 	}
 
@@ -245,7 +254,7 @@ public class SakaiController {
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
 
-			List<Roster> roster = sakaiSiteService.findParticipantDetails(json, displayId);
+			Roster roster = sakaiSiteService.findParticipantDetails(json, displayId);
 			uiModel.addAttribute("roster", roster);
 			
 //			url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
@@ -265,39 +274,23 @@ public class SakaiController {
 		try {
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			if (resId == null || resId.isEmpty()) {
-				List<Resource> resources = sakaiSiteService.findSiteResources(siteId, user.getUserId(), null);
+				List<Resource> resources = sakaiSiteService.findSiteResources(siteId, user.getUserId());
 				uiModel.addAttribute("resources", resources);
 			} else {
-				//check if the last char is / that means it is a folder else its a file
-				char lastChar = resId.charAt(resId.length()-1);
+				byte [] fileData = sakaiSiteService.getResource(resId, user.getUserId());
+				String mimeType = mimeTypesMap.getContentType(resId);
 				
-				if(lastChar == '/'){
-					List<Resource> resources = sakaiSiteService.findSiteResources(siteId, user.getUserId(), resId);
-					uiModel.addAttribute("resources", resources);
-//					uiModel.addAttribute("sessionId", sessionId);
-				}
-				else {
-					byte [] fileData = sakaiSiteService.getResource(resId, user.getUserId());
-					String mimeType = mimeTypesMap.getContentType(resId);
-					
-					if (mimeType.equals(urlMimeType)) {
-						String url = new String(fileData);
-						response.sendRedirect(response.encodeRedirectURL(url));
-					} else {
-						response.setContentType(mimeType);
-						response.setContentLength(fileData.length);
-						response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(resId) + "\"" );
-						response.getOutputStream().write(fileData, 0, fileData.length);
-						return null;
-					}
+				if (mimeType.equals(urlMimeType)) {
+					String url = new String(fileData);
+					response.sendRedirect(response.encodeRedirectURL(url));
+				} else {
+					response.setContentType(mimeType);
+					response.setContentLength(fileData.length);
+					response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(resId) + "\"" );
+					response.getOutputStream().write(fileData, 0, fileData.length);
+					return null;
 				}
 			}
-			
-//			url = configParamService.findValueByName("Sakai.Url.Base") + "session.json";
-//			ResponseEntity<InputStream> is1 = oncourseOAuthService.oAuthGetRequest(user.getUserId(), url, "text/html");
-//			String jsonSession = IOUtils.toString(is1.getBody(), "UTF-8");
-//			String sessionId = sakaiSessionService.findSakaiSessionId(jsonSession);
-//			uiModel.addAttribute("sessionId", sessionId);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
