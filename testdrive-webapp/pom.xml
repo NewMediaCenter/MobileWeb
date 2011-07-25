@@ -19,7 +19,7 @@
 	<parent>
         <artifactId>mobility</artifactId>
         <groupId>org.kuali.mobility</groupId>
-        <version>1.0.0-ALPHA-1</version>
+        <version>1.0.0-BETA-1</version>
 	</parent>
 	<dependencies>
 		<!-- Service dependencies -->

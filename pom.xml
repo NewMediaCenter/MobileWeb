@@ -15,7 +15,7 @@
 	<packaging>pom</packaging>
 	<url>http://kuali.org/mobility</url>
 	<inceptionYear>2011</inceptionYear>
-	<version>1.0.0-ALPHA-1</version>
+	<version>1.0.0-BETA-1</version>
 	<scm>
 		<connection>scm:svn:https://svn.kuali.org/repos/mobility/trunk</connection>
 		<developerConnection>scm:svn:https://svn.kuali.org/repos/mobility/trunk</developerConnection>
@@ -39,6 +39,28 @@
 		<log4j.version>1.2.14</log4j.version>
 		<commons-logging.version>1.1.1</commons-logging.version>
 		<junit.version>4.8.2</junit.version>
+		
+		<tool.shared.version>1.0.0-BETA-1</tool.shared.version>
+		<tool.user.version>1.0.0-BETA-1</tool.user.version>
+		<tool.admin.version>1.0.0-BETA-1</tool.admin.version>
+		<tool.alerts.version>1.0.0-BETA-1</tool.alerts.version>
+		<tool.askiu.version>1.0.0-BETA-1</tool.askiu.version>
+		<tool.athletics.version>1.0.0-BETA-1</tool.athletics.version>
+		<tool.bus.version>1.0.0-BETA-1</tool.bus.version>
+		<tool.computerlabs.version>1.0.0-BETA-1</tool.computerlabs.version>
+		<tool.configparams.version>1.0.0-BETA-1</tool.configparams.version>
+		<tool.dining.version>1.0.0-BETA-1</tool.dining.version>
+		<tool.emergencyinfo.version>1.0.0-BETA-1</tool.emergencyinfo.version>
+		<tool.events.version>1.0.0-BETA-1</tool.events.version>
+		<tool.feedback.version>1.0.0-BETA-1</tool.feedback.version>
+		<tool.itnotices.version>1.0.0-BETA-1</tool.itnotices.version>
+		<tool.knowledgebase.version>1.0.0-BETA-1</tool.knowledgebase.version>
+		<tool.maps.version>1.0.0-BETA-1</tool.maps.version>
+		<tool.news.version>1.0.0-BETA-1</tool.news.version>
+		<tool.people.version>1.0.0-BETA-1</tool.people.version>
+		<tool.sakai.version>1.0.0-BETA-1</tool.sakai.version>
+		<tool.socialmedia.version>1.0.0-BETA-1</tool.socialmedia.version>	
+		
 		<iu.edu.es.espd.oauth-consumer.version>1.0.0</iu.edu.es.espd.oauth-consumer.version>
 		<ccl-oauth-consumer.version>1.0.0</ccl-oauth-consumer.version>
 	</properties>
@@ -144,400 +166,400 @@
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>shared-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.shared.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>shared-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.shared.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>shared-config</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.shared.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>user-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.user.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>user-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.user.version}</version>
 			</dependency>
             <!-- Admin Service -->
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>admin-api</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>admin-impl</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>admin-web</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>admin-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.admin.version}</version>
             </dependency>
 			<!-- Alerts Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>alerts-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.alerts.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>alerts-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.alerts.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>alerts-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.alerts.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>alerts-webapp</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.alerts.version}</version>
 			</dependency>
 			<!-- AskIU Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>askiu-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.askiu.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>askiu-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.askiu.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>askiu-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.askiu.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>askiu-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.askiu.version}</version>
             </dependency>
             <!-- Athletics Service -->
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>athletics-api</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.athletics.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>athletics-impl</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.athletics.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>athletics-web</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.athletics.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>athletics-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.athletics.version}</version>
             </dependency>
    			<!-- Bus Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>bus-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.bus.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>bus-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.bus.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>bus-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.bus.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>bus-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.bus.version}</version>
             </dependency>
 			<!-- Computer Labs Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>computerlabs-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.computerlabs.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>computerlabs-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.computerlabs.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>computerlabs-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.computerlabs.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>computerlabs-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.computerlabs.version}</version>
             </dependency>
 			<!-- Configuration Parameters Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>configparams-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.configparams.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>configparams-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.configparams.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>configparams-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.configparams.version}</version>
 			</dependency>
             <!-- Dining Service -->
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>dining-api</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.dining.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>dining-impl</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.dining.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>dining-web</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.dining.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>dining-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.dining.version}</version>
             </dependency>
 			<!-- Emergency Information Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>emergencyinfo-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.emergencyinfo.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>emergencyinfo-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.emergencyinfo.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>emergencyinfo-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.emergencyinfo.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>emergencyinfo-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.emergencyinfo.version}</version>
             </dependency>
 			<!-- Events Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>events-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.events.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>events-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.events.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>events-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.events.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>events-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.events.version}</version>
             </dependency>
             <!-- Feedback Service -->
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>feedback-api</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.feedback.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>feedback-impl</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.feedback.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>feedback-web</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.feedback.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>feedback-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.feedback.version}</version>
             </dependency>
 			<!-- IT Notices Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>itnotices-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.itnotices.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>itnotices-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.itnotices.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>itnotices-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.itnotices.version}</version>
 			</dependency>
 			<dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>itnotices-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.itnotices.version}</version>
             </dependency>
 			<!-- Knowledge Base Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>knowledgebase-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.knowledgebase.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>knowledgebase-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.knowledgebase.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>knowledgebase-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.knowledgebase.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>knowledgebase-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.knowledgebase.version}</version>
             </dependency>
 			<!-- Maps Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>maps-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.maps.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>maps-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.maps.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>maps-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.maps.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>maps-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.maps.version}</version>
             </dependency>
 			<!-- News Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>news-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.news.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>news-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.news.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>news-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.news.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>news-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.news.version}</version>
             </dependency>
 			<!-- People Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>people-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.people.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>people-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.people.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>people-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.people.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>people-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.people.version}</version>
             </dependency>
 			<!-- Sakai Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>sakai-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.sakai.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>sakai-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.sakai.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>sakai-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.sakai.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>sakai-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.sakai.version}</version>
             </dependency>
 			<!-- Social Media Service -->
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>socialmedia-api</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.socialmedia.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>socialmedia-impl</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.socialmedia.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.kuali.mobility</groupId>
 				<artifactId>socialmedia-web</artifactId>
-				<version>${project.version}</version>
+				<version>${tool.socialmedia.version}</version>
 			</dependency>
             <dependency>
                 <groupId>org.kuali.mobility</groupId>
                 <artifactId>socialmedia-webapp</artifactId>
-                <version>${project.version}</version>
+                <version>${tool.socialmedia.version}</version>
             </dependency>
 			<!-- Spring dependencies -->
 			<dependency>
@@ -665,11 +687,6 @@
 				<groupId>javax.resource</groupId>
 				<artifactId>connector-api</artifactId>
 				<version>1.5</version>
-			</dependency>
-			<dependency>
-				<groupId>springmodules</groupId>
-				<artifactId>springmodules</artifactId>
-				<version>0.8</version>
 			</dependency>
 			<dependency>
 				<groupId>springmodules</groupId>

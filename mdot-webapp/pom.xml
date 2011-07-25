@@ -19,7 +19,7 @@
 	<parent>
         <artifactId>mobility</artifactId>
         <groupId>org.kuali.mobility</groupId>
-        <version>1.0.0-ALPHA-1</version>
+        <version>1.0.0-BETA-1</version>
    	</parent>
 	<dependencies>
 		<!-- IU OAuth dependencies -->
@@ -120,7 +120,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>admin-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.admin.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -139,7 +139,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>dining-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.dining.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -158,7 +158,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>socialmedia-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.socialmedia.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -177,7 +177,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>feedback-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.feedback.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -196,7 +196,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>bus-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.bus.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -215,7 +215,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>emergencyinfo-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.emergencyinfo.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -234,7 +234,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>computerlabs-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.computerlabs.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -253,7 +253,7 @@
 		<dependency> 
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>itnotices-webapp</artifactId>
-	        <version>1.0.0-ALPHA-1</version>
+			<version>${tool.itnotices.version}</version>
       		<type>war</type>
       		<scope>runtime</scope>
     	</dependency>   
@@ -272,7 +272,7 @@
 		<dependency> 
 			<groupId>org.kuali.mobility</groupId>
 			<artifactId>alerts-webapp</artifactId>
-	        <version>1.0.0-ALPHA-1</version>
+			<version>${tool.alerts.version}</version>
       		<type>war</type>
       		<scope>runtime</scope>
     	</dependency>    	
@@ -291,7 +291,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>events-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.events.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -310,7 +310,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>news-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.news.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -329,7 +329,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>athletics-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.athletics.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -348,7 +348,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>askiu-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.askiu.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -367,7 +367,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>knowledgebase-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.knowledgebase.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -386,7 +386,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>people-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.people.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -405,7 +405,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>sakai-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.sakai.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -436,7 +436,7 @@
         <dependency> 
             <groupId>org.kuali.mobility</groupId>
             <artifactId>maps-webapp</artifactId>
-            <version>1.0.0-ALPHA-1</version>
+			<version>${tool.maps.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>   
@@ -503,6 +503,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1H.14.1</version>				
 				<configuration>
 					<contextPath>/mdot</contextPath>
 					<connectors>
