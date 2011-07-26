@@ -15,6 +15,7 @@ public class Home {
 		courses = new LinkedHashMap<String,List<Site>>();
 		projects = new ArrayList<Site>();
 		other = new ArrayList<Site>();
+		todaysCourses = new ArrayList<Site>();
 	}
 
 	public Map<String, List<Site>> getCourses() {
