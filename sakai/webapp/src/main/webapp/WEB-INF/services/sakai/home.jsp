@@ -60,41 +60,59 @@
         </c:if>
         
         <c:if test="${!empty home.courses}">
-        <div background-color:#E6E6E6;" id="classesPanel" name="classesPanel">
-        <h2>Classes</h2>
-            <c:forEach items="${home.courses}" var="termItem" varStatus="status">
-                <h3>${termItem.key}</h3>
-                <kme:listView dataTheme="c">
-                    <c:forEach items="${termItem.value}" var="item" varStatus="status">
-                        <kme:listItem>
-                            <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
-                                <h3>${item.title}</h3>
-                                <c:if test="${not empty item.description && item.description != 'null'}">
-                                    <p>${item.description}</p>
-                                </c:if>
-                            </a>
-                        </kme:listItem>
-                    </c:forEach>
-                </kme:listView>
-            </c:forEach>
-        </div>
+	        <div background-color:#E6E6E6;" id="classesPanel" name="classesPanel">
+	        	<h2>Classes</h2>
+	            <c:forEach items="${home.courses}" var="termItem" varStatus="status">
+	                <h3>${termItem.key}</h3>
+	                <kme:listView dataTheme="c">
+	                    <c:forEach items="${termItem.value}" var="item" varStatus="status">
+	                        <kme:listItem>
+	                            <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+	                                <h3>${item.title}</h3>
+	                                <c:if test="${not empty item.description && item.description != 'null'}">
+	                                    <p>${item.description}</p>
+	                                </c:if>
+	                            </a>
+	                        </kme:listItem>
+	                    </c:forEach>
+	                </kme:listView>
+	            </c:forEach>
+	        </div>
         </c:if>
         
         <c:if test="${!empty home.projects}">
             <div background-color:#E6E6E6;" id="projectsPanel" name="projectsPanel">
-            <h2>Projects</h2>
-            <kme:listView dataTheme="c">
-                <c:forEach items="${home.projects}" var="item" varStatus="status">
-                    <kme:listItem>
-                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
-                            <h3>${item.title}</h3>
-                            <c:if test="${not empty item.description && item.description != 'null'}">
-                                <p>${item.description}</p>
-                            </c:if>
-                        </a>
-                    </kme:listItem>
-                </c:forEach>
-            </kme:listView>
+	            <h2>Projects</h2>
+	            <kme:listView dataTheme="c">
+	                <c:forEach items="${home.projects}" var="item" varStatus="status">
+	                    <kme:listItem>
+	                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+	                            <h3>${item.title}</h3>
+	                            <c:if test="${not empty item.description && item.description != 'null'}">
+	                                <p>${item.description}</p>
+	                            </c:if>
+	                        </a>
+	                    </kme:listItem>
+	                </c:forEach>
+	            </kme:listView>
+            </div>
+        </c:if>
+        
+        <c:if test="${!empty home.other}">
+            <div background-color:#E6E6E6;" id="otherPanel" name="otherPanel">
+	            <h2>Other</h2>
+	            <kme:listView dataTheme="c">
+	                <c:forEach items="${home.other}" var="item" varStatus="status">
+	                    <kme:listItem>
+	                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+	                            <h3>${item.title}</h3>
+	                            <c:if test="${not empty item.description && item.description != 'null'}">
+	                                <p>${item.description}</p>
+	                            </c:if>
+	                        </a>
+	                    </kme:listItem>
+	                </c:forEach>
+	            </kme:listView>
             </div>
         </c:if>
     </kme:content>

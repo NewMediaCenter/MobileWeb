@@ -48,6 +48,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import edu.iu.es.espd.ccl.oauth.CalendarEventOAuthService;
 import edu.iu.es.espd.oauth.OAuth2LegService;
 import edu.iu.es.espd.oauth.OAuthException;
 
@@ -61,6 +62,9 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	
 	@Autowired
 	private OAuth2LegService oncourseOAuthService;
+	
+	@Autowired
+	private CalendarEventOAuthService calendarEventOAuthService;
 	
 	private static final Map<String, FileType> fileTypes;
 	private static final String FOLDER_EXTENSION = "fldr";
@@ -110,14 +114,62 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		fileTypes.put(FOLDER_EXTENSION, FileType.FOLDER);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Home findSakaiHome(String user) {
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "site.json";
 			ResponseEntity<InputStream> is;
 			is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
-			String json = IOUtils.toString(is.getBody(), "UTF-8");
+			String siteJson = IOUtils.toString(is.getBody(), "UTF-8");
 			
-			return parseCourses(json);
+			//calendarEventOAuthService.
+			//String siteJson = IOUtils.toString(is.getBody(), "UTF-8");
+			
+			Home home = new Home();
+			Map<String,List<Site>> courses = home.getCourses();
+			List<Site> projects = home.getProjects();
+			List<Site> other = home.getOther();
+			JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(siteJson);
+            JSONArray itemArray = jsonObj.getJSONArray("site_collection");
+            for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
+            	JSONObject object = iter.next();
+            	
+            	String type = object.getString("type");
+            	if ("course".equals(type)) {
+	                String courseDesc = object.getString("description");
+	                courseDesc = courseDesc.replace("&nbsp;"," ");          
+	                Site item = new Site();
+	                item.setId(object.getString("entityId"));
+	                item.setTitle(object.getString("title"));
+	                
+	                Object jsonProps = object.get("props");
+	                String term = "No Term";
+	                if (jsonProps instanceof JSONObject) {
+		                JSONObject props = (JSONObject) jsonProps;
+		                term = props.getString("term");
+	                }
+	                item.setTerm(term);
+	                item.setDescription(courseDesc);
+	                
+	                List<Site> courseList = courses.get(term);
+	                if (courseList == null) {
+	                	courseList = new ArrayList<Site>();
+	                	courses.put(term, courseList);
+	                }
+	                courseList.add(item);
+            	} else {
+            		Site site = new Site();
+            		site.setId(object.getString("entityId"));
+            		site.setDescription(object.getString("shortDescription"));
+            		site.setTitle(object.getString("title"));
+            		if ("project".equals(type)) {
+            			projects.add(site);
+            		} else {
+            			other.add(site);
+            		}
+            	}
+            }
+			return home;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return new Home();
@@ -183,54 +235,6 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		site.setTitle(courseTitle);
 		
 		return site;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Home parseCourses(String json) {
-		Home home = new Home();
-		Map<String,List<Site>> courses = home.getCourses();
-		List<Site> projects = home.getProjects();
-    	try {
-			JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
-            JSONArray itemArray = jsonObj.getJSONArray("site_collection");
-            for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
-            	JSONObject object = iter.next();
-            	
-            	String type = object.getString("type");
-            	if (!"project".equals(type)) {
-	                String courseDesc = object.getString("description");
-	                courseDesc = courseDesc.replace("&nbsp;"," ");          
-	                Site item = new Site();
-	                item.setId(object.getString("entityId"));
-	                item.setTitle(object.getString("title"));
-	                
-	                JSONObject props = (JSONObject) object.get("props");
-	                String term = props.getString("term");
-	                item.setTerm(term);
-	                item.setDescription(courseDesc);
-	                
-	                List<Site> courseList = courses.get(term);
-	                if (courseList == null) {
-	                	courseList = new ArrayList<Site>();
-	                	courses.put(term, courseList);
-	                }
-	                courseList.add(item);
-            	} else {
-            		Site project = new Site();
-            		project.setId(object.getString("entityId"));
-            		project.setDescription(object.getString("shortDescription"));
-            		project.setTitle(object.getString("title"));
-            		
-            		projects.add(project);
-            	}
-            }
-    	} catch (JSONException e) {
-	    	e.printStackTrace();
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        //runOnUiThread(returnError);
-	    }
-		return home;
 	}
 	
 	public List<Announcement> findAllAnnouncements(String siteId, String user) {
@@ -601,5 +605,9 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			LOG.error(e.getMessage(), e);
 		}
 		return null;
+	}
+	
+	public void setCalendarEventOAuthService(CalendarEventOAuthService calendarEventOAuthService) {
+		this.calendarEventOAuthService = calendarEventOAuthService;
 	}
 }

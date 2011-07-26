@@ -8,10 +8,13 @@ import java.util.Map;
 public class Home {
 	private Map<String,List<Site>> courses;
 	private List<Site> projects;
+	private List<Site> other;
+	private List<Site> todayCourses;
 	
 	public Home(){
 		courses = new LinkedHashMap<String,List<Site>>();
 		projects = new ArrayList<Site>();
+		other = new ArrayList<Site>();
 	}
 
 	public Map<String, List<Site>> getCourses() {
@@ -28,6 +31,22 @@ public class Home {
 
 	public void setProjects(List<Site> projects) {
 		this.projects = projects;
+	}
+
+	public List<Site> getTodayCourses() {
+		return todayCourses;
+	}
+
+	public void setTodayCourses(List<Site> todayCourses) {
+		this.todayCourses = todayCourses;
+	}
+
+	public List<Site> getOther() {
+		return other;
+	}
+
+	public void setOther(List<Site> other) {
+		this.other = other;
 	}
 
 }

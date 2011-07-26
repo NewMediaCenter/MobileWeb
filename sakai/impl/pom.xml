@@ -28,6 +28,10 @@
           <artifactId>oauth-consumer</artifactId>
         </dependency>
         <dependency>
+			<groupId>edu.iu.es.espd</groupId>
+			<artifactId>ccl-oauth-consumer</artifactId>
+		</dependency>
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.0</version>
