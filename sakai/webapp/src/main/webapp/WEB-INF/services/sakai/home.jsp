@@ -15,36 +15,52 @@
 <kme:page title="My Classes" id="myclasses" homeButton="true" cssFilename="sakai">
     <kme:content>
     
-    <script type="text/javascript">
-    $(window).load(function () {
-    	$('#classesTab').css('top','50px');
-    	$('#classesTab').css('left','25%');
-    	$('#projectsTab').css('top','50px');
-    	$('#projectsTab').css('left','55%');
-    	
-    	$('#classesPanel').show(); //css('left', '15px');
-        $('#projectsPanel').hide(); //css('left', '-9999px');
-        //$('#classesPanel').css('top', '100px');
-        //$('#projectsPanel').css('top', '100px');
-        
-        $('#classesTab').click(function() {
-        	$('#classesPanel').show(); //css('left', '15px');
-            $('#projectsPanel').hide(); //css('left', '-9999px');
-        });
-        
-        $('#projectsTab').click(function() {
-        	$('#classesPanel').hide(); //css('left', '-9999px');
-            $('#projectsPanel').show(); //css('left', '15px');
-        });
-    });
-    </script>
+    <style type="text/css">
+    <!--
+        div.ui-body-b { background: none; }
+        div.ui-body-b { background-color: #E6E6E6 !important; }
+        div#classesPanel, div#projectsPanel { margin-top: -20px; }   
+    -->
+    </style>
     
-        <a style="position:absolute; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
-        <a style="position:absolute; text-align:center; text-decoration:none;" id="projectsTab" name="projectsTab" href="#">Projects</a>
+        <c:if test="${!empty home.courses && !empty home.projects}">
+	        <script type="text/javascript">
+			    $(window).load(function () {
+			        $('#classesPanel').show();
+			        $('#projectsPanel').hide();
+			        
+			        $('#classesTab').click(function() {
+			            $('#classesTab').css('background-color', '#E6E6E6');
+			            $('#classesTab').css('color', '#2F3E46');
+			            $('#projectsTab').css('background-color', '#CCCCCC');
+			            $('#projectsTab').css('color', '#999999');
+			            $('#classesPanel').show();
+			            $('#projectsPanel').hide();
+			        });
+			        
+			        $('#projectsTab').click(function() {
+			            $('#projectsTab').css('background-color', '#E6E6E6');
+			            $('#projectsTab').css('color', '#2F3E46');
+			            $('#classesTab').css('background-color', '#CCCCCC');
+			            $('#classesTab').css('color', '#999999');
+			            $('#classesPanel').hide();
+			            $('#projectsPanel').show();
+			        });
+			    });
+		    </script>
+		    
+            <a style="position:absolute; padding:1%; color:#2F3E46; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#E6E6E6; top:50px; left:0; width:48%; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
+            <a style="position:absolute; padding:1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; left:50%; width:48%; text-align:center; text-decoration:none;" id="projectsTab" name="projectsTab" href="#">Projects</a>
+            
+            <style type="text/css">
+			    <!--
+			    div#classesPanel, div#projectsPanel { margin-top: 40px; }			    
+			    -->
+		    </style>
+        </c:if>
         
         <c:if test="${!empty home.courses}">
-        
-        <div id="classesPanel" name="classesPanel">
+        <div background-color:#E6E6E6;" id="classesPanel" name="classesPanel">
         <h2>Classes</h2>
             <c:forEach items="${home.courses}" var="termItem" varStatus="status">
                 <h3>${termItem.key}</h3>
@@ -65,8 +81,7 @@
         </c:if>
         
         <c:if test="${!empty home.projects}">
-            
-            <div id="projectsPanel" name="projectsPanel">
+            <div background-color:#E6E6E6;" id="projectsPanel" name="projectsPanel">
             <h2>Projects</h2>
             <kme:listView dataTheme="c">
                 <c:forEach items="${home.projects}" var="item" varStatus="status">
