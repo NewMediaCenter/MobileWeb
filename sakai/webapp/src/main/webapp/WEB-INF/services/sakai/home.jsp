@@ -68,13 +68,13 @@
 		    
 		    <div style="margin:10px 0 0 -15px; position:absolute; top:40px; width:100%;">
 			    <c:if test="${!empty home.courses}">
-	                <a style="float:left; padding:9px 1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
+	                <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
 	            </c:if>
 	            <c:if test="${!empty home.projects}">
-	                <a style="float:left; padding:9px 1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="projectsTab" name="projectsTab" href="#">Projects</a>
+	                <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="projectsTab" name="projectsTab" href="#">Projects</a>
 	            </c:if>
 	            <c:if test="${!empty home.other}">
-	                <a style="float:left; padding:9px 1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="otherTab" name="otherTab" href="#">Other</a>
+	                <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="otherTab" name="otherTab" href="#">Other</a>
 	            </c:if>
             </div>
             
@@ -118,7 +118,7 @@
         
         <c:if test="${!empty home.courses}">
         <div background-color:#E6E6E6;" id="classesPanel" name="classesPanel">
-        <h2>Classes</h2>
+        <c:if test="${tabCount eq 1}"><h2>Classes</h2></c:if>
             <c:forEach items="${home.courses}" var="termItem" varStatus="status">
                 <h3>${termItem.key}</h3>
                 <kme:listView dataTheme="c">
@@ -139,7 +139,7 @@
         
         <c:if test="${!empty home.projects}">
             <div background-color:#E6E6E6;" id="projectsPanel" name="projectsPanel">
-            <h2>Projects</h2>
+            <c:if test="${tabCount eq 1}"><h2>Projects</h2></c:if>
             <kme:listView dataTheme="c">
                 <c:forEach items="${home.projects}" var="item" varStatus="status">
                     <kme:listItem>
@@ -158,7 +158,7 @@
              
         <c:if test="${!empty home.other}">
             <div background-color:#E6E6E6;" id="otherPanel" name="otherPanel">
-	            <h2>Other</h2>
+	            <c:if test="${tabCount eq 1}"><h2>Other</h2></c:if>
 	            <kme:listView dataTheme="c">
 	                <c:forEach items="${home.other}" var="item" varStatus="status">
 	                    <kme:listItem>
@@ -176,7 +176,7 @@
      
         <c:if test="${!empty home.todaysCourses}">
             <div background-color:#E6E6E6;" id="todayPanel" name="todayPanel">
-	            <h2>Other</h2>
+	            <c:if test="${tabCount eq 1}"><h2>Today</h2></c:if>
 	            <kme:listView dataTheme="c">
 	                <c:forEach items="${home.todaysCourses}" var="item" varStatus="status">
 	                    <kme:listItem>
