@@ -12,9 +12,10 @@
  * or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
- 
+
 package org.kuali.mobility.athletics.controllers;
 
+import org.kuali.mobility.athletics.entity.Athletics;
 import org.kuali.mobility.athletics.service.AthleticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,20 +23,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller 
+@Controller
 @RequestMapping("/athletics")
 public class AthleticsController {
-    
-    @Autowired
-    private AthleticsService athleticsService;
-    public void setEmergencyInfoService(AthleticsService athleticsService) {
-        this.athleticsService = athleticsService;
-    }
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public String getList(Model uiModel) {
 
-    	return "athletics/list";
-    }
-    
+	@Autowired
+	private AthleticsService athleticsService;
+
+	public void setAthleticsService(AthleticsService athleticsService) {
+		this.athleticsService = athleticsService;
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String getList(Model uiModel) throws Exception {
+		Athletics athletics = athleticsService.retrieveAthletics();
+		uiModel.addAttribute("athletics", athletics);
+		return "athletics/list";
+	}
+
 }

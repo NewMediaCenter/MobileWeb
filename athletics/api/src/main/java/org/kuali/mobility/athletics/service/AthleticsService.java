@@ -15,6 +15,8 @@
 
 package org.kuali.mobility.athletics.service;
 
-public interface AthleticsService {
+import org.kuali.mobility.athletics.entity.Athletics;
 
+public interface AthleticsService {
+	public Athletics retrieveAthletics() throws Exception;
 }

@@ -76,8 +76,8 @@
                 <value>JSESSIONID</value>
             </list>
         </property>
-    </bean>
--->
+    </bean>-->
+
      <bean id="calendarEventOAuthService" class="edu.iu.es.espd.ccl.oauth.CalendarEventOAuthServiceImpl">
         <property name="calendarRestURL" value="https://test.uisapp2.iu.edu/ccl-unt/rest/" />
         <property name="providerPublicURL" value="https://test.uisapp2.iu.edu/ccl-unt/session" />
@@ -94,6 +94,14 @@
         </property>
     </bean>
          
+     <bean class="org.kuali.mobility.athletics.service.AthleticsServiceImpl">
+        <property name="socketTimeout" value="30000" />
+        <property name="connectionManagerTimeout" value="30000" />
+        <property name="connectionTimeout" value="30000" />
+        <!-- <property name="athleticsURL" value="http://localhost:8080/ath-dev/" />-->
+        <property name="athleticsURL" value="https://test.uisapp2.iu.edu/ath-unt/" />
+     </bean>
+     
     <bean class="org.kuali.mobility.knowledgebase.service.KnowledgeBaseServiceImpl">
         <qualifier value="main"/>
         <!-- inject any dependencies required by this bean -->

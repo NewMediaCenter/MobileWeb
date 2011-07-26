@@ -20,5 +20,35 @@ import java.io.Serializable;
 public class Athletics implements Serializable {
 
 	private static final long serialVersionUID = -8017395981407716607L;
-    
+
+	private MatchData matchData;
+	
+	private SportData sportData;
+
+	private NewsData newsData;
+	
+	public NewsData getNewsData() {
+		return newsData;
+	}
+
+	public void setNewsData(NewsData newsData) {
+		this.newsData = newsData;
+	}
+
+	public SportData getSportData() {
+		return sportData;
+	}
+
+	public void setSportData(SportData sportData) {
+		this.sportData = sportData;
+	}
+
+	public MatchData getMatchData() {
+		return matchData;
+	}
+
+	public void setMatchData(MatchData matchData) {
+		this.matchData = matchData;
+	}
+
 }
