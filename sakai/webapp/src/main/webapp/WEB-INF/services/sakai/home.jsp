@@ -15,27 +15,29 @@
 <kme:page title="My Classes" id="myclasses" homeButton="true" cssFilename="sakai">
     <kme:content>
     
-    <style type="text/css">
-    <!--
-        div.ui-body-b { background: none; }
-        div.ui-body-b { background-color: #E6E6E6 !important; }
-        div#classesPanel, div#projectsPanel { margin-top: -20px; }   
-    -->
-    </style>
+	    <style type="text/css">
+	        div.ui-body-b { background: none; }
+	        div.ui-body-b { background-color: #E6E6E6 !important; }
+	        div#classesPanel, div#projectsPanel, div#otherPanel { margin-top: -20px; }   
+	    </style>
     
-        <c:if test="${!empty home.courses && !empty home.projects}">
+        <c:if test="${tabCount gt 0}">
 	        <script type="text/javascript">
 			    $(window).load(function () {
-			        $('#classesPanel').show();
+			        $('#classesPanel').hide();
 			        $('#projectsPanel').hide();
+			        $('#otherPanel').hide();
 			        
 			        $('#classesTab').click(function() {
 			            $('#classesTab').css('background-color', '#E6E6E6');
 			            $('#classesTab').css('color', '#2F3E46');
 			            $('#projectsTab').css('background-color', '#CCCCCC');
 			            $('#projectsTab').css('color', '#999999');
+			            $('#otherTab').css('background-color', '#CCCCCC');
+                        $('#otherTab').css('color', '#999999');
 			            $('#classesPanel').show();
 			            $('#projectsPanel').hide();
+			            $('#otherPanel').hide();
 			        });
 			        
 			        $('#projectsTab').click(function() {
@@ -43,61 +45,117 @@
 			            $('#projectsTab').css('color', '#2F3E46');
 			            $('#classesTab').css('background-color', '#CCCCCC');
 			            $('#classesTab').css('color', '#999999');
-			            $('#classesPanel').hide();
+			            $('#otherTab').css('background-color', '#CCCCCC');
+                        $('#otherTab').css('color', '#999999');
+                        $('#classesPanel').hide();
 			            $('#projectsPanel').show();
+			            $('#otherPanel').hide();
 			        });
+			        
+			        $('#otherTab').click(function() {
+                        $('#projectsTab').css('background-color', '#CCCCCC');
+                        $('#projectsTab').css('color', '#999999');
+                        $('#classesTab').css('background-color', '#CCCCCC');
+                        $('#classesTab').css('color', '#999999');
+                        $('#otherTab').css('background-color', '#E6E6E6');
+                        $('#otherTab').css('color', '#2F3E46');
+                        $('#classesPanel').hide();
+                        $('#projectsPanel').hide();
+                        $('#otherPanel').show();
+                    });
 			    });
 		    </script>
 		    
-            <a style="position:absolute; padding:1%; color:#2F3E46; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#E6E6E6; top:50px; left:0; width:48%; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
-            <a style="position:absolute; padding:1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; left:50%; width:48%; text-align:center; text-decoration:none;" id="projectsTab" name="projectsTab" href="#">Projects</a>
+		    <div style="margin:10px 0 0 -15px; position:absolute; top:40px; width:100%;">
+			    <c:if test="${!empty home.courses}">
+	                <a style="float:left; padding:9px 1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
+	            </c:if>
+	            <c:if test="${!empty home.projects}">
+	                <a style="float:left; padding:9px 1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="projectsTab" name="projectsTab" href="#">Projects</a>
+	            </c:if>
+	            <c:if test="${!empty home.other}">
+	                <a style="float:left; padding:9px 1%; color:#999999; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="otherTab" name="otherTab" href="#">Other</a>
+	            </c:if>
+            </div>
+            
+            <c:choose>
+                <c:when test="${!empty home.courses}">
+                    <script type="text/javascript">
+                    $(window).load(function () {
+                        $('#classesTab').css('background-color', '#E6E6E6');
+                        $('#classesTab').css('color', '#2F3E46');
+                        $('#classesPanel').show();
+                    });
+                    </script>
+                </c:when>
+                <c:when test="${!empty home.projects}">
+                    <script type="text/javascript">
+                    $(window).load(function () {
+                        $('#projectsTab').css('background-color', '#E6E6E6');
+                        $('#projectsTab').css('color', '#2F3E46');
+                        $('#projectsPanel').show();
+                    });
+                    </script>
+                </c:when>
+                <c:otherwise>
+                    <script type="text/javascript">
+                    $(window).load(function () {
+                        $('#otherTab').css('background-color', '#E6E6E6');
+                        $('#otherTab').css('color', '#2F3E46');
+                        $('#otherPanel').show();
+                    });
+                    </script>
+                </c:otherwise>
+                
+            </c:choose>
             
             <style type="text/css">
 			    <!--
-			    div#classesPanel, div#projectsPanel { margin-top: 40px; }			    
+			    div#classesPanel, div#projectsPanel, div#otherPanel  { margin-top: 40px; }			    
 			    -->
 		    </style>
         </c:if>
         
         <c:if test="${!empty home.courses}">
-	        <div background-color:#E6E6E6;" id="classesPanel" name="classesPanel">
-	        	<h2>Classes</h2>
-	            <c:forEach items="${home.courses}" var="termItem" varStatus="status">
-	                <h3>${termItem.key}</h3>
-	                <kme:listView dataTheme="c">
-	                    <c:forEach items="${termItem.value}" var="item" varStatus="status">
-	                        <kme:listItem>
-	                            <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
-	                                <h3>${item.title}</h3>
-	                                <c:if test="${not empty item.description && item.description != 'null'}">
-	                                    <p>${item.description}</p>
-	                                </c:if>
-	                            </a>
-	                        </kme:listItem>
-	                    </c:forEach>
-	                </kme:listView>
-	            </c:forEach>
-	        </div>
+        <div background-color:#E6E6E6;" id="classesPanel" name="classesPanel">
+        <h2>Classes</h2>
+            <c:forEach items="${home.courses}" var="termItem" varStatus="status">
+                <h3>${termItem.key}</h3>
+                <kme:listView dataTheme="c">
+                    <c:forEach items="${termItem.value}" var="item" varStatus="status">
+                        <kme:listItem>
+                            <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+                                <h3>${item.title}</h3>
+                                <c:if test="${not empty item.description && item.description != 'null'}">
+                                    <p>${item.description}</p>
+                                </c:if>
+                            </a>
+                        </kme:listItem>
+                    </c:forEach>
+                </kme:listView>
+            </c:forEach>
+        </div>
         </c:if>
         
         <c:if test="${!empty home.projects}">
             <div background-color:#E6E6E6;" id="projectsPanel" name="projectsPanel">
-	            <h2>Projects</h2>
-	            <kme:listView dataTheme="c">
-	                <c:forEach items="${home.projects}" var="item" varStatus="status">
-	                    <kme:listItem>
-	                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
-	                            <h3>${item.title}</h3>
-	                            <c:if test="${not empty item.description && item.description != 'null'}">
-	                                <p>${item.description}</p>
-	                            </c:if>
-	                        </a>
-	                    </kme:listItem>
-	                </c:forEach>
-	            </kme:listView>
+            <h2>Projects</h2>
+            <kme:listView dataTheme="c">
+                <c:forEach items="${home.projects}" var="item" varStatus="status">
+                    <kme:listItem>
+                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+                            <h3>${item.title}</h3>
+                            <c:if test="${not empty item.description && item.description != 'null'}">
+                                <p>${item.description}</p>
+                            </c:if>
+                        </a>
+                    </kme:listItem>
+                </c:forEach>
+            </kme:listView>
             </div>
         </c:if>
         
+             
         <c:if test="${!empty home.other}">
             <div background-color:#E6E6E6;" id="otherPanel" name="otherPanel">
 	            <h2>Other</h2>
@@ -115,7 +173,7 @@
 	            </kme:listView>
             </div>
         </c:if>
-        
+     
         <c:if test="${!empty home.todaysCourses}">
             <div background-color:#E6E6E6;" id="todayPanel" name="todayPanel">
 	            <h2>Other</h2>
@@ -132,6 +190,7 @@
 	                </c:forEach>
 	            </kme:listView>
             </div>
-        </c:if>
+        </c:if>        
+        
     </kme:content>
 </kme:page>

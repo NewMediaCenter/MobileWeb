@@ -91,6 +91,7 @@ public class SakaiController {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		Home home = sakaiSiteService.findSakaiHome(user.getUserId());
 		uiModel.addAttribute("home", home);
+		uiModel.addAttribute("tabCount", (home.getCourses() != null && home.getCourses().size() > 0 ? 1 : 0) + (home.getProjects() != null && home.getProjects().size() > 0 ? 1 : 0) + (home.getOther() != null && home.getOther().size() > 0 ? 1 : 0));
 		return "sakai/home";
 	}
 	
