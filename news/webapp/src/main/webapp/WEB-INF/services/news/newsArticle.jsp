@@ -8,30 +8,12 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>News</title>
-<jsp:include page="../resources.jsp" />
-</head>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<body>
-<div data-role="page" id="">
-	<div data-role="header" data-position="">
-		<c:if test="${referrer=='home'}">
-			<a href="${pageContext.request.contextPath}/news"  data-icon="arrow-l" data-direction="reverse">back</a>
-		</c:if>
-		<c:if test="${referrer=='stream'}">
-			<a href="${pageContext.request.contextPath}/news/${sourceId}"  data-icon="arrow-l" data-direction="reverse">back</a>
-		</c:if>
-		<h1>${sourceTitle}</h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content" class="news-story">
+<kme:page title="${sourceTitle}" id="news" homeButton="true" backButton="true" cssFilename="news">
+    <kme:content cssClass="news-story">
 		<h3>${newsArticle.title}</h3>
 		<p>
 			<%-- <c:if test="${!empty topArticle.thumbnailImageUrl}">
@@ -42,14 +24,5 @@
 		   	</c:if>--%>
 			${newsArticle.description}
 		</p>
-	</div>
-	<!-- /content -->
-
-	<!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+	</kme:content>
+</kme:page>

@@ -30,7 +30,6 @@ import org.kuali.mobility.news.entity.NewsStream;
 import org.kuali.mobility.news.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.LinkFeed;
 import edu.iu.m.news.entity.MaintRss;
@@ -38,7 +37,6 @@ import edu.iu.m.news.entity.Rss;
 import edu.iu.m.news.entity.RssItem;
 
 @Service
-@Transactional 
 public class NewsServiceImpl implements NewsService {
 	
 	@Autowired

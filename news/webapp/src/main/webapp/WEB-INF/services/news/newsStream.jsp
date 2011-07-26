@@ -8,25 +8,12 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 --%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>News</title>
-<jsp:include page="../resources.jsp" />
-</head>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<body>
-<div data-role="page" id="">
-	<div data-role="header" data-position="">
-		<a href="${pageContext.request.contextPath}/news"  data-icon="arrow-l" data-direction="reverse">back</a>
-		<h1>${newsStream.title}</h1>
-	</div>
-	<!-- /header -->
-
-	<div data-role="content">
+<kme:page title="${newsStream.title}" id="news" homeButton="true" backButton="true" cssFilename="news">
+    <kme:content>
 		<ul data-role="listview" data-theme="c" class="news-index">
 			<c:forEach items="${newsStream.articles}" var="day" varStatus="status">
 				<c:forEach items="${day.articles}" var="article" varStatus="status">
@@ -38,14 +25,5 @@
 				</c:forEach>
 			</c:forEach>
 		</ul>
-	</div>
-	<!-- /content -->
-
-	<!-- /header --> 
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+	</kme:content>
+</kme:page>
