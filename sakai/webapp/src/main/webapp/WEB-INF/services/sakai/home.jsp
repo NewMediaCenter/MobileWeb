@@ -115,5 +115,23 @@
 	            </kme:listView>
             </div>
         </c:if>
+        
+        <c:if test="${!empty home.todaysCourses}">
+            <div background-color:#E6E6E6;" id="todayPanel" name="todayPanel">
+	            <h2>Other</h2>
+	            <kme:listView dataTheme="c">
+	                <c:forEach items="${home.todaysCourses}" var="item" varStatus="status">
+	                    <kme:listItem>
+	                        <a href="${pageContext.request.contextPath}/myclasses/${item.id}">
+	                            <h3>${item.title}</h3>
+	                            <c:if test="${not empty item.description && item.description != 'null'}">
+	                                <p>${item.description}</p>
+	                            </c:if>
+	                        </a>
+	                    </kme:listItem>
+	                </c:forEach>
+	            </kme:listView>
+            </div>
+        </c:if>
     </kme:content>
 </kme:page>

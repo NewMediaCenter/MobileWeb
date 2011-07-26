@@ -9,7 +9,7 @@ public class Home {
 	private Map<String,List<Site>> courses;
 	private List<Site> projects;
 	private List<Site> other;
-	private List<Site> todayCourses;
+	private List<Site> todaysCourses;
 	
 	public Home(){
 		courses = new LinkedHashMap<String,List<Site>>();
@@ -33,12 +33,12 @@ public class Home {
 		this.projects = projects;
 	}
 
-	public List<Site> getTodayCourses() {
-		return todayCourses;
+	public List<Site> getTodaysCourses() {
+		return todaysCourses;
 	}
 
-	public void setTodayCourses(List<Site> todayCourses) {
-		this.todayCourses = todayCourses;
+	public void setTodaysCourses(List<Site> todaysCourses) {
+		this.todaysCourses = todaysCourses;
 	}
 
 	public List<Site> getOther() {

@@ -21,12 +21,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
@@ -49,6 +52,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.iu.es.espd.ccl.oauth.CalendarEventOAuthService;
+import edu.iu.es.espd.ccl.oauth.CalendarViewEvent;
+import edu.iu.es.espd.ccl.oauth.ListData;
+import edu.iu.es.espd.ccl.oauth.ListViewEvents;
 import edu.iu.es.espd.oauth.OAuth2LegService;
 import edu.iu.es.espd.oauth.OAuthException;
 
@@ -122,13 +128,32 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
 			String siteJson = IOUtils.toString(is.getBody(), "UTF-8");
 			
-			//calendarEventOAuthService.
-			//String siteJson = IOUtils.toString(is.getBody(), "UTF-8");
+			Calendar todayDate = Calendar.getInstance();
+			Calendar tomorrowDate = Calendar.getInstance();
+			todayDate.set(Calendar.HOUR, 0);
+			todayDate.set(Calendar.MINUTE, 0);
+			todayDate.set(Calendar.SECOND, 0);
+			todayDate.set(Calendar.MILLISECOND, 0);
+			tomorrowDate.setTime(todayDate.getTime());
+			tomorrowDate.add(Calendar.DATE, 1);
+			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(user, todayDate.getTime(), todayDate.getTime(), todayDate.getTime(), null);
+			List<ListData> events = listViewEvents.getEvents();
+			Set<String> calendarCourseIds = new HashSet<String>();
+			if (events.size() > 0) {
+				ListData list = events.get(0);
+				List<CalendarViewEvent> viewEvents = list.getEvents();
+				for (CalendarViewEvent event : viewEvents) {
+					if (event.getOncourseSiteId() != null) {
+						calendarCourseIds.add(event.getOncourseSiteId().toLowerCase());
+					}
+				}
+			}
 			
 			Home home = new Home();
 			Map<String,List<Site>> courses = home.getCourses();
 			List<Site> projects = home.getProjects();
 			List<Site> other = home.getOther();
+			List<Site> today = home.getTodaysCourses();
 			JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(siteJson);
             JSONArray itemArray = jsonObj.getJSONArray("site_collection");
             for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
@@ -157,6 +182,10 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	                	courses.put(term, courseList);
 	                }
 	                courseList.add(item);
+	                
+	                if (calendarCourseIds.contains(item.getId().toLowerCase())) {
+	                	today.add(item);
+	                }
             	} else {
             		Site site = new Site();
             		site.setId(object.getString("entityId"));
