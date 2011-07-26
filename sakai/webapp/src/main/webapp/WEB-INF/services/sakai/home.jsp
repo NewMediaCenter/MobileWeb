@@ -21,7 +21,7 @@
 	        div#classesPanel, div#projectsPanel, div#otherPanel { margin-top: -20px; }   
 	    </style>
     
-        <c:if test="${tabCount gt 0}">
+        <c:if test="${tabCount gt 1}">
 	        <script type="text/javascript">
 			    $(window).load(function () {
 			        $('#classesPanel').hide();
