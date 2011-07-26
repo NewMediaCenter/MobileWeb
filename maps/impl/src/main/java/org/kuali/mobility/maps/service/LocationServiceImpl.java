@@ -320,6 +320,7 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
 	public MapsGroup getMapsGroupByCode(String groupCode) {
 		MapsGroup mapsGroup = this.getLocationDao().getMapsGroupByCode(groupCode);
+		mapsGroup.getMapsLocations().size();
 		return mapsGroup;
 	}
 	

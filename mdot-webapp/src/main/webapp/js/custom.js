@@ -70,65 +70,109 @@ $('[data-role=page][id=kb]').live("pagebeforeshow", function(event) {
 	});	
 });
 
-$('[data-role=page]').live('pagecreate', function (event) {
-	var activekb = 0;
-	var activekbdoc = 0;
-	var activemapslocation = 0;
-	var activecomputerlabshome = 0;
-	if (this.id == "kb" && activekb == 0) {
-		activekb = 1;
-		//alert('pagecreate');
-		
-//		$('#kbsearch').keyup(function() {
-//			lookup($('#kbsearch').val());
-//		});	
-	} else if (this.id == "kbdoc" && activekbdoc == 0) {
-		activekbdoc = 1;
-//	    $('a.native-anchor').bind('click', function(ev) {
-//	          var target = $( $(this).attr('href') ).get(0).offsetTop;
-//	          $.mobile.silentScroll(target);
-//	          return false;
-//	    });
-		//$('a[href^="\\$"]').click(function(e){
-		$('a[href*="knowledgebase"][href*="#"]').click(function(e){
-			e.preventDefault();
-			var name = $(this).attr('href').substr(24);
-//			var pos = $('a[name='+name+']').offset();
-//			$('html,body').animate({ scrollTop: pos.top });
-//			alert(name);
-			var target = $('a[name='+name+']').get(0).offsetTop;
-			//alert(target);
-			$.mobile.silentScroll(target);
-			//alert(pos.top);
-			//alert(e.isDefaultPrevented());
-			return false;
-		});
-	} else if (this.id == "mapslocation" && activemapslocation == 0) {
-		activemapslocation = 1;
-//		initialize(39.17, -86.5);
-	} else if (this.id == "computerlabshome" && activecomputerlabshome == 0) {
-//		$('#cllist').delegate('li', 'vclick', function() {
-//			var clid = $(this).jqmData('id');
-//			$('#map_canvas').jqmData('code', clid);
-//			$.mobile.changePage({
-//				url: "/mdot/maps", 
-//				type: "get",
-//				data: clid
-//			});
-//		});
-		/*
-		$('#cllist').delegate('li', 'click', function() {
-			var detailId = $(this).get(0).getAttribute('detailId');
-			buildingCode = detailId;
-			//alert(detailId);
-			$.mobile.changePage({
-				url: "/mdot/maps", 
-				type: "get"
-			});
-		});
-		*/
-	}
+$('[data-role=page][id=kbdoc]').live("pagebeforeshow", function(event) {
+	//    $('a.native-anchor').bind('click', function(ev) {
+	//    var target = $( $(this).attr('href') ).get(0).offsetTop;
+	//    $.mobile.silentScroll(target);
+	//    return false;
+	//});
+	//$('a[href^="\\$"]').click(function(e){
+	$('a[href*="knowledgebase"][href*="#"]').click(function(e){
+		e.preventDefault();
+		var name = $(this).attr('href').substr(24);
+	//	var pos = $('a[name='+name+']').offset();
+	//	$('html,body').animate({ scrollTop: pos.top });
+	//	alert(name);
+		var target = $('a[name='+name+']').get(0).offsetTop;
+		//alert(target);
+		$.mobile.silentScroll(target);
+		//alert(pos.top);
+		//alert(e.isDefaultPrevented());
+		return false;
+	});
 });
+
+$('[data-role=page]').live('pagecreate', function (event) {
+
+});
+
+/*
+ * Maps
+ */
+
+function initialize(id, lat, lng) {
+	var latlng = new google.maps.LatLng(lat, lng);
+	var myOptions = {
+		zoom: 17,
+		center: latlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+	var newmap = new google.maps.Map(document.getElementById(id), myOptions);
+    //map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    google.maps.event.trigger(newmap, 'resize');
+    return newmap;
+}
+
+function addMarker(map, array, location, icon) {
+	if (icon) {
+		var myOptions = {
+			position: location,
+			map: map,
+			icon: icon 
+		};
+		
+	} else {
+		var myOptions = {
+			position: location,
+			map: map
+		};
+	}
+	marker = new google.maps.Marker(myOptions);
+	array.push(marker);
+}
+
+// Removes the overlays from the map, but keeps them in the array
+function clearOverlays(array) {
+	if (array) {
+		for (i in array) {
+			array[i].setMap(null);
+		}
+	}
+}
+
+// Shows any overlays currently in the array
+function showOverlays(map, array) {
+	if (array) {
+		for (i in array) {
+			array[i].setMap(map);
+		}
+	}
+}
+
+// Deletes all markers in the array by removing references to them
+function deleteOverlays(array) {
+	if (array) {
+		for (i in array) {
+			array[i].setMap(null);
+		}
+		array.length = 0;
+	}
+}
+
+function showLocationByCoordinates(map, markersArray, latitude, longitude) {
+	if (map) {
+		google.maps.event.trigger(map, 'resize');
+		var location = new google.maps.LatLng(latitude, longitude);
+		map.setZoom(17);
+		map.setCenter(location);
+		addMarker(map, markersArray, location);
+		google.maps.event.trigger(map, 'resize');
+	}
+}
+
+/*
+ * Knowledge Base
+ */
 
 var kbRemoteCallCount = 0;
 var kbCurrentDisplayNumber = 0;

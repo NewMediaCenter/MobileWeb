@@ -34,6 +34,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import flexjson.JSONSerializer;
+
 @Entity(name="MapsGroup")
 @Table(name="MAPS_GROUP_T")
 public class MapsGroup implements Serializable {
@@ -78,6 +80,10 @@ public class MapsGroup implements Serializable {
     
     @OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE}, mappedBy="mapsGroupParent")
     private Set<MapsGroup> mapsGroupChildren;
+    
+    public String toJson() {
+        return new JSONSerializer().exclude("*.class").include("mapsLocations").serialize(this);
+    }
     
 	public Long getGroupId() {
 		return groupId;
