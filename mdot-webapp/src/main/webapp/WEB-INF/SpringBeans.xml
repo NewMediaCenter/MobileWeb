@@ -116,6 +116,8 @@
 		<property name="password" value="${kerberos.password}" />
     </bean>
     
+    <bean class="edu.iu.m.news.service.RssCacheServiceImpl" />
+    
     <!--  
     <bean class="edu.iu.m.news.service.NewsServiceImpl" />
     <bean class="edu.iu.m.news.service.RssServiceImpl" />
