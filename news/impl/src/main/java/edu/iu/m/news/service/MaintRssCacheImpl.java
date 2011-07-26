@@ -32,7 +32,7 @@ public class MaintRssCacheImpl implements MaintRssCache {
 		if (maintRss != null) {
 			maintRss = maintRss.copy();
 		}
-		return this.cachedMaintRssMap.get(shortCode);
+		return maintRss;
 	}
 	
 	public List<MaintRss> getAllMaintRssByType(String type) {
