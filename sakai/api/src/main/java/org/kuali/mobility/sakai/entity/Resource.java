@@ -16,14 +16,13 @@
 package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Resource implements Serializable, Comparable<Resource> {
 
 private static final long serialVersionUID = -2272816569200642551L;
 	
     private String id;
+    private String encodedId;
     private String title;
     private String extension;
     private FileType fileType;
@@ -62,5 +61,13 @@ private static final long serialVersionUID = -2272816569200642551L;
 
 	public void setFileType(FileType fileType) {
 		this.fileType = fileType;
+	}
+
+	public String getEncodedId() {
+		return encodedId;
+	}
+
+	public void setEncodedId(String encodedId) {
+		this.encodedId = encodedId;
 	}
 }

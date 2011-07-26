@@ -281,18 +281,22 @@ public class SakaiController {
     			} else {
     				//download the file
 					byte [] fileData = sakaiSiteService.getResource(resId, user.getUserId());
-					String mimeType = mimeTypesMap.getContentType(resId);
-					
-					if (mimeType.equals(urlMimeType)) {
-						String url = new String(fileData);
-						response.sendRedirect(response.encodeRedirectURL(url));
-					} else {
-						response.setContentType(mimeType);
-						response.setContentLength(fileData.length);
-						response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(resId) + "\"" );
-						response.getOutputStream().write(fileData, 0, fileData.length);
-						return null;
-					}
+					if (fileData!= null) {
+						String mimeType = mimeTypesMap.getContentType(resId);
+						
+						if (mimeType.equals(urlMimeType)) {
+							String url = new String(fileData);
+							response.sendRedirect(response.encodeRedirectURL(url));
+						} else {
+							response.setContentType(mimeType);
+							response.setContentLength(fileData.length);
+							response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(resId) + "\"" );
+							response.getOutputStream().write(fileData, 0, fileData.length);
+							return null;
+						}
+	    			} else {
+	    				return null;
+	    			}
     			}
 			}
 		} catch (Exception e) {

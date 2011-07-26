@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -583,6 +584,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             	Resource item = new Resource();
 
             	item.setId(id);
+            	item.setEncodedId(URLEncoder.encode(id, "UTF-8"));
             	item.setTitle(resourceObject.getString("resourceName"));
 
             	char lastChar = id.charAt(id.length()-1);
