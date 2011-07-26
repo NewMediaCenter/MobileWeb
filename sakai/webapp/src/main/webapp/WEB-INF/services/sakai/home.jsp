@@ -14,7 +14,37 @@
 
 <kme:page title="My Classes" id="myclasses" homeButton="true" cssFilename="sakai">
     <kme:content>
+    
+    <script type="text/javascript">
+    $(window).load(function () {
+    	$('#classesTab').css('top','50px');
+    	$('#classesTab').css('left','25%');
+    	$('#projectsTab').css('top','50px');
+    	$('#projectsTab').css('left','55%');
+    	
+    	$('#classesPanel').show(); //css('left', '15px');
+        $('#projectsPanel').hide(); //css('left', '-9999px');
+        //$('#classesPanel').css('top', '100px');
+        //$('#projectsPanel').css('top', '100px');
+        
+        $('#classesTab').click(function() {
+        	$('#classesPanel').show(); //css('left', '15px');
+            $('#projectsPanel').hide(); //css('left', '-9999px');
+        });
+        
+        $('#projectsTab').click(function() {
+        	$('#classesPanel').hide(); //css('left', '-9999px');
+            $('#projectsPanel').show(); //css('left', '15px');
+        });
+    });
+    </script>
+    
+        <a style="position:absolute; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
+        <a style="position:absolute; text-align:center; text-decoration:none;" id="projectsTab" name="projectsTab" href="#">Projects</a>
+        
         <c:if test="${!empty home.courses}">
+        
+        <div id="classesPanel" name="classesPanel">
         <h2>Classes</h2>
             <c:forEach items="${home.courses}" var="termItem" varStatus="status">
                 <h3>${termItem.key}</h3>
@@ -31,9 +61,12 @@
                     </c:forEach>
                 </kme:listView>
             </c:forEach>
+        </div>
         </c:if>
         
         <c:if test="${!empty home.projects}">
+            
+            <div id="projectsPanel" name="projectsPanel">
             <h2>Projects</h2>
             <kme:listView dataTheme="c">
                 <c:forEach items="${home.projects}" var="item" varStatus="status">
@@ -47,6 +80,7 @@
                     </kme:listItem>
                 </c:forEach>
             </kme:listView>
+            </div>
         </c:if>
     </kme:content>
 </kme:page>
