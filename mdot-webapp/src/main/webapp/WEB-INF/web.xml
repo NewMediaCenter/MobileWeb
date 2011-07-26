@@ -42,11 +42,11 @@
         </init-param>
         <init-param>
             <param-name>loginURL</param-name>
-            <param-value>https://cas.iu.edu/cas/login</param-value>
+            <param-value>https://cas-test.iu.edu/cas/login</param-value>
         </init-param>
         <init-param>
             <param-name>validationURL</param-name>
-            <param-value>https://cas.iu.edu/cas/serviceValidate</param-value>
+            <param-value>https://cas-test.iu.edu/cas/serviceValidate</param-value>
         </init-param>
     </filter>
     

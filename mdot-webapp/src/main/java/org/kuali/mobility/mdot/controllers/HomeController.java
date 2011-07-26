@@ -20,15 +20,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.kuali.mobility.mdot.entity.Backdoor;
 import org.kuali.mobility.mdot.entity.HomeScreen;
 import org.kuali.mobility.mdot.entity.Tool;
+import org.kuali.mobility.shared.Constants;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import flexjson.JSONSerializer;
 
 @Controller 
 @RequestMapping("/")
@@ -38,17 +37,22 @@ public class HomeController {
 	
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String getList(HttpServletRequest request, Model uiModel) {      
-        uiModel.addAttribute("home", buildHomeScreen());    	
+        uiModel.addAttribute("home", buildHomeScreen(request));    	
     	return "index";
     }
 
+    /*
     @RequestMapping(value = "home.json", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public String getHomeScreenJson() {
     	return new JSONSerializer().exclude("*.class").include("tools").serialize(buildHomeScreen());
     }
+    */
 
-    private HomeScreen buildHomeScreen() {
+    private HomeScreen buildHomeScreen(HttpServletRequest request) {
+    	
+    	Backdoor backdoor = (Backdoor) request.getSession().getAttribute(Constants.KME_BACKDOOR_USER_KEY);
+    	
     	HomeScreen home = new HomeScreen();
     	home.setPrincipalId("1234");
     	home.setPrincipalName("natjohns");
@@ -56,15 +60,27 @@ public class HomeController {
     	List<Tool> tools = new ArrayList<Tool>();
 
     	Tool tool = new Tool();
-    	tool.setBadgeCount("0");
-    	tool.setDescription("Class information; forums, grades, and more!");
+    	tool.setBadgeCount("");
+    	tool.setDescription("Class information; forums, resources, and more!");
     	tool.setIconUrl("images/service-icons/srvc-myclasses.png");
     	tool.setTitle("My Classes");
     	tool.setUrl("myclasses");
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	if (backdoor != null) {
+    		tool.setBadgeCount(backdoor.getUserId());
+    	} else {
+    		tool.setBadgeCount("");
+    	}
+    	tool.setDescription("Impersonate a user.");
+    	tool.setIconUrl("images/service-icons/srvc-backdoor.png");
+    	tool.setTitle("Backdoor");
+    	tool.setUrl("backdoor");
+    	tools.add(tool);
+
+    	tool = new Tool();
+    	tool.setBadgeCount("");
     	tool.setDescription("Find furniture, books, an apartment, a job, and more.");
     	tool.setIconUrl("images/service-icons/srvc-classifieds.png");
     	tool.setTitle("Classifieds");
@@ -72,7 +88,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Never miss an IU Bloomington campus bus again.");
     	tool.setIconUrl("images/service-icons/srvc-bus.png");
     	tool.setTitle("Bus Schedules");
@@ -80,7 +96,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Get from here to there. Search for buildings by name.");
     	tool.setIconUrl("images/service-icons/srvc-maps.png");
     	tool.setTitle("Maps");
@@ -88,7 +104,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Live scores, rosters, news and schedules for your IU teams.");
     	tool.setIconUrl("images/service-icons/srvc-athletics.png");
     	tool.setTitle("Athletics");
@@ -96,7 +112,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Stay up to date with the IU twitter feeds.");
     	tool.setIconUrl("images/service-icons/srvc-athletics.png");
     	tool.setTitle("Twitter");
@@ -104,7 +120,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Find contact information for IU students, faculty, and staff.");
     	tool.setIconUrl("images/service-icons/srvc-people.png");
     	tool.setTitle("People");
@@ -112,7 +128,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("See which campus STC labs have an open computer.");
     	tool.setIconUrl("images/service-icons/srvc-stc.png");
     	tool.setTitle("Computer Labs");
@@ -120,7 +136,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Alerts and announcements affecting your technology.");
     	tool.setIconUrl("images/service-icons/srvc-itnotice.png");
     	tool.setTitle("IT Notices");
@@ -128,7 +144,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("The latest buzz on IU's exciting events and achievements.");
     	tool.setIconUrl("images/service-icons/srvc-news.png");
     	tool.setTitle("News");
@@ -136,7 +152,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("See what's happening on campus today, this week, and year-round.");
     	tool.setIconUrl("images/service-icons/srvc-events.png");
     	tool.setTitle("Events");
@@ -144,7 +160,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Access and manage your personal OneStart calendar.");
     	tool.setIconUrl("images/service-icons/srvc-events.png");
     	tool.setTitle("Calendar");
@@ -152,7 +168,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Find answers to questions about IU information technology.");
     	tool.setIconUrl("images/service-icons/srvc-kb.png");
     	tool.setTitle("Knowledge Base");
@@ -160,7 +176,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Take IU's popular question & answer service with you on the go.");
     	tool.setIconUrl("images/service-icons/srvc-askiu.png");
     	tool.setTitle("Ask IU");
@@ -168,7 +184,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Get up to date menus and prices for campus dining services.");
     	tool.setIconUrl("images/service-icons/srvc-dining.png");
     	tool.setTitle("Dining Services");
@@ -176,7 +192,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Police and medical phone numbers.");
     	tool.setIconUrl("images/service-icons/srvc-emergency.png");
     	tool.setTitle("Emergency Contacts");
@@ -192,7 +208,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("Submit questions and comments about IU Mobile.");
     	tool.setIconUrl("images/service-icons/srvc-feedback.png");
     	tool.setTitle("Feedback");
@@ -200,7 +216,7 @@ public class HomeController {
     	tools.add(tool);
 
     	tool = new Tool();
-    	tool.setBadgeCount("0");
+    	tool.setBadgeCount("");
     	tool.setDescription("IUPUI Athletics information.");
     	tool.setIconUrl("images/service-icons/srvc-jag.png");
     	tool.setTitle("Jaguar Athletics");

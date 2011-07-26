@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.iu.m.news.entity.MaintRss;
 
-@Service
+//@Service
 @Transactional 
 public class MaintRssCacheImpl implements MaintRssCache {
 

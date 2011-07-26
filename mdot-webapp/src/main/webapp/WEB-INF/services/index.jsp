@@ -21,7 +21,7 @@
 	            <kme:definitionListTerm>
 	            	<a href="${tool.url}" style="background-image: url('${tool.iconUrl}');">
 			      	${tool.title}
-			      	<c:if test="${tool.badgeCount gt 0}"> 
+			      	<c:if test="${not empty tool.badgeCount}"> 
 			      		<span class="dl-dt-count ui-btn-up-c ui-btn-corner-all">${tool.badgeCount}</span>
 			      	</c:if>
 			      	</a>

@@ -18,5 +18,6 @@ package org.kuali.mobility.shared;
 public class Constants {
 
 	public static final String KME_USER_KEY = "kme.user";
+	public static final String KME_BACKDOOR_USER_KEY = "kme.backdoor.user";
 	
 }

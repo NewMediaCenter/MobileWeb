@@ -15,24 +15,15 @@
 <%@ taglib prefix="kme"  uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Ask IU" id="ask_iu" backButton="true" homeButton="true">
+<kme:page title="Backdoor" id="backdoor" backButton="true" homeButton="true" backButtonURL="home">
 	<kme:content>
-		<form:form action="${pageContext.request.contextPath}/askiu" commandName="askiu" data-ajax="false" method="post">
-			<fieldset>
+		<form:form action="${pageContext.request.contextPath}/backdoor" commandName="backdoor" data-ajax="false" method="post">
+		      <c:if test="${empty backdoor.userId}">
+			  <fieldset>
 				<div data-role="fieldcontain">
-					<label for="email">Your email address:</label>
-			        <form:input path="email" class="required email" />
-			        <form:errors path="email"/>
-				</div>
-				<div data-role="fieldcontain">
-			        <label for="subject">Subject:</label>
-			        <form:input path="subject"></form:input>
-			        <form:errors path="subject"/>
-				</div>
-				<div data-role="fieldcontain">
-			        <label for="message">Message:</label>
-			        <form:textarea path="message" cols="40" rows="8" class="required" />
-			        <form:errors path="message"/>
+					<label for="userId">Username:</label>
+			        <form:input path="userId" /><br/>
+			        <form:errors path="userId" />
 				</div>
 		      </fieldset>
 		      <div data-inline="true">
@@ -41,6 +32,12 @@
 		          <div class="ui-block-b"><input class="submit" type="submit" value="Submit" /></div>
 		        </div>
 		      </div>
+		      </c:if>
+		      <c:if test="${not empty backdoor.userId}">
+	          <a href="${pageContext.request.contextPath}/backdoor/remove" data-role="button">Remove Backdoor</a>
+	          </c:if>
 	    </form:form>
 	</kme:content>
 </kme:page>
+
+
