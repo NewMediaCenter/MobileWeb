@@ -27,11 +27,6 @@ private static final long serialVersionUID = -2272816569200642551L;
     private String title;
     private String extension;
     private FileType fileType;
-    private List<Resource> children;
-    
-    public Resource() {
-    	children = new ArrayList<Resource>();
-    }
     
 	public String getTitle() {
 		return title;
@@ -68,14 +63,4 @@ private static final long serialVersionUID = -2272816569200642551L;
 	public void setFileType(FileType fileType) {
 		this.fileType = fileType;
 	}
-
-	public List<Resource> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<Resource> children) {
-		this.children = children;
-	}
-
-		
 }

@@ -39,6 +39,6 @@ public interface SakaiSiteService {
 	public List<Roster> findRoster(String siteId, String userId);
 	public Roster findParticipantDetails(String json, String displayId);
 	
-	public List<Resource> findSiteResources(String siteId, String userId);
+	public List<Resource> findSiteResources(String siteId, String userId, String resId);
 	public byte[] getResource(String resId, String userId);
 }

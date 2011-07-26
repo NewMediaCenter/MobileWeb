@@ -514,7 +514,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		return null;
 	}
 	
-	public List<Resource> findSiteResources(String siteId, String userId) {
+	public List<Resource> findSiteResources(String siteId, String userId, String resId) {
 		List<Resource> resources = new ArrayList<Resource>();
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "resources.json?siteId=" + siteId;
@@ -523,34 +523,34 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("resources_collection");
-            
-            Map<String, Resource> resourceMap = new HashMap<String, Resource>();
 
             for (int i = 0; i < itemArray.size(); i++) {
             	JSONObject resourceObject = itemArray.getJSONObject(i);
             	String id = resourceObject.getString("resourceID");
             	
-            	Resource item = resourceMap.get(id);
-            	if (item == null)item = new Resource();
+            	if (resId != null && !resId.isEmpty() && (!id.startsWith(resId) || id.equals(resId))) {
+            		continue;
+            	}
+                
+            	String strArr[];
+            	if (resId == null) {
+            		String strippedId = id.substring(1); //remove the leading slash
+                	strArr = strippedId.split("/");
+            		if (strArr.length > 3) {
+            			continue;
+            		}
+            	} else {
+            		String strippedId = id.substring(resId.length());
+                	strArr = strippedId.split("/");
+            		if (strArr.length > 1) {
+            			continue;
+            		}
+            	}
             	
+            	Resource item = new Resource();
+
             	item.setId(id);
             	item.setTitle(resourceObject.getString("resourceName"));
-
-                String strippedId = id.substring(1); //remove the leading slash
-            	String strArr[] = strippedId.split("/");
-            	if (strArr.length > 3) {
-            		//this is a sub-item in a folder
-            		String folderId = "/" + strArr[0] + "/" +  strArr[1] + "/" +  strArr[2] + "/";
-            		Resource folder = resourceMap.get(folderId);
-            		if (folder == null) {
-            			folder = new Resource();
-            			folder.setId(folderId);
-            			resourceMap.put(folderId, folder);
-            		}
-            		folder.getChildren().add(item);
-            	} else {
-            		resourceMap.put(item.getId(), item);
-            	}
 
             	char lastChar = id.charAt(id.length()-1);
     			if(lastChar == '/'){
@@ -564,11 +564,8 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
                 		item.setExtension(null);
                 	}
     			}
-                
                 item.setFileType(determineFileType(item.getExtension()));
-            }
-            for (Map.Entry<String, Resource> entries : resourceMap.entrySet()) {
-            	resources.add(entries.getValue());
+                resources.add(item);
             }
             Collections.sort(resources);
         } catch (Exception e) {

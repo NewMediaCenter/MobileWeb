@@ -17,7 +17,6 @@ package org.kuali.mobility.sakai.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -270,22 +269,30 @@ public class SakaiController {
 	        //resId = URLEncoder.encode(resId, "UTF-8");
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 			if (resId == null || resId.isEmpty()) {
-				List<Resource> resources = sakaiSiteService.findSiteResources(siteId, user.getUserId());
+				List<Resource> resources = sakaiSiteService.findSiteResources(siteId, user.getUserId(), null);
 				uiModel.addAttribute("resources", resources);
 			} else {
-				byte [] fileData = sakaiSiteService.getResource(resId, user.getUserId());
-				String mimeType = mimeTypesMap.getContentType(resId);
-				
-				if (mimeType.equals(urlMimeType)) {
-					String url = new String(fileData);
-					response.sendRedirect(response.encodeRedirectURL(url));
-				} else {
-					response.setContentType(mimeType);
-					response.setContentLength(fileData.length);
-					response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(resId) + "\"" );
-					response.getOutputStream().write(fileData, 0, fileData.length);
-					return null;
-				}
+				char lastChar = resId.charAt(resId.length()-1);
+    			if(lastChar == '/'){
+    				//Go into a sub-folder
+    				List<Resource> resources = sakaiSiteService.findSiteResources(siteId, user.getUserId(), resId);
+    				uiModel.addAttribute("resources", resources);
+    			} else {
+    				//download the file
+					byte [] fileData = sakaiSiteService.getResource(resId, user.getUserId());
+					String mimeType = mimeTypesMap.getContentType(resId);
+					
+					if (mimeType.equals(urlMimeType)) {
+						String url = new String(fileData);
+						response.sendRedirect(response.encodeRedirectURL(url));
+					} else {
+						response.setContentType(mimeType);
+						response.setContentLength(fileData.length);
+						response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(resId) + "\"" );
+						response.getOutputStream().write(fileData, 0, fileData.length);
+						return null;
+					}
+    			}
 			}
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
