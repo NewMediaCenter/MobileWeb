@@ -114,7 +114,7 @@ public class HomeController {
     	tool = new Tool();
     	tool.setBadgeCount("");
     	tool.setDescription("Stay up to date with the IU twitter feeds.");
-    	tool.setIconUrl("images/service-icons/srvc-athletics.png");
+    	tool.setIconUrl("images/service-icons/srvc-twitter.png");
     	tool.setTitle("Twitter");
     	tool.setUrl("twitter");
     	tools.add(tool);
