@@ -32,7 +32,7 @@
 	--%>
 	<label for="searchCampus">Campus</label>
 	<form:select path="searchCampus" multiple="false">
-		<form:option value="" label="" data-placeholder="true"/>
+		<form:option value="" label="" data-placeholder="true" />
 		<form:option value="BL" label="Bloomington" data-placeholder="true"/>
 		<form:option value="IN" label="Indianapolis" data-placeholder="true"/>
 	</form:select>
@@ -49,35 +49,68 @@
 <script type="text/javascript">
 /* Maps */
 
-var hasLoaded = 0;
-
-var buildingCode;
-
 var map;
 var markersArray = [];
 var userMarkersArray = [];
 
-$('#formtest').live("pageshow", function() {
+$('#formtest').live("pagebeforeshow", function() {
 		deleteOverlays(markersArray);
-		var map = initialize("map_canvas", 39.17, -86.5);
+		map = initialize("map_canvas", 39.17, -86.5);
 //		var buildingCode = getParameterByName("id");
 //		showBuildingByCode(map, buildingCode);
 //		drawUserLocation(map);
-		//alert(buildingCode);
 		$("#searchCampus").change(function() {
-			alert("Test");
+			var groupCode = $("#searchCampus").val();
+			if (groupCode) {
+				var buildingData = retrieveBuildingsForGroup(groupCode);
+			} else {
+				alert("No group code");
+			}
 		});
 		$("#searchBuilding").change(function() {
-			alert("Test");
+			var buildingCode = $("#searchBuilding").val();
+			//alert("Test");
+			if (buildingCode) {
+				retrieveBuildingByCode(buildingCode);	
+			} else {
+				alert("No building code");
+			}
 		});
 	    google.maps.event.addListener(map, 'click', function(event) {
+	    	//$('#searchCampus').val("");
+	    	//$('#searchCampus').selectmenu('refresh', true);
+	    	$('#searchBuilding').val("");
+	    	$('#searchBuilding').selectmenu('refresh', true);
 	    	$('#searchLatitude').val(event.latLng.lat());
 	    	$('#searchLongitude').val(event.latLng.lng());
 	    	deleteOverlays(markersArray);
 	    	addMarker(map, markersArray, event.latLng);
 	    	//alert(event.latLng);
 	    });
+});
+
+function retrieveBuildingByCode(buildingCode) {
+	clearOverlays(markersArray);
+	$.getJSON('${pageContext.request.contextPath}/maps/building/' + buildingCode, function(data) {
+		showLocationByCoordinates(map, markersArray, data.latitude, data.longitude);
+	}).error(function() { 
+		alert("Could not retrieve data at this time."); 
 	});
+}
+
+function retrieveBuildingsForGroup(groupCode) {
+	// http://localhost:9999/mdot/maps/group/BL
+	$('#searchBuilding').empty();
+	$('#searchBuilding').append($("<option></option>").attr("value", "").text(""));
+	$.getJSON('${pageContext.request.contextPath}/maps/group/' + groupCode, function(data) {
+		$.each(data.mapsLocations, function(key, value) {
+			$('#searchBuilding').append($("<option></option>").attr("value", value.buildingCode).text(value.name));
+		});
+		$('#searchBuilding').selectmenu('refresh', true);
+	}).error(function() { 
+		alert("Could not retrieve data at this time."); 
+	});
+}
 
 </script>
 	</kme:content>
