@@ -22,7 +22,11 @@ public class Term implements Serializable, Comparable<Term>{
 	@Override
 	public int compareTo(Term o) {
 		if (year == o.year) {
-			return termEnumVal.compareTo(o.termEnumVal);
+			if (termEnumVal != null && o.termEnumVal != null) {
+				return termEnumVal.compareTo(o.termEnumVal);
+			} else {
+				return 0;
+			}
 		} else {
 			return year - o.year;
 		}
@@ -35,8 +39,14 @@ public class Term implements Serializable, Comparable<Term>{
 	public void setTerm(String term) {
 		this.term = term;
 		String[] split = term.split(" ");
-		termEnumVal = Terms.valueOf(split[0].toUpperCase());
-		year = Integer.parseInt(split[1]);
+		
+		try {
+			termEnumVal = Terms.valueOf(split[0].toUpperCase());
+		} catch (Exception e) {}
+		
+		try {
+			year = Integer.parseInt(split[1]);
+		} catch (Exception e) {}
 	}
 
 	public Collection<Site> getCourses() {
