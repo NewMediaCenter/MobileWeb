@@ -14,12 +14,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility"%>
 
-<kme:page title="Roster" id="athletics-roster" backButton="true" homeButton="true" cssFilename="athletics">
+<kme:page title="Player" id="athletics-roster" backButton="true" homeButton="true" cssFilename="athletics">
 	<kme:content>
 		<ul class="nav">
 			<li>
 				<div>
-					<img class="rowicon-roster" src="<c:out value="${player.thumbnailMedium}" escapeXml="true" />" />
+					<img class="rowicon-player" src="<c:out value="${player.thumbnailMedium}" escapeXml="true" />" />
 					<em class="roster"> 
 						<c:if test="${not empty player.number}">
 							<c:out value="${player.number}" escapeXml="true" />

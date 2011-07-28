@@ -23,6 +23,9 @@ import org.kuali.mobility.athletics.entity.Player;
 import org.kuali.mobility.athletics.entity.RosterData;
 import org.kuali.mobility.athletics.entity.Sport;
 import org.kuali.mobility.athletics.service.AthleticsService;
+import org.kuali.mobility.news.entity.NewsArticle;
+import org.kuali.mobility.news.entity.NewsStream;
+import org.kuali.mobility.news.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +44,14 @@ public class AthleticsController {
 		this.athleticsService = athleticsService;
 	}
 
+	@Autowired
+	private NewsService newsService;
+
+	
+	public void setNewsService(NewsService newsService) {
+		this.newsService = newsService;
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String getList(Model uiModel) throws Exception {
 		Athletics athletics = athleticsService.retrieveAthletics();
@@ -51,8 +62,17 @@ public class AthleticsController {
 	@RequestMapping(value = "/viewSport", method = RequestMethod.GET)
 	public String viewSport(HttpServletRequest request, Model uiModel, @RequestParam(required = true) Long sportId) throws Exception {
 		Sport sport = athleticsService.retrieveSport(sportId);
+		NewsStream newsStream = newsService.getNewsStream(sport.getLink(), false);
 		uiModel.addAttribute("sport", sport);
+		uiModel.addAttribute("newsStream", newsStream);
 		return "athletics/newsList";
+	}
+	
+	@RequestMapping(value = "/viewStory", method = RequestMethod.GET)
+	public String viewStory(HttpServletRequest request, Model uiModel, @RequestParam(required = true) String link) throws Exception {
+		NewsArticle newsArticle = newsService.getNewsArticle(null, link);
+		uiModel.addAttribute("newsArticle", newsArticle);
+		return "athletics/news";
 	}
 
 	@RequestMapping(value = "/viewRoster", method = RequestMethod.GET)

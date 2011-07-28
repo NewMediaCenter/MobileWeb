@@ -399,7 +399,6 @@ a.goback {
 
 div.subnav {
 	height: 28px;
-	background-image: url(images/subnav-back.png);
 	background-position: bottom;
 	clear: both;
 }
@@ -425,7 +424,7 @@ a.button-subnav {
 	text-decoration: none;
 	background-attachment: scroll;
 	background-color: transparent;
-	background-image: url(images/bg_button_a1.png);
+	background-image: url(../images/bg_button_a1.png);
 	background-repeat: no-repeat;
 	background-position: right top;
 	margin-top: 2px;
@@ -447,7 +446,7 @@ a.button-subnav span {
 	line-height: 14px;
 	padding: 3px 0 7px 18px;
 	background-color: transparent;
-	background-image: url(images/bg_button_span1.png);
+	background-image: url(../images/bg_button_span1.png);
 	background-repeat: no-repeat;
 } 
 
@@ -1341,6 +1340,10 @@ img.rowicon-roster {
 	float:left;
 	width:60px;
 	height:60px;
+	margin-right:12px;
+}
+img.rowicon-player {
+	float:left;
 	margin-right:12px;
 }
 em.roster {

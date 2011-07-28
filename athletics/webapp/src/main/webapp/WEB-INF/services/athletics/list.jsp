@@ -91,7 +91,7 @@
 			<c:forEach var="news" items="${athletics.newsData.news}">
 				<li>
 					<div>
-						<a href="${pageContext.request.contextPath}/athletics/viewNews?newsId=${news.newsId}"> 
+						<a href="${pageContext.request.contextPath}/athletics/viewStory?link=${news.url}"> 
 							<c:choose>
 								<c:when test="${not empty news.thumbnail}">
 									<img src='<c:out value="${news.thumbnail}" escapeXml="true" />' class="rowicon-news" />

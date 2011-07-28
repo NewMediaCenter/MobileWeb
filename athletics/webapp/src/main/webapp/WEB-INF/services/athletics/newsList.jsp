@@ -12,6 +12,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility"%>
 
 <kme:page title="News" id="athletics-news" backButton="true" homeButton="true" cssFilename="athletics" backButtonURL="${pageContext.request.contextPath}/athletics">
@@ -31,26 +32,28 @@
 			<c:out value="${sport.name}" escapeXml="true"></c:out>
 		</div>
 
-		<%--
-  <ul class="nav-news" id="newsindex">
-   <c:forEach items="${page.model.rss.rssItems}" var="item" varStatus="status">
-	<li><c:choose>
-    	<c:when test="${not empty item.enclosureUrl}"><img src="<c:out value="${item.enclosureUrl}" escapeXml="true"  />" class="rowicon-news" /></c:when>
-    	<c:otherwise><img src="ip/images/default-blockiu.png" class="rowicon-news" /></c:otherwise>
-    	</c:choose>
-    	<a href="Base.do?s=AthleticsService&p=story&sportId=${page.model.team.id}&link=${item.link}">
-    	
-    	<strong><c:out value="${item.title}" escapeXml="true" /></strong>
-    
-    				 <div class="teaserline">
-			<c:out value="${item.description}" escapeXml="true"/>
-			</div>
-			<div class="timestamp"><fmt:formatDate value="${item.publishDate}" pattern="EEE, dd MMM yyyy"/></div>
-			</a><div style="clear:both"></div>
-      	
-	</li>
-   </c:forEach>
-</ul>
- --%>
+		<ul class="nav-news" id="newsindex">
+			<c:forEach items="${newsStream.articles}" var="item" varStatus="status">
+				<c:forEach items="${item.articles}" var="article" varStatus="status">
+					<li><c:choose>
+							<c:when test="${not empty article.thumbnailImageUrl}">
+								<img src="<c:out value="${article.thumbnailImageUrl}" escapeXml="true"  />" class="rowicon-news" />
+							</c:when>
+							<c:otherwise>
+								<img src="${pageContext.request.contextPath}/images/default-blockiu.png" class="rowicon-news" />
+							</c:otherwise>
+						</c:choose> <a href="${pageContext.request.contextPath}/athletics/viewStory?link=${article.link}"> <strong><c:out value="${article.title}" escapeXml="true" /> </strong>
+							<div class="teaserline">
+								<c:out value="${article.description}" escapeXml="true" />
+							</div>
+							<div class="timestamp">
+								<fmt:formatDate value="${article.publishDate}" pattern="EEE, dd MMM yyyy" />
+							</div> </a>
+						<div style="clear: both"></div>
+					</li>
+				</c:forEach>
+			</c:forEach>
+		</ul>
+
 	</kme:content>
 </kme:page>

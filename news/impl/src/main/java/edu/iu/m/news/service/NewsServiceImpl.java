@@ -38,37 +38,38 @@ import edu.iu.m.news.entity.RssItem;
 
 @Service
 public class NewsServiceImpl implements NewsService {
-	
+
 	@Autowired
-    private RssService rssService;
-	
+	private RssService rssService;
+
 	@Autowired
 	private NewsDao newsDao;
-	
+
 	@Autowired
-    private RssCacheService rssCacheService;
-	
+	private RssCacheService rssCacheService;
+
 	@Autowired
 	private DynamicRssCacheService dynamicRssCacheService;
-	
+
 	@Autowired
 	private ConfigParamService configParamService;
+
 	public void setConfigParamService(ConfigParamService configParamService) {
 		this.configParamService = configParamService;
 	}
-	
+
 	private static final String NEWS_DEFAULT_SOURCE_ID = "NEWS_DEFAULT_SOURCE_ID";
 	private static final int SAMPLE_COUNT_DEFAULT = 2;
 	private static final String SAMPLE_COUNT = "NEWS_SAMPLE_COUNT";
-	
+
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(NewsServiceImpl.class);
-	
+
 	@Override
-	public List<NewsSource> getAllNewsSourcesByLocation(String campusCode){
+	public List<NewsSource> getAllNewsSourcesByLocation(String campusCode) {
 		List<NewsSource> sources = newsDao.getAllActiveNewsSourcesByLocationCode(campusCode);
 		return sources;
 	}
-	
+
 	@Override
 	public NewsSource getNewsSourceById(String sourceId) {
 		return newsDao.getNewsSourceById(sourceId);
@@ -76,40 +77,56 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public NewsStream getNewsStream(String rssShortCode, boolean sample) {
-		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", rssShortCode);
-        if (maintRss != null) {
-			try {
-	        	Rss rssFeed = this.getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
-	        	if (rssFeed != null) {
-	        		NewsStream stream = convertRssToNewsStream(rssFeed, sample);
-	        		stream.setSourceId(rssShortCode);
-	        		stream.setTitle(maintRss.getDisplayName());
-	        		return stream;
-	        	}
-	        } catch (Exception e) {
-	            LOG.error(e.getMessage(), e);
-	        }
-        }
-        return null;
+		String title = "";
+		Rss rss = null;
+		if (rssShortCode.startsWith("http:")) {
+			rss = this.getDynamicRssCacheService().getRss(rssShortCode, 900);
+			title = rss.getTitle();
+		} else {
+			MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", rssShortCode);
+			if (maintRss != null) {
+				title = maintRss.getDisplayName();
+				rss = this.getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
+			} else {
+				return null;
+			}
+		}
+		try {
+			if (rss != null) {
+				NewsStream stream = convertRssToNewsStream(rss, sample);
+				stream.setSourceId(rssShortCode);
+				stream.setTitle(title);
+				return stream;
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+
+		return null;
 	}
 
 	@Override
 	public NewsArticle getNewsArticle(String sourceId, String articleId) {
-		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", sourceId);
-        if (maintRss != null) {
-            Rss rss = this.getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
-            LinkFeed lf = this.getDynamicRssCacheService().getLinkFeed(articleId, rss);
-            if (lf != null) {
-            	return convertLinkFeedToArticle(lf);
-            }        	
-        }
+		Rss rss = null;
+		if (sourceId != null) {
+			MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("BL", sourceId);
+			if (maintRss != null) {
+				rss = this.getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
+			} else {
+				return null;
+			}
+		}
+		LinkFeed lf = this.getDynamicRssCacheService().getLinkFeed(articleId, rss);
+		if (lf != null) {
+			return convertLinkFeedToArticle(lf);
+		}
 		return null;
 	}
 
 	private NewsArticle convertLinkFeedToArticle(LinkFeed lf) {
 		NewsArticle article = new NewsArticle();
 		article.setArticleId(lf.getFeedUrl());
-		//article.setDescription(lf.getRichBodyText());
+		// article.setDescription(lf.getRichBodyText());
 		article.setDescription(lf.getBodyText());
 		article.setTitle(lf.getTitle());
 		return article;
@@ -119,41 +136,44 @@ public class NewsServiceImpl implements NewsService {
 	public String getDefaultNewsSourceId() {
 		return configParamService.findValueByName(NEWS_DEFAULT_SOURCE_ID);
 	}
-	
+
 	private NewsStream convertRssToNewsStream(Rss rss, boolean sample) {
 		int sampleCount = SAMPLE_COUNT_DEFAULT;
 		if (sample) {
 			try {
 				sampleCount = Integer.parseInt(configParamService.findValueByName(SAMPLE_COUNT));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 		}
-		
+
 		NewsStream newsStream = new NewsStream();
-		
+
 		newsStream.setTitle(rss.getTitle());
 		newsStream.setDescription(rss.getFormDescription());
-		
+
 		List<NewsArticle> articles = new ArrayList<NewsArticle>();
 		int count = 0;
 		for (RssItem item : rss.getRssItems()) {
 			NewsArticle article = new NewsArticle();
 			article.setTitle(item.getTitle());
 			article.setPublishDate(item.getPublishDate());
-			//article.setArticleId(item.getRssItemId().toString());
+			// article.setArticleId(item.getRssItemId().toString());
 			article.setLink(item.getLink());
 			article.setThumbnailImageUrl(item.getEnclosureUrl());
 			article.setDescription(item.getDescription());
 			article.setArticleId(item.getLinkUrlEncoded());
 			articles.add(article);
 			count++;
-			if (sample && count == sampleCount) break;
+			if (sample && count == sampleCount)
+				break;
 		}
-		
-		Collections.sort(articles); //sort the articles in ascending order
-		Collections.reverse(articles); //reverse the list so the newest appears first
-		
+
+		Collections.sort(articles); // sort the articles in ascending order
+		Collections.reverse(articles); // reverse the list so the newest appears
+										// first
+
 		List<NewsDay> dayArticles = new ArrayList<NewsDay>();
-		
+
 		Calendar date = Calendar.getInstance();
 		Calendar previousDate = Calendar.getInstance();
 		SimpleDateFormat longDate = new SimpleDateFormat("EEEEE, MMMMM dd");
@@ -180,12 +200,11 @@ public class NewsServiceImpl implements NewsService {
 		newsDay.setArticles(articleListForDate);
 		newsDay.setFormattedDate(currentDateString);
 		dayArticles.add(newsDay);
-		
+
 		newsStream.setArticles(dayArticles);
 		return newsStream;
 	}
 
-	
 	public RssService getRssService() {
 		return rssService;
 	}

@@ -31,6 +31,19 @@
             <groupId>org.kuali.mobility</groupId>
             <artifactId>athletics-impl</artifactId>
         </dependency>
+        <dependency>
+			<groupId>org.kuali.mobility</groupId>
+			<artifactId>news-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kuali.mobility</groupId>
+			<artifactId>news-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kuali.mobility</groupId>
+			<artifactId>news-web</artifactId>
+		</dependency>
+        
         <!-- Spring dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
