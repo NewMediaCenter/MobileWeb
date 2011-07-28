@@ -16,7 +16,19 @@
 package org.kuali.mobility.athletics.service;
 
 import org.kuali.mobility.athletics.entity.Athletics;
+import org.kuali.mobility.athletics.entity.MatchData;
+import org.kuali.mobility.athletics.entity.Player;
+import org.kuali.mobility.athletics.entity.RosterData;
+import org.kuali.mobility.athletics.entity.Sport;
 
 public interface AthleticsService {
 	public Athletics retrieveAthletics() throws Exception;
+
+	public MatchData retrieveScheduleForSeason(Long sportId, Long seasonId) throws Exception;
+
+	public Sport retrieveSport(Long sportId) throws Exception;
+
+	public RosterData retrieveRosterForSeason(Long sportId, Long seasonId) throws Exception;
+
+	public Player retrievePlayer(Long sportId, Long seasonId, Long playerId) throws Exception;
 }

@@ -69,8 +69,8 @@
         <property name="consumerSecret" value="hello" />
         <property name="resourceId" value="MOBILE_ID" />
         <property name="socketTimeout" value="30000" />
-        <property name="connectionManagerTimeout" value="30000" />
-        <property name="connectionTimeout" value="30000" />
+        <property name="connectionManagerTimeout" value="10000" />
+        <property name="connectionTimeout" value="10000" />
         <property name="cookieNames">
             <list>
                 <value>JSESSIONID</value>
@@ -87,6 +87,9 @@
         <property name="consumerKey" value="mobileOAuthConsumerKey" />
         <property name="consumerSecret" value="hello" />
         <property name="resourceId" value="MOBILE_ID" />
+        <property name="socketTimeout" value="30000" />
+        <property name="connectionManagerTimeout" value="10000" />
+        <property name="connectionTimeout" value="10000" />
         <property name="cookieNames">
             <list>
                 <value>JSESSIONID</value>
@@ -96,9 +99,9 @@
          
      <bean class="org.kuali.mobility.athletics.service.AthleticsServiceImpl">
         <property name="socketTimeout" value="30000" />
-        <property name="connectionManagerTimeout" value="30000" />
-        <property name="connectionTimeout" value="30000" />
-        <!-- <property name="athleticsURL" value="http://localhost:8080/ath-dev/" />-->
+        <property name="connectionManagerTimeout" value="10000" />
+        <property name="connectionTimeout" value="10000" />
+        <!--<property name="athleticsURL" value="http://localhost:8080/ath-dev/" />-->
         <property name="athleticsURL" value="https://test.uisapp2.iu.edu/ath-unt/" />
      </bean>
      

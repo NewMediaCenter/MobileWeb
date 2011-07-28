@@ -14,16 +14,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility"%>
 
-<kme:page title="Athletics" id="athletics" backButton="true" homeButton="true" cssFilename="athletics">
+<kme:page title="Schedule" id="athletics-schedule" backButton="true" homeButton="true" cssFilename="athletics" backButtonURL="${pageContext.request.contextPath}/athletics">
 	<kme:content>
-		<h3>
-			<c:out value="${athletics.matchData.category}" />
-		</h3>
+		<div class="subnav">
+			<div class="subnav-container">
+				<a href="${pageContext.request.contextPath}/athletics/viewSport?sportId=${matchData.sport.sportId}" class="button-subnav left"><span>news</span> </a>
+				<c:if test="${matchData.sport.seasonId > 0}">
+					<a href="${pageContext.request.contextPath}/athletics/viewRoster?sportId=${matchData.sport.sportId}&seasonId=${matchData.sport.seasonId}" class="button-subnav left"><span>roster</span> </a>
+					<a href="${pageContext.request.contextPath}/athletics/viewSchedule?sportId=${matchData.sport.sportId}&seasonId=${matchData.sport.seasonId}" class="button-subnav left"><span>schedule</span> </a>
+				</c:if>
+			</div>
+		</div>
+		<div class="nonfocal">
+			<c:out value="${matchData.sport.name}" escapeXml="true"></c:out>
+		</div>
 		<ul class="nav">
-			<c:forEach var="match" items="${athletics.matchData.matches}">
+			<c:forEach items="${matchData.matches}" var="match" varStatus="status">
 				<li>
 					<div>
-
 						<div class="livescore-container">
 							<div class="livescore-sidebar1">
 								<div class="scorebox">
@@ -42,8 +50,8 @@
 										<span class="gamestatus"><c:out value="${match.winLoss}" /> </span>
 										<br />
 									</c:if>
-									<c:out value="${match.sportName}" escapeXml="true" />
-									<br /> <span class="opponent"> <c:choose>
+									<span class="opponent"> 
+										<c:choose>
 											<c:when test="${not empty match.opponent}">
 												<c:out value="${match.home}" />&nbsp;<c:out value="${match.opponent}" escapeXml="true" />
 											</c:when>
@@ -78,46 +86,10 @@
 										<c:out value="${match.oppScore}" escapeXml="true" />
 									</div>
 								</div>
+								<!-- end .sidebar2 -->
 							</div>
 						</div>
-					</div>
-				</li>
-			</c:forEach>
-		</ul>
-		<h3>
-			<c:out value="${athletics.newsData.category}" />
-		</h3>
-		<ul class="nav">
-			<c:forEach var="news" items="${athletics.newsData.news}">
-				<li>
-					<div>
-						<a href="${pageContext.request.contextPath}/athletics/viewNews?newsId=${news.newsId}"> 
-							<c:choose>
-								<c:when test="${not empty news.thumbnail}">
-									<img src='<c:out value="${news.thumbnail}" escapeXml="true" />' class="rowicon-news" />
-									<em class="news"><c:out value="${news.title}" /></em>
-								</c:when> 
-								<c:otherwise>
-									<em class="news-noimage"><c:out value="${news.title}" /></em>
-								</c:otherwise> 
-							</c:choose>
-						</a>
-					</div>
-				</li>
-			</c:forEach>
-		</ul>
-		<h3>
-			<c:out value="${athletics.sportData.category}" />
-		</h3>
-		<ul class="nav">
-			<c:forEach var="sport" items="${athletics.sportData.sports}">
-				<li>
-					<div>
-						<a href="${pageContext.request.contextPath}/athletics/viewSport?sportId=${sport.sportId}"> <c:if test="${not empty sport.thumbnail}">
-								<img src="${sport.thumbnail}" class="rowicon-team" />
-							</c:if><em class="team">${sport.name}</em> </a>
-					</div>
-				</li>
+					</div></li>
 			</c:forEach>
 		</ul>
 	</kme:content>

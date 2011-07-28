@@ -11,6 +11,8 @@ public class MatchData implements Serializable {
 
 	private List<Match> matches;
 
+	private Sport sport;
+
 	private String type;
 
 	public String getCategory() {
@@ -35,5 +37,13 @@ public class MatchData implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Sport getSport() {
+		return sport;
+	}
+
+	public void setSport(Sport sport) {
+		this.sport = sport;
 	}
 }

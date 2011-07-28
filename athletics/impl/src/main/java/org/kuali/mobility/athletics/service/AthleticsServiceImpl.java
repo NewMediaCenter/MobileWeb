@@ -26,15 +26,19 @@ import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.athletics.entity.Athletics;
+import org.kuali.mobility.athletics.entity.MatchData;
+import org.kuali.mobility.athletics.entity.Player;
+import org.kuali.mobility.athletics.entity.RosterData;
+import org.kuali.mobility.athletics.entity.Sport;
 
 import flexjson.JSONDeserializer;
 
 public class AthleticsServiceImpl implements AthleticsService {
 
 	private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(AthleticsServiceImpl.class);
-	
+
 	private int socketTimeout = 10000;
-	
+
 	private int connectionManagerTimeout = 10000;
 
 	private int connectionTimeout = 10000;
@@ -45,6 +49,36 @@ public class AthleticsServiceImpl implements AthleticsService {
 		GetMethod get = new GetMethod(athleticsURL + "sports.do?version=2");
 		String json = IOUtils.toString(getInputStreamFromGetMethod(get), "UTF-8");
 		return new JSONDeserializer<Athletics>().deserialize(json, Athletics.class);
+	}
+
+	public RosterData retrieveRosterForSeason(Long sportId, Long seasonId) throws Exception {
+		GetMethod get = new GetMethod(athleticsURL + "roster.do?version=2&seasonId=" + seasonId);
+		String json = IOUtils.toString(getInputStreamFromGetMethod(get), "UTF-8");
+		return new JSONDeserializer<RosterData>().deserialize(json, RosterData.class);
+	}
+
+	public Player retrievePlayer(Long seasonId, Long sportId, Long playerId) throws Exception {
+		GetMethod get = new GetMethod(athleticsURL + "player.do?version=2&playerId=" + playerId);
+		String json = IOUtils.toString(getInputStreamFromGetMethod(get), "UTF-8");
+		return new JSONDeserializer<Player>().deserialize(json, Player.class);
+	}
+
+	public MatchData retrieveScheduleForSeason(Long sportId, Long seasonId) throws Exception {
+		GetMethod get = new GetMethod(athleticsURL + "season.do?version=2&seasonId=" + seasonId);
+		String json = IOUtils.toString(getInputStreamFromGetMethod(get), "UTF-8");
+		return new JSONDeserializer<MatchData>().deserialize(json, MatchData.class);
+	}
+
+	public Athletics retrieveBreakingNews(Long newsId) throws Exception {
+		GetMethod get = new GetMethod(athleticsURL + "breakingNews.do?version=2&newsId=" + newsId);
+		String json = IOUtils.toString(getInputStreamFromGetMethod(get), "UTF-8");
+		return new JSONDeserializer<Athletics>().deserialize(json, Athletics.class);
+	}
+
+	public Sport retrieveSport(Long sportId) throws Exception {
+		GetMethod get = new GetMethod(athleticsURL + "sport.do?version=2&sportId=" + sportId);
+		String json = IOUtils.toString(getInputStreamFromGetMethod(get), "UTF-8");
+		return new JSONDeserializer<Sport>().deserialize(json, Sport.class);
 	}
 
 	private InputStream getInputStreamFromGetMethod(GetMethod get) throws Exception {
