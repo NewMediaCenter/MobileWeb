@@ -175,20 +175,27 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 	}
 
 	@Override
-	public void markMessageRead(String siteId, String messageId, String userId) {
+	public ResponseEntity<String> markMessageRead(String siteId, String messageId, String userId) {
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/markread/" + messageId + "/site/" + siteId;
-			oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", "");
+			ResponseEntity<InputStream> response = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", "");
+			return new ResponseEntity<String>(response.getStatusCode());
 		} catch (OAuthException e) {
-			BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
-			String body = "";
-			try {
-				body = br.readLine();
-			} catch (IOException e1) {
+			if (e.getResponseBody() != null) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
+				String body = "";
+				try {
+					body = br.readLine();
+				} catch (IOException e1) {
+				}
+				LOG.error(e.getResponseCode() + ", " + body, e);
+			} else {
+				LOG.error(e.getMessage(), e);
 			}
-			LOG.error(e.getResponseCode() + ", " + body, e);
+			return new ResponseEntity<String>(HttpStatus.valueOf(e.getResponseCode()));
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<String>(HttpStatus.METHOD_FAILURE);
 		}
 	}
 	

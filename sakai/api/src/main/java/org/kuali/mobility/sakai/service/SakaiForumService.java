@@ -30,4 +30,5 @@ public interface SakaiForumService {
 	public ForumThread findThread(String topicId, String threadId, String userId);
 	public Message findMessage(String messageId, String topicId, String userId);
 	public ResponseEntity<String> postMessage(Message message, String userId);
+	public ResponseEntity<String> markMessageRead(String siteId, String messageId, String userId);
 }

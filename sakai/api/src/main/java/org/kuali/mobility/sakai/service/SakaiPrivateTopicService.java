@@ -27,5 +27,5 @@ public interface SakaiPrivateTopicService {
 	public MessageFolder findPrivateMessages(String siteId, String typeUuid, String userId);
 	public Message findPrivateMessageDetails(String userId, String siteId, String typeUuid, String messageId);
 	public ResponseEntity<String> postMessage(Message message,String siteId, String userId);
-	public void markMessageRead(String siteId, String messageId, String userId);
+	public ResponseEntity<String> markMessageRead(String siteId, String messageId, String userId);
 }

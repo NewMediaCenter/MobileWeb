@@ -28,8 +28,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.sf.json.JSONArray;
@@ -124,10 +127,22 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	@SuppressWarnings("unchecked")
 	public Home findSakaiHome(String user) {
 		try {
-			String url = configParamService.findValueByName("Sakai.Url.Base") + "site.json";
-			ResponseEntity<InputStream> is;
-			is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
-			String siteJson = IOUtils.toString(is.getBody(), "UTF-8");
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "user_prefs.json";
+			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
+			String prefsJson = IOUtils.toString(is.getBody(), "UTF-8");
+			Set<String> visibleSiteIds = new HashSet<String>();
+			try {
+				JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(prefsJson);
+				JSONArray itemArray = jsonObj.getJSONArray("user_prefs_collection");
+				if (itemArray != null) {
+					for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
+		            	JSONObject object = iter.next();
+		            	visibleSiteIds.add(object.getString("siteId"));
+					}
+				}
+			} catch (Exception e) {
+				LOG.error(e.getMessage(), e);
+			}
 			
 			Calendar todayDate = Calendar.getInstance();
 			Calendar tomorrowDate = Calendar.getInstance();
@@ -150,6 +165,10 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 				}
 			}
 			
+			url = configParamService.findValueByName("Sakai.Url.Base") + "site.json";
+			is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
+			String siteJson = IOUtils.toString(is.getBody(), "UTF-8");
+			
 			Home home = new Home();
 			Map<String,List<Site>> courses = home.getCourses();
 			List<Site> projects = home.getProjects();
@@ -160,22 +179,33 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
             	JSONObject object = iter.next();
             	
+            	String id = object.getString("id");
+            	if (!visibleSiteIds.contains(id)) {
+            		continue;
+            	}
+            	
+            	Site item = new Site();
+            	item.setId(id);
+            	item.setTitle(object.getString("title"));
+            	item.setDescription(object.getString("shortDescription").replace("&nbsp;"," "));
+            	
             	String type = object.getString("type");
             	if ("course".equals(type)) {
-	                String courseDesc = object.getString("description");
-	                courseDesc = courseDesc.replace("&nbsp;"," ");          
-	                Site item = new Site();
-	                item.setId(object.getString("entityId"));
-	                item.setTitle(object.getString("title"));
-	                
 	                Object jsonProps = object.get("props");
 	                String term = "No Term";
 	                if (jsonProps instanceof JSONObject) {
 		                JSONObject props = (JSONObject) jsonProps;
 		                term = props.getString("term");
+		                String[] split = term.split(" ");
+		                term = "";
+		                for (String s : split) {
+		                	s = s.toLowerCase();
+		                	s = s.substring(0, 1).toUpperCase() + s.substring(1);
+		                	term = term + s + " ";
+		                }
+		                term.trim();
 	                }
 	                item.setTerm(term);
-	                item.setDescription(courseDesc);
 	                
 	                List<Site> courseList = courses.get(term);
 	                if (courseList == null) {
@@ -187,17 +217,22 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	                if (calendarCourseIds.contains(item.getId().toLowerCase())) {
 	                	today.add(item);
 	                }
-            	} else {
-            		Site site = new Site();
-            		site.setId(object.getString("entityId"));
-            		site.setDescription(object.getString("shortDescription"));
-            		site.setTitle(object.getString("title"));
-            		if ("project".equals(type)) {
-            			projects.add(site);
-            		} else {
-            			other.add(site);
-            		}
-            	}
+            	} else if ("project".equals(type)) {
+        			projects.add(item);
+        		} else {
+        			other.add(item);
+        		}
+            }
+            
+            LinkedList<Map.Entry<String, List<Site>>> list = new LinkedList<Map.Entry<String, List<Site>>>();
+            for (Map.Entry<String, List<Site>> entry : courses.entrySet()) {
+            	list.add(entry);
+            }
+            courses.clear();
+            ListIterator<Entry<String, List<Site>>> iterator = list.listIterator(list.size());
+            while (iterator.hasPrevious()) {
+            	Map.Entry<String, List<Site>> entry = iterator.previous();
+            	courses.put(entry.getKey(), entry.getValue());
             }
 			return home;
 		} catch (Exception e) {
@@ -503,11 +538,13 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             	trs.setOtherInformation(rosterObject.getString("otherInformation"));
             	trs.setEntityReference(rosterObject.getString("entityReference"));
             	trs.setEntityURL(rosterObject.getString("entityURL"));
+            	trs.setSortName();
                 roster.add(trs);
             }
     	} catch (Exception e) {
     		LOG.error(e.getMessage(), e);
         }
+    	Collections.sort(roster);
 		return roster;
 	}
 	

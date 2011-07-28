@@ -227,6 +227,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
         		m.setCreatedBy(message.getString("authoredBy"));
         		m.setTitle(message.getString("title"));
         		m.setBody(message.getString("body"));
+        		m.setIsRead((message.getBoolean("read")));
         		
         		if (m.getBody().equals("null")) {
         			m.setBody("(No message)");
@@ -351,6 +352,31 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 			} catch (IOException e1) {
 			}
 			LOG.error(e.getResponseCode() + ", " + body, e);
+			return new ResponseEntity<String>(HttpStatus.valueOf(e.getResponseCode()));
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<String>(HttpStatus.METHOD_FAILURE);
+		}
+	}
+	
+	@Override
+	public ResponseEntity<String> markMessageRead(String siteId, String messageId, String userId) {
+		try {
+			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/markread/" + messageId + "/site/" + siteId;
+			ResponseEntity<InputStream> response = oncourseOAuthService.oAuthPostRequest(userId, url, "text/html", "");
+			return new ResponseEntity<String>(response.getStatusCode());
+		} catch (OAuthException e) {
+			if (e.getResponseBody() != null) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(e.getResponseBody()));
+				String body = "";
+				try {
+					body = br.readLine();
+				} catch (IOException e1) {
+				}
+				LOG.error(e.getResponseCode() + ", " + body, e);
+			} else {
+				LOG.error(e.getMessage(), e);
+			}
 			return new ResponseEntity<String>(HttpStatus.valueOf(e.getResponseCode()));
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

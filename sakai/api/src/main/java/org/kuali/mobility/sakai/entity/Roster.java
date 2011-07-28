@@ -25,7 +25,20 @@ public class Roster implements Serializable, Comparable<Roster> {
 	private String department,email,homePage,homePhone,workPhone;
 	private String position,roleTitle,room,school,otherInformation;
 	private String entityReference,entityURL;
+	private String sortName;
 	
+	public void setSortName() {
+		if (lastName != null && !"null".equals(lastName) && firstName != null && !"null".equals(firstName)) {
+			sortName = lastName + " " + firstName;
+		} else {
+			String[] split = displayName.split(" ");
+			sortName = split[split.length-1];
+		}
+	}
+	
+	public String getSortName() {
+		return sortName;
+	}
 	public String getDisplayID() {
 		return displayID;
 	}
@@ -130,10 +143,7 @@ public class Roster implements Serializable, Comparable<Roster> {
 	}	
 
     public int compareTo(Roster that) {
-        if (this == null || that == null || this.getDisplayID() == null || that.getDisplayID() == null) {
-            return -1;
-        }
-        return this.getDisplayID().compareTo(that.getDisplayID());
+        return this.getSortName().compareToIgnoreCase(that.getSortName());
     }
 	public String getImageUrl() {
 		return imageUrl;

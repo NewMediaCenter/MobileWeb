@@ -15,14 +15,23 @@
 <kme:page title="${topic.title}" id="forum" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${topic.forumId}">
 	<kme:content>
 		<ul data-role="listview">
-			<c:forEach items="${topic.threads}" var="thread" varStatus="status">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${topic.forumId}/${topic.id}/${thread.id}?topicTitle=${topic.title}">
-						${thread.title}
-						<span class="ui-li-count">${thread.unreadCount}</span>
-					</a>
-				</li>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${not empty topic.threads}">
+					<c:forEach items="${topic.threads}" var="thread" varStatus="status">
+						<li>
+							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${topic.forumId}/${topic.id}/${thread.id}?topicTitle=${topic.title}">
+								${thread.title}
+								<span class="ui-li-count">${thread.unreadCount}</span>
+							</a>
+						</li>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<li>
+						No threads
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 	</kme:content>
 </kme:page>

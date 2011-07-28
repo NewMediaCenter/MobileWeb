@@ -15,15 +15,24 @@
 <kme:page title="Announcements" id="announcements" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}">
 	<kme:content>
 		<ul data-role="listview">
-			<c:forEach items="${announcements}" var="item" varStatus="status">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/announcements/${item.id}" data-direction="forward">
-						<h3 style="white-space:normal">${item.title}</h3>
-						<p>${item.createdOn}</p>
-						<p>${item.createdByDisplayName}</p>
-					</a>
-				</li>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${not empty announcements}">
+					<c:forEach items="${announcements}" var="item" varStatus="status">
+						<li>
+							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/announcements/${item.id}" data-direction="forward">
+								<h3 style="white-space:normal">${item.title}</h3>
+								<p>${item.createdOn}</p>
+								<p>${item.createdByDisplayName}</p>
+							</a>
+						</li>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<li>
+						No announcements
+					</li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 	</kme:content>
 </kme:page>

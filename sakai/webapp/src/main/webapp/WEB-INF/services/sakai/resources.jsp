@@ -70,7 +70,7 @@
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<li>No items</li>
+					<li>No resources</li>
 				</c:otherwise>
 			</c:choose>
 		</ul>

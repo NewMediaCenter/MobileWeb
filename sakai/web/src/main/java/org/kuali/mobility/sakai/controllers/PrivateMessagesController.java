@@ -79,6 +79,12 @@ public class PrivateMessagesController {
 		return "sakai/forums/privatemessagedetails";
 	}
 	
+	@RequestMapping(value = "/folder/{typeUuid}/{messageId}/markread/ajax", method = RequestMethod.GET)
+	public ResponseEntity<String> markMessageRead(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("messageId") String messageId, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		return sakaiPrivateTopicService.markMessageRead(siteId, messageId, user.getUserId());
+	}
+	
 	@RequestMapping(value = "/folder/{typeUuid}/{messageId}/markread", method = RequestMethod.GET)
 	public String markMessageRead(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("typeUuid") String typeUuid, @PathVariable("messageId") String messageId, @RequestParam("title") String title, Model uiModel) {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);

@@ -110,6 +110,19 @@ public class ForumsController {
 		return "sakai/forums/forumthread";
 	}
 	
+	@RequestMapping(value = "/{forumId}/{topicId}/{threadId}/{messageId}/markread/ajax", method = RequestMethod.GET)
+	public ResponseEntity<String> markMessageRead(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("messageId") String messageId, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		return sakaiForumService.markMessageRead(siteId, messageId, user.getUserId());
+	}
+	
+	@RequestMapping(value = "/{forumId}/{topicId}/{threadId}/{messageId}/markread", method = RequestMethod.GET)
+	public String markMessageRead(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("topicId") String topicId, @RequestParam("topicTitle") String topicTitle, @PathVariable("forumId") String forumId, @PathVariable("threadId") String threadId, @PathVariable("messageId") String messageId, Model uiModel) {
+		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
+		sakaiForumService.markMessageRead(siteId, messageId, user.getUserId());
+		return getForumTopicThread(request, siteId, topicId, topicTitle, forumId, threadId, uiModel);
+	}
+	
 	@RequestMapping(value = "/{forumId}/{topicId}/{threadId}/{messageId}/reply", method = RequestMethod.GET)
 	public String reply(HttpServletRequest request, @PathVariable("siteId") String siteId, @PathVariable("forumId") String forumId, @PathVariable("topicId") String topicId, @RequestParam("topicTitle") String topicTitle, @PathVariable("threadId") String threadId, @PathVariable("messageId") String messageId, Model uiModel) {
 		try {
