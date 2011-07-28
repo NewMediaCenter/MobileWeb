@@ -28,11 +28,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import net.sf.json.JSONArray;
@@ -51,6 +48,7 @@ import org.kuali.mobility.sakai.entity.Home;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
+import org.kuali.mobility.sakai.entity.Term;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -144,36 +142,41 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 				LOG.error(e.getMessage(), e);
 			}
 			
-			Calendar todayDate = Calendar.getInstance();
-			Calendar tomorrowDate = Calendar.getInstance();
-			todayDate.set(Calendar.HOUR, 0);
-			todayDate.set(Calendar.MINUTE, 0);
-			todayDate.set(Calendar.SECOND, 0);
-			todayDate.set(Calendar.MILLISECOND, 0);
-			tomorrowDate.setTime(todayDate.getTime());
-			tomorrowDate.add(Calendar.DATE, 1);
-			ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(user, todayDate.getTime(), todayDate.getTime(), todayDate.getTime(), null);
-			List<ListData> events = listViewEvents.getEvents();
 			Set<String> calendarCourseIds = new HashSet<String>();
-			if (events.size() > 0) {
-				ListData list = events.get(0);
-				List<CalendarViewEvent> viewEvents = list.getEvents();
-				for (CalendarViewEvent event : viewEvents) {
-					if (event.getOncourseSiteId() != null) {
-						calendarCourseIds.add(event.getOncourseSiteId().toLowerCase());
+			try {
+				Calendar todayDate = Calendar.getInstance();
+				Calendar tomorrowDate = Calendar.getInstance();
+				todayDate.set(Calendar.HOUR, 0);
+				todayDate.set(Calendar.MINUTE, 0);
+				todayDate.set(Calendar.SECOND, 0);
+				todayDate.set(Calendar.MILLISECOND, 0);
+				tomorrowDate.setTime(todayDate.getTime());
+				tomorrowDate.add(Calendar.DATE, 1);
+				ListViewEvents listViewEvents = calendarEventOAuthService.retrieveViewEventsList(user, todayDate.getTime(), todayDate.getTime(), todayDate.getTime(), null);
+				List<ListData> events = listViewEvents.getEvents();
+				if (events.size() > 0) {
+					ListData list = events.get(0);
+					List<CalendarViewEvent> viewEvents = list.getEvents();
+					for (CalendarViewEvent event : viewEvents) {
+						if (event.getOncourseSiteId() != null) {
+							calendarCourseIds.add(event.getOncourseSiteId().toLowerCase());
+						}
 					}
 				}
+			} catch (Exception e) {
+				LOG.error(e.getMessage(), e);
 			}
 			
 			url = configParamService.findValueByName("Sakai.Url.Base") + "site.json";
 			is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
 			String siteJson = IOUtils.toString(is.getBody(), "UTF-8");
-			
+	
 			Home home = new Home();
-			Map<String,List<Site>> courses = home.getCourses();
+			List<Term> courses = home.getCourses();
 			List<Site> projects = home.getProjects();
 			List<Site> other = home.getOther();
 			List<Site> today = home.getTodaysCourses();
+			Map<String, Term> courseMap = new HashMap<String, Term>();
 			JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(siteJson);
             JSONArray itemArray = jsonObj.getJSONArray("site_collection");
             for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
@@ -205,14 +208,15 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		                }
 		                term.trim();
 	                }
-	                item.setTerm(term);
+	                item.setTerm(term);  
 	                
-	                List<Site> courseList = courses.get(term);
-	                if (courseList == null) {
-	                	courseList = new ArrayList<Site>();
-	                	courses.put(term, courseList);
+	                Term termObj = courseMap.get(term);
+	                if (termObj == null) {
+	                	termObj = new Term();
+	                	termObj.setTerm(term);
+	                	courseMap.put(term, termObj);
 	                }
-	                courseList.add(item);
+	                termObj.getCourses().add(item);
 	                
 	                if (calendarCourseIds.contains(item.getId().toLowerCase())) {
 	                	today.add(item);
@@ -224,16 +228,11 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
         		}
             }
             
-            LinkedList<Map.Entry<String, List<Site>>> list = new LinkedList<Map.Entry<String, List<Site>>>();
-            for (Map.Entry<String, List<Site>> entry : courses.entrySet()) {
-            	list.add(entry);
+            for (Map.Entry<String, Term> entry : courseMap.entrySet()) {
+            	courses.add(entry.getValue());
             }
-            courses.clear();
-            ListIterator<Entry<String, List<Site>>> iterator = list.listIterator(list.size());
-            while (iterator.hasPrevious()) {
-            	Map.Entry<String, List<Site>> entry = iterator.previous();
-            	courses.put(entry.getKey(), entry.getValue());
-            }
+            Collections.sort(courses);
+            Collections.reverse(courses);
 			return home;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -322,6 +321,13 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
                 String createdDate = "";
                 if(!announcment.getString("createdOn").equalsIgnoreCase("null")) {
 	                JSONObject createdOnJSONObject = (JSONObject) new JSONTokener(announcment.getString("createdOn")).nextValue();
+	                
+	                long time = createdOnJSONObject.getLong("time");
+	                Calendar now = Calendar.getInstance();
+	                if (now.getTimeInMillis() < time) {
+	                	continue; //this is a time-restricted announcement for the future
+	                }
+	                
 	                createdOn = createdOnJSONObject.getString("display");
 	                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm a");
 	                Date date = sdf.parse(createdOn);

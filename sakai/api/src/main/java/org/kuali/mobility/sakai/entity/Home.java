@@ -1,28 +1,26 @@
 package org.kuali.mobility.sakai.entity;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Home {
-	private Map<String,List<Site>> courses;
+	private List<Term> courses;
 	private List<Site> projects;
 	private List<Site> other;
 	private List<Site> todaysCourses;
 	
 	public Home(){
-		courses = new LinkedHashMap<String,List<Site>>();
+		courses = new ArrayList<Term>();
 		projects = new ArrayList<Site>();
 		other = new ArrayList<Site>();
 		todaysCourses = new ArrayList<Site>();
 	}
 
-	public Map<String, List<Site>> getCourses() {
+	public List<Term> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Map<String, List<Site>> courses) {
+	public void setCourses(List<Term> courses) {
 		this.courses = courses;
 	}
 
@@ -34,14 +32,6 @@ public class Home {
 		this.projects = projects;
 	}
 
-	public List<Site> getTodaysCourses() {
-		return todaysCourses;
-	}
-
-	public void setTodaysCourses(List<Site> todaysCourses) {
-		this.todaysCourses = todaysCourses;
-	}
-
 	public List<Site> getOther() {
 		return other;
 	}
@@ -50,4 +40,11 @@ public class Home {
 		this.other = other;
 	}
 
+	public List<Site> getTodaysCourses() {
+		return todaysCourses;
+	}
+
+	public void setTodaysCourses(List<Site> todaysCourses) {
+		this.todaysCourses = todaysCourses;
+	}
 }
