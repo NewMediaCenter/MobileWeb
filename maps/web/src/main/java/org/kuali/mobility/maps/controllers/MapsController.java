@@ -15,10 +15,18 @@
 
 package org.kuali.mobility.maps.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.kuali.mobility.maps.entity.Location;
+import org.kuali.mobility.maps.entity.LocationSort;
 import org.kuali.mobility.maps.entity.MapsFormSearch;
+import org.kuali.mobility.maps.entity.MapsFormSearchResult;
+import org.kuali.mobility.maps.entity.MapsFormSearchResultContainer;
 import org.kuali.mobility.maps.entity.MapsGroup;
 import org.kuali.mobility.maps.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +34,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller 
 @RequestMapping("/maps")
@@ -46,8 +57,9 @@ public class MapsController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getHome(Model uiModel) {
-    	uiModel.addAttribute("test", "test2");
-    	return "maps/location";
+    	MapsFormSearch mapsFormSearch = new MapsFormSearch();
+    	uiModel.addAttribute("mapsearchform", mapsFormSearch);
+    	return "maps/home";
     }
 
     @RequestMapping(value = "/location", method = RequestMethod.GET)
@@ -84,6 +96,9 @@ public class MapsController {
         return "maps/location";
     }*/
     
+    /*
+     * Group with Buildings JSON, get by Group Code
+     */
     @RequestMapping(value = "/group/{groupCode}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public Object getBuildings(@PathVariable("groupCode") String groupCode) {
@@ -97,7 +112,7 @@ public class MapsController {
     }
     
     /*
-     * Buildings JSON by Building Code
+     * Buildings JSON, get by Building Code
      */
     @RequestMapping(value = "/building/{buildingCode}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
@@ -111,5 +126,60 @@ public class MapsController {
         }
         return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
+    
+    @RequestMapping(value = "/building/{buildingCode}", method = RequestMethod.GET)
+    public Object get(Model uiModel, @PathVariable("buildingCode") String buildingCode) {
+        List<Location> locations = locationService.getLocationsByBuildingCode(buildingCode);
+        if (locations == null || locations.size() < 1) {
+            // Error?
+        } else {
+        	Location location = locations.get(0);
+        	uiModel.addAttribute("location", location);
+        }
+        return "maps/building";
+    }
+    
+    /*
+     * Buildings search form results
+     */
+	@RequestMapping(value = "/building/search", method = RequestMethod.POST)
+	public String searchBuildings(HttpServletRequest request, @ModelAttribute("mapsearchform") MapsFormSearch mapsFormSearch, BindingResult bindingResult, SessionStatus status, Model uiModel) {
+		String searchString = mapsFormSearch.getSearchText();
+		searchString = searchString.trim();
+		String searchCampus = mapsFormSearch.getSearchCampus();
+    	try {
+    		MapsFormSearchResultContainer container = new MapsFormSearchResultContainer();
+    		List<MapsFormSearchResult> results = new ArrayList<MapsFormSearchResult>();
+    		MapsGroup group = locationService.getMapsGroupByCode(searchCampus);
+    		Set<Location> locationSet = group.getMapsLocations();
+    		List<Location> locations = new ArrayList<Location>();
+    		locations.addAll(locationSet);
+    		Collections.sort(locations, new LocationSort());
+    		for (Location location : locations) {
+    			boolean addLocation = false;
+    			if (location.getName() != null && location.getName().toLowerCase().indexOf(searchString.toLowerCase()) > -1) {
+    				addLocation = true;
+    			} else if (location.getShortName() != null && location.getShortName().toLowerCase().indexOf(searchString.toLowerCase()) > -1) {
+    				addLocation = true;
+    			} else if (location.getShortCode() != null && location.getShortCode().toLowerCase().trim().equals(searchString.toLowerCase().trim())) {
+    				addLocation = true;
+    			} else if (location.getCode() != null && location.getCode().toLowerCase().trim().equals(searchString.toLowerCase().trim())) {
+    				addLocation = true;
+    			}
+    			if (addLocation) {
+        			MapsFormSearchResult result = new MapsFormSearchResult();
+        			result.setName(location.getName());
+        			result.setCode(location.getBuildingCode());
+    				results.add(result);
+    			}
+    		}
+    		container.setResults(results);
+    		uiModel.addAttribute("container", container);
+    	} catch (Exception e) {
+    		LOG.error(e.getMessage(), e);
+    	}
+//		uiModel.addAttribute("message", pageLevelException.getMessage());
+		return "maps/home";
+	}
     
 }
