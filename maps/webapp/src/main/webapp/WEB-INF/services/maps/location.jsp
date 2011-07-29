@@ -23,8 +23,6 @@
 <script type="text/javascript">
 /* Maps */
 
-var hasLoaded = 0;
-
 var buildingCode;
 
 var markersArray = [];

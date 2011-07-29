@@ -140,6 +140,21 @@ public class MapsController {
     }
     
     /*
+     * Buildings search
+     */
+	@RequestMapping(value = "/building/search", method = RequestMethod.GET)
+	public String searchBuildings(Model uiModel, 
+			@RequestParam(required = true) String criteria, 
+			@RequestParam(required = true) String groupCode) {
+		criteria = criteria.trim();
+		LOG.info("Search: " + groupCode + " : " + criteria);
+		MapsFormSearchResultContainer container = search(criteria, groupCode);
+		uiModel.addAttribute("container", container);
+//		uiModel.addAttribute("message", pageLevelException.getMessage());
+		return "maps/search";
+	}
+
+    /*
      * Buildings search form results
      */
 	@RequestMapping(value = "/building/search", method = RequestMethod.POST)
@@ -147,8 +162,16 @@ public class MapsController {
 		String searchString = mapsFormSearch.getSearchText();
 		searchString = searchString.trim();
 		String searchCampus = mapsFormSearch.getSearchCampus();
+		MapsFormSearchResultContainer container = search(searchString, searchCampus);
+		uiModel.addAttribute("container", container);
+//		uiModel.addAttribute("message", pageLevelException.getMessage());
+		return "maps/home";
+	}
+
+	private MapsFormSearchResultContainer search(String searchString, String searchCampus) {
+		MapsFormSearchResultContainer container = new MapsFormSearchResultContainer();
     	try {
-    		MapsFormSearchResultContainer container = new MapsFormSearchResultContainer();
+    		
     		List<MapsFormSearchResult> results = new ArrayList<MapsFormSearchResult>();
     		MapsGroup group = locationService.getMapsGroupByCode(searchCampus);
     		Set<Location> locationSet = group.getMapsLocations();
@@ -174,12 +197,11 @@ public class MapsController {
     			}
     		}
     		container.setResults(results);
-    		uiModel.addAttribute("container", container);
+    		
     	} catch (Exception e) {
     		LOG.error(e.getMessage(), e);
     	}
-//		uiModel.addAttribute("message", pageLevelException.getMessage());
-		return "maps/home";
+    	return container;
 	}
-    
+	
 }

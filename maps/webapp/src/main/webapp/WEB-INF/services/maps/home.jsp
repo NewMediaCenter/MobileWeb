@@ -22,8 +22,16 @@
 			<form:errors path="searchText" />
 			<label for="searchCampus">Campus</label>
 			<form:select path="searchCampus" multiple="false">
-				<form:option value="BL" label="Bloomington" data-placeholder="true"/>
-				<form:option value="IN" label="Indianapolis" data-placeholder="true"/>
+				<option value="UA" label="">select:</option>			  
+				<option value="BL" label="">IU Bloomington</option>
+				<option value="CO" label="">IUPUC Columbus</option>
+				<option value="EA" label="">IU East</option>
+				<option value="FW" label="">IPFW Fort Wayne</option>
+				<option value="IN" label="">IUPUI Indianapolis</option>
+				<option value="KO" label="">IU Kokomo</option>
+				<option value="NW" label="">IU Northwest</option>
+				<option value="SB" label="">IU South Bend</option>
+				<option value="SE" label="">IU Southeast</option>
 			</form:select>
 			</fieldset>
 		</form:form>
@@ -36,5 +44,58 @@
 	        </c:forEach>
 	        </div>
 	    </kme:definitionListView>
+	    
+<script type="text/javascript">
+$('#maps').live("pagebeforeshow", function() {
+	$('#searchText').keypress(function (event) {
+		var searchText = $("#searchText").val();
+		var groupCode = $("#searchCampus").val();
+		console.log(searchText + " " + groupCode);
+		mapSearch(searchText, groupCode);
+		if (event.keyCode == 13) {
+			return false;
+		}
+	});
+	$("#searchCampus").change(function() {
+		var searchText = $("#searchText").val();
+		var groupCode = $("#searchCampus").val();
+		console.log(searchText + " " + groupCode);
+		mapSearch(searchText, groupCode);
+	});
+});
+
+$('#maps').live("pageshow", function() {
+	// If the browser keeps the search parameters, search on page load
+	var searchText = $("#searchText").val();
+	var groupCode = $("#searchCampus").val();
+	console.log(searchText + " " + groupCode);
+	mapSearch(searchText, groupCode);	
+});
+
+var mapsRemoteCallCount = 0;
+var mapsCurrentDisplayNumber = 0;
+
+function mapSearch(inputString, groupCode) {
+	mapsRemoteCallCount++;
+	var mapsRemoteCallCountAtStartOfRequest = mapsRemoteCallCount;
+	if (inputString.length < 2 || groupCode == "UA") {
+		// Hide the suggestion box.
+		$('#searchresults').html('');
+	} else {
+		var requestUrlString = '${pageContext.request.contextPath}/maps/building/search?criteria=' + encodeURI(inputString) + '&groupCode=' + encodeURI(groupCode);
+		$.get(requestUrlString, function(data) {
+			//console.log("" + requestUrlString + " " + mapsRemoteCallCount + " " + mapsCurrentDisplayNumber);
+			if (mapsRemoteCallCountAtStartOfRequest >= mapsCurrentDisplayNumber) {
+				mapsCurrentDisplayNumber = mapsRemoteCallCount;
+				// Show results
+				var pagehtml = '<div id="resultdata"></div>'
+				$('#searchresults').html(pagehtml);
+				$("#resultdata").html(data).page();
+			}
+		});
+	}
+} // mapSearch
+</script>
+
 	</kme:content>
 </kme:page>
