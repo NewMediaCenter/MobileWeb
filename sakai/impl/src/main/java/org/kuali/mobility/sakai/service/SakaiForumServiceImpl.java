@@ -196,7 +196,7 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 		}
 		if (replies != null && !replies.isEmpty()) {
 			for (String message : replies) {
-				currentCount += computeUnreadCount(message, messageReplies, unreadMessages, currentCount);
+				currentCount = computeUnreadCount(message, messageReplies, unreadMessages, currentCount);
 			}
 		}
 		
