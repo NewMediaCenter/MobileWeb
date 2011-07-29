@@ -29,6 +29,7 @@
 			context: anchor,
 			success: function() {
 				$(this).hide();
+				$(this).parent().children("h3").addClass("read");
 			},
 			error: function() {
 				var span = $(this).children('span')[0];
