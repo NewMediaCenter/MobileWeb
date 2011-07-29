@@ -70,6 +70,11 @@
         <body-content>scriptless</body-content>
         <description>This tag is for jQuery Mobility general list views, ListView</description>
         <attribute>
+            <name>id</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <name>filter</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
@@ -144,6 +149,16 @@
         <tag-class>org.kuali.mobility.tags.ListItemTag</tag-class>
         <body-content>scriptless</body-content>
         <description>This tag is for listItem</description>
+        <attribute>
+            <name>dataRole</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>dataTheme</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
     
     <tag>

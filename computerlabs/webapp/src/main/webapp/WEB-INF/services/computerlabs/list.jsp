@@ -15,22 +15,22 @@
 
 <kme:page title="Computer Labs" id="computerlabs" homeButton="true" backButton="true">
     <kme:content>
-        <c:forEach items="${lablocations}" var="location" varStatus="status">
-            <h3>${location.name}</h3>
-	        <kme:definitionListView id="computerlablist" filter="false">
+        <kme:listView id="computerlablist" dataTheme="c" dataDividerTheme="b" filter="false">
+            <c:forEach items="${lablocations}" var="location" varStatus="status">
+                <kme:listItem dataTheme="b" dataRole="list-divider">${location.name}</kme:listItem>
 	            <c:forEach items="${location.computerLabs}" var="computerlab" varStatus="status">
-	                <kme:definitionListTerm>
-	                    <a href="${pageContext.request.contextPath}/maps/location?id=${computerlab.buildingCode}">
-                            ${computerlab.labCode}
-                        </a>
-	                </kme:definitionListTerm>
-	                <kme:definitionListDefinition>
-		                <a href="${pageContext.request.contextPath}/maps/location?id=${computerlab.buildingCode}">
-	                        ${computerlab.availability} seats available
-	                    </a>
-	                </kme:definitionListDefinition>
-	            </c:forEach>     
-	        </kme:definitionListView>
-        </c:forEach>
+	                <kme:listItem>
+				       <c:choose>
+			                <c:when test="${!empty computerlab.buildingCode}">
+                                <a href="${pageContext.request.contextPath}/maps/location?id=${computerlab.buildingCode}"><h3>${computerlab.labCode}</h3><p>${computerlab.availability} seats available</p></a>
+			                </c:when>
+			                <c:otherwise>
+                                <h3>${computerlab.labCode}</h3><p>${computerlab.availability} seats available</p>
+			                </c:otherwise>
+			            </c:choose>
+	                </kme:listItem>
+	            </c:forEach>
+            </c:forEach>
+        </kme:listView>
     </kme:content>
 </kme:page>

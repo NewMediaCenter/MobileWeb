@@ -31,7 +31,7 @@
 								<li class="link-view">
 							</c:otherwise>
 						</c:choose>
-							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.encodedId}&type=${item.mimeType}" class="icon-${attachment.fileType}" >
+							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.encodedId}&type=${item.mimeType}" class="icon-${item.fileType}" >
 								${item.title}
 						  	</a>
 						</li>

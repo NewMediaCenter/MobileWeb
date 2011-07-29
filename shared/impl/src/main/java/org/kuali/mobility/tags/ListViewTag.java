@@ -9,6 +9,7 @@ public class ListViewTag extends SimpleTagSupport {
     
     private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ListViewTag.class);
     
+    private String id;
     private boolean filter;
     private String dataTheme;
     private String dataDividerTheme;
@@ -18,12 +19,17 @@ public class ListViewTag extends SimpleTagSupport {
         PageContext pageContext = (PageContext) getJspContext();
         JspWriter out = pageContext.getOut();
         try {
-            out.println("<ul data-role=\"listview\" data-theme=\"" + (dataTheme != null && !"".equals(dataTheme.trim()) ? dataTheme : "b") + "\"  data-inset=\""+ (dataInset ? "true" : "false") + "\" data-filter=\"" + (filter ? "true" : "false") + "\"" + (dataDividerTheme != null && !"".equals(dataDividerTheme.trim()) ? " data-dividertheme=\"" + dataDividerTheme + "\"" : "") + ">");
+            out.println("<ul data-role=\"listview\"" + (id != null && !"".equals(id.trim()) ? " id=\"" + id.trim() + "\"" : "") + "\"" + (dataTheme != null && !"".equals(dataTheme.trim()) ? " data-theme=\"" + dataTheme.trim() + "\"" : "") + "\" data-inset=\""+ (dataInset ? "true" : "false") + "\" data-filter=\"" + (filter ? "true" : "false") + "\"" + (dataDividerTheme != null && !"".equals(dataDividerTheme.trim()) ? " data-dividertheme=\"" + dataDividerTheme + "\"" : "") + ">");
             getJspBody().invoke(out);          
             out.println("</ul>");
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
+    }
+    
+    
+    public void setId(String id) {
+        this.id = id;
     }
     
     public void setDataTheme(String dataTheme) {

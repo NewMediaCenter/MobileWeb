@@ -97,7 +97,7 @@
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-bar-b {
-	border: 1px solid #456f9a;
+	border: 1px solid #000000;
 	background: 			#000000;
 	color: 					#fff;
 	font-weight: bold;
@@ -137,7 +137,6 @@
 	font-weight: bold;
 }
 .ui-btn-up-b {
-	border: 1px solid #000000;
 	background: 			#484848;
 	font-weight: bold;
 	color: 					#fff;
@@ -830,6 +829,39 @@ div#myclasses dd a {
     padding: 0 25px 12px 15px;
 }
 
+/* resource icons */
+div#class_details ul.ui-listview a, div#announcement ul.ui-listview a {
+	background: transparent url('../images/service-icons/mcl-file.png') 15px 50% no-repeat;
+	padding-left: 50px;
+}
+div#class_details ul.ui-listview a.icon-FOLDER, div#announcement ul.ui-listview a.icon-FOLDER {
+	background-image: url('../images/service-icons/mcl-folder.png');
+}
+div#class_details ul.ui-listview a.icon-IMAGE, div#announcement ul.ui-listview a.icon-IMAGE {
+    background-image: url('../images/service-icons/mcl-image.png');
+}
+div#class_details ul.ui-listview a.icon-VIDEO, div#announcement ul.ui-listview a.icon-VIDEO {
+    background-image: url('../images/service-icons/mcl-movie.png');
+}
+div#class_details ul.ui-listview a.icon-TEXT, div#announcement ul.ui-listview a.icon-TEXT {
+    background-image: url('../images/service-icons/mcl-doc.png');
+}
+div#class_details ul.ui-listview a.icon-PRESENTATION, div#announcement ul.ui-listview a.icon-PRESENTATION {
+    background-image: url('../images/service-icons/mcl-powerpoint.png');
+}
+div#class_details ul.ui-listview a.icon-SPREADSHEET, div#announcement ul.ui-listview a.icon-SPREADSHEET {
+    background-image: url('../images/service-icons/mcl-spreadsheet.png');
+}
+div#class_details ul.ui-listview a.icon-PDF, div#announcement ul.ui-listview a.icon-PDF {
+    background-image: url('../images/service-icons/mcl-pdf.png');
+}
+div#class_details ul.ui-listview a.icon-AUDIO, div#announcement ul.ui-listview a.icon-AUDIO {
+    background-image: url('../images/service-icons/mcl-audio.png');
+}
+div#class_details ul.ui-listview a.icon-LINK, div#announcement ul.ui-listview a.icon-LINK {
+    background-image: url('../images/service-icons/mcl-weblink.png');
+}
+
 
 /* Emergency Info
 -----------------------------------------------------------------------------------------------------------*/
@@ -844,7 +876,7 @@ dl.emergencylist dd a {
 
 /* Computer Labs
 -----------------------------------------------------------------------------------------------------------*/
-div#computerlabs div.ui-content {
+/*div#computerlabs div.ui-content {
 	padding-top: 0;
 }
 
@@ -876,7 +908,7 @@ div#computerlabs dt a {
 div#computerlabs dd a {
 	color: #333;
 	font-weight: normal;
-}
+}*/
 
 /* Home Screen Badge Style Overrides
 -----------------------------------------------------------------------------------------------------------*/
@@ -928,4 +960,9 @@ div#home span.dl-dt-count {
 .link-view .ui-icon.ui-icon-arrow-r {
 	background: url(images/icon-view.png);
 	background-color:#939393
+}
+
+.link-gps .ui-icon.ui-icon-arrow-r {
+    background: url(images/icon-gps-18.png);
+    background-color:#939393
 }
