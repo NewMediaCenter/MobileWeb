@@ -346,7 +346,9 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
                 if (attachments != null && !attachments.isEmpty()) {
                 	for (int j = 0; j < attachments.size(); j++) {
                 		Attachment attachment = new Attachment();
-                		attachment.setTitle(attachments.getJSONObject(j).getString("name"));
+                		JSONObject attachObj = attachments.getJSONObject(j);
+                		attachment.setTitle(attachObj.getString("name"));
+                		attachment.setMimeType(attachObj.getString("type"));
                 		attach.add(attachment);
                 	}
                 }
@@ -397,6 +399,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             		Attachment attachment = new Attachment();
             		attachment.setUrl(attach.getString("id"));
             		attachment.setTitle(attach.getString("name"));
+            		attachment.setMimeType(attach.getString("type"));
             		attachments.add(attachment);
             	}
             	anns.setAttachments(attachments);

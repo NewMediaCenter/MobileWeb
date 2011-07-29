@@ -71,7 +71,7 @@ public class SakaiController {
 	private SakaiPrivateTopicService sakaiPrivateTopicService;
 	
 	private static final MimetypesFileTypeMap mimeTypesMap;
-	private static final String urlMimeType = "url";
+	private static final String urlMimeType = "text/url";
 	
 	static {
 		mimeTypesMap = new MimetypesFileTypeMap();
@@ -155,11 +155,11 @@ public class SakaiController {
 	}
 	
 	@RequestMapping(value="/{siteId}/attachment", method = RequestMethod.GET)
-	public String getAnnouncementAttachment(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @RequestParam(value="attachmentId", required=false) String attachmentId, Model uiModel) {
+	public String getAnnouncementAttachment(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @RequestParam(value="attachmentId") String attachmentId, @RequestParam(value="type") String type, Model uiModel) {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		
 		byte [] fileData = sakaiSiteService.findAnnouncementAttachment(siteId, attachmentId, user.getUserId());
-		String mimeType = mimeTypesMap.getContentType(attachmentId);
+		String mimeType = type;//mimeTypesMap.getContentType(attachmentId);
 		
 		try {
 			if (mimeType.equals(urlMimeType)) {

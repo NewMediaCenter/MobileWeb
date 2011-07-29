@@ -50,23 +50,45 @@
 		return results;
 	}
 </script>
-	
+
+
+<kme:page title="${thread.title}" id="forum" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}?title=${thread.topicTitle}">
+	<kme:content>
+		<ul style="list-style-type: none; margin:0; padding:0;">
+			<c:forEach var="message" items="${thread.messages}">
+				<li>
+					<div style="margin-left:${message.indentIndex*10}px; border-left:1px solid black; padding-left:5px;">
+						<h3>${message.createdBy}</h3>
+						<span class="date">${message.createdDate}</span>
+						<c:if test="${not message.isRead}">
+							<a class="markread ui-li-static" style="display:inline;" href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}/${thread.id}/${message.id}/markread?topicTitle=${thread.topicTitle}">
+								Mark as read
+							</a>
+						</c:if>
+						<p class="forum-thread">${message.body}</p>
+					</div>
+				</li>
+			</c:forEach>
+		</ul>
+	</kme:content>
+</kme:page>
+
+<%--
 <kme:page title="${thread.title}" id="forum" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}?title=${thread.topicTitle}">
 	<kme:content>
 		<ul data-role="listview" data-theme="c"  data-dividertheme="b">
 			<c:forEach items="${thread.messages}" var="message" varStatus="status">
 				<li data-role="list-divider">${message.createdBy}<span class="ui-li-rightcont ui-btn-up-c ui-btn-corner-all">${message.createdDate}</span> </li>
       			<li class="ui-li-static" data-icon="false">
-      				<%--<a href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}/${thread.id}/${message.id}/reply">--%>
       				<c:if test="${not message.isRead}">
 						<a class="markread ui-li-static" style="display:inline;" href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}/${thread.id}/${message.id}/markread?topicTitle=${thread.topicTitle}">
 							Mark as read
 						</a>
 					</c:if>
         				<p class="forum-thread">${message.body}</p>
-        			<%--</a>--%>
         		</li>
 			</c:forEach>
 		</ul>
 	</kme:content>
 </kme:page>
+--%>

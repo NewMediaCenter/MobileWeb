@@ -23,6 +23,7 @@ public class Attachment implements Serializable {
 	
 	private String title;
 	private String url;
+	private String mimeType;
 
 	public String getTitle() {
 		return title;
@@ -38,5 +39,13 @@ public class Attachment implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getMimeType() {
+		return mimeType;
+	}
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 }

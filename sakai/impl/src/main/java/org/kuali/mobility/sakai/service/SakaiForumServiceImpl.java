@@ -216,67 +216,67 @@ public class SakaiForumServiceImpl implements SakaiForumService {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
             
-            Map<String, Message> allMessages = new HashMap<String, Message>();
-            Map<String, List<String>> messageReplies = new HashMap<String, List<String>>();
+            Map<String, Message> messages = new HashMap<String, Message>();
             for (int i = 0; i < itemArray.size(); i++) {
             	JSONObject message = itemArray.getJSONObject(i);
-            	Message m = new Message();
 
+            	String messageId = message.getString("messageId");
+
+            	Message m = messages.get(messageId);
+            	if (m == null) {
+            		m = new Message();
+            	}
+            	
         		m.setId(message.getString("messageId"));
         		m.setTopicId(message.getString("topicId"));
         		m.setCreatedBy(message.getString("authoredBy"));
         		m.setTitle(message.getString("title"));
         		m.setBody(message.getString("body"));
         		m.setIsRead((message.getBoolean("read")));
+        		m.setIndentIndex(message.getInt("indentIndex"));
         		
         		if (m.getBody().equals("null")) {
         			m.setBody("(No message)");
         		}
-        		
-        		Date cDate = new Date(message.getLong("createdOn"));
+
+        		long time = message.getLong("createdOn");
+        		m.setCreatedTime(time);
+        		Date cDate = new Date(time);
                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy  h:mm a");
                 m.setCreatedDate(df.format(cDate));
         		
-        		allMessages.put(m.getId(), m);
-        		
-        		if (message.getInt("indentIndex") == 0) {
-	        		if (messageReplies.get(thread.getId()) == null) {
-	        			messageReplies.put(thread.getId(), new ArrayList<String>());
-	        		}
-        		} else {
+        		if (m.getIndentIndex() > 0) {
         			String replyToId = message.getString("replyTo");
         			m.setIndentIndex(message.getInt("indentIndex"));
         			m.setInReplyTo(replyToId);
         			
-            		List<String> replyList = messageReplies.get(replyToId);
-            		if (replyList == null) {
-            			replyList = new ArrayList<String>();
-            			messageReplies.put(replyToId, replyList);
+            		Message parent = messages.get(replyToId);
+            		if (parent == null) {
+            			parent = new Message();
+            			messages.put(replyToId, parent);
             		}
-            		replyList.add(m.getId());
+            		parent.getReplies().add(m);
         		}
+        		messages.put(messageId, m);
             }
             
-            Message m = allMessages.get(threadId);
+            Message m = messages.get(threadId);
             thread.setTitle(m.getTitle());
-            
-            getThreadMessages(threadId, messageReplies, allMessages, thread.getMessages());
+            getThreadMessages(m, thread.getMessages());
         } catch (Exception e) {
         	LOG.error(e.getMessage(), e);
         }
     	return thread;
 	}
 	
-	private void getThreadMessages(String messageId, Map<String, List<String>> messageReplies, Map<String, Message> allMessages, List<Message> threadMessages) {
-		Message m = allMessages.get(messageId);
-		
+	private void getThreadMessages(Message m, List<Message> threadMessages) {
 		if (m != null) {
 			threadMessages.add(m);
 			
-			List<String> replies = messageReplies.get(m.getId());
+			List<Message> replies = m.getReplies();
 			if (replies != null && !replies.isEmpty()) {
-				for (String reply : replies) {
-					getThreadMessages(reply, messageReplies, allMessages, threadMessages);
+				for (Message reply : replies) {
+					getThreadMessages(reply, threadMessages);
 				}
 			}
 		}

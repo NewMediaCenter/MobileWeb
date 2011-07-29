@@ -16,6 +16,8 @@
 package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Message implements Serializable, Comparable<Message> {
 
@@ -35,8 +37,14 @@ public class Message implements Serializable, Comparable<Message> {
     private Boolean isRead;
     private String inReplyTo;
     private int indentIndex;
+    private long createdTime;
     
-
+    private List<Message> replies;
+    
+    public Message() {
+    	setReplies(new ArrayList<Message>());
+    }
+    
 	public String getTitle() {
 		return title;
 	}
@@ -94,10 +102,7 @@ public class Message implements Serializable, Comparable<Message> {
 	}
 	
     public int compareTo(Message that) {
-        if (this == null || that == null || this.getId() == null || that.getId() == null) {
-            return -1;
-        }
-        return this.getId().compareTo(that.getId());
+        return (int) (createdTime - that.createdTime);
     }
 
 	public void setInReplyTo(String inReplyTo) {
@@ -154,5 +159,23 @@ public class Message implements Serializable, Comparable<Message> {
 
 	public void setTopicTitle(String topicTitle) {
 		this.topicTitle = topicTitle;
+	}
+
+
+	public List<Message> getReplies() {
+		return replies;
+	}
+
+
+	public void setReplies(List<Message> replies) {
+		this.replies = replies;
+	}
+
+	public long getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(long createdTime) {
+		this.createdTime = createdTime;
 	}	
 }
