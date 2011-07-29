@@ -16,6 +16,21 @@
 
 <kme:page title="Social Media" id="socialmedia" backButton="true" homeButton="true">
 	<kme:content>
-	Social Meida
+		<ul data-role="listview">
+			<c:choose>
+				<c:when test="${not empty tweets}">
+					<c:forEach items="${tweets}" var="tweet" varStatus="status">
+						<li class="tweet">
+							<img src="${tweet.profileImageUrl}" alt="profile image"></img>
+							<h3>${tweet.screenName}</h3>
+							<p>${tweet.text}</p>
+						</li>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<li>No tweets to display</li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
 	</kme:content>
 </kme:page>

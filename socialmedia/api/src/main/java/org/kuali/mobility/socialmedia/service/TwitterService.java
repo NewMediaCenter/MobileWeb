@@ -15,6 +15,10 @@
 
 package org.kuali.mobility.socialmedia.service;
 
-public interface TwitterService {
+import java.util.List;
 
+import org.kuali.mobility.socialmedia.entity.Tweet;
+
+public interface TwitterService {
+	List<Tweet> retrieveCombinedFeeds(List<String> publicIds);
 }

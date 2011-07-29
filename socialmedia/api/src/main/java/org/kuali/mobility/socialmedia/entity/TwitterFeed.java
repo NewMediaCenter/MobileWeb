@@ -16,9 +16,43 @@
 package org.kuali.mobility.socialmedia.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Twitter implements Serializable {
+public class TwitterFeed implements Serializable {
 
 	private static final long serialVersionUID = -8017395981407716607L;
-    
+	
+	private String twitterId;
+	private long lastUpdated;
+	private List<Tweet> tweets;
+	
+	public TwitterFeed() {
+		tweets = new ArrayList<Tweet>();
+	}
+
+	public String getTwitterId() {
+		return twitterId;
+	}
+
+	public void setTwitterId(String twitterId) {
+		this.twitterId = twitterId;
+	}
+
+	public long getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(long lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	public List<Tweet> getTweets() {
+		return tweets;
+	}
+
+	public void setTweets(List<Tweet> tweets) {
+		this.tweets = tweets;
+	}
 }

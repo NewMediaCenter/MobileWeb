@@ -15,6 +15,10 @@
  
 package org.kuali.mobility.socialmedia.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.kuali.mobility.socialmedia.entity.Tweet;
 import org.kuali.mobility.socialmedia.service.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,14 +32,22 @@ public class TwitterController {
     
     @Autowired
     private TwitterService twitterService;
-    public void setEmergencyInfoService(TwitterService twitterService) {
-        this.twitterService = twitterService;
-    }
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
 
+    	List<String> feeds = new ArrayList<String>();
+    	feeds.add("IUBloomington");
+    	feeds.add("IUPUI");
+    	feeds.add("indiananews");
+    	
+    	List<Tweet> tweets = twitterService.retrieveCombinedFeeds(feeds);
+    	
+    	uiModel.addAttribute("tweets", tweets);
     	return "socialmedia/list";
     }
     
+    public void setEmergencyInfoService(TwitterService twitterService) {
+        this.twitterService = twitterService;
+    }
 }
