@@ -53,12 +53,17 @@
 
 
 <kme:page title="${thread.title}" id="forum" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}?title=${thread.topicTitle}">
-	<kme:content>
-		<ul style="list-style-type: none; margin:0; padding:0;">
+	<kme:content cssClass="forum">
+		<ul>
 			<c:forEach var="message" items="${thread.messages}">
 				<li>
-					<div style="margin-left:${message.indentIndex*10}px; border-left:1px solid black; padding-left:5px;">
-						<h3>${message.createdBy}</h3>
+					<div style="margin-left:${message.indentIndex*10}px;">
+						<c:if test="${not message.isRead}">
+							<h3>${message.createdBy}</h3>
+						</c:if>
+						<c:if test="${message.isRead}">
+							<h3 class="read">${message.createdBy}</h3>
+						</c:if>
 						<span class="date">${message.createdDate}</span>
 						<c:if test="${not message.isRead}">
 							<a class="markread ui-li-static" style="display:inline;" href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}/${thread.id}/${message.id}/markread?topicTitle=${thread.topicTitle}">
