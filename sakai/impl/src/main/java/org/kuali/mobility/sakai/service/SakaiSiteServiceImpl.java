@@ -400,6 +400,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             		attachment.setUrl(attach.getString("id"));
             		attachment.setTitle(attach.getString("name"));
             		attachment.setMimeType(attach.getString("type"));
+            		attachment.setFileType(determineAttachmentFileType(attachment.getUrl(), attachment.getMimeType()));
             		attachments.add(attachment);
             	}
             	anns.setAttachments(attachments);
@@ -632,6 +633,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             	item.setId(id);
             	item.setEncodedId(URLEncoder.encode(id, "UTF-8"));
             	item.setTitle(resourceObject.getString("resourceName"));
+            	item.setMimeType(resourceObject.getString("resourceType"));
 
             	char lastChar = id.charAt(id.length()-1);
     			if(lastChar == '/'){
@@ -657,6 +659,26 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	
 	private FileType determineFileType(String fileExtension) {
 		FileType type = fileTypes.get(fileExtension.toLowerCase());
+		if (type != null) {
+			return type;
+		} else {
+			return FileType.GENERIC;
+		}
+	}
+	
+	private FileType determineAttachmentFileType(String attachmentUrl, String mimeType) {
+		if (URL_MIME_TYPE.equals(mimeType)) {
+			return FileType.LINK;
+		}
+		
+		String strArr[] = attachmentUrl.split("/");
+		String resExt[] = strArr[strArr.length-1].split("\\.");
+		String extension = null;
+    	if(resExt!=null && resExt.length!=0) {
+    		extension = resExt[resExt.length-1].toLowerCase();
+    	}
+		
+		FileType type = fileTypes.get(extension);
 		if (type != null) {
 			return type;
 		} else {

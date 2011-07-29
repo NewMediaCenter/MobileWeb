@@ -26,6 +26,7 @@ private static final long serialVersionUID = -2272816569200642551L;
     private String title;
     private String extension;
     private FileType fileType;
+    private String mimeType;
     
 	public String getTitle() {
 		return title;
@@ -69,5 +70,13 @@ private static final long serialVersionUID = -2272816569200642551L;
 
 	public void setEncodedId(String encodedId) {
 		this.encodedId = encodedId;
+	}
+
+	public String getMimeType() {
+		return mimeType;
+	}
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 }

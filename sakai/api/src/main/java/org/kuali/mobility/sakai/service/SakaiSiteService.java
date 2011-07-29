@@ -25,6 +25,9 @@ import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
 
 public interface SakaiSiteService {
+	
+	public static final String URL_MIME_TYPE = "text/url";
+	
 	public Home findSakaiHome(String user);
 	public Site findSite(String siteId, String user);
 	

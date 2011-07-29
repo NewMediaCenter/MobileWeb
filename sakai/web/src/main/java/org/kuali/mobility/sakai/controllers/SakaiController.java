@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,22 +68,6 @@ public class SakaiController {
 	
 	@Autowired
 	private SakaiPrivateTopicService sakaiPrivateTopicService;
-	
-	private static final MimetypesFileTypeMap mimeTypesMap;
-	private static final String urlMimeType = "text/url";
-	
-	static {
-		mimeTypesMap = new MimetypesFileTypeMap();
-		
-		mimeTypesMap.addMimeTypes("application/pdf pdf");
-		mimeTypesMap.addMimeTypes("application/msword doc");
-		mimeTypesMap.addMimeTypes("application/vnd.openxmlformats-officedocument.wordprocessingml.document docx");
-		mimeTypesMap.addMimeTypes("application/vnd.ms-excel xla xls xlt xlw");
-		mimeTypesMap.addMimeTypes("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx");
-		mimeTypesMap.addMimeTypes("application/vnd.ms-powerpoint ppt pps");
-		mimeTypesMap.addMimeTypes("pplication/vnd.openxmlformats-officedocument.presentationml.presentation pptx");
-		mimeTypesMap.addMimeTypes(urlMimeType + " url URL Url com edu net org gov info biz us");
-	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getSites(HttpServletRequest request, Model uiModel) {
@@ -159,14 +142,13 @@ public class SakaiController {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		
 		byte [] fileData = sakaiSiteService.findAnnouncementAttachment(siteId, attachmentId, user.getUserId());
-		String mimeType = type;//mimeTypesMap.getContentType(attachmentId);
 		
 		try {
-			if (mimeType.equals(urlMimeType)) {
+			if (type.equals(SakaiSiteService.URL_MIME_TYPE)) {
 				String url = new String(fileData);
 				response.sendRedirect(response.encodeRedirectURL(url));
 			} else {
-				response.setContentType(mimeType);
+				response.setContentType(type);
 				response.setContentLength(fileData.length);
 				response.setHeader("Content-Disposition", "attachment; filename=\"" + getFileName(attachmentId) + "\"" );
 				response.getOutputStream().write(fileData, 0, fileData.length);
@@ -265,7 +247,7 @@ public class SakaiController {
 	}
 	
 	@RequestMapping(value="/{siteId}/resources", method = RequestMethod.GET)
-	public String getResources(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @RequestParam(value="resId", required=false) String resId, Model uiModel) {
+	public String getResources(HttpServletRequest request, HttpServletResponse response, @PathVariable("siteId") String siteId, @RequestParam(value="resId", required=false) String resId, @RequestParam(value="type", required=false) String type, Model uiModel) {
 	    try {
 	        //resId = URLEncoder.encode(resId, "UTF-8");
 			User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
@@ -282,9 +264,9 @@ public class SakaiController {
     				//download the file
 					byte [] fileData = sakaiSiteService.getResource(resId, user.getUserId());
 					if (fileData!= null) {
-						String mimeType = mimeTypesMap.getContentType(resId);
+						String mimeType = type;
 						
-						if (mimeType.equals(urlMimeType)) {
+						if (mimeType.equals(SakaiSiteService.URL_MIME_TYPE)) {
 							String url = new String(fileData);
 							response.sendRedirect(response.encodeRedirectURL(url));
 						} else {
