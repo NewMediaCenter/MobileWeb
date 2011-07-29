@@ -18,7 +18,7 @@
 	    <style type="text/css">
 	        div.ui-body-b { background: none; }
 	        div.ui-body-b { background-color: #E6E6E6 !important; }
-	        div#classesPanel, div#projectsPanel, div#otherPanel { margin-top: -20px; }   
+	        div#classesPanel, div#projectsPanel, div#otherPanel, div#todayPanel { margin-top: -20px; }   
 	    </style>
     
         <c:if test="${tabCount gt 1}">
@@ -27,6 +27,7 @@
 			        $('#classesPanel').hide();
 			        $('#projectsPanel').hide();
 			        $('#otherPanel').hide();
+			        $('#todayPanel').hide();
 			        
 			        $('#classesTab').click(function() {
 			            $('#classesTab').css('background-color', '#E6E6E6');
@@ -35,9 +36,12 @@
 			            $('#projectsTab').css('color', '#999999');
 			            $('#otherTab').css('background-color', '#CCCCCC');
                         $('#otherTab').css('color', '#999999');
+                        $('#todayTab').css('background-color', '#CCCCCC');
+                        $('#todayTab').css('color', '#999999');
 			            $('#classesPanel').show();
 			            $('#projectsPanel').hide();
 			            $('#otherPanel').hide();
+			            $('#todayPanel').hide();
 			        });
 			        
 			        $('#projectsTab').click(function() {
@@ -47,9 +51,12 @@
 			            $('#classesTab').css('color', '#999999');
 			            $('#otherTab').css('background-color', '#CCCCCC');
                         $('#otherTab').css('color', '#999999');
+                        $('#todayTab').css('background-color', '#CCCCCC');
+                        $('#todayTab').css('color', '#999999');
                         $('#classesPanel').hide();
 			            $('#projectsPanel').show();
 			            $('#otherPanel').hide();
+			            $('#todayPanel').hide();
 			        });
 			        
 			        $('#otherTab').click(function() {
@@ -59,9 +66,27 @@
                         $('#classesTab').css('color', '#999999');
                         $('#otherTab').css('background-color', '#E6E6E6');
                         $('#otherTab').css('color', '#2F3E46');
+                        $('#todayTab').css('background-color', '#CCCCCC');
+                        $('#todayTab').css('color', '#999999');
                         $('#classesPanel').hide();
                         $('#projectsPanel').hide();
                         $('#otherPanel').show();
+                        $('#todayPanel').hide();
+                    });
+			        
+			        $('#todayTab').click(function() {
+                        $('#projectsTab').css('background-color', '#CCCCCC');
+                        $('#projectsTab').css('color', '#999999');
+                        $('#classesTab').css('background-color', '#CCCCCC');
+                        $('#classesTab').css('color', '#999999');
+                        $('#otherTab').css('background-color', '#CCCCCC');
+                        $('#otherTab').css('color', '#999999');
+                        $('#todayTab').css('background-color', '#E6E6E6');
+                        $('#todayTab').css('color', '#2F3E46');
+                        $('#classesPanel').hide();
+                        $('#projectsPanel').hide();
+                        $('#otherPanel').hide();
+                        $('#todayPanel').show();
                     });
 			    });
 		    </script>
@@ -76,6 +101,9 @@
 	            <c:if test="${!empty home.other}">
 	                <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="otherTab" name="otherTab" href="#">Other</a>
 	            </c:if>
+	            <c:if test="${!empty home.today}">
+                    <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="otherTab" name="otherTab" href="#">Other</a>
+                </c:if>
             </div>
             
             <c:choose>
@@ -97,6 +125,15 @@
                     });
                     </script>
                 </c:when>
+                <c:when test="${!empty home.today}">
+                    <script type="text/javascript">
+                    $(window).load(function () {
+                        $('#todayTab').css('background-color', '#E6E6E6');
+                        $('#todayTab').css('color', '#2F3E46');
+                        $('#todayPanel').show();
+                    });
+                    </script>
+                </c:when>
                 <c:otherwise>
                     <script type="text/javascript">
                     $(window).load(function () {
@@ -111,7 +148,7 @@
             
             <style type="text/css">
 			    <!--
-			    div#classesPanel, div#projectsPanel, div#otherPanel  { margin-top: 40px; }			    
+			    div#classesPanel, div#projectsPanel, div#otherPanel, div#todayPanel  { margin-top: 40px; }			    
 			    -->
 		    </style>
         </c:if>
