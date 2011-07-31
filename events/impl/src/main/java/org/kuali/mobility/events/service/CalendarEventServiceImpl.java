@@ -45,7 +45,7 @@ public class CalendarEventServiceImpl implements CalendarEventService {
 
     private String eventURL;
 
-    private String SERVER_URL = "https://test.uisapp2.iu.edu/ccl-unt";
+    private String SERVER_URL = "https://test.uisapp2.iu.edu/ccl-snd";
 
     private String SERVER_URL_OAUTH_CALLBACK = "oob";
     

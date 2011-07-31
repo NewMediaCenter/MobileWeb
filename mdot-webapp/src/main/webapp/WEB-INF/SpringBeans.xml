@@ -79,11 +79,11 @@
     </bean>-->
 
      <bean id="calendarEventOAuthService" class="edu.iu.es.espd.ccl.oauth.CalendarEventOAuthServiceImpl">
-        <property name="calendarRestURL" value="https://test.uisapp2.iu.edu/ccl-unt/rest/" />
-        <property name="providerPublicURL" value="https://test.uisapp2.iu.edu/ccl-unt/session" />
-        <property name="providerRequestTokenURL" value="https://test.uisapp2.iu.edu/ccl-unt/oauth/request_token" />
-        <property name="providerAuthorizeURL" value="https://test.uisapp2.iu.edu/ccl-unt/oauth/authorize" />
-        <property name="providerAccessTokenURL" value="https://test.uisapp2.iu.edu/ccl-unt/oauth/access_token" />
+        <property name="calendarRestURL" value="https://test.uisapp2.iu.edu/ccl-snd/rest/" />
+        <property name="providerPublicURL" value="https://test.uisapp2.iu.edu/ccl-snd/session" />
+        <property name="providerRequestTokenURL" value="https://test.uisapp2.iu.edu/ccl-snd/oauth/request_token" />
+        <property name="providerAuthorizeURL" value="https://test.uisapp2.iu.edu/ccl-snd/oauth/authorize" />
+        <property name="providerAccessTokenURL" value="https://test.uisapp2.iu.edu/ccl-snd/oauth/access_token" />
         <property name="consumerKey" value="mobileOAuthConsumerKey" />
         <property name="consumerSecret" value="hello" />
         <property name="resourceId" value="MOBILE_ID" />

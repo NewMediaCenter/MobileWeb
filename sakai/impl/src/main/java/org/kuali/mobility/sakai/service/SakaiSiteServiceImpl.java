@@ -146,6 +146,9 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			try {
 				Calendar todayDate = Calendar.getInstance();
 				Calendar tomorrowDate = Calendar.getInstance();
+				//todayDate.set(Calendar.MONTH, Calendar.AUGUST);
+				//todayDate.set(Calendar.YEAR, 2011);
+				//todayDate.set(Calendar.DAY_OF_MONTH, 29);
 				todayDate.set(Calendar.HOUR, 0);
 				todayDate.set(Calendar.MINUTE, 0);
 				todayDate.set(Calendar.SECOND, 0);

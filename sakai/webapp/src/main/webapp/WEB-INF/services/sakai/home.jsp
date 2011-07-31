@@ -101,7 +101,7 @@
 	            <c:if test="${!empty home.other}">
 	                <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="otherTab" name="otherTab" href="#">Other</a>
 	            </c:if>
-	            <c:if test="${!empty home.today}">
+	            <c:if test="${!empty home.todaysCourses}">
                     <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="todayTab" name="todayTab" href="#">Today</a>
                 </c:if>
             </div>
@@ -125,7 +125,7 @@
                     });
                     </script>
                 </c:when>
-                <c:when test="${!empty home.today}">
+                <c:when test="${!empty home.todaysCourses}">
                     <script type="text/javascript">
                     $(window).load(function () {
                         $('#todayTab').css('background-color', '#E6E6E6');
