@@ -35,6 +35,8 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
+import org.kuali.mobility.sakai.entity.Attachment;
+import org.kuali.mobility.sakai.entity.FileType;
 import org.kuali.mobility.sakai.entity.Forum;
 import org.kuali.mobility.sakai.entity.ForumThread;
 import org.kuali.mobility.sakai.entity.ForumTopic;
@@ -238,6 +240,21 @@ public class SakaiForumServiceImpl implements SakaiForumService {
         		if (m.getBody().equals("null")) {
         			m.setBody("(No message)");
         		}
+        		
+        		JSONArray attachmentArray = message.getJSONArray("attachments");
+                if (attachmentArray != null && !attachmentArray.isEmpty()) {
+                	List<Attachment> attachments = new ArrayList<Attachment>();
+                	for (int j = 0; j < attachmentArray.size(); j++) {
+                		JSONObject attach = attachmentArray.getJSONObject(j);
+                		Attachment attachment = new Attachment();
+                		attachment.setUrl(attach.getString("id"));
+                		attachment.setTitle(attach.getString("name"));
+                		attachment.setMimeType(attach.getString("type"));
+                		attachment.setFileType(determineAttachmentFileType(attachment.getUrl(), attachment.getMimeType()));
+                		attachments.add(attachment);
+                	}
+                	m.setAttachments(attachments);
+                }
 
         		long time = message.getLong("createdOn");
         		m.setCreatedTime(time);
@@ -279,6 +296,26 @@ public class SakaiForumServiceImpl implements SakaiForumService {
 					getThreadMessages(reply, threadMessages);
 				}
 			}
+		}
+	}
+	
+	private FileType determineAttachmentFileType(String attachmentUrl, String mimeType) {
+		if (SakaiSiteService.URL_MIME_TYPE.equals(mimeType)) {
+			return FileType.LINK;
+		}
+		
+		String strArr[] = attachmentUrl.split("/");
+		String resExt[] = strArr[strArr.length-1].split("\\.");
+		String extension = null;
+    	if(resExt!=null && resExt.length!=0) {
+    		extension = resExt[resExt.length-1].toLowerCase();
+    	}
+		
+		FileType type = SakaiSiteService.FILE_TYPES.get(extension);
+		if (type != null) {
+			return type;
+		} else {
+			return FileType.GENERIC;
 		}
 	}
 	

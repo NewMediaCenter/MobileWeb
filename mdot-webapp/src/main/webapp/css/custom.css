@@ -830,35 +830,43 @@ div#myclasses dd a {
 }
 
 /* resource icons */
-div#class_details ul.ui-listview a, div#announcement ul.ui-listview a {
+div#class_details ul.ui-listview a, div#announcement ul.ui-listview a, div#message ul.ui-listview a {
 	background: transparent url('../images/service-icons/mcl-file.png') 15px 50% no-repeat;
 	padding-left: 50px;
 }
-div#class_details ul.ui-listview a.icon-FOLDER, div#announcement ul.ui-listview a.icon-FOLDER {
+div#forum ul li ul li a {
+	background: transparent url('../images/service-icons/mcl-file.png') 10px 50% no-repeat;
+	padding-left: 30px;
+}
+div#forum ul li ul li {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+div#class_details ul.ui-listview a.icon-FOLDER, div#announcement ul.ui-listview a.icon-FOLDER, div#message ul.ui-listview a.icon-FOLDER, div#forum ul li ul li a.icon-FOLDER {
 	background-image: url('../images/service-icons/mcl-folder.png');
 }
-div#class_details ul.ui-listview a.icon-IMAGE, div#announcement ul.ui-listview a.icon-IMAGE {
+div#class_details ul.ui-listview a.icon-IMAGE, div#announcement ul.ui-listview a.icon-IMAGE, div#message ul.ui-listview a.icon-IMAGE, div#forum ul li ul li a.icon-IMAGE {
     background-image: url('../images/service-icons/mcl-image.png');
 }
-div#class_details ul.ui-listview a.icon-VIDEO, div#announcement ul.ui-listview a.icon-VIDEO {
+div#class_details ul.ui-listview a.icon-VIDEO, div#announcement ul.ui-listview a.icon-VIDEO, div#message ul.ui-listview a.icon-VIDEO, div#forum ul li ul li a.icon-VIDEO {
     background-image: url('../images/service-icons/mcl-movie.png');
 }
-div#class_details ul.ui-listview a.icon-TEXT, div#announcement ul.ui-listview a.icon-TEXT {
+div#class_details ul.ui-listview a.icon-TEXT, div#announcement ul.ui-listview a.icon-TEXT, div#message ul.ui-listview a.icon-TEXT, div#forum ul li ul li a.icon-TEXT {
     background-image: url('../images/service-icons/mcl-doc.png');
 }
-div#class_details ul.ui-listview a.icon-PRESENTATION, div#announcement ul.ui-listview a.icon-PRESENTATION {
+div#class_details ul.ui-listview a.icon-PRESENTATION, div#announcement ul.ui-listview a.icon-PRESENTATION, div#message ul.ui-listview a.icon-PRESENTATION, div#forum ul li ul li a.icon-PRESENTATION {
     background-image: url('../images/service-icons/mcl-powerpoint.png');
 }
-div#class_details ul.ui-listview a.icon-SPREADSHEET, div#announcement ul.ui-listview a.icon-SPREADSHEET {
+div#class_details ul.ui-listview a.icon-SPREADSHEET, div#announcement ul.ui-listview a.icon-SPREADSHEET, div#message ul.ui-listview a.icon-SPREADSHEET, div#forum ul li ul li a.icon-SPREADSHEET {
     background-image: url('../images/service-icons/mcl-spreadsheet.png');
 }
-div#class_details ul.ui-listview a.icon-PDF, div#announcement ul.ui-listview a.icon-PDF {
+div#class_details ul.ui-listview a.icon-PDF, div#announcement ul.ui-listview a.icon-PDF, div#message ul.ui-listview a.icon-PDF, div#forum ul li ul li a.icon-PDF {
     background-image: url('../images/service-icons/mcl-pdf.png');
 }
-div#class_details ul.ui-listview a.icon-AUDIO, div#announcement ul.ui-listview a.icon-AUDIO {
+div#class_details ul.ui-listview a.icon-AUDIO, div#announcement ul.ui-listview a.icon-AUDIO, div#message ul.ui-listview a.icon-AUDIO, div#forum ul li ul li a.icon-AUDIO {
     background-image: url('../images/service-icons/mcl-audio.png');
 }
-div#class_details ul.ui-listview a.icon-LINK, div#announcement ul.ui-listview a.icon-LINK {
+div#class_details ul.ui-listview a.icon-LINK, div#announcement ul.ui-listview a.icon-LINK, div#message ul.ui-listview a.icon-LINK, div#forum ul li ul li a.icon-LINK {
     background-image: url('../images/service-icons/mcl-weblink.png');
 }
 

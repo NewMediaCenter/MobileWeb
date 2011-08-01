@@ -31,6 +31,7 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
+import org.kuali.mobility.sakai.entity.Attachment;
 import org.kuali.mobility.sakai.entity.FileType;
 import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
@@ -157,20 +158,20 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
                 DateFormat df = new SimpleDateFormat("MMM d, yyyy h:mm a");
                 String createdDate = df.format(cDate);
                 
-//                JSONArray attachmentArray = messageObject.getJSONArray("attachments");
-//                if (attachmentArray != null && !attachmentArray.isEmpty()) {
-//                	List<Attachment> attachments = new ArrayList<Attachment>();
-//                	for (int j = 0; j < attachmentArray.size(); j++) {
-//                		JSONObject attach = attachmentArray.getJSONObject(j);
-//                		Attachment attachment = new Attachment();
-//                		attachment.setUrl(attach.getString("id"));
-//                		attachment.setTitle(attach.getString("name"));
-//                		attachment.setMimeType(attach.getString("type"));
-//                		attachment.setFileType(determineAttachmentFileType(attachment.getUrl(), attachment.getMimeType()));
-//                		attachments.add(attachment);
-//                	}
-//                	item.setAttachments(attachments);
-//                }
+                JSONArray attachmentArray = messageObject.getJSONArray("attachments");
+                if (attachmentArray != null && !attachmentArray.isEmpty()) {
+                	List<Attachment> attachments = new ArrayList<Attachment>();
+                	for (int j = 0; j < attachmentArray.size(); j++) {
+                		JSONObject attach = attachmentArray.getJSONObject(j);
+                		Attachment attachment = new Attachment();
+                		attachment.setUrl(attach.getString("id"));
+                		attachment.setTitle(attach.getString("name"));
+                		attachment.setMimeType(attach.getString("type"));
+                		attachment.setFileType(determineAttachmentFileType(attachment.getUrl(), attachment.getMimeType()));
+                		attachments.add(attachment);
+                	}
+                	item.setAttachments(attachments);
+                }
                 
                 item.setId(messageId);
                 item.setTitle(messageTitle);

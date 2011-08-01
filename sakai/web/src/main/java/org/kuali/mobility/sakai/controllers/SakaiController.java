@@ -293,6 +293,9 @@ public class SakaiController {
 							return null;
 						}
 	    			} else {
+	    				//couldn't find the resource
+	    				String referrer = request.getHeader("referer");
+	    				response.sendRedirect(referrer);
 	    				return null;
 	    			}
     			}

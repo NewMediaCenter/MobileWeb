@@ -18,7 +18,7 @@
 			<c:forEach items="${privatetopics}" var="item" varStatus="status">
 				<li>
 					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/messages/folder/${item.typeUuid}?title=${item.title}">
-						${item.title}
+						<span style="text-transform:capitalize">${item.title}</span>
 						<span class="ui-li-count">${item.unreadCount}</span>
 					</a>
 				</li>

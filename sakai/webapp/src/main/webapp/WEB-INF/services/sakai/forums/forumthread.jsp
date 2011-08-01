@@ -72,29 +72,20 @@
 							</a>
 						</c:if>
 						<p class="forum-thread">${message.body}</p>
+						<c:if test="${not empty message.attachments}">
+							<ul>
+								<c:forEach items="${message.attachments}" var="attachment" varStatus="status">
+									<li>
+										<a href="${pageContext.request.contextPath}/myclasses/${siteId}/attachment?attachmentId=${attachment.url}&type=${attachment.mimeType}" class="icon-${attachment.fileType}" >
+											${attachment.title}
+										</a>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:if>
 					</div>
 				</li>
 			</c:forEach>
 		</ul>
 	</kme:content>
 </kme:page>
-
-<%--
-<kme:page title="${thread.title}" id="forum" cssFilename="sakai" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}?title=${thread.topicTitle}">
-	<kme:content>
-		<ul data-role="listview" data-theme="c"  data-dividertheme="b">
-			<c:forEach items="${thread.messages}" var="message" varStatus="status">
-				<li data-role="list-divider">${message.createdBy}<span class="ui-li-rightcont ui-btn-up-c ui-btn-corner-all">${message.createdDate}</span> </li>
-      			<li class="ui-li-static" data-icon="false">
-      				<c:if test="${not message.isRead}">
-						<a class="markread ui-li-static" style="display:inline;" href="${pageContext.request.contextPath}/myclasses/${siteId}/forums/${thread.forumId}/${thread.topicId}/${thread.id}/${message.id}/markread?topicTitle=${thread.topicTitle}">
-							Mark as read
-						</a>
-					</c:if>
-        				<p class="forum-thread">${message.body}</p>
-        		</li>
-			</c:forEach>
-		</ul>
-	</kme:content>
-</kme:page>
---%>
