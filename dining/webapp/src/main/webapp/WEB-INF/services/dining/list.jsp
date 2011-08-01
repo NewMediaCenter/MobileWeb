@@ -30,9 +30,9 @@
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<li>
+					<kme:listItem>
 						No menus
-					</li>
+					</kme:listItem>
 				</c:otherwise>
 			</c:choose>
 		</kme:listView>

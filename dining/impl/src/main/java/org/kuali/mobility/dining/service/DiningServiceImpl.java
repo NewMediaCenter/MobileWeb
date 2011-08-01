@@ -70,6 +70,7 @@ public class DiningServiceImpl implements DiningService {
         return url;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private List<Menu> parseUrl(String url){
 		List<Menu> menus = new ArrayList<Menu>();
 		try {
@@ -78,19 +79,19 @@ public class DiningServiceImpl implements DiningService {
 			// Process the XML	
 			Document doc = retrieveDocumentFromUrl(url, 5000, 5000);
 			Element root = doc.getRootElement();
-			List xmlMenus = root.getChildren("menu");
-			for (Iterator iterator = xmlMenus.iterator(); iterator.hasNext();) {
-				Element xmlMenu = (Element) iterator.next();
+			List<Element> xmlMenus = root.getChildren("menu");
+			for (Iterator<Element> iterator = xmlMenus.iterator(); iterator.hasNext();) {
+				Element xmlMenu = iterator.next();
 				// Make the date format configurable
 				String dateStr = xmlMenu.getChildText("date");
 				Menu menu = new Menu();
 				try {
 					Date date = sdf.parse(dateStr);
 					menu.setDate(date);
-					List items = xmlMenu.getChildren("item");
-					for (Iterator itemItr = items.iterator(); itemItr.hasNext();) {
+					List<Element> items = xmlMenu.getChildren("item");
+					for (Iterator<Element> itemItr = items.iterator(); itemItr.hasNext();) {
 						try {
-							Element xmlItem = (Element) itemItr.next();
+							Element xmlItem = itemItr.next();
 							String name = xmlItem.getChildText("name");
 							String priceStr = xmlItem.getChildText("price");
 							double price = Double.parseDouble(priceStr);
