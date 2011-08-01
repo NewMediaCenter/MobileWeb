@@ -1,0 +1,8 @@
+dl.emergencylist dt a {
+    color: #000 !important;
+}
+
+dl.emergencylist dd a {
+    color: #333 !important;
+    font-weight: normal;
+}

@@ -1,3 +1,28 @@
+
+/* Custom Grid Configurations  (need to refactor using 960 grid framework?)
+-----------------------------------------------------------------------------------------------------------*/
+.ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d, .ui-grid-20-60-20, .ui-grid-evt-month {
+	overflow: hidden;
+}
+.ui-block-a, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e, .ui-block-f, .ui-block-g {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	min-height: 1px;
+}
+.ui-block-1, .ui-block-2, .ui-block-3, .ui-block-4 .ui-block-5, .ui-block-6, .ui-block-7 {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	min-height: 1px;
+}
+
+
+
+
+
 /* Calander Month - Custom Grid
 -----------------------------------------------------------------------------------------------------------*/
 .monthgrid {
@@ -196,38 +221,23 @@
 	text-decoration: none;
 }
 
-.tabs ul {
-	margin-right:2px;
-	margin-left:;
-	
-}
 
 
-.tabs ul li a {
-	margin-left:2px;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
-	-moz-border-radius-topleft: 10px;
-	-moz-border-radius-topright: 10px;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	border-right: 1px solid #CCC;
-	background:#666;
-	color:#ffffff;
-	text-shadow:none;
-}
-
-.tabs ul li a.selected {
-	border-bottom-style: none;
-	background:#FFF;
-	color:#000;
-}
-
-.tabs {
-	margin-top:2px;
-}
-
-.monthgrid .ui-navbar-noicons li .ui-btn .ui-btn-inner, .ui-navbar-noicons .ui-navbar-toggle .ui-btn-inner { padding-top: .4em; padding-bottom: .4em; }
-.monthgrid div .event-list li a h3 {
+/*.monthgrid div .event-list li a h3 {
 	white-space:normal;
+}*/
+.event-list {
+	display: block;
+	padding-left:15px;
+	padding-right:15px;
 }
+
+
+
+.listload {
+	padding-top:12px;
+}
+.listload a {
+	text-decoration:none;
+}
+

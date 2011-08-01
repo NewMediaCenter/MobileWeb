@@ -9,3 +9,59 @@
   permissions and limitations under the License.
 */
 
+/* IT Notices
+-----------------------------------------------------------------------------------------------------------*/
+dl.itnoticeslist dt a {
+    padding: 15px 250px 10px 75px;
+    position: relative;
+    color: #000 !important;
+    border: none;
+    width: 60%;
+}
+
+dl.itnoticeslist dd a {
+    padding: 5px 150px 10px 75px;
+    color: #333 !important;
+    border: none;
+    width: 60%;
+}
+
+div#itnotices div.ui-content span, div#itnotices div.ui-content span.itNoticeIcon-Announcement, div#itnotices div.ui-content span.itNoticeIcon-Critical, div#itnotices div.ui-content span.itNoticeIcon-Error, div#itnotices div.ui-content span.itNoticeIcon-News, div#itnotices div.ui-content span.itNoticeIcon-Warning {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 60px;
+    height: 100px;
+    display: block;
+    text-indent: -9999px;
+    background-color: transparent;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+/* default icon */
+div#itnotices div.ui-content span {
+	background-image: url('../images/itnotices/announcement.png');
+}
+
+div#itnotices div.ui-content span.itNoticeIcon-Announcement {
+    background-image: url('../images/itnotices/announcement.png');
+}
+
+div#itnotices div.ui-content span.itNoticeIcon-Critical {
+    background-image: url('../images/itnotices/critical.png');
+}
+
+div#itnotices div.ui-content span.itNoticeIcon-Error {
+    background-image: url('../images/itnotices/error.png');
+}
+
+div#itnotices div.ui-content span.itNoticeIcon-News {
+    background-image: url('../images/itnotices/news.png');
+}
+
+div#itnotices div.ui-content span.itNoticeIcon-Warning {
+    background-image: url('../images/itnotices/warning.png');
+}

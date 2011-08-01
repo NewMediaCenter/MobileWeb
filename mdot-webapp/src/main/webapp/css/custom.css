@@ -446,177 +446,6 @@
 	min-height: 20px;
 	padding-left: 50px;*/
 }
-/* Custom Grid Configurations  (need to refactor using 960 grid framework?)
------------------------------------------------------------------------------------------------------------*/
-.ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d, .ui-grid-20-60-20, .ui-grid-evt-month {
-	overflow: hidden;
-}
-.ui-block-a, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e, .ui-block-f, .ui-block-g {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	float: left;
-	min-height: 1px;
-}
-.ui-block-1, .ui-block-2, .ui-block-3, .ui-block-4 .ui-block-5, .ui-block-6, .ui-block-7 {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	float: left;
-	min-height: 1px;
-}
-/* Athletics - Custom Grid
------------------------------------------------------------------------------------------------------------*/
-
-
-
-
-
-
-/* grid d: 20/60/20/ */
-.ui-grid-20-60-20 .ui-block-a, .ui-grid-20-60-20 .ui-block-c {
-	width: 20%;
-}
-.ui-grid-20-60-20 .ui-block-b {
-	width: 60%;
-	text-align:center;
-	border-left:none;
-	border-right:0px none
-}
-.ui-grid-20-60-20 .ui-block-a {
-	clear: left;
-}
-
-
-
-
-/* MISC STUFF
------------------------------------------------------------------------------------------------------------*/
-
-.shadow {
-	-moz-box-shadow: 5px 5px 5px #ccc;
-	-webkit-box-shadow: 5px 5px 5px #ccc;
-	box-shadow: 5px 5px 5px #ccc;
-}
-
-
-
-.listload {
-	padding-top:12px;
-}
-.listload a {
-	text-decoration:none;
-}
-
-
-
-
-/* NEWS
------------------------------------------------------------------------------------------------------------*/
-
-.news-index li {
-	font-size:.7em
-}
-.news-index .ui-li-thumb, .ui-li-icon {
-	/*
-	
-	disabled while testing sakai resource icons
-	
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	max-height: 120px;
-	max-width: 120px;*/
-}
-.news-index .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
-	min-height: 60px;
-	padding-left: 130px;
-}
-.news-index .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
-	padding-right: 40px;
-}
-.news-index .ui-icon-listview {
-	background:url(images/icon-listview.png)
-}
-.news-index p.news-title {
-	white-space:normal;
-	margin:0em;
-}
-.news-index .news-topstory .bottom-fade {
-	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(249,249,249,0.85) 46%, rgba(244,244,244,0.95) 83%, rgba(244,244,244,1) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0)), color-stop(46%, rgba(249,249,249,0.85)), color-stop(83%, rgba(244,244,244,0.95)), color-stop(100%, rgba(244,244,244,1)));
-	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(249,249,249,0.85) 46%, rgba(244,244,244,0.95) 83%, rgba(244,244,244,1) 100%);
-	background: -o-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(249,249,249,0.85) 46%, rgba(244,244,244,0.95) 83%, rgba(244,244,244,1) 100%);
-	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(249,249,249,0.85) 46%, rgba(244,244,244,0.95) 83%, rgba(244,244,244,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#f4f4f4', GradientType=0 );
-	background: linear-gradient(top, rgba(255,255,255,0) 0%, rgba(249,249,249,0.85) 46%, rgba(244,244,244,0.95) 83%, rgba(244,244,244,1) 100%);
-	position:absolute;
-	width:100%;
-	height:40px;
-	top:80px;
-}
-.news-index .news-topstory a {
-	/* [disabled]padding-bottom:0em; */
-}
-.news-index .news-topstory a img {
-	height:200px;
-	width:200px;
-}
-.news-index .news-topstory a div {
-	max-height:100px;
-	min-height:100px;
-	overflow:hidden;
-}
-.news-index .news-topstory a div .news-title {
-	white-space:normal;
-	font-weight:bold;
-	margin-bottom:1em;
-	margin-top:.2em;
-}
-.news-index .news-topstory a div .news-teaser {
-	white-space:normal;
-	margin-bottom:0px;
-}
-	
-
-
-
-
-
-.news-index .ui-li, .ui-li.ui-field-contain {
-	
-	border-top-width: 0px;
-}
-
-
-
-.news-story h3 {
-	margin-top:0px;
-}
-.news-story p {
-	font-size:0.8em;
-}
-.news-story .image-caption {
-	float:left;
-	margin-right:0.5em;
-	width:140px;
-	padding:0.4em;
-	background: #FFFFFF;
-	border: 1px solid #CCC;
-	margin-bottom: .5em;
-}
-.news-story .image-caption img {
-	width:140px;
-	height: 140px;
-}
-.news-story .image-caption p {
-	font-size:.7em;
-	margin:0px;
-}
-.news-story p strong {
-	color:#999999;
-}
-
 
 
 /* All Services - Definition List Default Styles
@@ -739,187 +568,8 @@ div#home dd a {
 }
 
 
-/* IT Notices
------------------------------------------------------------------------------------------------------------*/
-dl.itnoticeslist dt a {
-    padding: 15px 250px 10px 75px;
-    position: relative;
-    color: #000 !important;
-    border: none;
-    width: 60%;
-}
-
-dl.itnoticeslist dd a {
-    padding: 5px 150px 10px 75px;
-    color: #333 !important;
-    border: none;
-    width: 60%;
-}
-
-div#itnotices div.ui-content span, div#itnotices div.ui-content span.itNoticeIcon-Announcement, div#itnotices div.ui-content span.itNoticeIcon-Critical, div#itnotices div.ui-content span.itNoticeIcon-Error, div#itnotices div.ui-content span.itNoticeIcon-News, div#itnotices div.ui-content span.itNoticeIcon-Warning {
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    width: 60px;
-    height: 100px;
-    display: block;
-    text-indent: -9999px;
-    background-color: transparent;
-    background-position: top left;
-    background-repeat: no-repeat;
-}
-
-/* default icon */
-div#itnotices div.ui-content span {
-	background-image: url('../images/itnotices/announcement.png');
-}
-
-div#itnotices div.ui-content span.itNoticeIcon-Announcement {
-    background-image: url('../images/itnotices/announcement.png');
-}
-
-div#itnotices div.ui-content span.itNoticeIcon-Critical {
-    background-image: url('../images/itnotices/critical.png');
-}
-
-div#itnotices div.ui-content span.itNoticeIcon-Error {
-    background-image: url('../images/itnotices/error.png');
-}
-
-div#itnotices div.ui-content span.itNoticeIcon-News {
-    background-image: url('../images/itnotices/news.png');
-}
-
-div#itnotices div.ui-content span.itNoticeIcon-Warning {
-    background-image: url('../images/itnotices/warning.png');
-}
 
 
-/* Campus Alerts
------------------------------------------------------------------------------------------------------------*/
-div#campusalerts dt, div#campusalerts dd {
-	margin: 0;
-	padding: 7px 15px 7px 15px;
-}
-
-/* My Classes
------------------------------------------------------------------------------------------------------------*/
-div#myclasses dt a {
-    padding: 12px 25px 7px 15px;
-    position: relative;
-}
-
-/*div#myclasses dt a:after {
-	content: "Details";
-	display: block;
-	width: 18px;
-	height: 18px;
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	text-indent: -9999px;
-	background-position: -108px 50%;
-    background: url("images/icons-18-white.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0.4);
-    border-radius: 9px 9px 9px 9px;
-}*/
-
-div#myclasses dd a {
-    padding: 0 25px 12px 15px;
-}
-
-/* resource icons */
-div#class_details ul.ui-listview a, div#announcement ul.ui-listview a, div#message ul.ui-listview a {
-	background: transparent url('../images/service-icons/mcl-file.png') 15px 50% no-repeat;
-	padding-left: 50px;
-}
-div#forum ul li ul li a {
-	background: transparent url('../images/service-icons/mcl-file.png') 10px 50% no-repeat;
-	padding-left: 30px;
-}
-div#forum ul li ul li {
-	padding-top: 3px;
-	padding-bottom: 3px;
-}
-div#class_details ul.ui-listview a.icon-FOLDER, div#announcement ul.ui-listview a.icon-FOLDER, div#message ul.ui-listview a.icon-FOLDER, div#forum ul li ul li a.icon-FOLDER {
-	background-image: url('../images/service-icons/mcl-folder.png');
-}
-div#class_details ul.ui-listview a.icon-IMAGE, div#announcement ul.ui-listview a.icon-IMAGE, div#message ul.ui-listview a.icon-IMAGE, div#forum ul li ul li a.icon-IMAGE {
-    background-image: url('../images/service-icons/mcl-image.png');
-}
-div#class_details ul.ui-listview a.icon-VIDEO, div#announcement ul.ui-listview a.icon-VIDEO, div#message ul.ui-listview a.icon-VIDEO, div#forum ul li ul li a.icon-VIDEO {
-    background-image: url('../images/service-icons/mcl-movie.png');
-}
-div#class_details ul.ui-listview a.icon-TEXT, div#announcement ul.ui-listview a.icon-TEXT, div#message ul.ui-listview a.icon-TEXT, div#forum ul li ul li a.icon-TEXT {
-    background-image: url('../images/service-icons/mcl-doc.png');
-}
-div#class_details ul.ui-listview a.icon-PRESENTATION, div#announcement ul.ui-listview a.icon-PRESENTATION, div#message ul.ui-listview a.icon-PRESENTATION, div#forum ul li ul li a.icon-PRESENTATION {
-    background-image: url('../images/service-icons/mcl-powerpoint.png');
-}
-div#class_details ul.ui-listview a.icon-SPREADSHEET, div#announcement ul.ui-listview a.icon-SPREADSHEET, div#message ul.ui-listview a.icon-SPREADSHEET, div#forum ul li ul li a.icon-SPREADSHEET {
-    background-image: url('../images/service-icons/mcl-spreadsheet.png');
-}
-div#class_details ul.ui-listview a.icon-PDF, div#announcement ul.ui-listview a.icon-PDF, div#message ul.ui-listview a.icon-PDF, div#forum ul li ul li a.icon-PDF {
-    background-image: url('../images/service-icons/mcl-pdf.png');
-}
-div#class_details ul.ui-listview a.icon-AUDIO, div#announcement ul.ui-listview a.icon-AUDIO, div#message ul.ui-listview a.icon-AUDIO, div#forum ul li ul li a.icon-AUDIO {
-    background-image: url('../images/service-icons/mcl-audio.png');
-}
-div#class_details ul.ui-listview a.icon-LINK, div#announcement ul.ui-listview a.icon-LINK, div#message ul.ui-listview a.icon-LINK, div#forum ul li ul li a.icon-LINK {
-    background-image: url('../images/service-icons/mcl-weblink.png');
-}
-
-
-/* Emergency Info
------------------------------------------------------------------------------------------------------------*/
-dl.emergencylist dt a {
-    color: #000 !important;
-}
-
-dl.emergencylist dd a {
-    color: #333 !important;
-    font-weight: normal;
-}
-
-/* Computer Labs
------------------------------------------------------------------------------------------------------------*/
-/*div#computerlabs div.ui-content {
-	padding-top: 0;
-}
-
-div#computerlabs h3 {
-	margin: 0 -15px 0 -15px;
-	padding: 7px 15px 7px 15px;
-	font-size: 16px;
-	text-shadow: none;
-	display: block;
-	width: 100%;
-	border: 1px solid #333;
-    background-color: #000;
-    color: #fff;
-    font-weight: bold;
-    background: -moz-linear-gradient(center top , #484848, #000000) repeat scroll 0 0 #000000;
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #484848), color-stop(1, #000000));
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#484848', EndColorStr='#000000')";
-}
-
-div#computerlabs dl {
-    margin: 0 -15px 0 -15px;
-    padding: 0;	
-}
-
-div#computerlabs dt a {
-    color: #000 !important; 
-}
-
-div#computerlabs dd a {
-	color: #333;
-	font-weight: normal;
-}*/
-
-/* Home Screen Badge Style Overrides
------------------------------------------------------------------------------------------------------------*/
 div#home span.dl-dt-count {
     font-size: 14px;
     padding: 2px 8px 3px 8px;
@@ -949,6 +599,63 @@ div#home span.dl-dt-count {
 
 
 
+/* IT Notices (moved to dedicated css file)
+-----------------------------------------------------------------------------------------------------------*/
+
+/* Campus Alerts (moved to dedicated css file)
+-----------------------------------------------------------------------------------------------------------*/
+
+/* My Classes (moved to dedicated css file)
+-----------------------------------------------------------------------------------------------------------*/
+
+/* Emergency Info (moved to dedicated css file)
+-----------------------------------------------------------------------------------------------------------*/
+
+/* Computer Labs (moved to dedicated css file)
+-----------------------------------------------------------------------------------------------------------*/
+
+/* Home Screen Badge Style Overrides
+-----------------------------------------------------------------------------------------------------------*/
+
+
+
+/* Horizontal Tab Navigation
+-----------------------------------------------------------------------------------------------------------*/
+
+
+.tabs {
+	/*margin-top:2px;*/
+}
+.tabs ul {
+	/*margin-right:2px;*/
+	
+}
+
+.tabs ul li a {
+	margin-left:2px;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-right: 1px solid #CCC;
+	background:#666;
+	color:#ffffff;
+	text-shadow:none;
+}
+
+.tabs ul li a.selected {
+	border-bottom-style: none;
+	background:#FFF;
+	color:#000;
+}
+
+.tabs ul li .ui-btn .ui-btn-inner, .ui-navbar-noicons .ui-navbar-toggle .ui-btn-inner { padding-top: .4em; padding-bottom: .4em; }
+
+
+
+
 /* Custom Link Disclosure Icons
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -974,3 +681,5 @@ div#home span.dl-dt-count {
     background: url(images/icon-gps-18.png);
     background-color:#939393
 }
+
+
