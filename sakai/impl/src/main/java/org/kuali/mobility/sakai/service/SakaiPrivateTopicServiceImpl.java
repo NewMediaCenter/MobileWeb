@@ -31,6 +31,7 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
+import org.kuali.mobility.sakai.entity.FileType;
 import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
@@ -110,10 +111,8 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
                 Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
                 
                 String messageAuthor = itemArray.getJSONObject(i).getString("authoredBy");
-//              String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
-//              String messageAuthorRole = messageAuthor[2];
                 Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
-                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                DateFormat df = new SimpleDateFormat("MMM d, yyyy h:mm a");
                 String createdDate = df.format(cDate);
                 
                 
@@ -138,26 +137,40 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "forum_message/private/" + typeUuid + "/site/" + siteId + ".json";
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(userId, url, "text/html");
 			String json = IOUtils.toString(is.getBody(), "UTF-8");
-			
+
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(json);
             JSONArray itemArray = jsonObj.getJSONArray("forum_message_collection");
             Message item = new Message();
             
             for (int i = 0; i < itemArray.size(); i++) {
-                String mId = itemArray.getJSONObject(i).getString("messageId");
+            	JSONObject messageObject = itemArray.getJSONObject(i);
+                String mId = messageObject.getString("messageId");
                 if(!messageId.equalsIgnoreCase(mId)) {
                 	continue;
                 }
-                String messageTitle = itemArray.getJSONObject(i).getString("title");
-                String messageBody = itemArray.getJSONObject(i).getString("body");
-                Boolean isRead = itemArray.getJSONObject(i).getBoolean("read");
+                String messageTitle = messageObject.getString("title");
+                String messageBody = messageObject.getString("body");
+                Boolean isRead = messageObject.getBoolean("read");
                 
-                String messageAuthor = itemArray.getJSONObject(i).getString("authoredBy");
-//              String messageAuthorName = messageAuthor[0] + " " + messageAuthor[1];
-//              String messageAuthorRole = messageAuthor[2];
-                Date cDate = new Date(Long.parseLong(itemArray.getJSONObject(i).getString("createdOn")));
-                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                String messageAuthor = messageObject.getString("authoredBy");
+                Date cDate = new Date(Long.parseLong(messageObject.getString("createdOn")));
+                DateFormat df = new SimpleDateFormat("MMM d, yyyy h:mm a");
                 String createdDate = df.format(cDate);
+                
+//                JSONArray attachmentArray = messageObject.getJSONArray("attachments");
+//                if (attachmentArray != null && !attachmentArray.isEmpty()) {
+//                	List<Attachment> attachments = new ArrayList<Attachment>();
+//                	for (int j = 0; j < attachmentArray.size(); j++) {
+//                		JSONObject attach = attachmentArray.getJSONObject(j);
+//                		Attachment attachment = new Attachment();
+//                		attachment.setUrl(attach.getString("id"));
+//                		attachment.setTitle(attach.getString("name"));
+//                		attachment.setMimeType(attach.getString("type"));
+//                		attachment.setFileType(determineAttachmentFileType(attachment.getUrl(), attachment.getMimeType()));
+//                		attachments.add(attachment);
+//                	}
+//                	item.setAttachments(attachments);
+//                }
                 
                 item.setId(messageId);
                 item.setTitle(messageTitle);
@@ -167,6 +180,7 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
                 item.setCreatedDate(createdDate);
                 item.setIsRead(isRead);
             }
+            markMessageRead(siteId, messageId, userId);
             return item;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -235,6 +249,26 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return new ResponseEntity<String>(HttpStatus.METHOD_FAILURE);
+		}
+	}
+	
+	private FileType determineAttachmentFileType(String attachmentUrl, String mimeType) {
+		if (SakaiSiteService.URL_MIME_TYPE.equals(mimeType)) {
+			return FileType.LINK;
+		}
+		
+		String strArr[] = attachmentUrl.split("/");
+		String resExt[] = strArr[strArr.length-1].split("\\.");
+		String extension = null;
+    	if(resExt!=null && resExt.length!=0) {
+    		extension = resExt[resExt.length-1].toLowerCase();
+    	}
+		
+		FileType type = SakaiSiteService.FILE_TYPES.get(extension);
+		if (type != null) {
+			return type;
+		} else {
+			return FileType.GENERIC;
 		}
 	}
 	

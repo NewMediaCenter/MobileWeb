@@ -40,9 +40,11 @@ public class Message implements Serializable, Comparable<Message> {
     private long createdTime;
     
     private List<Message> replies;
+    private List<Attachment> attachments;
     
     public Message() {
     	setReplies(new ArrayList<Message>());
+    	attachments = new ArrayList<Attachment>();
     }
     
 	public String getTitle() {
@@ -177,5 +179,13 @@ public class Message implements Serializable, Comparable<Message> {
 
 	public void setCreatedTime(long createdTime) {
 		this.createdTime = createdTime;
+	}
+
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
 	}	
 }

@@ -74,52 +74,50 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	@Autowired
 	private CalendarEventOAuthService calendarEventOAuthService;
 	
-	private static final Map<String, FileType> fileTypes;
 	private static final String FOLDER_EXTENSION = "fldr";
 	private static final String URL_EXTENSION = "url";
 	
 	static {
-		fileTypes = new HashMap<String, FileType>();
-		fileTypes.put("txt", FileType.TEXT);
-		fileTypes.put("rtf", FileType.TEXT);
-		fileTypes.put("doc", FileType.TEXT);
-		fileTypes.put("docx", FileType.TEXT);
-		fileTypes.put("odt", FileType.TEXT);
-		fileTypes.put("wpd", FileType.TEXT);
-		fileTypes.put("jpg", FileType.IMAGE);
-		fileTypes.put("jpeg", FileType.IMAGE);
-		fileTypes.put("png", FileType.IMAGE);
-		fileTypes.put("gif", FileType.IMAGE);
-		fileTypes.put("bmp", FileType.IMAGE);
-		fileTypes.put("psd", FileType.IMAGE);
-		fileTypes.put("tiff", FileType.IMAGE);
-		fileTypes.put("wav", FileType.AUDIO);
-		fileTypes.put("wma", FileType.AUDIO);
-		fileTypes.put("mpa", FileType.AUDIO);
-		fileTypes.put("mp3", FileType.AUDIO);
-		fileTypes.put("mid", FileType.AUDIO);
-		fileTypes.put("midi", FileType.AUDIO);
-		fileTypes.put("m4a", FileType.AUDIO);
-		fileTypes.put("m3u", FileType.AUDIO);
-		fileTypes.put("aif", FileType.AUDIO);
-		fileTypes.put("avi", FileType.VIDEO);
-		fileTypes.put("flv", FileType.VIDEO);
-		fileTypes.put("mov", FileType.VIDEO);
-		fileTypes.put("mp4", FileType.VIDEO);
-		fileTypes.put("mpg", FileType.VIDEO);
-		fileTypes.put("swf", FileType.VIDEO);
-		fileTypes.put("vob", FileType.VIDEO);
-		fileTypes.put("wmv", FileType.VIDEO);
-		fileTypes.put("wks", FileType.SPREADSHEET);
-		fileTypes.put("xls", FileType.SPREADSHEET);
-		fileTypes.put("xlsx", FileType.SPREADSHEET);
-		fileTypes.put("ods", FileType.SPREADSHEET);
-		fileTypes.put("ppt", FileType.PRESENTATION);
-		fileTypes.put("pptx", FileType.PRESENTATION);
-		fileTypes.put("odp", FileType.PRESENTATION);
-		fileTypes.put("pdf", FileType.PDF);
-		fileTypes.put(URL_EXTENSION, FileType.LINK);
-		fileTypes.put(FOLDER_EXTENSION, FileType.FOLDER);
+		FILE_TYPES.put("txt", FileType.TEXT);
+		FILE_TYPES.put("rtf", FileType.TEXT);
+		FILE_TYPES.put("doc", FileType.TEXT);
+		FILE_TYPES.put("docx", FileType.TEXT);
+		FILE_TYPES.put("odt", FileType.TEXT);
+		FILE_TYPES.put("wpd", FileType.TEXT);
+		FILE_TYPES.put("jpg", FileType.IMAGE);
+		FILE_TYPES.put("jpeg", FileType.IMAGE);
+		FILE_TYPES.put("png", FileType.IMAGE);
+		FILE_TYPES.put("gif", FileType.IMAGE);
+		FILE_TYPES.put("bmp", FileType.IMAGE);
+		FILE_TYPES.put("psd", FileType.IMAGE);
+		FILE_TYPES.put("tiff", FileType.IMAGE);
+		FILE_TYPES.put("wav", FileType.AUDIO);
+		FILE_TYPES.put("wma", FileType.AUDIO);
+		FILE_TYPES.put("mpa", FileType.AUDIO);
+		FILE_TYPES.put("mp3", FileType.AUDIO);
+		FILE_TYPES.put("mid", FileType.AUDIO);
+		FILE_TYPES.put("midi", FileType.AUDIO);
+		FILE_TYPES.put("m4a", FileType.AUDIO);
+		FILE_TYPES.put("m3u", FileType.AUDIO);
+		FILE_TYPES.put("aif", FileType.AUDIO);
+		FILE_TYPES.put("avi", FileType.VIDEO);
+		FILE_TYPES.put("flv", FileType.VIDEO);
+		FILE_TYPES.put("mov", FileType.VIDEO);
+		FILE_TYPES.put("mp4", FileType.VIDEO);
+		FILE_TYPES.put("mpg", FileType.VIDEO);
+		FILE_TYPES.put("swf", FileType.VIDEO);
+		FILE_TYPES.put("vob", FileType.VIDEO);
+		FILE_TYPES.put("wmv", FileType.VIDEO);
+		FILE_TYPES.put("wks", FileType.SPREADSHEET);
+		FILE_TYPES.put("xls", FileType.SPREADSHEET);
+		FILE_TYPES.put("xlsx", FileType.SPREADSHEET);
+		FILE_TYPES.put("ods", FileType.SPREADSHEET);
+		FILE_TYPES.put("ppt", FileType.PRESENTATION);
+		FILE_TYPES.put("pptx", FileType.PRESENTATION);
+		FILE_TYPES.put("odp", FileType.PRESENTATION);
+		FILE_TYPES.put("pdf", FileType.PDF);
+		FILE_TYPES.put(URL_EXTENSION, FileType.LINK);
+		FILE_TYPES.put(FOLDER_EXTENSION, FileType.FOLDER);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -663,7 +661,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	}
 	
 	private FileType determineFileType(String fileExtension) {
-		FileType type = fileTypes.get(fileExtension.toLowerCase());
+		FileType type = FILE_TYPES.get(fileExtension.toLowerCase());
 		if (type != null) {
 			return type;
 		} else {
@@ -683,7 +681,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
     		extension = resExt[resExt.length-1].toLowerCase();
     	}
 		
-		FileType type = fileTypes.get(extension);
+		FileType type = FILE_TYPES.get(extension);
 		if (type != null) {
 			return type;
 		} else {
