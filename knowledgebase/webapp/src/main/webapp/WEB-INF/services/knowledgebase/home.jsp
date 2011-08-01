@@ -28,6 +28,12 @@
 			</kme:input>
 		</kme:form>
  		--%>
+		<kme:listView id="kbsearchresults" dataTheme="c" dataDividerTheme="b" filter="false">
+		<div id="searchresults">
+ 		<jsp:include page="search.jsp" />
+ 		</div>
+ 		</kme:listView>
+ 		<%-- 
 	    <kme:definitionListView id="kbsearchresults">
 			<div id="searchresults">
 	        <c:forEach items="${container.results}" var="item" varStatus="status">
@@ -37,5 +43,62 @@
 	        </c:forEach>
 	        </div>
 	    </kme:definitionListView>
+		--%>
+
+<script type="text/javascript">
+$('[data-role=page][id=kb]').live("pagebeforeshow", function() {
+	$('#searchText').keypress(function(event) {
+		var searchText = $('#searchText').val();
+		if (searchText != previousSearch) {
+			lookup(searchText);			
+		}
+		previousSearch = searchText;
+		console.log(event.keyCode);
+		if (event.keyCode == 13) {
+			return false;
+		}
+	});	
+});
+
+$('[data-role=page][id=kb]').live("pageshow", function() {
+	// If the browser keeps the search parameters, search on page load
+	var searchText = $("#searchText").val();
+	previousSearch = searchText;
+	lookup(searchText);	
+});
+
+var previousSearch;
+var kbRemoteCallCount = 0;
+var kbCurrentDisplayNumber = 0;
+
+function lookup(inputString) {
+	kbRemoteCallCount++;
+	var kbRemoteCallCountAtStartOfRequest = kbRemoteCallCount;
+	if(inputString.length < 2) {
+		$('#searchresults').html('');
+	} else {
+/* 			$.post("rpc.php", {queryString: ""+inputString+""}, function(data){
+			if(data.length >0) {
+				$('#searchresults').show();
+				$('#list').html(data);
+			}
+		});
+*/
+		var requestUrlString = '${pageContext.request.contextPath}/knowledgebase/search?criteria=' + encodeURI(inputString);
+		$.get(requestUrlString, function(data) {
+			console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
+			if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
+				kbCurrentDisplayNumber = kbRemoteCallCount;
+				// Show results
+				var pagehtml = '<div id="resultdata"></div>'
+				$('#searchresults').html(pagehtml);
+				$("#resultdata").html(data).page();
+			}
+		});
+	}
+
+} // lookup
+</script>
+	    
 	</kme:content>
 </kme:page>

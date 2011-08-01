@@ -15,5 +15,31 @@
 <kme:page title="Knowledge Base" id="kbdoc" backButton="true" homeButton="true">
 	<kme:content>
 		${kbdoc}
+		
+<script type="text/javascript">
+$('[data-role=page][id=kbdoc]').live("pagebeforeshow", function(event) {
+	//    $('a.native-anchor').bind('click', function(ev) {
+	//    var target = $( $(this).attr('href') ).get(0).offsetTop;
+	//    $.mobile.silentScroll(target);
+	//    return false;
+	//});
+	//$('a[href^="\\$"]').click(function(e){
+	$('a[href*="knowledgebase"][href*="#"]').click(function(e){
+		e.preventDefault();
+		var name = $(this).attr('href').substr(25);
+	//	var pos = $('a[name='+name+']').offset();
+	//	$('html,body').animate({ scrollTop: pos.top });
+	//	alert(name);
+		var target = $('a[name='+name+']').get(0).offsetTop;
+		//alert(target);
+		$.mobile.silentScroll(target);
+		//alert(pos.top);
+		//alert(e.isDefaultPrevented());
+		return false;
+	});
+});
+</script>
+
+
 	</kme:content>
 </kme:page>

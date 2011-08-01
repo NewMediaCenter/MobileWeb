@@ -63,38 +63,12 @@ function refreshComputerLabs() {
 	}
 }
 
-$('[data-role=page][id=kb]').live("pagebeforeshow", function(event) {
-//	alert("test");
-	$('#searchText').keyup(function() {
-		lookup($('#searchText').val());
-	});	
-});
-
-$('[data-role=page][id=kbdoc]').live("pagebeforeshow", function(event) {
-	//    $('a.native-anchor').bind('click', function(ev) {
-	//    var target = $( $(this).attr('href') ).get(0).offsetTop;
-	//    $.mobile.silentScroll(target);
-	//    return false;
-	//});
-	//$('a[href^="\\$"]').click(function(e){
-	$('a[href*="knowledgebase"][href*="#"]').click(function(e){
-		e.preventDefault();
-		var name = $(this).attr('href').substr(24);
-	//	var pos = $('a[name='+name+']').offset();
-	//	$('html,body').animate({ scrollTop: pos.top });
-	//	alert(name);
-		var target = $('a[name='+name+']').get(0).offsetTop;
-		//alert(target);
-		$.mobile.silentScroll(target);
-		//alert(pos.top);
-		//alert(e.isDefaultPrevented());
-		return false;
-	});
-});
-
-$('[data-role=page]').live('pagecreate', function (event) {
-
-});
+//$('[data-role=page][id=kb]').live("pagebeforeshow", function(event) {
+////	alert("test");
+//	$('#searchText').keyup(function() {
+//		lookup($('#searchText').val());
+//	});	
+//});
 
 /*
  * Maps
@@ -170,57 +144,7 @@ function showLocationByCoordinates(map, markersArray, latitude, longitude) {
 	}
 }
 
-/*
- * Knowledge Base
- */
 
-var kbRemoteCallCount = 0;
-var kbCurrentDisplayNumber = 0;
-
-function lookup(inputString) {
-	kbRemoteCallCount++;
-	var kbRemoteCallCountAtStartOfRequest = kbRemoteCallCount;
-	if(inputString && inputString.length < 2) {
-		// Hide the suggestion box.
-		// $('#suggestions').hide();
-		$('#searchresults').html('');
-	} else {
-/* 			$.post("rpc.php", {queryString: ""+inputString+""}, function(data){
-			if(data.length >0) {
-				$('#suggestions').show();
-				$('#autoSuggestionsList').html(data);
-			}
-		});
-*/
-		var requestUrlString = 'search?criteria=' + inputString;
-		$.get(requestUrlString, function(data) {
-			console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
-			if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
-				kbCurrentDisplayNumber = kbRemoteCallCount;
-				// Show results
-				var pagehtml = '<div id="resultdata"></div>'
-				$('#searchresults').html(pagehtml);
-				$("#resultdata").html(data).page();
-			}
-		});
-	}
-//		$.getJSON(requestUrlString, function(data) {
-//			console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
-//			if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
-//				kbCurrentDisplayNumber = kbRemoteCallCount;
-//				// Show results
-//				var items = [];
-//				$.each(data.results, function(key, val) {
-//					//items.push('key:'+key+' val:'+val.documentId+' '+val.title+'<br/><br/>');
-//					items.push('<a href="knowledgebase/'+val.documentId+'"><li><h3>'+val.title+'</h3></li></a>')
-//				});
-//				var pagehtml = '<div id="resultdata"></div>'
-//				$('#searchresults').html(pagehtml);
-//				$("#resultdata").html(items.join('')).page();
-//			}
-//			});
-//		}
-} // lookup
 
 /* Begin Calendar js*/
 

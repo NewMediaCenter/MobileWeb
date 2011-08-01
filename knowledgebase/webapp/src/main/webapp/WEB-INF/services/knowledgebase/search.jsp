@@ -12,12 +12,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-	    <kme:definitionListView id="kbsearchresults">
-			<div id="searchresults">
-	        <c:forEach items="${container.results}" var="item" varStatus="status">
-	            <kme:definitionListTerm>
-					<a href="${pageContext.request.contextPath}/knowledgebase/${item.documentId}">${item.title}</a>
-	            </kme:definitionListTerm>
-	        </c:forEach>
-	        </div>
-	    </kme:definitionListView>
+<c:forEach items="${container.results}" var="item" varStatus="status">
+<kme:listItem>
+	<p><a href="${pageContext.request.contextPath}/knowledgebase/${item.documentId}">${item.title}</a></p>
+</kme:listItem>
+</c:forEach>
