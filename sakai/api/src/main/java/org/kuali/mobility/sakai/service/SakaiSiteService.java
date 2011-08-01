@@ -32,6 +32,8 @@ public interface SakaiSiteService {
 	
 	public static final String URL_MIME_TYPE = "text/url";
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+    public static final SimpleDateFormat DISPLAY_DATE_FORMAT = new SimpleDateFormat("MMMM dd, yyyy");
+    public static final SimpleDateFormat BUTTON_DATE_FORMAT = new SimpleDateFormat("MMM dd");
 	public static final Map<String, FileType> FILE_TYPES = new HashMap<String, FileType>();
 	
 	public Home findSakaiHome(String user, String shortDate);

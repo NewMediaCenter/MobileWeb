@@ -92,6 +92,9 @@
 		    </script>
 		    
 		    <div style="margin:10px 0 0 -15px; position:absolute; top:40px; width:100%;">
+		        <c:if test="${!empty home.courses}">
+                    <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="todayTab" name="todayTab" href="#">Today</a>
+                </c:if>
 			    <c:if test="${!empty home.courses}">
 	                <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="classesTab" name="classesTab" href="#">Classes</a>
 	            </c:if>
@@ -100,13 +103,19 @@
 	            </c:if>
 	            <c:if test="${!empty home.other}">
 	                <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="otherTab" name="otherTab" href="#">Other</a>
-	            </c:if>
-	            <c:if test="${!empty home.todaysCourses}">
-                    <a style="float:left; padding:9px 1%; color:#999999; -moz-box-shadow:0 -1px 1px #AAAAAA; -webkit-box-shadow:0 -1px 1px #AAAAAA; box-shadow:0 -1px 1px #AAAAAA; border-radius:10px 10px 0 0; background-color:#CCCCCC; top:50px; width:${(100/tabCount)-2}%; text-align:center; text-decoration:none;" id="todayTab" name="todayTab" href="#">Today</a>
-                </c:if>
+	            </c:if> 
             </div>
             
             <c:choose>
+                <c:when test="${!empty home.courses}">
+                    <script type="text/javascript">
+                    $(window).load(function () {
+                        $('#todayTab').css('background-color', '#E6E6E6');
+                        $('#todayTab').css('color', '#2F3E46');
+                        $('#todayPanel').show();
+                    });
+                    </script>
+                </c:when>
                 <c:when test="${!empty home.courses}">
                     <script type="text/javascript">
                     $(window).load(function () {
@@ -122,15 +131,6 @@
                         $('#projectsTab').css('background-color', '#E6E6E6');
                         $('#projectsTab').css('color', '#2F3E46');
                         $('#projectsPanel').show();
-                    });
-                    </script>
-                </c:when>
-                <c:when test="${!empty home.todaysCourses}">
-                    <script type="text/javascript">
-                    $(window).load(function () {
-                        $('#todayTab').css('background-color', '#E6E6E6');
-                        $('#todayTab').css('color', '#2F3E46');
-                        $('#todayPanel').show();
                     });
                     </script>
                 </c:when>
@@ -211,9 +211,17 @@
             </div>
         </c:if>
      
-        <c:if test="${!empty home.todaysCourses}">
+        <c:if test="${!empty home.courses}">
             <div background-color:#E6E6E6;" id="todayPanel" name="todayPanel">
-	            <c:if test="${tabCount eq 1}"><h2>Today</h2></c:if>
+                <div data-inline="true">
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a"><a data-role="button" data-theme="c" href="${pageContext.request.contextPath}/myclasses?date=${yesterday}">&laquo; ${yesterdayButton}</a></div>
+                        <div class="ui-block-b"><a data-role="button" data-theme="c" href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">${tomorrowButton} &raquo; </a></div>
+                    </div>
+                </div>
+                <h2>${todayDisplay}</h2>
+	            <!--<c:if test="${tabCount eq 1}"><h2>Today</h2></c:if>-->
+	            <c:if test="${!empty home.todaysCourses}">
 	            <kme:listView dataTheme="c">
 	                <c:forEach items="${home.todaysCourses}" var="item" varStatus="status">
 	                    <kme:listItem>
@@ -226,13 +234,12 @@
 	                    </kme:listItem>
 	                </c:forEach>
 	            </kme:listView>
+	            </c:if>      
+                <c:if test="${empty home.todaysCourses}">
+                    <p>No classes today.</p>
+                </c:if>
             </div>
         </c:if>        
-        
-        <div>
-        	<a href="${pageContext.request.contextPath}/myclasses?date=${yesterday}">Prev. Day</a>
-        	<a href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">Next Day</a>  
-        </div>
-        
+
     </kme:content>
 </kme:page>

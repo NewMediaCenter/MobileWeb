@@ -75,7 +75,7 @@ public class SakaiController {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
 		Home home = sakaiSiteService.findSakaiHome(user.getUserId(), date);
 		uiModel.addAttribute("home", home);
-		uiModel.addAttribute("tabCount", (home.getCourses() != null && home.getCourses().size() > 0 ? 1 : 0) + (home.getProjects() != null && home.getProjects().size() > 0 ? 1 : 0) + (home.getOther() != null && home.getOther().size() > 0 ? 1 : 0)  + (home.getTodaysCourses() != null && home.getTodaysCourses().size() > 0 ? 1 : 0));
+		uiModel.addAttribute("tabCount", (home.getCourses() != null && home.getCourses().size() > 0 ? 2 : 0) + (home.getProjects() != null && home.getProjects().size() > 0 ? 1 : 0) + (home.getOther() != null && home.getOther().size() > 0 ? 1 : 0));
 		
 		Calendar todayDate = Calendar.getInstance();
 		if (date != null) {
@@ -87,10 +87,14 @@ public class SakaiController {
 		todayDate.set(Calendar.MINUTE, 0);
 		todayDate.set(Calendar.SECOND, 0);
 		todayDate.set(Calendar.MILLISECOND, 0);
+		uiModel.addAttribute("todayDisplay", SakaiSiteService.DISPLAY_DATE_FORMAT.format(todayDate.getTime()));
 		todayDate.add(Calendar.DATE, -1);
 		uiModel.addAttribute("yesterday", SakaiSiteService.DATE_FORMAT.format(todayDate.getTime()));
+		uiModel.addAttribute("yesterdayButton", SakaiSiteService.BUTTON_DATE_FORMAT.format(todayDate.getTime()));
 		todayDate.add(Calendar.DATE, 2);
 		uiModel.addAttribute("tomorrow", SakaiSiteService.DATE_FORMAT.format(todayDate.getTime()));
+		uiModel.addAttribute("tomorrowButton", SakaiSiteService.BUTTON_DATE_FORMAT.format(todayDate.getTime()));
+		
 		return "sakai/home";
 	}
 	
