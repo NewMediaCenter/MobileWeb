@@ -17,6 +17,7 @@ package org.kuali.mobility.sakai.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,11 +71,26 @@ public class SakaiController {
 	private SakaiPrivateTopicService sakaiPrivateTopicService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getSites(HttpServletRequest request, Model uiModel) {
+	public String getSites(HttpServletRequest request, @RequestParam(value="date", required=false) String date, Model uiModel) {
 		User user = (User) request.getSession().getAttribute(Constants.KME_USER_KEY);
-		Home home = sakaiSiteService.findSakaiHome(user.getUserId());
+		Home home = sakaiSiteService.findSakaiHome(user.getUserId(), date);
 		uiModel.addAttribute("home", home);
 		uiModel.addAttribute("tabCount", (home.getCourses() != null && home.getCourses().size() > 0 ? 1 : 0) + (home.getProjects() != null && home.getProjects().size() > 0 ? 1 : 0) + (home.getOther() != null && home.getOther().size() > 0 ? 1 : 0)  + (home.getTodaysCourses() != null && home.getTodaysCourses().size() > 0 ? 1 : 0));
+		
+		Calendar todayDate = Calendar.getInstance();
+		if (date != null) {
+			try {
+				todayDate.setTime(SakaiSiteService.DATE_FORMAT.parse(date));
+			} catch (Exception e) {}
+		}
+		todayDate.set(Calendar.HOUR, 0);
+		todayDate.set(Calendar.MINUTE, 0);
+		todayDate.set(Calendar.SECOND, 0);
+		todayDate.set(Calendar.MILLISECOND, 0);
+		todayDate.add(Calendar.DATE, -1);
+		uiModel.addAttribute("yesterday", SakaiSiteService.DATE_FORMAT.format(todayDate.getTime()));
+		todayDate.add(Calendar.DATE, 2);
+		uiModel.addAttribute("tomorrow", SakaiSiteService.DATE_FORMAT.format(todayDate.getTime()));
 		return "sakai/home";
 	}
 	

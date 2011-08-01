@@ -123,7 +123,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Home findSakaiHome(String user) {
+	public Home findSakaiHome(String user, String shortDate) {
 		try {
 			String url = configParamService.findValueByName("Sakai.Url.Base") + "user_prefs.json";
 			ResponseEntity<InputStream> is = oncourseOAuthService.oAuthGetRequest(user, url, "text/html");
@@ -146,9 +146,11 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			try {
 				Calendar todayDate = Calendar.getInstance();
 				Calendar tomorrowDate = Calendar.getInstance();
-				//todayDate.set(Calendar.MONTH, Calendar.AUGUST);
-				//todayDate.set(Calendar.YEAR, 2011);
-				//todayDate.set(Calendar.DAY_OF_MONTH, 29);
+				if (shortDate != null) {
+					try {
+						todayDate.setTime(DATE_FORMAT.parse(shortDate));
+					} catch (Exception e) {}
+				}
 				todayDate.set(Calendar.HOUR, 0);
 				todayDate.set(Calendar.MINUTE, 0);
 				todayDate.set(Calendar.SECOND, 0);

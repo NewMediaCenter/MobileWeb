@@ -227,7 +227,12 @@
 	                </c:forEach>
 	            </kme:listView>
             </div>
-        </c:if>        
+        </c:if>
+        
+        <div>
+        	<a href="${pageContext.request.contextPath}/myclasses?date=${yesterday}">Prev. Day</a>
+        	<a href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">Next Day</a>  
+        </div>
         
     </kme:content>
 </kme:page>

@@ -15,6 +15,7 @@
  
 package org.kuali.mobility.sakai.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.kuali.mobility.sakai.entity.Announcement;
@@ -27,8 +28,9 @@ import org.kuali.mobility.sakai.entity.Site;
 public interface SakaiSiteService {
 	
 	public static final String URL_MIME_TYPE = "text/url";
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 	
-	public Home findSakaiHome(String user);
+	public Home findSakaiHome(String user, String shortDate);
 	public Site findSite(String siteId, String user);
 	
 	public Announcement findAnnouncementDetails(String json);
