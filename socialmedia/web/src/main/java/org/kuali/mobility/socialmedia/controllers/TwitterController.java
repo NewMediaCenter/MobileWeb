@@ -12,7 +12,7 @@
  * or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
- 
+
 package org.kuali.mobility.socialmedia.controllers;
 
 import java.util.ArrayList;
@@ -26,28 +26,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller 
+@Controller
 @RequestMapping("/twitter")
 public class TwitterController {
-    
-    @Autowired
-    private TwitterService twitterService;
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public String getList(Model uiModel) {
 
-    	List<String> feeds = new ArrayList<String>();
-    	feeds.add("IUBloomington");
-    	feeds.add("IUPUI");
-    	feeds.add("indiananews");
-    	
-    	List<Tweet> tweets = twitterService.retrieveCombinedFeeds(feeds);
-    	
-    	uiModel.addAttribute("tweets", tweets);
-    	return "socialmedia/list";
-    }
-    
-    public void setEmergencyInfoService(TwitterService twitterService) {
-        this.twitterService = twitterService;
-    }
+	@Autowired
+	private TwitterService twitterService;
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String getList(Model uiModel) {
+
+		List<String> feeds = new ArrayList<String>();
+		feeds.add("IndianaUniv");
+		feeds.add("citybloomington");
+		feeds.add("idsnews");
+		feeds.add("theheraldtimes");
+		feeds.add("IUBloomington");
+		feeds.add("IUPUI");
+		feeds.add("indiananews");
+		feeds.add("IDS_Opinion");
+		feeds.add("IUPUI_Prepared");
+		feeds.add("IU_Health");
+		feeds.add("IUBookstore");
+		feeds.add("kinseyinstitute");
+
+		List<Tweet> tweets = twitterService.retrieveCombinedFeeds(feeds);
+
+		uiModel.addAttribute("tweets", tweets);
+		return "socialmedia/list";
+	}
+
+	public void setEmergencyInfoService(TwitterService twitterService) {
+		this.twitterService = twitterService;
+	}
 }

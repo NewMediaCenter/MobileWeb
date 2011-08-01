@@ -33,6 +33,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 import org.kuali.mobility.socialmedia.entity.Tweet;
+import org.kuali.mobility.socialmedia.entity.TweetEntity;
 import org.kuali.mobility.socialmedia.entity.TwitterFeed;
 import org.springframework.stereotype.Service;
 
@@ -82,7 +83,7 @@ public class TwitterServiceImpl implements TwitterService {
 	@SuppressWarnings("unchecked")
 	private TwitterFeed updateFeed(TwitterFeed feedToUpdate) {
 		try {
-			URL url = new URL("http://api.twitter.com/1/statuses/user_timeline.json?screen_name=" + feedToUpdate.getTwitterId() + "&exclude_replies=true&include_entities=false");
+			URL url = new URL("http://api.twitter.com/1/statuses/user_timeline.json?screen_name=" + feedToUpdate.getTwitterId() + "&exclude_replies=true&include_entities=true");
 			URLConnection conn = url.openConnection();
 			
 			BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -100,14 +101,21 @@ public class TwitterServiceImpl implements TwitterService {
 			for (Iterator<JSONObject> iter = tweetArray.iterator(); iter.hasNext();) {
 				try {
 					JSONObject tweetObject = iter.next();
-					Tweet tweet = new Tweet();
-					
 					JSONObject user = tweetObject.getJSONObject("user");
+					JSONObject entities = tweetObject.getJSONObject("entities");
+					JSONArray hashTags = entities.getJSONArray("hashtags");
+					JSONArray urls = entities.getJSONArray("urls");
+					JSONArray mentions = entities.getJSONArray("user_mentions");
+					
+					Tweet tweet = new Tweet();	
 					tweet.setProfileImageUrl(user.getString("profile_image_url_https"));
 					tweet.setScreenName(user.getString("screen_name"));
 					tweet.setUserName(user.getString("name"));
 					tweet.setId(tweetObject.getString("id_str"));
-					tweet.setText(tweetObject.getString("text"));
+					
+					String text = tweetObject.getString("text");
+					text = fixEntities(text, hashTags, urls, mentions);
+					tweet.setText(text);
 					
 					String publishDate = tweetObject.getString("created_at").replace("+0000", "GMT");
 					tweet.setTimestamp(twitterDateFormat.parse(publishDate).getTime());
@@ -127,6 +135,57 @@ public class TwitterServiceImpl implements TwitterService {
 		}
 		
 		return feedToUpdate;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private String fixEntities(String message, JSONArray hashTags, JSONArray urls, JSONArray mentions) {
+		List<TweetEntity> entities = new ArrayList<TweetEntity>();
+		for (Iterator<JSONObject> iter = hashTags.iterator(); iter.hasNext();) {
+			JSONObject hashTag = iter.next();
+			TweetEntity entity = new TweetEntity();
+			
+			JSONArray indices = hashTag.getJSONArray("indices");
+			entity.setStartIndex(indices.getInt(0));
+			entity.setEndIndex(indices.getInt(1));
+			entity.setDisplayText(hashTag.getString("text"));
+			entity.setLinkText("<a href=\"https://twitter.com/search?q=%23" + entity.getDisplayText() + "\">&#35;" + entity.getDisplayText() + "</a>");
+			
+			entities.add(entity);
+		}
+		for (Iterator<JSONObject> iter = urls.iterator(); iter.hasNext();) {
+			JSONObject url = iter.next();
+			TweetEntity entity = new TweetEntity();
+			
+			JSONArray indices = url.getJSONArray("indices");
+			entity.setStartIndex(indices.getInt(0));
+			entity.setEndIndex(indices.getInt(1));
+			entity.setDisplayText(url.getString("url"));
+			entity.setLinkText("<a href=\"" + entity.getDisplayText() + "\">" + entity.getDisplayText() + "</a>");
+
+			entities.add(entity);
+		}
+		for (Iterator<JSONObject> iter = mentions.iterator(); iter.hasNext();) {
+			JSONObject mention = iter.next();
+			TweetEntity entity = new TweetEntity();
+			
+			JSONArray indices = mention.getJSONArray("indices");
+			entity.setStartIndex(indices.getInt(0));
+			entity.setEndIndex(indices.getInt(1));
+			entity.setDisplayText(mention.getString("screen_name"));
+			entity.setLinkText("<a href=\"http://twitter.com/" + entity.getDisplayText() + "\">&#64;" + entity.getDisplayText() + "</a>");
+			entities.add(entity);
+		}
+		
+		Collections.sort(entities);
+		StringBuffer sb = new StringBuffer();
+		int currentIndex = 0;
+		for (TweetEntity entity : entities) {
+			sb.append(message.substring(currentIndex, entity.getStartIndex()));
+			sb.append(entity.getLinkText());
+			currentIndex = entity.getEndIndex();
+		}
+		sb.append(message.substring(currentIndex));
+		return sb.toString();
 	}
 	
 //	public List<Tweet> getAllTweets(){
