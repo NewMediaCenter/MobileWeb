@@ -16,6 +16,25 @@
 
 <kme:page title="Dining Services" id="dining" backButton="true" homeButton="true">
 	<kme:content>
-	Dining
+		<kme:listView id="menulist" dataTheme="c" dataDividerTheme="b" filter="false">
+			<c:choose>
+				<c:when test="${not empty menus}">
+					<c:forEach items="${menus}" var="menu" varStatus="status">
+						<kme:listItem dataTheme="b" dataRole="list-divider">${menu.dateFormatted}</kme:listItem>
+						<c:forEach items="${menu.items}" var="item" varStatus="status">
+							<kme:listItem>
+									<h3>${item.name}</h3>
+									<p>${item.priceFormatted}</p>
+							</kme:listItem>
+						</c:forEach>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<li>
+						No menus
+					</li>
+				</c:otherwise>
+			</c:choose>
+		</kme:listView>
 	</kme:content>
 </kme:page>

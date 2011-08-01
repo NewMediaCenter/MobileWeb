@@ -15,6 +15,10 @@
 
 package org.kuali.mobility.dining.service;
 
-public interface DiningService {
+import java.util.List;
 
+import org.kuali.mobility.dining.entity.Menu;
+
+public interface DiningService {
+	public List<Menu> getMenus(String location);
 }

@@ -15,6 +15,9 @@
 
 package org.kuali.mobility.dining.controllers;
 
+import java.util.List;
+
+import org.kuali.mobility.dining.entity.Menu;
 import org.kuali.mobility.dining.service.DiningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +37,8 @@ public class DiningController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model uiModel) {
-
+    	List<Menu> menus = diningService.getMenus("SE");
+    	uiModel.addAttribute("menus", menus);
     	return "dining/list";
     }
-    
 }
