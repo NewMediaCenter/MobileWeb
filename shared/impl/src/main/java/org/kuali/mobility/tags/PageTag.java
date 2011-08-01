@@ -15,6 +15,7 @@ public class PageTag extends SimpleTagSupport {
     private boolean backButton;
     private String backButtonURL;
     private String cssFilename;
+    private String jsFilename;
     
     public void setId(String id) {
         this.id = id;
@@ -39,6 +40,10 @@ public class PageTag extends SimpleTagSupport {
     public void setCssFilename(String cssFilename) {
 		this.cssFilename = cssFilename;
 	}
+    
+    public void setJsFilename(String jsFilename) {
+        this.jsFilename = jsFilename;
+    }
 
 	public void doTag() throws JspException {
         PageContext pageContext = (PageContext) getJspContext();
@@ -63,6 +68,9 @@ public class PageTag extends SimpleTagSupport {
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.validate.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/jquery.validate.ready.js\"></script>");
             out.println("<script type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=true\"></script>");
+            if (jsFilename != null && !jsFilename.trim().equals("")) {
+                out.println("<script type=\"text/javascript\" src=\"" + contextPath + "/js/" + jsFilename + ".js\"></script>");
+            }
             out.println("<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\">");
             out.println("</head>");
             out.println("<body>");
