@@ -70,8 +70,12 @@ public class TwitterServiceImpl implements TwitterService {
 		if (feed == null) {
 			feed = new TwitterFeed();
 			feed.setTwitterId(publicId);
-			twitterFeeds.put(publicId, feed);
-			updateFeed(feed);
+			TwitterFeed existing = twitterFeeds.putIfAbsent(publicId, feed);
+			if (existing == null) {
+				updateFeed(feed);
+			} else {
+				feed = existing;
+			}
 		}
 		Calendar now = Calendar.getInstance();
 		if (now.getTimeInMillis() - feed.getLastUpdated() > FEED_UPDATE_INTERVAL) {
@@ -83,6 +87,7 @@ public class TwitterServiceImpl implements TwitterService {
 	@SuppressWarnings("unchecked")
 	private TwitterFeed updateFeed(TwitterFeed feedToUpdate) {
 		try {
+			LOG.info("Updating Twitter feed: " + feedToUpdate.getTwitterId());
 			URL url = new URL("http://api.twitter.com/1/statuses/user_timeline.json?screen_name=" + feedToUpdate.getTwitterId() + "&exclude_replies=true&include_entities=true");
 			URLConnection conn = url.openConnection();
 			

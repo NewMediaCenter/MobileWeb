@@ -43,16 +43,16 @@ public class TwitterController {
 		feeds.add("theheraldtimes");
 		feeds.add("IUBloomington");
 		feeds.add("IUPUI");
-		feeds.add("indiananews");
+//		feeds.add("indiananews");
 		feeds.add("IDS_Opinion");
 		feeds.add("IUPUI_Prepared");
 		feeds.add("IU_Health");
 		feeds.add("IUBookstore");
 		feeds.add("kinseyinstitute");
+		feeds.add("UITSNEWS");
 
 		List<Tweet> tweets = twitterService.retrieveCombinedFeeds(feeds);
-
-		uiModel.addAttribute("tweets", tweets);
+		uiModel.addAttribute("tweets", tweets.subList(0, 25));
 		return "socialmedia/list";
 	}
 
