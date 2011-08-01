@@ -21,10 +21,10 @@ import org.kuali.mobility.xsl.entity.Xsl;
 
 public interface XslDao {
 	
-    public Xsl findXslById(Long id);
-    public void saveXsl(Xsl configParam);
-    public List<Xsl> findAllXsl();
-    public void deleteXslById(Long id);
-    public Xsl findXslByCode(String code);
+    Xsl findXslById(Long id);
+    void saveXsl(Xsl configParam);
+    List<Xsl> findAllXsl();
+    void deleteXslById(Long id);
+    Xsl findXslByCode(String code);
     
 }

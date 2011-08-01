@@ -17,6 +17,8 @@ package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
 
+import org.kuali.mobility.shared.Constants.FileType;
+
 public class Attachment implements Serializable {
 
 	private static final long serialVersionUID = 2853260455429749231L;

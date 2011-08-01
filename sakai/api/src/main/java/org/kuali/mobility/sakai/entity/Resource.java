@@ -17,6 +17,8 @@ package org.kuali.mobility.sakai.entity;
 
 import java.io.Serializable;
 
+import org.kuali.mobility.shared.Constants.FileType;
+
 public class Resource implements Serializable, Comparable<Resource> {
 
 private static final long serialVersionUID = -2272816569200642551L;

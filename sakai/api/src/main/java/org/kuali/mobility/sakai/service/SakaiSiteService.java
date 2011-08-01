@@ -15,27 +15,16 @@
  
 package org.kuali.mobility.sakai.service;
 
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.kuali.mobility.sakai.entity.Announcement;
 import org.kuali.mobility.sakai.entity.Assignment;
-import org.kuali.mobility.sakai.entity.FileType;
 import org.kuali.mobility.sakai.entity.Home;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
 
 public interface SakaiSiteService {
-	
-	public static final String URL_MIME_TYPE = "text/url";
-	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
-    public static final SimpleDateFormat DISPLAY_DATE_FORMAT = new SimpleDateFormat("MMMM dd, yyyy");
-    public static final SimpleDateFormat BUTTON_DATE_FORMAT = new SimpleDateFormat("MMM dd");
-	public static final Map<String, FileType> FILE_TYPES = new HashMap<String, FileType>();
-	
 	public Home findSakaiHome(String user, String shortDate);
 	public Site findSite(String siteId, String user);
 	

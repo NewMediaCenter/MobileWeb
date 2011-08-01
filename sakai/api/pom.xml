@@ -22,6 +22,11 @@
         <version>1.0.0-BETA-1</version>
     </parent>
     <dependencies>
+    	<!-- Internal dependencies -->
+        <dependency>
+		   <groupId>org.kuali.mobility</groupId>
+		   <artifactId>shared-api</artifactId>
+		</dependency>
         <!-- Persistence dependencies -->
         <dependency>
             <groupId>javax.persistence</groupId>

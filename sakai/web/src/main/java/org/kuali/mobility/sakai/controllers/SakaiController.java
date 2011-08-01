@@ -80,20 +80,20 @@ public class SakaiController {
 		Calendar todayDate = Calendar.getInstance();
 		if (date != null) {
 			try {
-				todayDate.setTime(SakaiSiteService.DATE_FORMAT.parse(date));
+				todayDate.setTime(Constants.DateFormat.queryStringDateFormat.getFormat().parse(date));
 			} catch (Exception e) {}
 		}
 		todayDate.set(Calendar.HOUR, 0);
 		todayDate.set(Calendar.MINUTE, 0);
 		todayDate.set(Calendar.SECOND, 0);
 		todayDate.set(Calendar.MILLISECOND, 0);
-		uiModel.addAttribute("todayDisplay", SakaiSiteService.DISPLAY_DATE_FORMAT.format(todayDate.getTime()));
+		uiModel.addAttribute("todayDisplay", Constants.DateFormat.displayDateFormat.getFormat().format(todayDate.getTime()));
 		todayDate.add(Calendar.DATE, -1);
-		uiModel.addAttribute("yesterday", SakaiSiteService.DATE_FORMAT.format(todayDate.getTime()));
-		uiModel.addAttribute("yesterdayButton", SakaiSiteService.BUTTON_DATE_FORMAT.format(todayDate.getTime()));
+		uiModel.addAttribute("yesterday", Constants.DateFormat.queryStringDateFormat.getFormat().format(todayDate.getTime()));
+		uiModel.addAttribute("yesterdayButton", Constants.DateFormat.buttonDateFormat.getFormat().format(todayDate.getTime()));
 		todayDate.add(Calendar.DATE, 2);
-		uiModel.addAttribute("tomorrow", SakaiSiteService.DATE_FORMAT.format(todayDate.getTime()));
-		uiModel.addAttribute("tomorrowButton", SakaiSiteService.BUTTON_DATE_FORMAT.format(todayDate.getTime()));
+		uiModel.addAttribute("tomorrow", Constants.DateFormat.queryStringDateFormat.getFormat().format(todayDate.getTime()));
+		uiModel.addAttribute("tomorrowButton", Constants.DateFormat.buttonDateFormat.getFormat().format(todayDate.getTime()));
 		
 		return "sakai/home";
 	}
@@ -164,7 +164,7 @@ public class SakaiController {
 		byte [] fileData = sakaiSiteService.findAnnouncementAttachment(siteId, attachmentId, user.getUserId());
 		
 		try {
-			if (type.equals(SakaiSiteService.URL_MIME_TYPE)) {
+			if (type.equals(Constants.URL_MIME_TYPE)) {
 				String url = new String(fileData);
 				response.sendRedirect(response.encodeRedirectURL(url));
 			} else {
@@ -286,7 +286,7 @@ public class SakaiController {
 					if (fileData!= null) {
 						String mimeType = type;
 						
-						if (mimeType.equals(SakaiSiteService.URL_MIME_TYPE)) {
+						if (mimeType.equals(Constants.URL_MIME_TYPE)) {
 							String url = new String(fileData);
 							response.sendRedirect(response.encodeRedirectURL(url));
 						} else {

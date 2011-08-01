@@ -56,6 +56,10 @@
         </dependency>
         <dependency>
 		   <groupId>org.kuali.mobility</groupId>
+		   <artifactId>shared-api</artifactId>
+		</dependency>
+        <dependency>
+		   <groupId>org.kuali.mobility</groupId>
 		   <artifactId>shared-config</artifactId>
 		</dependency>
 		<dependency>

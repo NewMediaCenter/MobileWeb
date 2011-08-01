@@ -32,10 +32,11 @@ import net.sf.json.JSONSerializer;
 import org.apache.commons.io.IOUtils;
 import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Attachment;
-import org.kuali.mobility.sakai.entity.FileType;
 import org.kuali.mobility.sakai.entity.ForumTopic;
 import org.kuali.mobility.sakai.entity.Message;
 import org.kuali.mobility.sakai.entity.MessageFolder;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.shared.Constants.FileType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -254,7 +255,7 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
 	}
 	
 	private FileType determineAttachmentFileType(String attachmentUrl, String mimeType) {
-		if (SakaiSiteService.URL_MIME_TYPE.equals(mimeType)) {
+		if (Constants.URL_MIME_TYPE.equals(mimeType)) {
 			return FileType.LINK;
 		}
 		
@@ -265,7 +266,7 @@ public class SakaiPrivateTopicServiceImpl implements SakaiPrivateTopicService {
     		extension = resExt[resExt.length-1].toLowerCase();
     	}
 		
-		FileType type = SakaiSiteService.FILE_TYPES.get(extension);
+		FileType type = Constants.FileTypes.valueOf(extension).getFileType();
 		if (type != null) {
 			return type;
 		} else {

@@ -43,12 +43,13 @@ import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.sakai.entity.Announcement;
 import org.kuali.mobility.sakai.entity.Assignment;
 import org.kuali.mobility.sakai.entity.Attachment;
-import org.kuali.mobility.sakai.entity.FileType;
 import org.kuali.mobility.sakai.entity.Home;
 import org.kuali.mobility.sakai.entity.Resource;
 import org.kuali.mobility.sakai.entity.Roster;
 import org.kuali.mobility.sakai.entity.Site;
 import org.kuali.mobility.sakai.entity.Term;
+import org.kuali.mobility.shared.Constants;
+import org.kuali.mobility.shared.Constants.FileType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -73,52 +74,6 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	
 	@Autowired
 	private CalendarEventOAuthService calendarEventOAuthService;
-	
-	private static final String FOLDER_EXTENSION = "fldr";
-	private static final String URL_EXTENSION = "url";
-	
-	static {
-		FILE_TYPES.put("txt", FileType.TEXT);
-		FILE_TYPES.put("rtf", FileType.TEXT);
-		FILE_TYPES.put("doc", FileType.TEXT);
-		FILE_TYPES.put("docx", FileType.TEXT);
-		FILE_TYPES.put("odt", FileType.TEXT);
-		FILE_TYPES.put("wpd", FileType.TEXT);
-		FILE_TYPES.put("jpg", FileType.IMAGE);
-		FILE_TYPES.put("jpeg", FileType.IMAGE);
-		FILE_TYPES.put("png", FileType.IMAGE);
-		FILE_TYPES.put("gif", FileType.IMAGE);
-		FILE_TYPES.put("bmp", FileType.IMAGE);
-		FILE_TYPES.put("psd", FileType.IMAGE);
-		FILE_TYPES.put("tiff", FileType.IMAGE);
-		FILE_TYPES.put("wav", FileType.AUDIO);
-		FILE_TYPES.put("wma", FileType.AUDIO);
-		FILE_TYPES.put("mpa", FileType.AUDIO);
-		FILE_TYPES.put("mp3", FileType.AUDIO);
-		FILE_TYPES.put("mid", FileType.AUDIO);
-		FILE_TYPES.put("midi", FileType.AUDIO);
-		FILE_TYPES.put("m4a", FileType.AUDIO);
-		FILE_TYPES.put("m3u", FileType.AUDIO);
-		FILE_TYPES.put("aif", FileType.AUDIO);
-		FILE_TYPES.put("avi", FileType.VIDEO);
-		FILE_TYPES.put("flv", FileType.VIDEO);
-		FILE_TYPES.put("mov", FileType.VIDEO);
-		FILE_TYPES.put("mp4", FileType.VIDEO);
-		FILE_TYPES.put("mpg", FileType.VIDEO);
-		FILE_TYPES.put("swf", FileType.VIDEO);
-		FILE_TYPES.put("vob", FileType.VIDEO);
-		FILE_TYPES.put("wmv", FileType.VIDEO);
-		FILE_TYPES.put("wks", FileType.SPREADSHEET);
-		FILE_TYPES.put("xls", FileType.SPREADSHEET);
-		FILE_TYPES.put("xlsx", FileType.SPREADSHEET);
-		FILE_TYPES.put("ods", FileType.SPREADSHEET);
-		FILE_TYPES.put("ppt", FileType.PRESENTATION);
-		FILE_TYPES.put("pptx", FileType.PRESENTATION);
-		FILE_TYPES.put("odp", FileType.PRESENTATION);
-		FILE_TYPES.put("pdf", FileType.PDF);
-		FILE_TYPES.put(URL_EXTENSION, FileType.LINK);
-		FILE_TYPES.put(FOLDER_EXTENSION, FileType.FOLDER);
-	}
 	
 	@SuppressWarnings("unchecked")
 	public Home findSakaiHome(String user, String shortDate) {
@@ -146,7 +101,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 				Calendar tomorrowDate = Calendar.getInstance();
 				if (shortDate != null) {
 					try {
-						todayDate.setTime(DATE_FORMAT.parse(shortDate));
+						todayDate.setTime(Constants.DateFormat.queryStringDateFormat.getFormat().parse(shortDate));
 					} catch (Exception e) {}
 				}
 				todayDate.set(Calendar.HOUR, 0);
@@ -640,7 +595,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 
             	char lastChar = id.charAt(id.length()-1);
     			if(lastChar == '/'){
-    				item.setExtension(FOLDER_EXTENSION);
+    				item.setExtension(Constants.SAKAI_FOLDER_EXTENSION);
     			} else {
                 	String resExt [] = strArr[strArr.length-1].split("\\.");
                 	if(resExt!=null && resExt.length!=0) {
@@ -661,7 +616,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	}
 	
 	private FileType determineFileType(String fileExtension) {
-		FileType type = FILE_TYPES.get(fileExtension.toLowerCase());
+		FileType type = Constants.FileTypes.valueOf(fileExtension.toLowerCase()).getFileType();
 		if (type != null) {
 			return type;
 		} else {
@@ -670,7 +625,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	}
 	
 	private FileType determineAttachmentFileType(String attachmentUrl, String mimeType) {
-		if (URL_MIME_TYPE.equals(mimeType)) {
+		if (Constants.URL_MIME_TYPE.equals(mimeType)) {
 			return FileType.LINK;
 		}
 		
@@ -681,7 +636,7 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
     		extension = resExt[resExt.length-1].toLowerCase();
     	}
 		
-		FileType type = FILE_TYPES.get(extension);
+		FileType type = Constants.FileTypes.valueOf(extension).getFileType();
 		if (type != null) {
 			return type;
 		} else {
