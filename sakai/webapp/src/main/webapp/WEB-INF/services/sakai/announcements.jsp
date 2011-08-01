@@ -20,7 +20,7 @@
 					<c:forEach items="${announcements}" var="item" varStatus="status">
 						<li>
 							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/announcements/${item.id}" data-direction="forward">
-								<h3 style="white-space:normal">${item.title}</h3>
+								<h3>${item.title}</h3>
 								<p>${item.createdOn}</p>
 								<p>${item.createdByDisplayName}</p>
 							</a>
