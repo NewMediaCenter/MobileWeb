@@ -29,7 +29,7 @@
 			context: anchor,
 			success: function() {
 				$(this).hide();
-				$(this).parent().children("h3").addClass("read");
+				$(this).parent().children('h3').removeClass('unread');
 			},
 			error: function() {
 				var span = $(this).children('span')[0];
@@ -60,10 +60,10 @@
 				<li>
 					<div style="margin-left:${message.indentIndex*10}px;">
 						<c:if test="${not message.isRead}">
-							<h3>${message.createdBy}</h3>
+							<h3 class="unread">${message.createdBy}</h3>
 						</c:if>
 						<c:if test="${message.isRead}">
-							<h3 class="read">${message.createdBy}</h3>
+							<h3>${message.createdBy}</h3>
 						</c:if>
 						<span class="date">${message.createdDate}</span>
 						<c:if test="${not message.isRead}">

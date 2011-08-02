@@ -117,8 +117,6 @@
                         $('#todayTab').css('background-color', '#E6E6E6');
                         $('#todayTab').css('color', '#2F3E46');
                         $('#todayPanel').show();
-                        $('#classesTab').css('position', 'relative');
-                        $('#classesTab').css('top', '10px');
                     });
                     </script>
                 </c:when>
