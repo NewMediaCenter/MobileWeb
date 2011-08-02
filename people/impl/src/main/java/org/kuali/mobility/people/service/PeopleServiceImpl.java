@@ -15,9 +15,19 @@
  
 package org.kuali.mobility.people.service;
 
+import java.util.List;
+
+import org.kuali.mobility.people.entity.Person;
+import org.kuali.mobility.people.entity.Search;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PeopleServiceImpl implements PeopleService {
+
+	@Override
+	public List<Person> performSearch(Search search) {
+		// TODO Auto-generated method stub
+		return null;
+	}
   
 }

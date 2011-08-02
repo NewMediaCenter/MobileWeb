@@ -15,6 +15,13 @@
  
 package org.kuali.mobility.people.service;
 
+import java.util.List;
+
+import org.kuali.mobility.people.entity.Person;
+import org.kuali.mobility.people.entity.Search;
+
 public interface PeopleService {
+
+	List<Person> performSearch(Search search);
 
 }

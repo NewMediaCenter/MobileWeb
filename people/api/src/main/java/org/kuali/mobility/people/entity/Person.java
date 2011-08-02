@@ -20,5 +20,34 @@ import java.io.Serializable;
 public class Person implements Serializable {
 
 	private static final long serialVersionUID = -2125754188712894101L;
-    
+	
+	private String firstName;
+	private String lastName;
+	private String location;
+	private String affiliation;
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getAffiliation() {
+		return affiliation;
+	}
+	public void setAffiliation(String affiliation) {
+		this.affiliation = affiliation;
+	}
 }
