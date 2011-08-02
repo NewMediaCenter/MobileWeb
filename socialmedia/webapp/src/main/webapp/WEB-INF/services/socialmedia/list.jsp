@@ -14,7 +14,7 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Social Media" id="socialmedia" backButton="true" homeButton="true">
+<kme:page title="Social Media" id="socialmedia" backButton="true" homeButton="true" cssFilename="twitter">
 	<kme:content>
 		<ul data-role="listview">
 			<c:choose>
