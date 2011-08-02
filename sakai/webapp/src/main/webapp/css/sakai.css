@@ -155,3 +155,10 @@ h3.unread {
 	font-weight:bold;
 	color:#990000;
 }
+
+
+/*Roster*/
+
+#roster_details ul li {
+	padding-right:10px;
+}
