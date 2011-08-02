@@ -153,18 +153,20 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
             	String type = object.getString("type");
             	if ("course".equals(type)) {
 	                Object jsonProps = object.get("props");
-	                String term = "No Term";
+	                String term = null;
 	                if (jsonProps instanceof JSONObject) {
 		                JSONObject props = (JSONObject) jsonProps;
-		                term = props.getString("term");
-		                String[] split = term.split(" ");
-		                term = "";
-		                for (String s : split) {
-		                	s = s.toLowerCase();
-		                	s = s.substring(0, 1).toUpperCase() + s.substring(1);
-		                	term = term + s + " ";
-		                }
-		                term.trim();
+		                try {
+		                	term = props.getString("term");
+			                String[] split = term.split(" ");
+			                term = "";
+			                for (String s : split) {
+			                	s = s.toLowerCase();
+			                	s = s.substring(0, 1).toUpperCase() + s.substring(1);
+			                	term = term + s + " ";
+			                }
+			                term.trim();
+		                } catch (Exception e) {}
 	                }
 	                item.setTerm(term);  
 	                

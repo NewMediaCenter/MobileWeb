@@ -76,8 +76,6 @@ public class Site implements Serializable, Comparable<Site> {
         this.campus = campus;
     }
 
-    
-
     public int compareTo(Site that) {
         if (this == null || that == null || this.getId() == null || that.getId() == null) {
             return -1;

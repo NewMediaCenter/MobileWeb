@@ -38,15 +38,18 @@ public class Term implements Serializable, Comparable<Term>{
 
 	public void setTerm(String term) {
 		this.term = term;
-		String[] split = term.split(" ");
 		
-		try {
-			termEnumVal = Terms.valueOf(split[0].toUpperCase());
-		} catch (Exception e) {}
-		
-		try {
-			year = Integer.parseInt(split[1]);
-		} catch (Exception e) {}
+		if (term != null) {
+			String[] split = term.split(" ");
+			
+			try {
+				termEnumVal = Terms.valueOf(split[0].toUpperCase());
+			} catch (Exception e) {}
+			
+			try {
+				year = Integer.parseInt(split[1]);
+			} catch (Exception e) {}
+		}
 	}
 
 	public Collection<Site> getCourses() {

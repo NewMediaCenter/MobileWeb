@@ -163,7 +163,8 @@
 	        <div background-color:#E6E6E6;" id="classesPanel" name="classesPanel">
 	        	<c:if test="${tabCount eq 1}"><h2>Classes</h2></c:if>
 	            <c:forEach items="${home.courses}" var="termItem" varStatus="status">
-	                <h3>${termItem.term}</h3>
+	                <c:if test="${not empty termItem.term}"><h3>${termItem.term}</h3></c:if>
+	                <c:if test="${empty termItem.term}"><h3>No Term</h3></c:if>
 	                <kme:listView dataTheme="c">
 	                    <c:forEach items="${termItem.courses}" var="item" varStatus="status">
 	                        <kme:listItem>
