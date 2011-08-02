@@ -1,43 +1,63 @@
 /* resource icons */
-div#class_details ul.ui-listview a, div#announcement ul.ui-listview a, div#message ul.ui-listview a {
+#class_details ul.ui-listview a, div#announcement ul.ui-listview a, div#message ul.ui-listview a {
 	background: transparent url('../images/service-icons/mcl-file.png') 15px 50% no-repeat;
 	padding-left: 50px;
 }
-div#forum ul li ul li a {
+#forum ul li ul li a {
 	background: transparent url('../images/service-icons/mcl-file.png') 10px 50% no-repeat;
 	padding-left: 30px;
 }
-div#forum ul li ul li {
+#forum ul li ul li {
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
-div#class_details ul.ui-listview a.icon-FOLDER, div#announcement ul.ui-listview a.icon-FOLDER, div#message ul.ui-listview a.icon-FOLDER, div#forum ul li ul li a.icon-FOLDER {
+#class_details ul.ui-listview a.icon-FOLDER, #announcement ul.ui-listview a.icon-FOLDER, #message ul.ui-listview a.icon-FOLDER, #forum ul li ul li a.icon-FOLDER {
 	background-image: url('../images/service-icons/mcl-folder.png');
 }
-div#class_details ul.ui-listview a.icon-IMAGE, div#announcement ul.ui-listview a.icon-IMAGE, div#message ul.ui-listview a.icon-IMAGE, div#forum ul li ul li a.icon-IMAGE {
+#class_details ul.ui-listview a.icon-IMAGE, #announcement ul.ui-listview a.icon-IMAGE, #message ul.ui-listview a.icon-IMAGE, #forum ul li ul li a.icon-IMAGE {
     background-image: url('../images/service-icons/mcl-image.png');
 }
-div#class_details ul.ui-listview a.icon-VIDEO, div#announcement ul.ui-listview a.icon-VIDEO, div#message ul.ui-listview a.icon-VIDEO, div#forum ul li ul li a.icon-VIDEO {
+#class_details ul.ui-listview a.icon-VIDEO, #announcement ul.ui-listview a.icon-VIDEO, #message ul.ui-listview a.icon-VIDEO, #forum ul li ul li a.icon-VIDEO {
     background-image: url('../images/service-icons/mcl-movie.png');
 }
-div#class_details ul.ui-listview a.icon-TEXT, div#announcement ul.ui-listview a.icon-TEXT, div#message ul.ui-listview a.icon-TEXT, div#forum ul li ul li a.icon-TEXT {
+#class_details ul.ui-listview a.icon-TEXT, #announcement ul.ui-listview a.icon-TEXT, #message ul.ui-listview a.icon-TEXT, #forum ul li ul li a.icon-TEXT {
     background-image: url('../images/service-icons/mcl-doc.png');
 }
-div#class_details ul.ui-listview a.icon-PRESENTATION, div#announcement ul.ui-listview a.icon-PRESENTATION, div#message ul.ui-listview a.icon-PRESENTATION, div#forum ul li ul li a.icon-PRESENTATION {
+#class_details ul.ui-listview a.icon-PRESENTATION, #announcement ul.ui-listview a.icon-PRESENTATION, #message ul.ui-listview a.icon-PRESENTATION, #forum ul li ul li a.icon-PRESENTATION {
     background-image: url('../images/service-icons/mcl-powerpoint.png');
 }
-div#class_details ul.ui-listview a.icon-SPREADSHEET, div#announcement ul.ui-listview a.icon-SPREADSHEET, div#message ul.ui-listview a.icon-SPREADSHEET, div#forum ul li ul li a.icon-SPREADSHEET {
+#class_details ul.ui-listview a.icon-SPREADSHEET, #announcement ul.ui-listview a.icon-SPREADSHEET, #message ul.ui-listview a.icon-SPREADSHEET, #forum ul li ul li a.icon-SPREADSHEET {
     background-image: url('../images/service-icons/mcl-spreadsheet.png');
 }
-div#class_details ul.ui-listview a.icon-PDF, div#announcement ul.ui-listview a.icon-PDF, div#message ul.ui-listview a.icon-PDF, div#forum ul li ul li a.icon-PDF {
+#class_details ul.ui-listview a.icon-PDF, #announcement ul.ui-listview a.icon-PDF, #message ul.ui-listview a.icon-PDF, #forum ul li ul li a.icon-PDF {
     background-image: url('../images/service-icons/mcl-pdf.png');
 }
-div#class_details ul.ui-listview a.icon-AUDIO, div#announcement ul.ui-listview a.icon-AUDIO, div#message ul.ui-listview a.icon-AUDIO, div#forum ul li ul li a.icon-AUDIO {
+#class_details ul.ui-listview a.icon-AUDIO, #announcement ul.ui-listview a.icon-AUDIO, #message ul.ui-listview a.icon-AUDIO, #forum ul li ul li a.icon-AUDIO {
     background-image: url('../images/service-icons/mcl-audio.png');
 }
-div#class_details ul.ui-listview a.icon-LINK, div#announcement ul.ui-listview a.icon-LINK, div#message ul.ui-listview a.icon-LINK, div#forum ul li ul li a.icon-LINK {
+#class_details ul.ui-listview a.icon-LINK, #announcement ul.ui-listview a.icon-LINK, #message ul.ui-listview a.icon-LINK, #forum ul li ul li a.icon-LINK {
     background-image: url('../images/service-icons/mcl-weblink.png');
 }
+
+#class_details ul.ui-listview a.icon-INSTRUCTOR, #announcement ul.ui-listview a.icon-INSTRUCTOR, #message ul.ui-listview a.icon-INSTRUCTOR, #forum ul li ul li a.icon-INSTRUCTOR {
+    background-image: url('../images/service-icons/mcl-teacher.png');
+}
+#class_details ul.ui-listview a.icon-ANNOUNCEMENTS, #announcement ul.ui-listview a.icon-ANNOUNCEMENTS, #message ul.ui-listview a.icon-ANNOUNCEMENTS, #forum ul li ul li a.icon-ANNOUNCEMENTS {
+    background-image: url('../images/service-icons/mcl-announce.png');
+}
+#class_details ul.ui-listview a.icon-ROSTER, #announcement ul.ui-listview a.icon-ROSTER, #message ul.ui-listview a.icon-ROSTER, #forum ul li ul li a.icon-ROSTER {
+    background-image: url('../images/service-icons/mcl-roster.png');
+}
+#class_details ul.ui-listview a.icon-FORUMS, #announcement ul.ui-listview a.icon-FORUMS, #message ul.ui-listview a.icon-FORUMS, #forum ul li ul li a.icon-FORUMS {
+    background-image: url('../images/service-icons/mcl-forums.png');
+}
+#class_details ul.ui-listview a.icon-RESOURCES, #announcement ul.ui-listview a.icon-RESOURCES, #message ul.ui-listview a.icon-RESOURCES, #forum ul li ul li a.icon-RESOURCES {
+    background-image: url('../images/service-icons/mcl-resources.png');
+}
+#class_details ul.ui-listview a.icon-MESSAGES, #announcement ul.ui-listview a.icon-MESSAGES, #message ul.ui-listview a.icon-MESSAGES, #forum ul li ul li a.icon-MESSAGES {
+    background-image: url('../images/service-icons/mcl-messages.png');
+}
+
 
 .ui-li-icon.ui-li-thumb {
 	width:18px;
@@ -154,11 +174,4 @@ h3.unread {
 .forum .ui-li .ui-btn-text a.ui-link-inherit { text-overflow: ellipsis; overflow: hidden; white-space: normal;  }.forum ul li a b i {
 	font-weight:bold;
 	color:#990000;
-}
-
-
-/*Roster*/
-
-#roster_details ul li {
-	padding-right:10px;
 }

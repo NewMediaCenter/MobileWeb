@@ -14,73 +14,67 @@
 	
 <kme:page title="${site.title}" id="class_details" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses" cssFilename="sakai">
 	<kme:content>
-		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
+		<kme:listView dataTheme="c" dataDividerTheme="b">
 			<c:if test="${site.instructorName != null && site.instructorName != 'null'}">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster/${site.instructorId}">
-						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-teacher.png" class="ui-li-icon ui-li-thumb" alt="instructor">
+				<kme:listItem>
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster/${site.instructorId}" class="icon-INSTRUCTOR">
 						Instructor<br />
 						<span style=" font-weight:normal; font-size:.8em">${site.instructorName}</span>
 					</a>
-				</li>
+				</kme:listItem>>
 			</c:if>
 			<c:if test="${site.hasAnnouncementsTool}">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/announcements">
-						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-announce.png"  class="ui-li-icon ui-li-thumb" alt="announcements">
+				<kme:listItem>
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/announcements" class="icon-ANNOUNCEMENTS">
 						Announcements
 					</a>
-				</li>
+				</kme:listItem>
 			</c:if>
 			<c:if test="${site.hasAssignmentsTool && false}">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/assignments">
+				<kme:listItem>
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/assignments" class="icon-ASSIGNMENTS">
 						Assignments
 					</a>
-				</li>
+				</kme:listItem>
 			</c:if>
 			<c:if test="${site.hasGradesTool && false}">
-				<li>					
-					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/grades">
+				<kme:listItem>					
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/grades" class="icon-GRADES">
 						Gradebook
 					</a>
-				</li>
+				</kme:listItem>
 			</c:if>
 			<c:if test="${site.hasRosterTool}">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster">
-						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-roster.png"  class="ui-li-icon ui-li-thumb" alt="roster">
+				<kme:listItem>
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/roster" class="icon-ROSTER">
 						Roster
 					</a>
-				</li>
+				</kme:listItem>
 			</c:if>
 			<c:if test="${site.hasForumsTool}">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/forums">
-						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-forums.png"  class="ui-li-icon ui-li-thumb" alt="forums">
+				<kme:listItem>
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/forums" class="icon-FORUMS">
 						Forums
 						<span class="ui-li-count">${forumCount}</span>
 					</a>
-				</li>
+				</kme:listItem>
 			</c:if>
 			<c:if test="${site.hasResourcesTool}">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources">
-						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-resources.png"  class="ui-li-icon ui-li-thumb" alt="resources">
+				<kme:listItem>
+					<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources" class="icon-RESOURCES">
 						Resources
 					</a>
-				</li>
+				</kme:listItem>
 			</c:if>
 			<c:if test="${site.hasMessagesTool}">
-				<li>
-					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/messages">
-						<img src="${pageContext.request.contextPath}/images/service-icons/mcl-messages.png"  class="ui-li-icon ui-li-thumb" alt="messages">
+				<kme:listItem>
+					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/messages" class="icon-MESSAGES">
 						Messages
 						<span class="ui-li-count">${messageCount}</span>
 					</a>
-				</li>
+				</kme:listItem>
 			</c:if>
-		</ul>
+		</kme:listView>
 	</kme:content>
 </kme:page>
 

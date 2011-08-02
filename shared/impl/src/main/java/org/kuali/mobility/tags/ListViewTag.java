@@ -14,12 +14,13 @@ public class ListViewTag extends SimpleTagSupport {
     private String dataTheme;
     private String dataDividerTheme;
     private boolean dataInset;
+    private String cssClass;
     
     public void doTag() throws JspException {
         PageContext pageContext = (PageContext) getJspContext();
         JspWriter out = pageContext.getOut();
         try {
-            out.println("<ul data-role=\"listview\"" + (id != null && !"".equals(id.trim()) ? " id=\"" + id.trim() + "\"" : "") + "\"" + (dataTheme != null && !"".equals(dataTheme.trim()) ? " data-theme=\"" + dataTheme.trim() + "\"" : "") + "\" data-inset=\""+ (dataInset ? "true" : "false") + "\" data-filter=\"" + (filter ? "true" : "false") + "\"" + (dataDividerTheme != null && !"".equals(dataDividerTheme.trim()) ? " data-dividertheme=\"" + dataDividerTheme + "\"" : "") + ">");
+            out.println("<ul data-role=\"listview\"" + (id != null && !"".equals(id.trim()) ? " id=\"" + id.trim() + "\"" : "") + (cssClass != null && !"".equals(cssClass.trim()) ? " class=\"" + cssClass.trim() + "\"" : "") + (dataTheme != null && !"".equals(dataTheme.trim()) ? " data-theme=\"" + dataTheme.trim() + "\"" : "") + "\" data-inset=\""+ (dataInset ? "true" : "false") + "\" data-filter=\"" + (filter ? "true" : "false") + "\"" + (dataDividerTheme != null && !"".equals(dataDividerTheme.trim()) ? " data-dividertheme=\"" + dataDividerTheme + "\"" : "") + ">");
             getJspBody().invoke(out);          
             out.println("</ul>");
         } catch (Exception e) {
@@ -46,5 +47,9 @@ public class ListViewTag extends SimpleTagSupport {
     
     public void setDataInset(boolean dataInset) {
         this.dataInset = dataInset;
+    }
+    
+    public void setCssClass(String cssClass) {
+        this.cssClass = cssClass;
     }
 }	

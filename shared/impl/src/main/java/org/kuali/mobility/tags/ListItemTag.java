@@ -11,13 +11,13 @@ public class ListItemTag extends SimpleTagSupport {
     
     private String dataRole;
     private String dataTheme;
-    private String specialClass;
+    private String cssClass;
     
     public void doTag() throws JspException {
         PageContext pageContext = (PageContext) getJspContext();
         JspWriter out = pageContext.getOut();
         try {
-            out.println("<li " + (dataRole != null && !"".equals(dataRole.trim()) ? " data-role=\"" + dataRole.trim() + "\"" : "") + " data-theme=\"" + (dataTheme != null && !"".equals(dataTheme.trim()) ? dataTheme : "c") + "\">");
+            out.println("<li " + (dataRole != null && !"".equals(dataRole.trim()) ? " data-role=\"" + dataRole.trim() + "\"" : "") + (cssClass != null && !"".equals(cssClass.trim()) ? " class=\"" + cssClass.trim() + "\"" : "") + " data-theme=\"" + (dataTheme != null && !"".equals(dataTheme.trim()) ? dataTheme : "c") + "\">");
             getJspBody().invoke(out);          
             out.println("</li>");
         } catch (Exception e) {
@@ -31,5 +31,9 @@ public class ListItemTag extends SimpleTagSupport {
     
     public void setDataTheme(String dataTheme) {
         this.dataTheme = dataTheme;
+    }
+    
+    public void setCssClass(String cssClass) {
+        this.cssClass = cssClass;
     }
 }
