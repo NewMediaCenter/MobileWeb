@@ -14,33 +14,32 @@
 	
 <kme:page title="Resources" id="class_details" backButton="true" homeButton="true" cssFilename="sakai">
 	<kme:content>
-	<style type="text/css">
-    <!--
-	div.ui-li { border:none !important; }
-	-->
-	</style>
-		<ul data-role="listview">
+		<kme:listView>
 			<c:choose>
 				<c:when test="${not empty resources}">
 					<c:forEach items="${resources}" var="item" varStatus="status">
 						<c:choose>
 							<c:when test="${item.fileType == 'FOLDER'}">
-								<li>
+							     <kme:listItem>
+		                            <a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.encodedId}&type=${item.mimeType}" class="icon-${item.fileType}" >
+		                                ${item.title}
+		                            </a>
+		                         </kme:listItem>
 							</c:when>
 							<c:otherwise>
-								<li class="link-view">
+								<kme:listItem cssClass="link-view">
+                                    <a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.encodedId}&type=${item.mimeType}" class="icon-${item.fileType}" >
+                                        ${item.title}
+                                    </a>
+                                </kme:listItem>
 							</c:otherwise>
 						</c:choose>
-							<a href="${pageContext.request.contextPath}/myclasses/${siteId}/resources?resId=${item.encodedId}&type=${item.mimeType}" class="icon-${item.fileType}" >
-								${item.title}
-						  	</a>
-						</li>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<li>No resources</li>
+					<kme:listItem>No resources</kme:listItem>>
 				</c:otherwise>
 			</c:choose>
-		</ul>
+		</kme:listView>
 	</kme:content>
 </kme:page>
