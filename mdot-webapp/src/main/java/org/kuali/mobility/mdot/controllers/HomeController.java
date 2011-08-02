@@ -67,7 +67,6 @@ public class HomeController {
     	tool.setUrl("myclasses");
     	tools.add(tool);
 
-    	/*
     	tool = new Tool();
     	if (backdoor != null) {
     		tool.setBadgeCount(backdoor.getUserId());
@@ -79,7 +78,6 @@ public class HomeController {
     	tool.setTitle("Backdoor");
     	tool.setUrl("backdoor");
     	tools.add(tool);
-		*/
     	
     	tool = new Tool();
     	tool.setBadgeCount("");
