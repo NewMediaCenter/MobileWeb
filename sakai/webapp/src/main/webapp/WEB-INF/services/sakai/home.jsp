@@ -18,7 +18,11 @@
 	    <style type="text/css">
 	        div.ui-body-b { background: none; }
 	        div.ui-body-b { background-color: #E6E6E6 !important; }
-	        div#classesPanel, div#projectsPanel, div#otherPanel, div#todayPanel { margin-top: -20px; }   
+	        div#classesPanel, div#projectsPanel, div#otherPanel, div#todayPanel { margin-top: -20px; } 
+	        h2 { text-align: center; }
+	        a.arrowButtonLeft, a.arrowButtonRight { width:28px; height:28px; display:block; text-indent:-9999px; background-position:6px 6px; background-repeat:no-repeat; }
+	        a.arrowButtonLeft { float:left; background-image:url('images/arrow-left.png'); }
+	        a.arrowButtonRight { float:right; background-image:url('images/arrow-right.png'); }
 	    </style>
     
         <c:if test="${tabCount gt 1}">
@@ -113,6 +117,8 @@
                         $('#todayTab').css('background-color', '#E6E6E6');
                         $('#todayTab').css('color', '#2F3E46');
                         $('#todayPanel').show();
+                        $('#classesTab').css('position', 'relative');
+                        $('#classesTab').css('top', '10px');
                     });
                     </script>
                 </c:when>
@@ -213,12 +219,17 @@
      
         <c:if test="${!empty home.courses}">
             <div background-color:#E6E6E6;" id="todayPanel" name="todayPanel">
+                <!-- 
                 <div data-inline="true">
                     <div class="ui-grid-a">
                         <div class="ui-block-a"><a data-role="button" data-theme="c" href="${pageContext.request.contextPath}/myclasses?date=${yesterday}">&laquo; ${yesterdayButton}</a></div>
                         <div class="ui-block-b"><a data-role="button" data-theme="c" href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">${tomorrowButton} &raquo; </a></div>
                     </div>
                 </div>
+                -->
+                
+                <a class="arrowButtonLeft" href="${pageContext.request.contextPath}/myclasses?date=${yesterday}">${yesterdayButton}</a>
+                <a class="arrowButtonRight" href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">${tomorrowButton}</a>
                 <h2>${todayDisplay}</h2>
 	            <!--<c:if test="${tabCount eq 1}"><h2>Today</h2></c:if>-->
 	            <c:if test="${!empty home.todaysCourses}">
