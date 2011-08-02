@@ -50,6 +50,7 @@ import org.kuali.mobility.sakai.entity.Site;
 import org.kuali.mobility.sakai.entity.Term;
 import org.kuali.mobility.shared.Constants;
 import org.kuali.mobility.shared.Constants.FileType;
+import org.kuali.mobility.shared.Constants.FileTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -158,10 +159,10 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		                JSONObject props = (JSONObject) jsonProps;
 		                try {
 		                	term = props.getString("term");
+		                	term = term.toLowerCase();
 			                String[] split = term.split(" ");
 			                term = "";
 			                for (String s : split) {
-			                	s = s.toLowerCase();
 			                	s = s.substring(0, 1).toUpperCase() + s.substring(1);
 			                	term = term + s + " ";
 			                }
@@ -618,9 +619,9 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	}
 	
 	private FileType determineFileType(String fileExtension) {
-		FileType type = Constants.FileTypes.valueOf(fileExtension.toLowerCase()).getFileType();
+		FileTypes type = Constants.FileTypes.valueOf(fileExtension.toLowerCase());
 		if (type != null) {
-			return type;
+			return type.getFileType();
 		} else {
 			return FileType.GENERIC;
 		}
@@ -638,9 +639,9 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
     		extension = resExt[resExt.length-1].toLowerCase();
     	}
 		
-		FileType type = Constants.FileTypes.valueOf(extension).getFileType();
+    	FileTypes type = Constants.FileTypes.valueOf(extension);
 		if (type != null) {
-			return type;
+			return type.getFileType();
 		} else {
 			return FileType.GENERIC;
 		}
