@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Assignment Details" id="assignment" backButton="true" homeButton="true">
+<kme:page title="Assignment Details" id="assignment" backButton="true" homeButton="true" cssFilename="sakai">
 	<kme:content>
 		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
 			<c:set var="lastCreatedDate" value=""/>

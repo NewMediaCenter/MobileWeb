@@ -15,7 +15,7 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Maps" id="formtest">
+<kme:page title="Maps" id="formtest" cssFilename="maps">
 	<kme:content>
 
 <form:form action="${pageContext.request.contextPath}/maps/search" commandName="mapsearchform" data-ajax="false">

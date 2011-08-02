@@ -15,7 +15,7 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Feedback" id="feedback">
+<kme:page title="Feedback" id="feedback" cssFilename="feedback">
 	<kme:content>
 		Thank you for your feedback! 
 	</kme:content>

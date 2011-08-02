@@ -13,7 +13,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Computer Labs" id="computerlabs" homeButton="true" backButton="true">
+<kme:page title="Computer Labs" id="computerlabs" homeButton="true" backButton="true" cssFilename="computerlabs">
     <kme:content>
         <kme:listView id="computerlablist" dataTheme="c" dataDividerTheme="b" filter="false">
             <c:forEach items="${lablocations}" var="location" varStatus="status">

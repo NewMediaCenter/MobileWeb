@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Knowledge Base" id="kbdoc" backButton="true" homeButton="true">
+<kme:page title="Knowledge Base" id="kbdoc" backButton="true" homeButton="true" cssFilename="knowledgebase">
 	<kme:content>
 		${kbdoc}
 		

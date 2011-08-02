@@ -15,7 +15,7 @@
 <%@ taglib prefix="kme"  uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Ask IU" id="ask_iu" backButton="true" homeButton="true">
+<kme:page title="Ask IU" id="ask_iu" backButton="true" homeButton="true" cssFilename="askiu">
 	<kme:content>
 		<form:form action="${pageContext.request.contextPath}/askiu" commandName="askiu" data-ajax="false" method="post">
 			<fieldset>

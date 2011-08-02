@@ -13,7 +13,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Emergency Contacts" id="emergencyinfo" backButton="true" homeButton="true">
+<kme:page title="Emergency Contacts" id="emergencyinfo" backButton="true" homeButton="true" cssFilename="emergencyinfo">
     <kme:content>
         <kme:definitionListView id="emergencylist" filter="false">
             <c:forEach items="${emergencyinfos}" var="emergencyinfo" varStatus="status">

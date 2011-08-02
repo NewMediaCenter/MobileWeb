@@ -15,7 +15,7 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="Feedback" id="feedback_page" backButton="true" homeButton="true">
+<kme:page title="Feedback" id="feedback_page" backButton="true" homeButton="true" cssFilename="feedback">
     <kme:content>
         <form:form action="${pageContext.request.contextPath}/feedback" commandName="feedback" data-ajax="false" method="post"> Do you have suggestions for other mobile services at Indiana University or ideas on how we can improve the current services? Let us know!
             <%--hidden fields: <form:hidden path="eventId"/>--%>

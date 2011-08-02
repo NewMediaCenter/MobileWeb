@@ -15,7 +15,7 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Maps" id="mapslocation" backButton="true" homeButton="true">
+<kme:page title="Maps" id="mapslocation" backButton="true" homeButton="true" cssFilename="maps">
 	<kme:content>
 	
 <div id="map_canvas" style="height:300px;"></div>

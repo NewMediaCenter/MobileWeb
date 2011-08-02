@@ -15,7 +15,7 @@
 <%@ taglib prefix="kme"  uri="http://kuali.org/mobility" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<kme:page title="People" id="people" backButton="true" homeButton="true">
+<kme:page title="People" id="people" backButton="true" homeButton="true" cssFilename="people">
 	<kme:content>
 	People
 	</kme:content>

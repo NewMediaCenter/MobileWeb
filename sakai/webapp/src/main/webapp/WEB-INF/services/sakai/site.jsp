@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 	
-<kme:page title="${site.title}" id="class_details" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses">
+<kme:page title="${site.title}" id="class_details" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/myclasses" cssFilename="sakai">
 	<kme:content>
 		<ul data-role="listview" data-theme="c" data-dividertheme="b" data-inset="false">
 			<c:if test="${site.instructorName != null && site.instructorName != 'null'}">

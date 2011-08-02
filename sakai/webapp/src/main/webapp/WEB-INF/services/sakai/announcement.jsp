@@ -12,7 +12,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Announcement Details" id="announcement" backButton="true" homeButton="true">
+<kme:page title="Announcement Details" id="announcement" backButton="true" homeButton="true" cssFilename="sakai">
 	<kme:content>
 		<h3>${announcement.title}</h3>
 		<p>Posted: ${announcement.createdByDisplayName}</p>
