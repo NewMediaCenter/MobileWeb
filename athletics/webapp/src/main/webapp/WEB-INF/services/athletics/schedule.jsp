@@ -18,10 +18,21 @@
 	<kme:content>
 		<div class="subnav">
 			<div class="subnav-container">
-				<a href="${pageContext.request.contextPath}/athletics/viewSport?sportId=${matchData.sport.sportId}" class="button-subnav left"><span>news</span> </a>
+				<c:url var="newsUrl" value="/athletics/viewSport">
+					<c:param name="sportId" value="${matchData.sport.sportId}" />
+				</c:url>
+				<a href="${newsUrl}" class="button-subnav left"><span>news</span> </a>
 				<c:if test="${matchData.sport.seasonId > 0}">
-					<a href="${pageContext.request.contextPath}/athletics/viewRoster?sportId=${matchData.sport.sportId}&seasonId=${matchData.sport.seasonId}" class="button-subnav left"><span>roster</span> </a>
-					<a href="${pageContext.request.contextPath}/athletics/viewSchedule?sportId=${matchData.sport.sportId}&seasonId=${matchData.sport.seasonId}" class="button-subnav left"><span>schedule</span> </a>
+					<c:url var="rosterUrl" value="/athletics/viewRoster">
+						<c:param name="sportId" value="${matchData.sport.sportId}" />
+						<c:param name="seasonId" value="${matchData.sport.seasonId}" />
+					</c:url>
+					<c:url var="scheduleUrl" value="/athletics/viewSchedule">
+						<c:param name="sportId" value="${matchData.sport.sportId}" />
+						<c:param name="seasonId" value="${matchData.sport.seasonId}" />
+					</c:url>
+					<a href="${rosterUrl}" class="button-subnav left"><span>roster</span> </a>
+					<a href="${scheduleUrl}" class="button-subnav left"><span>schedule</span> </a>
 				</c:if>
 			</div>
 		</div>
@@ -36,7 +47,7 @@
 							<div class="livescore-sidebar1">
 								<div class="scorebox">
 									<c:if test="${not empty match.thumbnail}">
-										<img src="${match.thumbnail}" class="team-icon" />
+										<img src='<c:out value="${match.thumbnail}"/>' class="team-icon" />
 									</c:if>
 									<div class="currentscore">
 										<c:out value="${match.score}" escapeXml="true" />
@@ -50,8 +61,7 @@
 										<span class="gamestatus"><c:out value="${match.winLoss}" /> </span>
 										<br />
 									</c:if>
-									<span class="opponent"> 
-										<c:choose>
+									<span class="opponent"> <c:choose>
 											<c:when test="${not empty match.opponent}">
 												<c:out value="${match.home}" />&nbsp;<c:out value="${match.opponent}" escapeXml="true" />
 											</c:when>
@@ -80,7 +90,7 @@
 							<div class="livescore-sidebar2">
 								<div class="scorebox">
 									<c:if test="${not empty match.oppThumbnail}">
-										<img src="${match.oppThumbnail}" class="team-icon" />
+										<img src='<c:out value="${match.oppThumbnail}"/>' class="team-icon" />
 									</c:if>
 									<div class="currentscore">
 										<c:out value="${match.oppScore}" escapeXml="true" />
@@ -89,7 +99,8 @@
 								<!-- end .sidebar2 -->
 							</div>
 						</div>
-					</div></li>
+					</div>
+				</li>
 			</c:forEach>
 		</ul>
 	</kme:content>

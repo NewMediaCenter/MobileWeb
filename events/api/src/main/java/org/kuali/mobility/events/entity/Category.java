@@ -13,18 +13,43 @@
  * permissions and limitations under the License.
  */
 
-package org.kuali.mobility.events.service;
+package org.kuali.mobility.events.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-import org.kuali.mobility.events.entity.Category;
-import org.kuali.mobility.events.entity.Event;
+public class Category implements Serializable {
 
-public interface EventsService {
+	private static final long serialVersionUID = 2433472025839184720L;
 
-	public Category getAllEvents(String campus, String categoryId);
+	private String categoryId;
 
-	public List<Category> getCategoriesByCampus(String campus);
+	private String title;
+	
+	private List<Day> days;
 
-	public Event getEvent(String campus, String categoryId, String eventId);
+	public List<Day> getDays() {
+		return days;
+	}
+
+	public void setDays(List<Day> days) {
+		this.days = days;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 }

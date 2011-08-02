@@ -23,12 +23,11 @@
 			<c:forEach var="match" items="${athletics.matchData.matches}">
 				<li>
 					<div>
-
 						<div class="livescore-container">
 							<div class="livescore-sidebar1">
 								<div class="scorebox">
 									<c:if test="${not empty match.thumbnail}">
-										<img src="${match.thumbnail}" class="team-icon" />
+										<img src='<c:out value="match.thumbnail"/>' class="team-icon" />
 									</c:if>
 									<div class="currentscore">
 										<c:out value="${match.score}" escapeXml="true" />
@@ -72,7 +71,7 @@
 							<div class="livescore-sidebar2">
 								<div class="scorebox">
 									<c:if test="${not empty match.oppThumbnail}">
-										<img src="${match.oppThumbnail}" class="team-icon" />
+										<img src='<c:out value="${match.oppThumbnail}"/>' class="team-icon" />
 									</c:if>
 									<div class="currentscore">
 										<c:out value="${match.oppScore}" escapeXml="true" />
@@ -91,17 +90,18 @@
 			<c:forEach var="news" items="${athletics.newsData.news}">
 				<li>
 					<div>
-						<a href="${pageContext.request.contextPath}/athletics/viewStory?link=${news.url}"> 
-							<c:choose>
+						<c:url var="story" value="/athletics/viewStory">
+							<c:param name="link" value="${news.url}" />
+						</c:url>
+						<a href="${story}"> <c:choose>
 								<c:when test="${not empty news.thumbnail}">
 									<img src='<c:out value="${news.thumbnail}" escapeXml="true" />' class="rowicon-news" />
-									<em class="news"><c:out value="${news.title}" /></em>
-								</c:when> 
+									<em class="news"><c:out value="${news.title}" /> </em>
+								</c:when>
 								<c:otherwise>
-									<em class="news-noimage"><c:out value="${news.title}" /></em>
-								</c:otherwise> 
-							</c:choose>
-						</a>
+									<em class="news-noimage"><c:out value="${news.title}" /> </em>
+								</c:otherwise>
+							</c:choose> </a>
 					</div>
 				</li>
 			</c:forEach>
@@ -114,7 +114,7 @@
 				<li>
 					<div>
 						<a href="${pageContext.request.contextPath}/athletics/viewSport?sportId=${sport.sportId}"> <c:if test="${not empty sport.thumbnail}">
-								<img src="${sport.thumbnail}" class="rowicon-team" />
+								<img src='<c:out value="${sport.thumbnail}"/>' class="rowicon-team" />
 							</c:if><em class="team">${sport.name}</em> </a>
 					</div>
 				</li>

@@ -21,7 +21,7 @@
 		<div class="focal">
 			<c:choose>
 				<c:when test="${not empty newsArticle.description}">
-					${newsArticle.description}
+					<c:out value="${newsArticle.description}"/>
 				</c:when>
 				<c:otherwise>
 					This story is not currently available.

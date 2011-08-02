@@ -20,10 +20,22 @@
 
 		<div class="subnav">
 			<div class="subnav-container">
-				<a href="${pageContext.request.contextPath}/athletics/viewSport?sportId=${sport.sportId}" class="button-subnav left"><span>news</span> </a>
+				<c:url var="newsUrl" value="/athletics/viewSport">
+					<c:param name="sportId" value="${sport.sportId}" />
+				</c:url>
+
+				<a href="${newsUrl}" class="button-subnav left"><span>news</span> </a>
 				<c:if test="${sport.seasonId > 0}">
-					<a href="${pageContext.request.contextPath}/athletics/viewRoster?sportId=${sport.sportId}&seasonId=${sport.seasonId}" class="button-subnav left"><span>roster</span> </a>
-					<a href="${pageContext.request.contextPath}/athletics/viewSchedule?sportId=${sport.sportId}&seasonId=${sport.seasonId}" class="button-subnav left"><span>schedule</span> </a>
+					<c:url var="rosterUrl" value="/athletics/viewRoster">
+						<c:param name="sportId" value="${sport.sportId}" />
+						<c:param name="seasonId" value="${sport.seasonId}" />
+					</c:url>
+					<c:url var="scheduleUrl" value="/athletics/viewSchedule">
+						<c:param name="sportId" value="${sport.sportId}" />
+						<c:param name="seasonId" value="${sport.seasonId}" />
+					</c:url>
+					<a href="${rosterUrl}" class="button-subnav left"><span>roster</span> </a>
+					<a href="${scheduleUrl}" class="button-subnav left"><span>schedule</span> </a>
 				</c:if>
 			</div>
 		</div>
@@ -42,7 +54,9 @@
 							<c:otherwise>
 								<img src="${pageContext.request.contextPath}/images/default-blockiu.png" class="rowicon-news" />
 							</c:otherwise>
-						</c:choose> <a href="${pageContext.request.contextPath}/athletics/viewStory?link=${article.link}"> <strong><c:out value="${article.title}" escapeXml="true" /> </strong>
+						</c:choose> <c:url var="articleUrl" value="/athletics/viewStory">
+							<c:param name="link" value="${article.link}" />
+						</c:url> <a href="${articleUrl}"> <strong><c:out value="${article.title}" escapeXml="true" /> </strong>
 							<div class="teaserline">
 								<c:out value="${article.description}" escapeXml="true" />
 							</div>

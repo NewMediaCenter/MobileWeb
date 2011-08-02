@@ -11,11 +11,26 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility"%>
 
-<kme:page title="Events" id="events" backButton="true" homeButton="true" cssFilename="events">
+<kme:page title="Events" id="events" backButton="true" homeButton="true" cssFilename="events" backButtonURL="${pageContext.request.contextPath}/home">
 	<kme:content>
-	Events
+
+		<h3>Event Categories</h3>
+		<kme:listView id="eventslist" dataTheme="c" dataDividerTheme="b" filter="false">
+			<c:forEach items="${categories}" var="category" varStatus="status">
+				<kme:listItem>
+					<c:url var="url" value="/events/viewEvents">
+						<c:param name="categoryId" value="${category.categoryId}"></c:param>
+						<c:param name="campus" value="${campus}"></c:param>
+					</c:url>
+					<a href="${url}">
+						<h3>
+							<c:out value="${category.title}" />
+						</h3> </a>
+				</kme:listItem>
+			</c:forEach>
+		</kme:listView>
 	</kme:content>
 </kme:page>
