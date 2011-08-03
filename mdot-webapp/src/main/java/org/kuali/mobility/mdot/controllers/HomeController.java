@@ -52,7 +52,7 @@ public class HomeController {
     private HomeScreen buildHomeScreen(HttpServletRequest request) {
     	
     	Backdoor backdoor = (Backdoor) request.getSession().getAttribute(Constants.KME_BACKDOOR_USER_KEY);
-    	
+    	 
     	HomeScreen home = new HomeScreen();
     	home.setPrincipalId("1234");
     	home.setPrincipalName("natjohns");
@@ -61,7 +61,7 @@ public class HomeController {
 
     	Tool tool = new Tool();
     	tool.setBadgeCount("");
-    	tool.setDescription("Class information; forums, resources, and more!");
+    	tool.setDescription("Class information; Oncourse  forums, resources, and more!");
     	tool.setIconUrl("images/service-icons/srvc-myclasses.png");
     	tool.setTitle("My Classes");
     	tool.setUrl("myclasses");
@@ -79,6 +79,7 @@ public class HomeController {
     	tool.setUrl("backdoor");
     	tools.add(tool);
     	
+    	/*
     	tool = new Tool();
     	tool.setBadgeCount("");
     	tool.setDescription("Find furniture, books, an apartment, a job, and more.");
@@ -86,7 +87,8 @@ public class HomeController {
     	tool.setTitle("Classifieds");
     	tool.setUrl("https://onestart.iu.edu/ccf2-prd/ClassifiedsMb.do");
     	tools.add(tool);
-
+		*/
+    	
     	tool = new Tool();
     	tool.setBadgeCount("");
     	tool.setDescription("Never miss an IU Bloomington campus bus again.");
