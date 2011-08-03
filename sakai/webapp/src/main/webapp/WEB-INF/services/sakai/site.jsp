@@ -21,7 +21,7 @@
 						Instructor<br />
 						<span style=" font-weight:normal; font-size:.8em">${site.instructorName}</span>
 					</a>
-				</kme:listItem>>
+				</kme:listItem>
 			</c:if>
 			<c:if test="${site.hasAnnouncementsTool}">
 				<kme:listItem>

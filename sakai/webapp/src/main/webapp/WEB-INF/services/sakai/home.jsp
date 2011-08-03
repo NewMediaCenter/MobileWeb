@@ -225,8 +225,7 @@
                         <div class="ui-block-b"><a data-role="button" data-theme="c" href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">${tomorrowButton} &raquo; </a></div>
                     </div>
                 </div>
-                -->
-                
+                -->       
                 <a class="arrowButtonLeft" href="${pageContext.request.contextPath}/myclasses?date=${yesterday}">${yesterdayButton}</a>
                 <a class="arrowButtonRight" href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">${tomorrowButton}</a>
                 <h2>${todayDisplay}</h2>
@@ -250,6 +249,5 @@
                 </c:if>
             </div>
         </c:if>        
-
     </kme:content>
 </kme:page>
