@@ -19,7 +19,7 @@
 	        div.ui-body-b { background: none; }
 	        div.ui-body-b { background-color: #E6E6E6 !important; }
 	        div#classesPanel, div#projectsPanel, div#otherPanel, div#todayPanel { margin-top: -20px; } 
-	        h2 { text-align: center; }
+	        h2.todaysDate { text-align: center; }
 	        a.arrowButtonLeft, a.arrowButtonRight { width:28px; height:28px; display:block; text-indent:-9999px; background-position:6px 6px; background-repeat:no-repeat; }
 	        a.arrowButtonLeft { float:left; background-image:url('images/arrow-left.png'); }
 	        a.arrowButtonRight { float:right; background-image:url('images/arrow-right.png'); }
@@ -228,7 +228,7 @@
                 -->       
                 <a class="arrowButtonLeft" href="${pageContext.request.contextPath}/myclasses?date=${yesterday}">${yesterdayButton}</a>
                 <a class="arrowButtonRight" href="${pageContext.request.contextPath}/myclasses?date=${tomorrow}">${tomorrowButton}</a>
-                <h2>${todayDisplay}</h2>
+                <h2 class="todaysDate">${todayDisplay}</h2>
 	            <!--<c:if test="${tabCount eq 1}"><h2>Today</h2></c:if>-->
 	            <c:if test="${!empty home.todaysCourses}">
 	            <kme:listView dataTheme="c">
