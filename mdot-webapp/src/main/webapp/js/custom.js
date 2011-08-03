@@ -201,3 +201,61 @@ function showCalendarDay(selectedMonthYear, selectedDate){
 	$('#inputString').val(thisValue);
 	setTimeout("$('#suggestions').hide();", 200);
 } */
+
+
+/* Begin Horizontal Tab Navigation*/
+
+ $(window).load(function() {
+     $('.tabs-panel2').hide();
+     $('.tabs-panel3').hide();
+     $('.tabs-panel4').hide();
+     $('.tabs-panel1').hide();
+
+     $('.tabs-tab2').click(function() {
+         $('.tabs-tab2').addClass('selected');
+         $('.tabs-tab3').removeClass('selected');
+         $('.tabs-tab4').removeClass('selected');
+         $('.tabs-tab1').removeClass('selected');
+         $('.tabs-panel2').show();
+         $('.tabs-panel3').hide();
+         $('.tabs-panel4').hide();
+         $('.tabs-panel1').hide();
+     });
+
+     $('.tabs-tab3').click(function() {
+         $('.tabs-tab3').addClass('selected');
+         $('.tabs-tab2').removeClass('selected');
+         $('.tabs-tab4').removeClass('selected');
+         $('.tabs-tab1').removeClass('selected');
+         $('.tabs-panel2').hide();
+         $('.tabs-panel3').show();
+         $('.tabs-panel4').hide();
+         $('.tabs-panel1').hide();
+     });
+
+     $('.tabs-tab4').click(function() {
+         $('.tabs-tab3').removeClass('selected');
+         $('.tabs-tab2').removeClass('selected');
+         $('.tabs-tab4').addClass('selected');
+         $('.tabs-tab1').removeClass('selected');
+         $('.tabs-panel2').hide();
+         $('.tabs-panel3').hide();
+         $('.tabs-panel4').show();
+         $('.tabs-panel1').hide();
+     });
+
+     $('.tabs-tab1').click(function() {
+         $('.tabs-tab3').removeClass('selected');
+         $('.tabs-tab2').removeClass('selected');
+         $('.tabs-tab4').removeClass('selected');
+         $('.tabs-tab1').addClass('selected');
+         $('.tabs-panel2').hide();
+         $('.tabs-panel3').hide();
+         $('.tabs-panel4').hide();
+         $('.tabs-panel1').show();
+     });
+
+ });
+
+
+/* End Horizontal Tab Navigation*/

@@ -11,8 +11,6 @@
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #cc0000), color-stop(1, #990000));
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#cc0000', EndColorStr='#990000')";*/
 	background:#7D110C
-	
-	
 }
 .ui-bar-a, .ui-bar-a input, .ui-bar-a select, .ui-bar-a textarea, .ui-bar-a button {
 	font-family: Helvetica, Arial, sans-serif;
@@ -179,80 +177,74 @@
 	text-decoration: none;
 }
 /* C -----------------------------------------------------------------------------------------------------------*/
-.ui-bar-c
-{
+.ui-bar-c {
 	border: 1px solid #B3B3B3;
 	background: #e9eaeb;
 	color: #3E3E3E;
 	font-weight: bold;
 	text-shadow: 0 1px 1px #fff;
-	background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #f0f0f0), color-stop(1, #e9eaeb));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f0f0f0), color-stop(1, #e9eaeb));
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#f0f0f0', EndColorStr='#e9eaeb')";
 }
-
-.ui-bar-c, .ui-bar-c input, .ui-bar-c select, .ui-bar-c textarea, .ui-bar-c button { font-family: Helvetica, Arial, sans-serif; }
-
-.ui-body-c
-{
+.ui-bar-c, .ui-bar-c input, .ui-bar-c select, .ui-bar-c textarea, .ui-bar-c button {
+	font-family: Helvetica, Arial, sans-serif;
+}
+.ui-body-c {
 	border: 1px solid #B3B3B3;
 	color: #333333;
 	text-shadow: 0 1px 0 #fff;
 	background: #f0f0f0;
-	background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #eeeeee), color-stop(1, #dddddd));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eeeeee), color-stop(1, #dddddd));
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#dddddd')";
 }
-
-.ui-body-c, .ui-body-c input, .ui-body-c select, .ui-body-c textarea, .ui-body-c button { font-family: Helvetica, Arial, sans-serif; }
-.ui-body-c .ui-link-inherit { color: #333333; }
-
-.ui-body-c .ui-link
-{
+.ui-body-c, .ui-body-c input, .ui-body-c select, .ui-body-c textarea, .ui-body-c button {
+	font-family: Helvetica, Arial, sans-serif;
+}
+.ui-body-c .ui-link-inherit {
+	color: #333333;
+}
+.ui-body-c .ui-link {
 	/*color: #2489CE;*/
 	color: #2F3E46;
 	font-weight: bold;
 }
-
-.ui-btn-up-c
-{
+.ui-btn-up-c {
 	/*border: 1px solid #ccc;*/
 	background: #eee;
 	font-weight: bold;
 	color: #444;
 	text-shadow: 0 1px 1px #f6f6f6;
-	background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #fdfdfd), color-stop(1, #eeeeee));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fdfdfd), color-stop(1, #eeeeee));
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#fdfdfd', EndColorStr='#eeeeee')";
 }
-
-.ui-btn-up-c a.ui-link-inherit { color: #2F3E46; }
-
-.ui-btn-hover-c
-{
+.ui-btn-up-c a.ui-link-inherit {
+	color: #2F3E46;
+}
+.ui-btn-hover-c {
 	/*border: 1px solid #bbb;*/
 	background: #dadada;
 	font-weight: bold;
 	color: #101010;
 	text-shadow: 0 1px 1px #fff;
-	background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #ededed), color-stop(1, #dadada));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ededed), color-stop(1, #dadada));
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ededed', EndColorStr='#dadada')";
 }
-
-.ui-btn-hover-c a.ui-link-inherit { color: #2F3E46; }
-
-.ui-btn-down-c
-{
-/*	border: 1px solid #808080;*/
+.ui-btn-hover-c a.ui-link-inherit {
+	color: #2F3E46;
+}
+.ui-btn-down-c {
+	/*	border: 1px solid #808080;*/
 	background: #fdfdfd;
 	font-weight: bold;
 	color: #111111;
 	text-shadow: 0 1px 1px #ffffff;
-	background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #eeeeee), color-stop(1, #fdfdfd));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eeeeee), color-stop(1, #fdfdfd));
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#fdfdfd')";
 }
-
-.ui-btn-down-c a.ui-link-inherit { color: #2F3E46; }
-
-.ui-btn-up-c, .ui-btn-hover-c, .ui-btn-down-c
-{
+.ui-btn-down-c a.ui-link-inherit {
+	color: #2F3E46;
+}
+.ui-btn-up-c, .ui-btn-hover-c, .ui-btn-down-c {
 	font-family: Helvetica, Arial, sans-serif;
 	text-decoration: none;
 }
@@ -430,7 +422,7 @@
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-li-icon {
-	/*
+/*
 	
 	disabled while testing sakai resource icons
 	
@@ -440,69 +432,56 @@
 	top: .3em;*/
 }
 .ui-li-has-icon .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-icon {
-	/*
+/*
 		disabled while testing sakai resource icons
 	
 	min-height: 20px;
 	padding-left: 50px;*/
 }
-
-
 /* All Services - Definition List Default Styles
 -----------------------------------------------------------------------------------------------------------*/
 dl {
-    padding: 0;
-    /*width: 90%;*/
-    /* temporary adjustment for testing to remove page padding */
+	padding: 0;/*width: 90%;*//* temporary adjustment for testing to remove page padding */
     /*margin: -17px -15px -15px -15px;*/
 }
-
 dl dt {
-    border-top: 2px solid #BBB;
-    padding: 0;
-    margin: 0;
-    clear: left;
-    font-size: 17px;
-    font-weight: bold;
-    /*width: 90%;*/
+	border-top: 2px solid #BBB;
+	padding: 0;
+	margin: 0;
+	clear: left;
+	font-size: 17px;
+	font-weight: bold;/*width: 90%;*/
 }
-
 dl dt a {
-    color: #000;
-    text-decoration: none;
-    font-weight: normal;
-    display: block;
-    /*width: 100%;*/
+	color: #000;
+	text-decoration: none;
+	font-weight: normal;
+	display: block;
+	/*width: 100%;*/
     margin: 0;
-    padding: 5px 15px 5px 15px;
+	padding: 5px 15px 5px 15px;
 }
-
-
 dl dd {
-    padding: 0;
-    margin: 0;
-    font-size: 14px;
-    font-weight: normal;
-    /*width: 90%;*/
+	padding: 0;
+	margin: 0;
+	font-size: 14px;
+	font-weight: normal;/*width: 90%;*/
 }
-
 dl dd a {
-    color: #333;
-    font-weight: normal;
-    text-decoration: none;
-    display: block;
-    /*width: 90%;*/
+	color: #333;
+	font-weight: normal;
+	text-decoration: none;
+	display: block;
+	/*width: 90%;*/
     margin: 0;
-    padding: 5px 15px 5px 15px;
+	padding: 5px 15px 5px 15px;
 }
-
 dl p {
 	margin: 0;
-    padding: 5px 15px 5px 15px;
-    padding: 0;
-    margin: 0;
+	padding: 5px 15px 5px 15px;
+	padding: 0;
+	margin: 0;
 }
-
 /* Home
 -----------------------------------------------------------------------------------------------------------*/
 /* start - testing some overrides */
@@ -518,10 +497,9 @@ dl p {
 .ui-body-b {
 	border: none;
 }
-.ui-bar-a  {
+.ui-bar-a {
 	border: none;
 }
-
 div#home {
 	border: none;
 	padding: 0;
@@ -532,33 +510,28 @@ div#home {
 div#home dl {
 	position: relative;
 }
-
 div#home dt {
 	height: 80px;
 	display: block;
 	margin: 0 0 -50px 0;
 }
-
 div#home dl dd:last-child {
 	margin-bottom: 15px;
 }
-
 div#home dt a {
-    background-repeat: no-repeat;
-    background-position: 8px 10px;
-    padding: 5px 0 0 80px;
-    position: relative;
-    height: 80px;
-    color: #333;
+	background-repeat: no-repeat;
+	background-position: 8px 10px;
+	padding: 5px 0 0 80px;
+	position: relative;
+	height: 80px;
+	color: #333;
 }
-
 div#home dd {
 	position: relative;
 	display: block;
 	top: 0;
 	margin: 0 20px 0 80px;
 }
-
 div#home dd a {
 	height: 45px;
 	color: #444;
@@ -566,28 +539,23 @@ div#home dd a {
 	padding: 0;
 	margin: 0;
 }
-
-
-
-
 div#home span.dl-dt-count {
-    font-size: 14px;
-    padding: 2px 8px 3px 8px;
-    position: absolute;
-    left: 42px;
-    top: 3px;
-    background: -moz-linear-gradient(center top , #FF8888, #992222) repeat scroll 0 0 #992222;
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FF8888), color-stop(1, #992222));
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FF8888', EndColorStr='#992222')";
-    border: 3px solid #FFFFFF;
-    color: #FFFFFF;
-    font-weight: bold;
-    text-shadow: 0 1px 1px #333333;
-    -moz-box-shadow: 1px 1px 3px #666;
-    -webkit-box-shadow: 1px 1px 3px #666;
-    box-shadow: 1px 1px 3px #666;
+	font-size: 14px;
+	padding: 2px 8px 3px 8px;
+	position: absolute;
+	left: 42px;
+	top: 3px;
+	background: -moz-linear-gradient(center top, #FF8888, #992222) repeat scroll 0 0 #992222;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FF8888), color-stop(1, #992222));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FF8888', EndColorStr='#992222')";
+	border: 3px solid #FFFFFF;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-shadow: 0 1px 1px #333333;
+	-moz-box-shadow: 1px 1px 3px #666;
+	-webkit-box-shadow: 1px 1px 3px #666;
+	box-shadow: 1px 1px 3px #666;
 }
-
 /*.ui-btn-up-c {
     background: -moz-linear-gradient(center top , #FF8888, #992222) repeat scroll 0 0 #990000 !important;
     border: 3px solid #FFFFFF;
@@ -619,18 +587,17 @@ div#home span.dl-dt-count {
 
 
 
-/* Horizontal Tab Navigation
+/* Horizontal Tab Navigation - (8/2/11 - depreciated)
 -----------------------------------------------------------------------------------------------------------*/
 
 
 .tabs {
-	/*margin-top:2px;*/
+/*margin-top:2px;*/
 }
 .tabs ul {
-	/*margin-right:2px;*/
+/*margin-right:2px;*/
 	
 }
-
 .tabs ul li a {
 	margin-left:2px;
 	-webkit-border-top-left-radius: 10px;
@@ -644,42 +611,77 @@ div#home span.dl-dt-count {
 	color:#ffffff;
 	text-shadow:none;
 }
-
 .tabs ul li a.selected {
 	border-bottom-style: none;
 	background:#FFF;
 	color:#000;
 }
-
-.tabs ul li .ui-btn .ui-btn-inner, .ui-navbar-noicons .ui-navbar-toggle .ui-btn-inner { padding-top: .4em; padding-bottom: .4em; }
-
-
-
-
+.tabs ul li .ui-btn .ui-btn-inner, .ui-navbar-noicons .ui-navbar-toggle .ui-btn-inner {
+	padding-top: .4em;
+	padding-bottom: .4em;
+}
 /* Custom Link Disclosure Icons
 -----------------------------------------------------------------------------------------------------------*/
 
 
 .link-email .ui-icon.ui-icon-arrow-r {
-	background: url(images/icon-email.png);
+	background: url(images/icon-disclosure-email-18.png);
 	background-color:#939393
 }
-
-
 .link-phone .ui-icon.ui-icon-arrow-r {
-	background: url(images/icon-phone.png);
+	background: url(images/icon-disclosure-phone-18.png);
 	background-color:#939393
 }
-
-
 .link-view .ui-icon.ui-icon-arrow-r {
-	background: url(images/icon-view.png);
+	background: url(images/icon-disclosure-view-18.png);
 	background-color:#939393
 }
-
 .link-gps .ui-icon.ui-icon-arrow-r {
-    background: url(images/icon-gps-18.png);
-    background-color:#939393
+	background: url(images/icon-disclosure-gps-18.png);
+	background-color:#939393
 }
+/* Horizontal Tabs
+-----------------------------------------------------------------------------------------------------------*/
 
 
+.tabs-tabcontainer {
+	margin:10px 0 0 -15px;
+	position:absolute;
+	top:40px;
+	width:100%;
+}
+.tabs-tabcontainer .tabs-tab1, .tabs-tabcontainer .tabs-tab2, .tabs-tabcontainer .tabs-tab3, .tabs-tabcontainer .tabs-tab4 {
+	background:#ccc;
+	float:left;
+	padding:9px 1%;
+	color:#333;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	top:50px;
+	width:98%;
+	text-align:center;
+	text-decoration:none;
+	border: 1px solid #999;
+	font-size: 10px;
+}
+.tabs-tabcontainer .selected {
+	background:#E6E6E6;
+	color:#000000;
+	border-bottom: 1px solid #E6E6E6;
+}
+div.tabs-panel2, div.tabs-panel3, div.tabs-panel4, div.tabs-panel1 {
+	margin-top: -20px;
+}
+div.tabs-panel2, div.tabs-panel3, div.tabs-panel4, div.tabs-panel1 {
+	margin-top: 40px;
+}
+div.ui-body-b {
+	background: none;
+}
+div.ui-body-b {
+	background-color: #E6E6E6 !important;
+}
