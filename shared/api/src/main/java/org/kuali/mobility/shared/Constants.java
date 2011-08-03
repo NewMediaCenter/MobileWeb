@@ -16,6 +16,8 @@
 package org.kuali.mobility.shared;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Constants {
 
@@ -26,7 +28,22 @@ public class Constants {
 	
 	public static final String SAKAI_FOLDER_EXTENSION = "fldr";
 	public static final String SAKAI_URL_EXTENSION = "url";
-
+	
+	public static final Map<String, String> CAMPUS_NAMES = new HashMap<String, String>();
+	
+	static {
+		CAMPUS_NAMES.put("UA", "Any Campus");
+		CAMPUS_NAMES.put("BL", "IU Bloomington");
+		CAMPUS_NAMES.put("IN", "IUPUI");
+		CAMPUS_NAMES.put("CO", "IUPUC");
+		CAMPUS_NAMES.put("EA", "IU East");
+		CAMPUS_NAMES.put("FW", "IPFW");
+		CAMPUS_NAMES.put("KO", "IU Kokomo");
+		CAMPUS_NAMES.put("NW", "IU Northwest");
+		CAMPUS_NAMES.put("SB", "IU South Bend");
+		CAMPUS_NAMES.put("SE", "IU Southeast");
+	}
+	
 	public enum DateFormat {
 		
 		queryStringDateFormat("yyyyMMdd"),
@@ -91,8 +108,8 @@ public class Constants {
 		pptx(FileType.PRESENTATION),
 		odp(FileType.PRESENTATION),
 		pdf(FileType.PDF),
-		fldr(FileType.LINK),
-		url(FileType.FOLDER);
+		fldr(FileType.FOLDER),
+		url(FileType.LINK);
 		
 		private FileType fileType;
 		

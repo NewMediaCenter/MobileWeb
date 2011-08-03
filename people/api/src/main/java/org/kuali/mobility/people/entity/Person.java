@@ -16,6 +16,8 @@
 package org.kuali.mobility.people.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Person implements Serializable {
 
@@ -23,8 +25,22 @@ public class Person implements Serializable {
 	
 	private String firstName;
 	private String lastName;
-	private String location;
-	private String affiliation;
+	private String displayName;
+	private String userName;
+	
+	private List<String> locations;
+	private List<String> affiliations;
+	private List<String> departments;
+	
+	private String email;
+	private String phone;
+	private String address;
+	
+	public Person() {
+		locations = new ArrayList<String>();
+		affiliations = new ArrayList<String>();
+		departments = new ArrayList<String>();
+	}
 	
 	public String getFirstName() {
 		return firstName;
@@ -38,16 +54,52 @@ public class Person implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getLocation() {
-		return location;
+	public String getUserName() {
+		return userName;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getAffiliation() {
-		return affiliation;
+	public String getDisplayName() {
+		return displayName;
 	}
-	public void setAffiliation(String affiliation) {
-		this.affiliation = affiliation;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public List<String> getLocations() {
+		return locations;
+	}
+	public void setLocations(List<String> locations) {
+		this.locations = locations;
+	}
+	public List<String> getAffiliations() {
+		return affiliations;
+	}
+	public void setAffiliations(List<String> affiliations) {
+		this.affiliations = affiliations;
+	}
+	public List<String> getDepartments() {
+		return departments;
+	}
+	public void setDepartments(List<String> departments) {
+		this.departments = departments;
 	}
 }

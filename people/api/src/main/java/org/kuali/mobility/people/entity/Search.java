@@ -9,6 +9,10 @@ public class Search {
 	private String status;
 	private String location;
 	
+	public boolean isExactLastName() {
+		return "exact".equals(exactness);
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

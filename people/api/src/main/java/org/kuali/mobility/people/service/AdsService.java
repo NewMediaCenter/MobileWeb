@@ -17,11 +17,12 @@ package org.kuali.mobility.people.service;
 
 import java.util.List;
 
-import org.kuali.mobility.people.entity.Person;
-import org.kuali.mobility.people.entity.Search;
+import edu.iu.uis.sit.util.directory.AdsPerson;
 
-public interface PeopleService {
+public interface AdsService {
 
-	List<Person> performSearch(Search search);
-	Person getUserDetails(String userName);
+	public AdsPerson getAdsPerson(String username) throws Exception;
+	public List<AdsPerson> getAdsPersons(String last, String first, String status, String campus, boolean isExactLastName, int resultLimit) throws Exception;
+	public int getResultLimit();
+	
 }

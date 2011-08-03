@@ -20,7 +20,27 @@
 		<kme:listView id="peopleList" filter="false">
             <c:forEach items="${people}" var="person" varStatus="status">
                 <kme:listItem>
-			       <h3>${person.lastName}, ${person.firstName}</h3>
+                	<c:url value="/people/${person.userName}" var="url">
+                		<c:param name="lName" value="${search.lastName}" />
+                		<c:param name="fName" value="${search.firstName}" />
+                		<c:param name="uName" value="${search.userName}" />
+                		<c:param name="exact" value="${search.exactness}" />
+                		<c:param name="status" value="${search.status}" />
+                		<c:param name="location" value="${search.location}" />
+                	</c:url>
+					<a href="${url}">
+						<h3><c:out value="${person.lastName}" />, <c:out value="${person.firstName}" /></h3>
+						<p>Location:
+				       		<c:forEach items="${person.locations}" var="location" varStatus="status">
+				       			<c:out value="${location}" /><c:if test="${not status.last}">, </c:if>
+				       		</c:forEach>
+						</p>
+						<p>Affiliation:
+				       		<c:forEach items="${person.affiliations}" var="affiliation" varStatus="status">
+				       			<c:out value="${affiliation}" /><c:if test="${not status.last}">, </c:if>
+				       		</c:forEach>
+						</p>
+					</a>
                 </kme:listItem>
             </c:forEach>
         </kme:listView>

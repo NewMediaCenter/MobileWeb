@@ -119,6 +119,13 @@
 		<property name="password" value="${kerberos.password}" />
     </bean>
     
+    <bean class="org.kuali.mobility.people.service.AdsServiceImpl">
+	    <qualifier value="main"/>
+        <!-- inject any dependencies required by this bean -->
+	    <property name="adsUsername" value="${ads.username}" />
+		<property name="adsPassword" value="${ads.password}" />
+	</bean>
+    
     <bean class="edu.iu.m.news.service.RssCacheServiceImpl" />
     
     <!--  
