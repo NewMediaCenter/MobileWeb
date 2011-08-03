@@ -15,11 +15,11 @@
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<kme:page title="Events" id="events" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/events/">
+<c:set var="categoryTitle">
+	<c:out value="${category.title}"/>
+</c:set>
+<kme:page title="${categoryTitle}" id="events" backButton="true" homeButton="true" backButtonURL="${pageContext.request.contextPath}/events/">
 	<kme:content>
-		<h3>
-			<c:out value="${category.title}" />
-		</h3>
 		<kme:listView id="eventslist" dataTheme="c" dataDividerTheme="b" filter="false">
 			<c:forEach items="${category.days}" var="day" varStatus="statusEventDay">
 				<kme:listItem dataTheme="b" dataRole="list-divider">

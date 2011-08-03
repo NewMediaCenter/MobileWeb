@@ -17,6 +17,7 @@ package org.kuali.mobility.events.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Event implements Serializable {
 
@@ -45,14 +46,32 @@ public class Event implements Serializable {
 	private String description;
 
 	private String link;
-	
+
 	private String contact;
-	
+
 	private String cost;
-	
-	private String otherInfo;
-	
+
+	private List<List<String>> otherInfo;
+
+	private String contactEmail;
+
 	private String category;
+
+	public String getContactEmail() {
+		return contactEmail;
+	}
+
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
+
+	public List<List<String>> getOtherInfo() {
+		return otherInfo;
+	}
+
+	public void setOtherInfo(List<List<String>> otherInfo) {
+		this.otherInfo = otherInfo;
+	}
 
 	public String getCategory() {
 		return category;
@@ -76,14 +95,6 @@ public class Event implements Serializable {
 
 	public void setCost(String cost) {
 		this.cost = cost;
-	}
-
-	public String getOtherInfo() {
-		return otherInfo;
-	}
-
-	public void setOtherInfo(String otherInfo) {
-		this.otherInfo = otherInfo;
 	}
 
 	public Date getEndDate() {

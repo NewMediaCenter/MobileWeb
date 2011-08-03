@@ -42,9 +42,9 @@ public class EventsController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getList(Model uiModel) {
-		List<Category> categories = eventsService.getCategoriesByCampus("BL");
+		List<Category> categories = eventsService.getCategoriesByCampus("NW");
 		uiModel.addAttribute("categories", categories);
-		uiModel.addAttribute("campus", "BL");
+		uiModel.addAttribute("campus", "NW");
 		return "events/list";
 	}
 

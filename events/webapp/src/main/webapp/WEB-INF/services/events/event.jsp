@@ -16,11 +16,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <c:url var="back" value="/events/viewEvents">
-	<c:param name="categoryId" value="${categoryId}"/>
-	<c:param name="campus" value="${campus}"/>
+	<c:param name="categoryId" value="${categoryId}" />
+	<c:param name="campus" value="${campus}" />
 </c:url>
 
-<kme:page title="Events" id="events" backButton="true" homeButton="true" backButtonURL="${back}">
+<kme:page title="Event Detail" id="events" backButton="true" homeButton="true" backButtonURL="${back}">
 	<kme:content>
 		<kme:listView id="event" dataTheme="g">
 			<kme:listItem>
@@ -48,7 +48,7 @@
 						<c:out value="${event.description}" />
 					</p>
 				</c:if>
-				
+
 				<c:if test="${not empty event.category}">
 					<br />
 					<h3>Category</h3>
@@ -67,15 +67,30 @@
 					<br />
 					<h3>Contact</h3>
 					<p style="white-space: normal">
-						<c:out value="${event.contact}" />
+						<c:choose>
+							<c:when test="${not empty event.contactEmail}">
+								<c:url var="email" value="mailto:${event.contactEmail}" />
+								<a href="${email}"><c:out value="${event.contact}" /> </a>
+							</c:when>
+							<c:otherwise>
+								<c:out value="${event.contact}" />
+							</c:otherwise>
+						</c:choose>
 					</p>
 				</c:if>
 				<c:if test="${not empty event.otherInfo}">
 					<br />
 					<h3>Other Info</h3>
-					<p style="white-space: normal">
-						<c:out value="${event.otherInfo}" />
-					</p>
+					<c:forEach var="otherInfo" items="${event.otherInfo}">
+						<c:if test="${not empty otherInfo}">
+							<c:forEach var="info" items="${otherInfo}">
+								<p style="white-space: normal">
+									<c:out value="${info}" />
+								</p>
+							</c:forEach>
+							<br />
+						</c:if>
+					</c:forEach>
 				</c:if>
 			</kme:listItem>
 		</kme:listView>

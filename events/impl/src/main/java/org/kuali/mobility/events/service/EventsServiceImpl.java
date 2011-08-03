@@ -15,8 +15,12 @@
 
 package org.kuali.mobility.events.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,14 +90,7 @@ public class EventsServiceImpl implements EventsService {
 
 		if (eventId != null && !"".equals(eventId.trim())) {
 			if (this.isIUPUIEventsCalendar(categoryId)) {
-				String replacementTokens = configParamService.findValueByName(DATA_XML_REPLACEMENT_TOKENS);
-				// IUPUIEventsParser parser = new
-				// IUPUIEventsParser(replacementTokens);
-				// EventsModel eventsModel = new EventsModel();
-				// parser.parseEvent(eventsModel, link);
-				// event.setTitle(eventsModel.getEventTitle());
-				// event.setDescription(eventsModel.getEventHtml());
-				// event = parser.parseEventById(eventId);
+				parseIUPUIEvent(event, eventId);
 			} else {
 				MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode(campus, categoryId);
 				String timezone = null;
@@ -229,6 +226,8 @@ public class EventsServiceImpl implements EventsService {
 			category.setDays(days);
 			if (rss != null) {
 				category.setTitle(rss.getTitle());
+			} else {
+				category.setTitle(maintRss.getDisplayName());
 			}
 			return category;
 		}
@@ -248,6 +247,82 @@ public class EventsServiceImpl implements EventsService {
 			}
 		}
 		return categories;
+	}
+
+	public void parseIUPUIEvent(Event event, String eventId) {
+		String url = "http://events.iupui.edu/mobile/event_detail.php?event_id=" + eventId;
+		try {
+			SAXBuilder builder = new SAXBuilder();
+			String xml = this.getPageAsStringFromUrl(url);
+			xml = this.escapeInvalidEntities(xml);
+
+			Document doc = builder.build(new InputSource(new StringReader(xml)));
+			Element root = doc.getRootElement();
+			event.setTitle(root.getChildText("EVENT_TITLE"));
+			event.setDescription(StringEscapeUtils.escapeHtml(root.getChild("SUMMARY").getValue().trim()));
+			event.setLocation(StringEscapeUtils.escapeHtml(root.getChildText("LOCATION_NAME")) + StringEscapeUtils.escapeHtml(root.getChildText("LOCATION")));
+			event.setContactEmail(StringEscapeUtils.escapeHtml(root.getChildText("EMAIL")));
+			event.setContact(StringEscapeUtils.escapeHtml(root.getChildText("CONTACT")));
+
+			Element schedule = root.getChild("SCHEDULE");
+
+			List<Element> eventSchedule = schedule.getChildren("EVENT_DATE");
+			List<List<String>> otherInfo = new ArrayList<List<String>>();
+			for (Element day : eventSchedule) {
+				List<String> list = new ArrayList<String>();
+				list.add(StringEscapeUtils.escapeHtml(day.getChildText("DATE")));
+				list.add(StringEscapeUtils.escapeHtml(day.getChildText("START_TIME")) + " - " + StringEscapeUtils.escapeHtml(day.getChildText("END_TIME")));
+				otherInfo.add(list);
+			}
+			event.setOtherInfo(otherInfo);
+
+		} catch (JDOMException e) {
+			LOG.error(e.getMessage(), e);
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+		}
+	}
+
+	private String escapeInvalidEntities(String xml) {
+		try {
+			String replacementTokens = configParamService.findValueByName(DATA_XML_REPLACEMENT_TOKENS);
+			String replacements[] = replacementTokens.split(",");
+			// LOG.info("start getting rssDescription tokens:" + url);
+			for (String replacement : replacements) {
+				String[] tokens = replacement.split("=");
+				xml = xml.replace(tokens[0].trim(), tokens[1].trim());
+			}
+			// LOG.info("end getting rssDescription tokens:" + url);
+		} catch (Exception e) {
+			LOG.error("Problem escaping invalid entities for XML: " + xml, e);
+		}
+		return xml;
+	}
+
+	private String getPageAsStringFromUrl(String link) {
+		String html = "";
+		BufferedReader in = null;
+		try {
+			URL url = new URL(link);
+			URLConnection conn = url.openConnection();
+			conn.setConnectTimeout(5000);
+			conn.setReadTimeout(5000);
+			in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String inputLine;
+			while ((inputLine = in.readLine()) != null) {
+				html += inputLine;
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+				}
+			}
+		}
+		return html;
 	}
 
 	private List<Day> parseEventDaysFromEvents(List<Event> events, String timezone) {
@@ -303,7 +378,7 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	private List<Event> handleEventsList(MaintRss maintRss) {
-		List<Event> events = null;
+		List<Event> events = new ArrayList<Event>();
 		Rss rss = getRssCacheService().getRssByMaintRssId(maintRss.getRssId());
 		if (rss != null) {
 			List<RssItem> items = rss.getRssItems();
@@ -319,11 +394,80 @@ public class EventsServiceImpl implements EventsService {
 			Date date = new Date();
 			// String replacementTokens =
 			// getConfigParamService().findValueByName(DATA_XML_REPLACEMENT_TOKENS);
-			// IUPUIEventsParser parser = new
-			// IUPUIEventsParser(replacementTokens);
-			// events = parser.parseEventsList(maintRss.getUrl(), date);
+			events = parseIUPUIEventsList(maintRss.getUrl(), date);
 		}
 		return events;
+	}
+
+	private List<Event> parseIUPUIEventsList(String link, Date date) {
+		List<Event> events = new ArrayList<Event>();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = sdf.format(date);
+		String url = link + dateStr;
+
+		try {
+			Document doc = retrieveDocumentFromUrl(url, 5000, 5000);
+			Element root = doc.getRootElement();
+			List items = root.getChildren("EVENT");
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+
+			Calendar cal2 = Calendar.getInstance();
+
+			SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a");
+			for (Iterator iterator = items.iterator(); iterator.hasNext();) {
+				Element item = (Element) iterator.next();
+
+				try {
+					Event event = new Event();
+					event.setTitle(item.getChildText("EVENT_TITLE"));
+					event.setLink(item.getChildText("EVENT_ID"));
+					event.setEventId(item.getChildText("EVENT_ID"));
+					String startTime = item.getChildText("START_TIME");
+					String endTime = item.getChildText("END_TIME");
+					Date timeOnly = sdfTime.parse(startTime);
+					cal2.setTime(timeOnly);
+					cal.set(Calendar.HOUR_OF_DAY, cal2.get(Calendar.HOUR_OF_DAY));
+					cal.set(Calendar.MINUTE, cal2.get(Calendar.MINUTE));
+					event.setStartDate(cal.getTime());
+					cal.setTime(date);
+					cal.set(Calendar.HOUR_OF_DAY, 0);
+					cal.set(Calendar.MINUTE, 0);
+					cal.set(Calendar.SECOND, 0);
+					cal.set(Calendar.MILLISECOND, 0);
+
+					if ("12:00 AM".equals(startTime) && "11:59 PM".equals(endTime)) {
+						event.setAllDay(true);
+					}
+					events.add(event);
+				} catch (Exception e) {
+					LOG.error("Error converting event for IUPUI events: ", e);
+				}
+
+			}
+		} catch (JDOMException e) {
+			LOG.error(e.getMessage(), e);
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+		}
+
+		return events;
+	}
+
+	private Document retrieveDocumentFromUrl(String urlStr, int connectTimeout, int readTimeout) throws IOException, JDOMException {
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = null;
+		URL urlObj = new URL(urlStr);
+		URLConnection urlConnection = urlObj.openConnection();
+		urlConnection.setConnectTimeout(connectTimeout);
+		urlConnection.setReadTimeout(readTimeout);
+		doc = builder.build(urlConnection.getInputStream());
+		return doc;
 	}
 
 	private List<Event> parseEvents(Rss rss) {
@@ -381,7 +525,11 @@ public class EventsServiceImpl implements EventsService {
 				event.setCost(fields.get("Cost"));
 			}
 			if (fields.get("Other Info") != null) {
-				event.setOtherInfo(fields.get("Other Info"));
+				List<List<String>> otherInfo = new ArrayList<List<String>>();
+				List<String> otherInfo2 = new ArrayList<String>();
+				otherInfo2.add(fields.get("Other Info"));
+				otherInfo.add(otherInfo2);
+				event.setOtherInfo(otherInfo);
 			}
 		}
 	}

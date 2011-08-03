@@ -14,10 +14,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility"%>
 
-<kme:page title="Events" id="events" backButton="true" homeButton="true" cssFilename="events" backButtonURL="${pageContext.request.contextPath}/home">
+<kme:page title="Event Categories" id="events" backButton="true" homeButton="true" cssFilename="events" backButtonURL="${pageContext.request.contextPath}/home">
 	<kme:content>
-
-		<h3>Event Categories</h3>
 		<kme:listView id="eventslist" dataTheme="c" dataDividerTheme="b" filter="false">
 			<c:forEach items="${categories}" var="category" varStatus="status">
 				<kme:listItem>
