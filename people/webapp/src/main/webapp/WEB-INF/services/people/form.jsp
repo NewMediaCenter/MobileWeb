@@ -22,42 +22,31 @@
 				<label for="lastName">Last Name:</label>
                 <form:input path="lastName" type="text" value="" />
                 <form:errors path="lastName"/>
-                <fieldset data-role="controlgroup" data-type="horizontal">
-					<form:radiobutton path="exactness" value="starts" />
-			        <label for="exactness1">starts with</label>
-			
-			        <form:radiobutton path="exactness" value="exact"  />
-			        <label for="exactness2">is exactly</label>
-                </fieldset>
-			</div>
-               
-               
-			<div data-role="fieldcontain">
+                
+                <form:select path="exactness" id="slider" data-role="slider">
+					<form:option value="starts" label="starts with" />
+			        <form:option value="exact" label="is exactly" />
+                </form:select>
+                
 				<label for="firstName">First Name:</label>
-                <form:input path="firstName" type="text" value=""  />
+	            <form:input path="firstName" type="text" value=""  />
 			</div>
+			
+			<div data-role="fieldcontain">
+                <form:select path="status" multiple="false" items="${statusTypes}" data-native-menu="false"/>
+                <form:select path="location" multiple="false" items="${locations}" data-native-menu="false"/>
+			</div> 
                
 			<div data-role="fieldcontain">
                 <label for="userName">User Name:</label>
                 <form:input path="userName" type="text" value=""  />
 			</div>
-               
-			<div data-role="fieldcontain">
-                <label for="status" class="select">Status:</label>
-                <form:select path="status" multiple="false" items="${statusTypes}" data-native-menu="false"/>
-			</div>
-                       
-			<div data-role="fieldcontain">
-                <label for="location" class="select">Location:</label>
-                <form:select path="location" multiple="false" items="${locations}" data-native-menu="false"/>
-                <form:errors path="location"/>
-			</div> 
             
 			<div data-inline="true">
                 <div class="ui-grid-a">
                     <div class="ui-block-a"><a href="${pageContext.request.contextPath}" data-role="button">Cancel</a></div>
                     <div class="ui-block-b">
-                        <input class="submit" type="submit" value="Submit" />
+                        <input class="submit" type="submit" value="Search" />
                     </div>
                 </div>
             </div>

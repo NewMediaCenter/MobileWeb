@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,12 +59,12 @@ public class PeopleController {
     	uiModel.addAttribute("search", s);
     	uiModel.addAttribute("locations", Constants.CAMPUS_NAMES);
     	
-    	Map<String, String> statusTypes = new HashMap<String, String>();
-    	statusTypes.put("Employee", "Employee");
-    	statusTypes.put("Faculty", "Faculty");
-    	statusTypes.put("Student", "Student");
+    	Map<String, String> statusTypes = new LinkedHashMap<String, String>();
     	statusTypes.put("Any", "Any Status");
-    	
+    	statusTypes.put("Student", "Student");
+    	statusTypes.put("Faculty", "Faculty");
+    	statusTypes.put("Employee", "Employee");
+   
     	uiModel.addAttribute("statusTypes", statusTypes);
     	
     	return "people/form";
@@ -111,13 +112,16 @@ public class PeopleController {
     	*/
     	
     	Map<String, String> userNameHashes = (Map<String, String>) request.getSession().getAttribute("People.UserNames.Hashes");
-    	String userName = userNameHashes.get(userNameHash);
-    	Person p = peopleService.getUserDetails(userName);
+    	Person p = null;
+    	if (userNameHashes != null) {
+	    	String userName = userNameHashes.get(userNameHash);
+	    	p = peopleService.getUserDetails(userName);
+    	}
     	uiModel.addAttribute("person", p);
 //		uiModel.addAttribute("search", search);
 		uiModel.addAttribute("loggedIn", isLoggedIn);
 		
-		if (!isLoggedIn && p.getEmail() != null && !"".equals(p.getEmail())) {
+		if (!isLoggedIn && p != null && p.getEmail() != null && !"".equals(p.getEmail())) {
 			BufferedImage bufferedImage = peopleService.generateObfuscatedImage(p.getEmail());
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 		    try {
