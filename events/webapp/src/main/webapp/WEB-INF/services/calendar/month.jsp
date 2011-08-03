@@ -11,78 +11,64 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>My Calendar</title>
-<link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/events.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.min.js"></script>
-</head>
+<%@ taglib prefix="kme" uri="http://kuali.org/mobility"%>
 
-<body>
+
+<kme:page title="Events" id="Calendar-Events" backButton="true" homeButton="true" cssFilename="events" backButtonURL="${pageContext.request.contextPath}/home">
+
+
+	<kme:content>
+
+
+
 <script type="text/javascript">
 	calendarSelectedDate = ${selectedDate};
 	calendarSelectedMonthYear = ${monthYear};
 </script>
-<div data-role="page" id="Calendar-Events">
-  <div data-role="header">
-    <h1>Events</h1><a href="${pageContext.request.contextPath}/calendar/createEvent" data-ajax="false">Add Event</a> <a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
-  </div>
-  <!-- /header -->
-  <div data-role="content" class="monthgrid">
-      <div class="cal-header" >
-      <div class="ui-grid-20-60-20">
-        <div class="ui-block-a">
-          <div class="cal-arrow-left">
-                <a href="${pageContext.request.contextPath}/calendar/month?date=${previousMonth}" onclick="javascript:setCalendarSelectedDate(${previousMonth}01, ${previousMonth}); return true;" data-direction="reverse">
+
+<script type="text/javascript">
+ $(window).load(function() {
+     $('.tabs-tab1').addClass('selected');
+     $('.tabs-panel1').show();
+ });
+</script>
+  
+  
+  <div class="tabs-tabcontainer container_12">
+      <div class="grid_3"><a class="tabs-tab1 selected" name="tabs-tab1" href="${pageContext.request.contextPath}/calendar/month?date=${monthYear}">Month</a></div>
+      <div class="grid_3"><a class="tabs-tab2" name="tabs-tab2" href="${pageContext.request.contextPath}/calendar/list?date=${selectedDate}">List</a></div>
+      <div class="grid_3"><a class="tabs-tab3" name="tabs-tab3" href="${pageContext.request.contextPath}/calendar/options">Options</a></div>
+      <div class="grid_3"><a class="tabs-tab4" name="tabs-tab4" href="${pageContext.request.contextPath}/calendar/createEvent" data-ajax="false">Add Event</a></div>
+    </div>
+    <div class="tabs-panel1" name="tabs-panel1">
+    
+      <div class="container_16 monthgrid" style="background-color:; margin-top:px">
+        <div class="grid_4">
+          <div class="cal-arrow-left">  <a href="${pageContext.request.contextPath}/calendar/month?date=${previousMonth}" onclick="javascript:setCalendarSelectedDate(${previousMonth}01, ${previousMonth}); return true;" data-direction="reverse">
                     <img src="${pageContext.request.contextPath}/images/arrow-left.png" width="16" height="16" alt="back">
-                </a> 
-          </div>
+                </a>  </div>
         </div>
-        <div class="ui-block-b">
+        <div class="grid_8">
           <div class="month-year"><c:out value="${viewData.title}"/></div>
         </div>
-        <div class="ui-block-c">
-          <div class="cal-arrow-right">
-                <a href="${pageContext.request.contextPath}/calendar/month?date=${nextMonth}" onclick="javascript:setCalendarSelectedDate(${nextMonth}01, ${nextMonth});return true;">
+        <div class="grid_4">
+          <div class="cal-arrow-right">  <a href="${pageContext.request.contextPath}/calendar/month?date=${nextMonth}" onclick="javascript:setCalendarSelectedDate(${nextMonth}01, ${nextMonth});return true;">
                     <img src="${pageContext.request.contextPath}/images/arrow-right.png" width="16" height="16" alt="forward">
-                </a> 
-           </div>
+                </a>  </div>
         </div>
-      </div>
-      <div class="ui-grid-evt-month"> 
-        <!--Days of Week-->
-        <div class="ui-block-1">
-          <div class="daysofweek"> Sun </div>
-        </div>
-        <div class="ui-block-2">
-          <div class="daysofweek"> Mon </div>
-        </div>
-        <div class="ui-block-3">
-          <div class="daysofweek"> Tue </div>
-        </div>
-        <div class="ui-block-4">
-          <div class="daysofweek"> Wed </div>
-        </div>
-        <div class="ui-block-5">
-          <div class="daysofweek"> Thu </div>
-        </div>
-        <div class="ui-block-6">
-          <div class="daysofweek"> Fri </div>
-        </div>
-        <div class="ui-block-7">
-          <div class="daysofweek"> Sat </div>
-        </div>
-      </div>
-    </div>
-    <div class="ui-grid-evt-month"> 
+        
+        
+        <div class=" daysofweek grid_cal"> Sun</div>
+        <div class=" daysofweek grid_cal"> Mon</div>
+        <div class=" daysofweek grid_cal"> Tue</div>
+        <div class=" daysofweek grid_cal"> Wed</div>
+        <div class=" daysofweek grid_cal"> Thu</div>
+        <div class=" daysofweek grid_cal"> Fri</div>
+        <div class=" daysofweek grid_cal"> Sat</div>
+   
+
       <c:forEach var="day" items="${events}">
-           <div class="ui-block-${day.value.dayOfWeek}">
+      
               <c:choose>
                 <c:when test="${day.value.currentMonth}">
                 	<c:choose>
@@ -101,7 +87,7 @@
                				<c:set var="todaySelected" value=""/>
                			</c:otherwise>
                		</c:choose>
-                    <div class="datebox-${day.value.currentMonth}" onclick='javascript:hideCalendarDay(${monthYear});showCalendarDay(${monthYear}, ${day.key});return false;'>
+                    <div class="datebox-${day.value.currentMonth} grid_cal" onclick='javascript:hideCalendarDay(${monthYear});showCalendarDay(${monthYear}, ${day.key});return false;'>
                         <div class="event-${day.value.hasEvents}${current} event-${day.value.hasEvents}${monthYear}${day.key} event-${day.value.hasEvents}${current}${monthYear} ${todaySelected}">${day.value.day}</div>
                     </div>
                  </c:when>
@@ -114,17 +100,19 @@
                             <c:set var="dataDirection" value=""/>
                         </c:otherwise>
                      </c:choose>
-                        <div class="datebox-${day.value.currentMonth}">
+                        <div class="datebox-${day.value.currentMonth} grid_cal">
                             <div class="event-${day.value.hasEvents} event-${day.value.hasEvents}-${day.key} event-${day.value.hasEvents}${monthYear}">${day.value.day}</div>
                         </div>
                  </c:otherwise>
               </c:choose>
-          </div>
+          
       </c:forEach>
-    </div>
   
-  <c:if test="${not empty filter}">Filtered by: ${filter.filterName}<br/></c:if>
-  <br/>
+      </div>
+     
+       
+  <c:if test="${not empty filter}">Filtered by: ${filter.filterName}</c:if>
+
     <c:forEach var="day" items="${events}">
     <c:choose>
        <c:when test="${selectedDate eq day.key}">
@@ -136,7 +124,7 @@
 	</c:choose>
     
       <div class="Calendar-Day-${monthYear} Calendar-Day-${monthYear}-${day.key}" style="display: ${display};">
-      <ul data-role="listview" data-theme="g">
+     <ul data-role="listview" data-theme="c" data-inset="true">
         <c:forEach var="event" items="${day.value.events}">
            <li>
               <a href="${pageContext.request.contextPath}/calendar/event?eventId=${event.eventId}&date=${event.date}">
@@ -153,21 +141,12 @@
         </c:if>
       </ul>
      </div>
+    
    </c:forEach>
-    </div>
-  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
-    <div data-role="navbar" role="navigation">
-      <ul class="ui-grid-a">
-        <li class="ui-block-1"><a href="${pageContext.request.contextPath}/calendar/month?date=${monthYear}">Month View</a></li>
-        <li class="ui-block-2"><a href="${pageContext.request.contextPath}/calendar/list?date=${selectedDate}">List View</a></li>
-      </ul>
-    </div>
-  </div>
-  
-</div>
-<!-- /stc --> 
-
-<!-- /page -->
-
-</body>
-</html>
+   
+    
+ </div>
+    
+    </kme:content></kme:page>
+    
+   

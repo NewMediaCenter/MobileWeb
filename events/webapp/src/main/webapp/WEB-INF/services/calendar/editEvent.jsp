@@ -18,8 +18,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Calendar</title>
 <link href="${pageContext.request.contextPath}/css/jquery.mobile-1.0b1.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/jquery-mobile-fluid960.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/jquery.mobile.datebox.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/css/events.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.1.min.js"></script>
 <script type="text/javascript">
     $( document ).bind( "mobileinit", function(){ $.mobile.page.prototype.options.degradeInputs.date = 'text'; });
@@ -27,14 +29,36 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile-1.0b1.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.mobile.datebox.min.js"></script>
+
+
+	
+		
+	<script type="text/javascript">
+ $(window).load(function() {
+     $('.tabs-tab4').addClass('selected');
+     $('.tabs-panel4').show();
+ });
+</script>
+
 </head>
 
 <body>
 <div data-role="page" id="Calendar-Events-edit">
   <div data-role="header">
-    <h1>Event</h1><a href="${pageContext.request.contextPath}/calendar/options" class="ui-btn-right">options</a>
+    <h1>Event</h1>
   </div>
   <div data-role="content" >
+  
+  
+  	<div class="tabs-tabcontainer container_12">
+    <div class="grid_3"><a class="tabs-tab1" name="tabs-tab1" href="${pageContext.request.contextPath}/calendar/month?date=${monthSelectedDate}">Month</a></div>
+    <div class="grid_3"><a class="tabs-tab2" name="tabs-tab2" href="${pageContext.request.contextPath}/calendar/list?date=${selectedDate}">List</a></div>
+      <div class="grid_3"><a class="tabs-tab3" name="tabs-tab3" href="${pageContext.request.contextPath}/calendar/options">Options</a></div>
+      <div class="grid_3"><a class="tabs-tab4" name="tabs-tab4" href="${pageContext.request.contextPath}/calendar/createEvent" data-ajax="false">Add Event</a></div>
+  </div>
+  
+    <div class="tabs-panel4" name="tabs-panel4">
+  
     <form:form action="${pageContext.request.contextPath}/calendar/saveEvent" commandName="event" data-ajax="false">
         <form:hidden path="eventId"/>
         <form:hidden path="lockingNumber"/>
@@ -169,8 +193,7 @@
         <input name="save" type="image" value="Save" src="${pageContext.request.contextPath}/images/btn-save.gif" alt="save" />
     </form:form>
   </div>
-  <div data-role="footer" data-id="events-footer" data-position="fixed" role="contentinfo" data-theme="b">
-  </div>
+
 </div>
 <!-- /page -->
 
