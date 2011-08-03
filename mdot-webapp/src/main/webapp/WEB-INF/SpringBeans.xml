@@ -26,7 +26,25 @@
     <import resource="classpath:ConfigSpringBeans.xml" />
     <import resource="classpath:EntityManagerSpringBeans.xml" />
     <import resource="classpath:RiceSpringBeans.xml" />
-
+	
+	<!--  
+    <bean id="oncourseOAuthService" class="edu.iu.es.espd.oauth.OAuth2LegServiceImpl">
+        <property name="providerPublicURL" value="https://performance.oncourse.iu.edu/direct/describe" />
+        <property name="providerRequestTokenURL" value="https://performance.oncourse.iu.edu/oauthdirect/oauth/request_token" />
+        <property name="providerAuthorizeURL" value="https://performance.oncourse.iu.edu/oauthdirect/oauth/authorize" />
+        <property name="providerAccessTokenURL" value="https://performance.oncourse.iu.edu/oauthdirect/oauth/access_token" />
+        <property name="consumerKey" value="miu_id" />
+        <property name="consumerSecret" value="test_miu_secret" />
+        <property name="resourceId" value="miu_id" />
+        <property name="cookieNames">
+            <list>
+                <value>X-Mapping-bmipgloi</value>
+                <value>JSESSIONID</value>
+            </list>
+        </property>
+    </bean>
+	-->
+	
     <bean id="oncourseOAuthService" class="edu.iu.es.espd.oauth.OAuth2LegServiceImpl">
         <property name="providerPublicURL" value="https://regression.oncourse.iu.edu/direct/describe" />
         <property name="providerRequestTokenURL" value="https://regression.oncourse.iu.edu/oauthdirect/oauth/request_token" />
