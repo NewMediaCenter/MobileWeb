@@ -14,23 +14,25 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
-<kme:page title="Social Media" id="socialmedia" backButton="true" homeButton="true" cssFilename="twitter">
+<kme:page title="Social Media" id="twitter" backButton="true" homeButton="true" cssFilename="twitter">
 	<kme:content>
-		<ul data-role="listview">
+		<kme:listView>
 			<c:choose>
 				<c:when test="${not empty tweets}">
 					<c:forEach items="${tweets}" var="tweet" varStatus="status">
-						<li class="tweet">
-							<img src="${tweet.profileImageUrl}" alt="profile image"></img>
+						<kme:listItem>
+							<!-- <a href="http://www.twitter.com/${tweet.screenName}"> -->
+							<img src="${tweet.profileImageUrl}" alt="profile icon"/>
+							<!-- </a> -->
 							<h3>${tweet.screenName}</h3>
 							<p>${tweet.text}</p>
-						</li>
+						</kme:listItem>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<li>No tweets to display</li>
+					<kme:listItem>No tweets to display</kme:listItem>>
 				</c:otherwise>
 			</c:choose>
-		</ul>
+		</kme:listView>
 	</kme:content>
 </kme:page>

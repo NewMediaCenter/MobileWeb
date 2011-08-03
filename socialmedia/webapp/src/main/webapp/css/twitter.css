@@ -1,12 +1,13 @@
-.tweet .ui-li-desc {
+#twitter .ui-li-desc {
 	white-space:normal;
 }
 
-.tweet img {
-	margin:20px;
+#twitter img {
+	margin:22px;
 }
 
-li.tweet {
-	padding-right: 15px !important;
-	border-top: 1px solid #FFFFFF;
+#twitter li {
+	white-space:normal;
+	padding-right:15px;
+	border-top:1px solid #FFFFFF;
 }
