@@ -20,13 +20,13 @@
 		<kme:listView id="peopleList" filter="false">
             <c:forEach items="${people}" var="person" varStatus="status">
                 <kme:listItem>
-                	<c:url value="/people/${person.userName}" var="url">
-                		<c:param name="lName" value="${search.lastName}" />
+                	<c:url value="/people/${person.hashedUserName}" var="url">
+                		<%--<c:param name="lName" value="${search.lastName}" />
                 		<c:param name="fName" value="${search.firstName}" />
                 		<c:param name="uName" value="${search.userName}" />
                 		<c:param name="exact" value="${search.exactness}" />
                 		<c:param name="status" value="${search.status}" />
-                		<c:param name="location" value="${search.location}" />
+                		<c:param name="location" value="${search.location}" /> --%>
                 	</c:url>
 					<a href="${url}">
 						<h3><c:out value="${person.lastName}" />, <c:out value="${person.firstName}" /></h3>

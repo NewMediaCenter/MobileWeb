@@ -16,7 +16,7 @@
 package org.kuali.mobility.shared;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Constants {
@@ -29,10 +29,10 @@ public class Constants {
 	public static final String SAKAI_FOLDER_EXTENSION = "fldr";
 	public static final String SAKAI_URL_EXTENSION = "url";
 	
-	public static final Map<String, String> CAMPUS_NAMES = new HashMap<String, String>();
+	public static final Map<String, String> CAMPUS_NAMES = new LinkedHashMap<String, String>();
 	
 	static {
-		CAMPUS_NAMES.put("UA", "Any Campus");
+		CAMPUS_NAMES.put("Any", "Any Campus");
 		CAMPUS_NAMES.put("BL", "IU Bloomington");
 		CAMPUS_NAMES.put("IN", "IUPUI");
 		CAMPUS_NAMES.put("CO", "IUPUC");

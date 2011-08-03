@@ -15,13 +15,14 @@
  
 package org.kuali.mobility.people.service;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import org.kuali.mobility.people.entity.Person;
 import org.kuali.mobility.people.entity.Search;
 
 public interface PeopleService {
-
 	List<Person> performSearch(Search search);
 	Person getUserDetails(String userName);
+	BufferedImage generateObfuscatedImage(String text);
 }

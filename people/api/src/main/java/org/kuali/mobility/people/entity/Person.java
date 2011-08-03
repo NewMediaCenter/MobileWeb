@@ -42,6 +42,9 @@ public class Person implements Serializable {
 		departments = new ArrayList<String>();
 	}
 	
+	public String getHashedUserName() {
+		return Integer.toString(Math.abs(userName.hashCode()));
+	}
 	public String getFirstName() {
 		return firstName;
 	}

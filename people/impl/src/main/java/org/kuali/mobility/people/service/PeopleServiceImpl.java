@@ -15,6 +15,12 @@
  
 package org.kuali.mobility.people.service;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -80,6 +86,37 @@ public class PeopleServiceImpl implements PeopleService {
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public BufferedImage generateObfuscatedImage(String text) {
+		int width = 250;
+	    int height = 25;
+
+	    BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+	    Graphics2D g2d = bufferedImage.createGraphics();
+	    Font font = new Font("Arial", Font.PLAIN, 14);
+	    g2d.setFont(font);
+
+	    RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	    rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+	    g2d.setRenderingHints(rh);
+
+	    Paint bg = new Color(255,255,255);
+	    g2d.setPaint(bg);
+	    g2d.fillRect(0, 0, width, height);
+
+	    int x = 0; 
+	    int y = height - 7;
+
+	    Paint textPaint = new Color(0,0,0);
+	    g2d.setPaint(textPaint);
+	    g2d.drawString(text, x, y);
+	    
+	    g2d.dispose();
+	    return bufferedImage;
 	}
 	
 	private void filterAdsPersons(List<AdsPerson> adsPersons) {

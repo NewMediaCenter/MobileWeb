@@ -19,9 +19,25 @@
 	<kme:content>
 		<c:choose>
 			<c:when test="${person != null}">
-				<h3><c:out value="${person.lastName}" />, <c:out value="${person.firstName}" /></h3>
-				<c:if test="${not empty person.email}" ><p>Email: <c:out value="${person.email}" /></p></c:if>
-				<c:if test="${not empty person.phone}" ><p>Phone: <c:out value="${person.phone}" /></p></c:if>
+				<h3><c:out value="${person.lastName}" />, <c:out value="${person.firstName}" /></h3>	
+				<c:if test="${not empty person.email}" >
+					<p>Email: 
+						<c:choose>
+							<c:when test="${loggedIn == true}">
+								<c:set var="email"><c:out value="${person.email}" /></c:set>
+								<a href="mailto:${email}" ><c:out value="${email}" /></a>
+							</c:when>
+							<c:otherwise>
+								<img src="${pageContext.request.contextPath}/people/image/${imageKey}" alt="email" />
+							</c:otherwise>
+						</c:choose>
+					</p>
+				</c:if>
+				
+				<c:if test="${not empty person.phone}" >
+					<c:set var="phone"><c:out value="${person.phone}" /></c:set>
+					<p>Phone: <a href="tel:${phone}"><c:out value="${phone}" /></a></p>
+				</c:if>
 				
 				<c:if test="${not empty person.departments}" >
 					<p>Department:
