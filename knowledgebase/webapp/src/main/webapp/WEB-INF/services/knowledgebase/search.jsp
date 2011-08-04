@@ -12,8 +12,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="kme" uri="http://kuali.org/mobility" %>
 
+<kme:listView id="kbsearchresults" dataTheme="c" dataDividerTheme="b" filter="false">
 <c:forEach items="${container.results}" var="item" varStatus="status">
 <kme:listItem>
-	<p><a href="${pageContext.request.contextPath}/knowledgebase/${item.documentId}">${item.title}</a></p>
+	<a href="${pageContext.request.contextPath}/knowledgebase/${item.documentId}">${item.title}</a>
 </kme:listItem>
 </c:forEach>
+</kme:listView>

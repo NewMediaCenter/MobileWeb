@@ -18,7 +18,8 @@
 		<form:form action="${pageContext.request.contextPath}/knowledgebase/search" commandName="kbsearchform" data-ajax="false">
 			<fieldset>
             <label for="searchText">Search</label>
-			<form:input path="searchText" cssClass="text ui-widget-content ui-corner-all" />
+			<%--<form:input path="searchText" cssClass="text ui-widget-content ui-corner-all" /> --%>
+			<input id="searchText" name="searchText" class="text ui-widget-content ui-corner-all" type="search" />
 			<form:errors path="searchText" />
 			</fieldset>
 		</form:form>
@@ -28,11 +29,9 @@
 			</kme:input>
 		</kme:form>
  		--%>
-		<kme:listView id="kbsearchresults" dataTheme="c" dataDividerTheme="b" filter="false">
 		<div id="searchresults">
  		<jsp:include page="search.jsp" />
  		</div>
- 		</kme:listView>
  		<%-- 
 	    <kme:definitionListView id="kbsearchresults">
 			<div id="searchresults">
@@ -47,54 +46,68 @@
 
 <script type="text/javascript">
 $('[data-role=page][id=kb]').live("pagebeforeshow", function() {
+	//alert("pagebeforeshow: " + $("#searchText").val());
+	// If the browser keeps the search parameters, search on page load
+	var searchText = $("#searchText").val();
+	previousSearch = "";
+	lookup(searchText);
+});
+
+$('[data-role=page][id=kb]').live("pageshow", function() {
+	//alert("pageshow: " + $("#searchText").val());
+	// Search handler
 	$('#searchText').keypress(function(event) {
-		var searchText = $('#searchText').val();
-		if (searchText != previousSearch) {
-			lookup(searchText);			
-		}
-		previousSearch = searchText;
-		console.log(event.keyCode);
-		if (event.keyCode == 13) {
+		// Prevent enter key from submitting the form
+		lastTypedKeyCode = event.keyCode;
+		console.log(lastTypedKeyCode);
+		if (lastTypedKeyCode == 13) {
+			event.preventDefault();
 			return false;
+		} else {
+			if (timeout) { 
+				clearTimeout(timeout);
+			}
+			timeout = setTimeout(function(){
+				lookup();
+			}, 200);
 		}
 	});	
 });
 
-$('[data-role=page][id=kb]').live("pageshow", function() {
-	// If the browser keeps the search parameters, search on page load
-	var searchText = $("#searchText").val();
-	previousSearch = searchText;
-	lookup(searchText);	
-});
-
+var timeout;
 var previousSearch;
 var kbRemoteCallCount = 0;
 var kbCurrentDisplayNumber = 0;
 
 function lookup(inputString) {
+	var inputString = $('#searchText').val();
 	kbRemoteCallCount++;
 	var kbRemoteCallCountAtStartOfRequest = kbRemoteCallCount;
-	if(inputString.length < 2) {
-		$('#searchresults').html('');
-	} else {
-/* 			$.post("rpc.php", {queryString: ""+inputString+""}, function(data){
+	if (inputString != previousSearch) {
+		previousSearch = inputString;
+		if (inputString.length < 2) {
+			$('#searchresults').html('');
+		} else {
+			var requestUrlString = '${pageContext.request.contextPath}/knowledgebase/search?criteria=' + encodeURI(inputString);
+			$.get(requestUrlString, function(data) {
+				console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
+				if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
+					kbCurrentDisplayNumber = kbRemoteCallCount;
+					// Show results
+					var pagehtml = '<div id="resultdata"></div>'
+					$('#searchresults').html(pagehtml);
+					$("#resultdata").html(data).page();
+				}
+			});
+			/*
+			$.post("rpc.php", {queryString: ""+inputString+""}, function(data){
 			if(data.length >0) {
 				$('#searchresults').show();
 				$('#list').html(data);
 			}
-		});
-*/
-		var requestUrlString = '${pageContext.request.contextPath}/knowledgebase/search?criteria=' + encodeURI(inputString);
-		$.get(requestUrlString, function(data) {
-			console.log("" + requestUrlString + " " + kbRemoteCallCount + " " + kbCurrentDisplayNumber);
-			if (kbRemoteCallCountAtStartOfRequest >= kbCurrentDisplayNumber) {
-				kbCurrentDisplayNumber = kbRemoteCallCount;
-				// Show results
-				var pagehtml = '<div id="resultdata"></div>'
-				$('#searchresults').html(pagehtml);
-				$("#resultdata").html(data).page();
-			}
-		});
+			});
+			*/
+		}
 	}
 
 } // lookup
