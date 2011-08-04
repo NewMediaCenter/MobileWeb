@@ -18,8 +18,11 @@
 		<form:form action="${pageContext.request.contextPath}/maps/building/search" commandName="mapsearchform" data-ajax="false">
 			<fieldset>
             <label for="searchText">Search</label>
-			<form:input path="searchText" cssClass="text ui-widget-content ui-corner-all" />
+            <%-- <form:input path="searchText" cssClass="text ui-widget-content ui-corner-all" /> --%>
+			<input id="searchText" name="searchText" class="text ui-widget-content ui-corner-all" type="search" />
 			<form:errors path="searchText" />
+			</fieldset>
+			<fieldset>
 			<label for="searchCampus">Campus</label>
 			<form:select path="searchCampus" multiple="false">
 				<option value="UA" label="">select:</option>			  
@@ -35,32 +38,30 @@
 			</form:select>
 			</fieldset>
 		</form:form>
-	    <kme:definitionListView id="mapsearchresults">
-			<div id="searchresults">
-	        <c:forEach items="${container.results}" var="item" varStatus="status">
-	            <kme:definitionListTerm>
-					<a href="${pageContext.request.contextPath}/maps/building/${item.code}">${item.name}</a>
-	            </kme:definitionListTerm>
-	        </c:forEach>
-	        </div>
-	    </kme:definitionListView>
+		<div id="searchresults">
+		<jsp:include page="search.jsp" />
+		</div>
 	    
 <script type="text/javascript">
 $('#maps').live("pagebeforeshow", function() {
 	$('#searchText').keypress(function (event) {
-		var searchText = $("#searchText").val();
-		var groupCode = $("#searchCampus").val();
-		console.log(searchText + " " + groupCode);
-		mapSearch(searchText, groupCode);
-		if (event.keyCode == 13) {
+		// Prevent enter key from submitting the form
+		lastTypedKeyCode = event.keyCode;
+		console.log(lastTypedKeyCode);
+		if (lastTypedKeyCode == 13) {
+			event.preventDefault();
 			return false;
+		} else {
+			if (timeout) { 
+				clearTimeout(timeout);
+			}
+			timeout = setTimeout(function(){
+				mapSearch();
+			}, 200);
 		}
 	});
 	$("#searchCampus").change(function() {
-		var searchText = $("#searchText").val();
-		var groupCode = $("#searchCampus").val();
-		console.log(searchText + " " + groupCode);
-		mapSearch(searchText, groupCode);
+		mapSearch();
 	});
 });
 
@@ -72,28 +73,36 @@ $('#maps').live("pageshow", function() {
 	mapSearch(searchText, groupCode);	
 });
 
+var previousSearchKey;
 var mapsRemoteCallCount = 0;
 var mapsCurrentDisplayNumber = 0;
 
-function mapSearch(inputString, groupCode) {
+function mapSearch() {
+	var inputString = $("#searchText").val();
+	var groupCode = $("#searchCampus").val();
 	mapsRemoteCallCount++;
-	var mapsRemoteCallCountAtStartOfRequest = mapsRemoteCallCount;
-	if (inputString.length < 2 || groupCode == "UA") {
-		// Hide the suggestion box.
-		$('#searchresults').html('');
-	} else {
-		var requestUrlString = '${pageContext.request.contextPath}/maps/building/search?criteria=' + encodeURI(inputString) + '&groupCode=' + encodeURI(groupCode);
-		$.get(requestUrlString, function(data) {
-			//console.log("" + requestUrlString + " " + mapsRemoteCallCount + " " + mapsCurrentDisplayNumber);
-			if (mapsRemoteCallCountAtStartOfRequest >= mapsCurrentDisplayNumber) {
-				mapsCurrentDisplayNumber = mapsRemoteCallCount;
-				// Show results
-				var pagehtml = '<div id="resultdata"></div>'
-				$('#searchresults').html(pagehtml);
-				$("#resultdata").html(data).page();
-			}
-		});
+	var mapsRemoteCallCountAtStartOfRequest = mapsRemoteCallCount;	
+	var searchKey = inputString + ":" + groupCode;
+
+	if (searchKey != previousSearchKey) {
+		if (inputString.length < 2 || groupCode == "UA") {
+			// Hide the suggestion box.
+			$('#searchresults').html('');
+		} else {
+			var requestUrlString = '${pageContext.request.contextPath}/maps/building/search?criteria=' + encodeURI(inputString) + '&groupCode=' + encodeURI(groupCode);
+			$.get(requestUrlString, function(data) {
+				//console.log("" + requestUrlString + " " + mapsRemoteCallCount + " " + mapsCurrentDisplayNumber);
+				if (mapsRemoteCallCountAtStartOfRequest >= mapsCurrentDisplayNumber) {
+					mapsCurrentDisplayNumber = mapsRemoteCallCount;
+					// Show results
+					var pagehtml = '<div id="resultdata"></div>'
+					$('#searchresults').html(pagehtml);
+					$("#resultdata").html(data).page();
+				}
+			});
+		}
 	}
+	previousSearchKey = searchKey;
 } // mapSearch
 </script>
 
