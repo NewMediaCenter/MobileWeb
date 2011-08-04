@@ -63,8 +63,8 @@
             
             
              <div class="container_12" style="padding-top:20px">
-      <div class="grid_6"><a href="${pageContext.request.contextPath}/calendar/listEvents?date=${selectedDate}&beginDate=${previousDate}&endDate=${currentEndDate}" data-role="button" data-icon="arrow-l" data-theme="c"><c:out value="${days}"/> prev</a></div>
-      <div class="grid_6"><a href="${pageContext.request.contextPath}/calendar/listEvents?date=${selectedDate}&beginDate=${beginDate}&endDate=${endDate}" data-role="button" data-icon="arrow-r" data-theme="c" data-iconpos="right"><c:out value="${days}"/> future</a></div>
+      <div class="grid_6"><a href="${pageContext.request.contextPath}/calendar/listEvents?date=${selectedDate}&beginDate=${previousDate}&endDate=${currentEndDate}" data-role="button" data-icon="arrow-l" data-theme="a"><c:out value="${days}"/> prev</a></div>
+      <div class="grid_6"><a href="${pageContext.request.contextPath}/calendar/listEvents?date=${selectedDate}&beginDate=${beginDate}&endDate=${endDate}" data-role="button" data-icon="arrow-r" data-theme="a" data-iconpos="right"><c:out value="${days}"/> future</a></div>
     </div>
     
 

@@ -441,8 +441,7 @@
 /* All Services - Definition List Default Styles
 -----------------------------------------------------------------------------------------------------------*/
 dl {
-	padding: 0;/*width: 90%;*//* temporary adjustment for testing to remove page padding */
-    /*margin: -17px -15px -15px -15px;*/
+	padding: 0;/*width: 90%;*//* temporary adjustment for testing to remove page padding *//*margin: -17px -15px -15px -15px;*/
 }
 dl dt {
 	border-top: 2px solid #BBB;
@@ -645,16 +644,17 @@ div#home span.dl-dt-count {
 
 
 .tabs-tabcontainer {
-	margin:10px 0 0 -15px;
+	margin:6px 0 0 -15px;
 	position:absolute;
 	top:40px;
 	width:100%;
 }
 .tabs-tabcontainer .tabs-tab1, .tabs-tabcontainer .tabs-tab2, .tabs-tabcontainer .tabs-tab3, .tabs-tabcontainer .tabs-tab4 {
-	background:#ccc;
+	background-image: -webkit-gradient(  linear,  left bottom,  left top,  color-stop(0.26, #4F4F4F),  color-stop(0.63, #696869) );
+	background-image: -moz-linear-gradient(  center bottom,  #4F4F4F 26%,  #696869 63% );
 	float:left;
-	padding:9px 1%;
-	color:#333;
+	padding:8px 1%;
+	color:#fff;
 	-webkit-border-top-left-radius: 10px;
 	-webkit-border-top-right-radius: 10px;
 	-moz-border-radius-topleft: 10px;
@@ -662,16 +662,43 @@ div#home span.dl-dt-count {
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 	top:50px;
-	width:98%;
+	width:100%;
 	text-align:center;
 	text-decoration:none;
-	border: 1px solid #999;
+	text-shadow: 1px 1px 1px #000000;
+	filter: dropshadow(color=#000000, offx=1, offy=1);
 	font-size: 10px;
+	font-weight: bold;
+	border-top: 1px solid #000;
+	border-right: 1px none #000;
+	border-bottom: 1px solid #000;
+	border-left: 1px none #000;
 }
+
+
+.tabs-tabcontainer .tabs-tab1 {
+	
+}
+
+
 .tabs-tabcontainer .selected {
-	background:#E6E6E6;
+	background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, #E6E6E6),
+    color-stop(1, #FAFAFA)
+);
+	background-image: -moz-linear-gradient(
+    center bottom,
+    #E6E6E6 0%,
+    #FAFAFA 100%
+);
 	color:#000000;
+	border-color: #999999;
 	border-bottom: 1px solid #E6E6E6;
+	text-shadow: 0px 0px 0px #000000;
+	filter: dropshadow(color=#000000, offx=0, offy=0);
 }
 div.tabs-panel2, div.tabs-panel3, div.tabs-panel4, div.tabs-panel1 {
 	margin-top: -20px;

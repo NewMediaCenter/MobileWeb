@@ -40,7 +40,7 @@
       <div class="grid_3"><a class="tabs-tab3" name="tabs-tab3" href="${pageContext.request.contextPath}/calendar/options">Options</a></div>
       <div class="grid_3"><a class="tabs-tab4" name="tabs-tab4" href="${pageContext.request.contextPath}/calendar/createEvent" data-ajax="false">Add Event</a></div>
     </div>
-    <div class="tabs-panel1" name="tabs-panel1">
+    <div class="tabs-panel1" name="tabs-panel1" style="margin-top:25px">
     
       <div class="container_16 monthgrid" style="background-color:; margin-top:px">
         <div class="grid_4">
@@ -57,7 +57,7 @@
                 </a>  </div>
         </div>
         
-        
+  <div class="month-grid">  
         <div class=" daysofweek grid_cal"> Sun</div>
         <div class=" daysofweek grid_cal"> Mon</div>
         <div class=" daysofweek grid_cal"> Tue</div>
@@ -108,7 +108,7 @@
           
       </c:forEach>
   
-      </div>
+      </div></div>
      
        
   <c:if test="${not empty filter}">Filtered by: ${filter.filterName}</c:if>

@@ -76,9 +76,13 @@
             <form:input path="location"  cssClass="text ui-widget-content ui-corner-all" />
             <form:errors path="location" />
             <br/>
+            
+            <fieldset data-role="controlgroup" class="temp-checkbox-hack">
+            <legend>All Day</legend>
             <form:checkbox path="allDay" onclick='javascript:$("div#calendar-time").toggle();' />
-            <label for="allDay">All Day</label>
+            <label for="allDay" data-theme="c" class="ui-btn ui-btn-icon-left ui-corner-top ui-corner-bottom ui-controlgroup-last ui-btn-up-c"><span class="ui-btn-inner ui-corner-top ui-corner-bottom ui-controlgroup-last"><span class="ui-btn-text">yes</span></span></label>
             <br/>
+            </fieldset>
             <label for="startDate">Start Date</label>
             <form:input path="startDate"  cssClass="genField textEntry date" data-role="datebox" data-options='{"useDialogForceFalse": true, "dateFormat": "MM/DD/YYYY"}'/>
             <form:errors path="startDate" />
@@ -190,7 +194,7 @@
             <form:errors path="invitations" />
             <br/>
         </fieldset>
-        <input name="save" type="image" value="Save" src="${pageContext.request.contextPath}/images/btn-save.gif" alt="save" />
+        <input data-theme="a" name="save" type="submit" value="Save"  />
     </form:form>
   </div>
 
