@@ -156,12 +156,18 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
 	NSURLRequest *request = [webView request];
-    if ([request.URL.absoluteString isEqualToString:@"http://www.iupuijags.com/mobile/"]) {
-        [toolbar setHidden:NO];
-        [webView setFrame:CGRectMake(0, 0, webView.frame.size.width, webView.frame.size.height - toolbar.frame.size.height)];                
+    NSRange range = [[[request URL] path] rangeOfString:@"kme-"];
+    
+    if (range.location != NSNotFound) {
+        if (![toolbar isHidden]) {
+            [webView setFrame:CGRectMake(0, 0, webView.frame.size.width, webView.frame.size.height + toolbar.frame.size.height)];
+            [toolbar setHidden:YES];
+        }
     } else {
-        [webView setFrame:CGRectMake(0, 0, webView.frame.size.width, webView.frame.size.height + toolbar.frame.size.height)];
-        [toolbar setHidden:YES];
+        if ([toolbar isHidden]) {
+            [toolbar setHidden:NO];
+            [webView setFrame:CGRectMake(0, 0, webView.frame.size.width, webView.frame.size.height - toolbar.frame.size.height)];                
+        }
     }
     
 	if(delegate != NULL) {
