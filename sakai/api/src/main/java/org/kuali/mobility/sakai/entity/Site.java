@@ -42,6 +42,10 @@ public class Site implements Serializable, Comparable<Site> {
     private boolean hasResourcesTool;
     private boolean hasMessagesTool;
     
+    private String meetingTime;
+    private String location;
+    private String buildingCode;
+    
     public String getInstructorName() {
 		return instructorName;
 	}
@@ -198,5 +202,29 @@ public class Site implements Serializable, Comparable<Site> {
 
 	public void setHasMessagesTool(boolean hasMessagesTool) {
 		this.hasMessagesTool = hasMessagesTool;
+	}
+
+	public String getMeetingTime() {
+		return meetingTime;
+	}
+
+	public void setMeetingTime(String meetingTime) {
+		this.meetingTime = meetingTime;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getBuildingCode() {
+		return buildingCode;
+	}
+
+	public void setBuildingCode(String buildingCode) {
+		this.buildingCode = buildingCode;
 	}
 }

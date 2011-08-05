@@ -23,6 +23,25 @@
 					</a>
 				</kme:listItem>
 			</c:if>
+			<c:if test="${not empty site.meetingTime}">
+                <kme:listItem>
+                	<p>${site.meetingTime}</p>
+                </kme:listItem>
+            </c:if>
+            <c:if test="${not empty site.location}">
+                <kme:listItem>
+	                <c:if test="${not empty site.buildingCode}">
+	                	<c:url value="/maps/location" var="url">
+	                		<c:param name="id" value="${site.buildingCode}" />
+	                	</c:url>
+						<a href="${url}" class="icon-MAPS">${site.location}</a>
+	            	</c:if>
+	            	<c:if test="${empty site.buildingCode}">
+	                	<p>${site.location}</p>
+	            	</c:if>
+                </kme:listItem>
+            </c:if>
+            
 			<c:if test="${site.hasAnnouncementsTool}">
 				<kme:listItem>
 					<a href="${pageContext.request.contextPath}/myclasses/${site.id}/announcements" class="icon-ANNOUNCEMENTS">

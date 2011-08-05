@@ -59,6 +59,7 @@ import edu.iu.es.espd.ccl.oauth.CalendarEventOAuthService;
 import edu.iu.es.espd.ccl.oauth.CalendarViewEvent;
 import edu.iu.es.espd.ccl.oauth.ListData;
 import edu.iu.es.espd.ccl.oauth.ListViewEvents;
+import edu.iu.es.espd.ccl.oauth.ViewDetailedEvent;
 import edu.iu.es.espd.oauth.OAuth2LegService;
 import edu.iu.es.espd.oauth.OAuthException;
 
@@ -136,6 +137,8 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 			List<Site> other = home.getOther();
 			List<Site> today = home.getTodaysCourses();
 			Map<String, Term> courseMap = new HashMap<String, Term>();
+			Map<String, Site> courseSiteMap = new HashMap<String, Site>();
+			List<String> courseSiteIdList = new ArrayList<String>();
 			JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(siteJson);
             JSONArray itemArray = jsonObj.getJSONArray("site_collection");
             for (Iterator<JSONObject> iter = itemArray.iterator(); iter.hasNext();) {
@@ -179,6 +182,9 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 	                }
 	                termObj.getCourses().add(item);
 	                
+	                courseSiteMap.put(item.getId(), item);
+	                courseSiteIdList.add(item.getId());
+	                
 	                if (calendarCourseIds.contains(item.getId().toLowerCase())) {
 	                	today.add(item);
 	                }
@@ -188,6 +194,23 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
         			other.add(item);
         		}
             }
+            
+            
+//            try {
+//				List<ViewDetailedEvent> listViewEvents = calendarEventOAuthService.retrieveCourseEvents(user, courseSiteIdList);
+//				for (ViewDetailedEvent event : listViewEvents) {
+//					Site site = courseSiteMap.get(event.getOncourseSiteId());
+//					if (event.getRecurrenceMessage() != null && !event.getRecurrenceMessage().isEmpty()) {
+//						site.setMeetingTime(event.getRecurrenceMessage());
+//					} else {
+//						site.setMeetingTime(event.getDisplayDate());
+//					}
+//					site.setLocation(event.getLocation());
+//					site.setBuildingCode(event.getLocationId());
+//				}
+//			} catch (Exception e) {
+//				LOG.error(e.getMessage(), e);
+//			}
             
             for (Map.Entry<String, Term> entry : courseMap.entrySet()) {
             	courses.add(entry.getValue());
@@ -258,6 +281,25 @@ public class SakaiSiteServiceImpl implements SakaiSiteService {
 		site.setInstructorName(instructorName);
 		site.setDescription(courseDescription);
 		site.setTitle(courseTitle);
+		
+		try {
+			List<String> courseSiteIdList = new ArrayList<String>();
+			courseSiteIdList.add(site.getId());
+			List<ViewDetailedEvent> listViewEvents = calendarEventOAuthService.retrieveCourseEvents(user, courseSiteIdList);
+			for (ViewDetailedEvent event : listViewEvents) {
+				if (event.getRecurrenceMessage() != null && !event.getRecurrenceMessage().isEmpty()) {
+					site.setMeetingTime(event.getRecurrenceMessage().replace("This event recurs", "This class meets"));
+				}
+				if (event.getLocation() != null && !event.getLocation().isEmpty()) {
+					site.setLocation(event.getLocation());
+				}
+				if (event.getLocationId() != null && !event.getLocationId().isEmpty()) {
+					site.setBuildingCode(event.getLocationId());
+				}
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
 		
 		return site;
 	}
