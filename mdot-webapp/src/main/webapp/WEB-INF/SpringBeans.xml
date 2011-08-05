@@ -9,7 +9,12 @@
   express or implied. See the License for the specific language governing
   permissions and limitations under the License.
 -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:jee="http://www.springframework.org/schema/jee" 
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/aop 
 						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
 						http://www.springframework.org/schema/beans 
@@ -21,90 +26,46 @@
 						http://www.springframework.org/schema/tx 
 						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-
     <import resource="classpath:DatabaseSpringBeans.xml" />
     <import resource="classpath:ConfigSpringBeans.xml" />
     <import resource="classpath:EntityManagerSpringBeans.xml" />
     <import resource="classpath:RiceSpringBeans.xml" />
 	
-	<!--  
-    <bean id="oncourseOAuthService" class="edu.iu.es.espd.oauth.OAuth2LegServiceImpl">
-        <property name="providerPublicURL" value="https://performance.oncourse.iu.edu/direct/describe" />
-        <property name="providerRequestTokenURL" value="https://performance.oncourse.iu.edu/oauthdirect/oauth/request_token" />
-        <property name="providerAuthorizeURL" value="https://performance.oncourse.iu.edu/oauthdirect/oauth/authorize" />
-        <property name="providerAccessTokenURL" value="https://performance.oncourse.iu.edu/oauthdirect/oauth/access_token" />
-        <property name="consumerKey" value="miu_id" />
-        <property name="consumerSecret" value="test_miu_secret" />
-        <property name="resourceId" value="miu_id" />
-        <property name="cookieNames">
-            <list>
-                <value>X-Mapping-bmipgloi</value>
-                <value>JSESSIONID</value>
-            </list>
-        </property>
-    </bean>
+	<!-- 
+	https://performance.oncourse.iu.edu/
+	X-Mapping-bmipgloi
+	https://regression.oncourse.iu.edu
+	X-Mapping-jfafkpgg
 	-->
-	
     <bean id="oncourseOAuthService" class="edu.iu.es.espd.oauth.OAuth2LegServiceImpl">
-        <property name="providerPublicURL" value="https://regression.oncourse.iu.edu/direct/describe" />
-        <property name="providerRequestTokenURL" value="https://regression.oncourse.iu.edu/oauthdirect/oauth/request_token" />
-        <property name="providerAuthorizeURL" value="https://regression.oncourse.iu.edu/oauthdirect/oauth/authorize" />
-        <property name="providerAccessTokenURL" value="https://regression.oncourse.iu.edu/oauthdirect/oauth/access_token" />
-        <property name="consumerKey" value="miu_id" />
-        <property name="consumerSecret" value="test_miu_secret" />
-        <property name="resourceId" value="miu_id" />
+        <property name="providerPublicURL" value="${sakai.oauth.baseUrl}/direct/describe" />
+        <property name="providerRequestTokenURL" value="${sakai.oauth.baseUrl}/oauthdirect/oauth/request_token" />
+        <property name="providerAuthorizeURL" value="${sakai.oauth.baseUrl}/oauthdirect/oauth/authorize" />
+        <property name="providerAccessTokenURL" value="${sakai.oauth.baseUrl}/oauthdirect/oauth/access_token" />
+        <property name="consumerKey" value="${sakai.oauth.key}" />
+        <property name="consumerSecret" value="${sakai.oauth.secret}" />
+        <property name="resourceId" value="${sakai.oauth.resourceId}" />
         <property name="cookieNames">
             <list>
-                <value>X-Mapping-jfafkpgg</value>
+                <value>${sakai.oauth.cookie}</value>
                 <value>JSESSIONID</value>
             </list>
         </property>
     </bean>
-
-    <bean id="testOAuthService" class="edu.iu.es.espd.oauth.OAuth2LegServiceImpl">
-        <!-- <property name="providerPublicURL" value="http://localhost:9999/test/hello.html" /> -->
-        <property name="providerRequestTokenURL" value="http://localhost:9999/test/oauth/request_token" />
-        <property name="providerAuthorizeURL" value="http://localhost:9999/test/oauth/authorize" />
-        <property name="providerAccessTokenURL" value="http://localhost:9999/test/oauth/access_token" />
-        <property name="consumerKey" value="test_id" />
-        <property name="consumerSecret" value="testmysecret" />
-        <property name="resourceId" value="test1_id" />
-        <property name="cookieNames">
-            <list>
-                <value>JSESSIONID</value>
-            </list>
-        </property>
-    </bean>
-
-<!-- 
+	
+	<!-- 
+    http://localhost:8080/ccl-dev
+    https://test.uisapp2.iu.edu/ccl-snd
+	-->
     <bean id="calendarEventOAuthService" class="edu.iu.es.espd.ccl.oauth.CalendarEventOAuthServiceImpl">
-        <property name="calendarRestURL" value="http://localhost:8080/ccl-dev/rest/" />
-        <property name="providerPublicURL" value="http://localhost:8080/ccl-dev/session" />
-        <property name="providerRequestTokenURL" value="http://localhost:8080/ccl-dev/oauth/request_token" />
-        <property name="providerAuthorizeURL" value="http://localhost:8080/ccl-dev/oauth/authorize" />
-        <property name="providerAccessTokenURL" value="http://localhost:8080/ccl-dev/oauth/access_token" />
-        <property name="consumerKey" value="mobileOAuthConsumerKey" />
-        <property name="consumerSecret" value="hello" />
-        <property name="resourceId" value="MOBILE_ID" />
-        <property name="socketTimeout" value="30000" />
-        <property name="connectionManagerTimeout" value="10000" />
-        <property name="connectionTimeout" value="10000" />
-        <property name="cookieNames">
-            <list>
-                <value>JSESSIONID</value>
-            </list>
-        </property>
-    </bean>-->
-
-     <bean id="calendarEventOAuthService" class="edu.iu.es.espd.ccl.oauth.CalendarEventOAuthServiceImpl">
-        <property name="calendarRestURL" value="https://test.uisapp2.iu.edu/ccl-snd/rest/" />
-        <property name="providerPublicURL" value="https://test.uisapp2.iu.edu/ccl-snd/session" />
-        <property name="providerRequestTokenURL" value="https://test.uisapp2.iu.edu/ccl-snd/oauth/request_token" />
-        <property name="providerAuthorizeURL" value="https://test.uisapp2.iu.edu/ccl-snd/oauth/authorize" />
-        <property name="providerAccessTokenURL" value="https://test.uisapp2.iu.edu/ccl-snd/oauth/access_token" />
-        <property name="consumerKey" value="mobileOAuthConsumerKey" />
-        <property name="consumerSecret" value="hello" />
-        <property name="resourceId" value="MOBILE_ID" />
+        <property name="calendarRestURL" value="${calendar.oauth.baseUrl}/rest/" />
+        <property name="providerPublicURL" value="${calendar.oauth.baseUrl}/session" />
+        <property name="providerRequestTokenURL" value="${calendar.oauth.baseUrl}/oauth/request_token" />
+        <property name="providerAuthorizeURL" value="${calendar.oauth.baseUrl}/oauth/authorize" />
+        <property name="providerAccessTokenURL" value="${calendar.oauth.baseUrl}/oauth/access_token" />
+        <property name="consumerKey" value="${calendar.oauth.key}" />
+        <property name="consumerSecret" value="${calendar.oauth.secret}" />
+        <property name="resourceId" value="${calendar.oauth.resourceId}" />
         <property name="socketTimeout" value="30000" />
         <property name="connectionManagerTimeout" value="10000" />
         <property name="connectionTimeout" value="10000" />
@@ -115,13 +76,16 @@
         </property>
     </bean>
          
-     <bean class="org.kuali.mobility.athletics.service.AthleticsServiceImpl">
+    <!--  
+    https://test.uisapp2.iu.edu/ath-unt/
+    http://129.79.44.142:8080/ath-dev/
+    -->    
+    <bean class="org.kuali.mobility.athletics.service.AthleticsServiceImpl">
         <property name="socketTimeout" value="30000" />
         <property name="connectionManagerTimeout" value="10000" />
         <property name="connectionTimeout" value="10000" />
-        <!-- <property name="athleticsURL" value="http://129.79.44.142:8080/ath-dev/" />-->
-        <property name="athleticsURL" value="https://test.uisapp2.iu.edu/ath-unt/" />
-     </bean>
+        <property name="athleticsURL" value="${athletics.baseUrl}" />
+    </bean>
      
     <bean class="org.kuali.mobility.knowledgebase.service.KnowledgeBaseServiceImpl">
         <qualifier value="main"/>
@@ -146,17 +110,5 @@
     
     <bean class="edu.iu.m.news.service.RssCacheServiceImpl" />
     
-    <!--  
-    <bean class="edu.iu.m.news.service.NewsServiceImpl" />
-    <bean class="edu.iu.m.news.service.RssServiceImpl" />
-    <bean class="edu.iu.m.news.service.MaintRssServiceImpl" />
-    <bean class="edu.iu.m.news.service.RssCacheServiceImpl" />
-    <bean class="edu.iu.m.news.service.DynamicRssCacheServiceImpl" />
-    <bean class="edu.iu.m.news.service.CacheServiceImpl" id="newsCacheService" />
-    
-    <bean class="edu.iu.m.news.dao.RssDaoImpl" />
-    <bean class="edu.iu.m.news.dao.MaintRssDaoImpl" />
-    <bean class="edu.iu.m.news.dao.NewsDaoImpl" />
-    -->
 </beans>
  
