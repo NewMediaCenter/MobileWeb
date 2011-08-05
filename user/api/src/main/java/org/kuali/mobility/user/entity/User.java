@@ -15,10 +15,17 @@
 
 package org.kuali.mobility.user.entity;
 
+import java.util.Map;
+
 public interface User {
 
     Long getGuid();
     String getUserId();
     void setUserId(String userId);
+    Map<String, String> getUserAttributes();
+    void setUserAttriebutes(Map<String, String> userAttributes);
+    String getUserAttribute(String key);
+    void setUserAttribute(String key, String value);
+    void removeUserAttribute(String key);
     
 }

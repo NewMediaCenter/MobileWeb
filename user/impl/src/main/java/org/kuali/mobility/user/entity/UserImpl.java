@@ -17,6 +17,8 @@ package org.kuali.mobility.user.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +27,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 @Entity
@@ -64,7 +67,12 @@ public class UserImpl implements User, Serializable {
     @Column(name="VER_NBR")
     protected Long versionNumber;
     
-    public UserImpl() {}
+    @Transient
+    private Map<String, String> userAttributes;
+    
+    public UserImpl() {
+    	userAttributes = new HashMap<String, String>();
+    }
 
     public Long getGuid() {
         return guid;
@@ -137,5 +145,31 @@ public class UserImpl implements User, Serializable {
     public void setPairDate(Timestamp pairDate) {
         this.pairDate = pairDate;
     }
+
+	@Override
+	public Map<String, String> getUserAttributes() {		
+		return userAttributes;
+	}
+
+	@Override
+	public void setUserAttriebutes(Map<String, String> userAttributes) {
+		this.userAttributes = userAttributes;
+	}
+
+	@Override
+	public String getUserAttribute(String key) {		
+		return userAttributes.get(key);
+	}
+
+	@Override
+	public void setUserAttribute(String key, String value) {
+		userAttributes.put(key, value);
+	}
+	
+	@Override
+    public void removeUserAttribute(String key) {
+		userAttributes.remove(key);
+	}
+
 
 }

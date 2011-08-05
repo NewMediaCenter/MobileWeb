@@ -34,10 +34,6 @@ public class HttpUtil {
 	public static boolean needsAuthenticated(String path) {
 		if (path.startsWith("/oauth") 
 				|| path.startsWith("/myclasses") 
-				|| path.startsWith("/sakaiprivatetopics") 
-				|| path.startsWith("/sakaiprivatemessages") 
-				|| path.startsWith("/resources") 
-				|| path.startsWith("/sakairesourcedetails") 
 				|| path.startsWith("/calendar")) {
 			return true;
 		}

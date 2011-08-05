@@ -17,9 +17,7 @@ package org.kuali.mobility.mdot.filters;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -37,7 +35,7 @@ public class LoginFilter extends CASFilter {
 			super.doFilter(request, response, chain);
 		} else {
 			chain.doFilter(request, response);
-		}
+		}		
 	}
 
 }

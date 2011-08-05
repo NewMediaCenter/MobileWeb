@@ -1,5 +1,7 @@
 package org.kuali.mobility.mdot.interceptors;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (HttpUtil.needsAuthenticated(request.getServletPath())) {
 			login(request);
 		}
+
+		User user = (User) request.getSession(true).getAttribute(Constants.KME_USER_KEY);
+
+		if (user != null && user.getUserAttribute("acked") == null && HttpUtil.needsAuthenticated(request.getServletPath())) {
+			try {
+				user.setUserAttribute("service", request.getServletPath());
+				response.sendRedirect(request.getContextPath() + "/mobileCasAck");
+			} catch (IOException e) {
+				LOG.error(e.getMessage(), e);
+			}
+		}
+		
 		return true;
 	}
 
@@ -28,6 +42,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (user == null) {
 			user = new UserImpl();
 			user.setUserId(CASFilter.getRemoteUser(request));
+			
+			// TODO: Get person attributes and set on User Object. Save to database.
+			
+			
+			
 			request.getSession().setAttribute(Constants.KME_USER_KEY, user);
 			LOG.info("User id: " + user.getUserId() + " logging in."); 
 		}
@@ -35,9 +54,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) throws Exception {}
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView e) throws Exception {}
 
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView e) throws Exception {}
-	
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) throws Exception {}
+
 }
