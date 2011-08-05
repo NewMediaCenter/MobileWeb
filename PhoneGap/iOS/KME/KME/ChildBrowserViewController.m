@@ -157,8 +157,9 @@
         
 	NSURLRequest *request = [webView request];
     NSRange range = [[[request URL] path] rangeOfString:@"kme-"];
+    NSRange range2 = [[[request URL] absoluteString] rangeOfString:@"/resources?resId"];
     
-    if (range.location != NSNotFound) {
+    if (range.location != NSNotFound && range2.location == NSNotFound) {
         if (![toolbar isHidden]) {
             [webView setFrame:CGRectMake(0, 0, webView.frame.size.width, webView.frame.size.height + toolbar.frame.size.height)];
             [toolbar setHidden:YES];
