@@ -3888,7 +3888,7 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>334206894.10437697</real>
+		<real>334236846.029486</real>
 		<string>{2941, 2227}</string>
 		<string>{4585, 0}</string>
 		<string>-webViewDidFinishLoad:</string>
@@ -4258,7 +4258,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>{{19, 7}, {1825, 1033}}</string>
+		<string>{{278, 142}, {1825, 1033}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -10094,7 +10094,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>334206894.101511</real>
+		<real>334236846.02748901</real>
 		<string>{2941, 2227}</string>
 		<string>{4585, 0}</string>
 		<dict>
@@ -11599,7 +11599,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 11:14 PM</string>
+		<string>Yesterday at 11:14 PM</string>
 		<integer>106</integer>
 		<dict>
 			<key>$class</key>
