@@ -44,11 +44,15 @@
 				<c:if test="${not empty event.description}">
 					<br />
 					<h3>Description</h3>
-					<p style="white-space: normal">
-						<c:out value="${event.description}" />
-					</p>
+					<c:forEach var="description" items="${event.description}" varStatus="status">
+						<p style="white-space: normal">
+							<c:out value="${description}" />
+						</p>
+						<c:if test="${not status.last}">
+							<br/>
+						</c:if>
+					</c:forEach>
 				</c:if>
-
 				<c:if test="${not empty event.category}">
 					<br />
 					<h3>Category</h3>

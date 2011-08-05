@@ -53,10 +53,6 @@
         </property>
     </bean>
 	
-	<!-- 
-    http://localhost:8080/ccl-dev
-    https://test.uisapp2.iu.edu/ccl-snd
-	-->
     <bean id="calendarEventOAuthService" class="edu.iu.es.espd.ccl.oauth.CalendarEventOAuthServiceImpl">
         <property name="calendarRestURL" value="${calendar.oauth.baseUrl}/rest/" />
         <property name="providerPublicURL" value="${calendar.oauth.baseUrl}/session" />
@@ -76,10 +72,6 @@
         </property>
     </bean>
          
-    <!--  
-    https://test.uisapp2.iu.edu/ath-unt/
-    http://129.79.44.142:8080/ath-dev/
-    -->    
     <bean class="org.kuali.mobility.athletics.service.AthleticsServiceImpl">
         <property name="socketTimeout" value="30000" />
         <property name="connectionManagerTimeout" value="10000" />

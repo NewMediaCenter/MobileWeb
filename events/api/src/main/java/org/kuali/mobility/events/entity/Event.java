@@ -43,7 +43,7 @@ public class Event implements Serializable {
 
 	private String location;
 
-	private String description;
+	private List<String> description;
 
 	private String link;
 
@@ -121,11 +121,11 @@ public class Event implements Serializable {
 		this.displayEndTime = displayEndTime;
 	}
 
-	public String getDescription() {
+	public List<String> getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(List<String> description) {
 		this.description = description;
 	}
 

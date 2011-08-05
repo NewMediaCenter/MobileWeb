@@ -38,7 +38,6 @@
 								<c:out value="${event.title}" />
 							</h3>
 							<p>
-								<c:out value="${event.displayStartDate}" />
 								<c:out value="${event.displayStartTime}" />
 							</p> </a>
 					</kme:listItem>

@@ -16,11 +16,14 @@
 package org.kuali.mobility.events.service;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +37,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import javax.xml.transform.Templates;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -43,6 +52,8 @@ import org.kuali.mobility.configparams.service.ConfigParamService;
 import org.kuali.mobility.events.entity.Category;
 import org.kuali.mobility.events.entity.Day;
 import org.kuali.mobility.events.entity.Event;
+import org.kuali.mobility.xsl.dao.XslDao;
+import org.kuali.mobility.xsl.entity.Xsl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xml.sax.InputSource;
@@ -70,18 +81,14 @@ public class EventsServiceImpl implements EventsService {
 	@Autowired
 	private ConfigParamService configParamService;
 
+	@Autowired
+	private XslDao xslDao;
+
 	private static final String RSS_TYPE_EVENTS_ONESTART = "EVENTS-ONESTART";
-	private static final String RSS_TYPE_EVENTS_CALENDAR = "EVENTS-IUEVENTS";
-	private static final String RSS_TYPE_EVENTS_IUPUI = "EVENTS-IUPUI";
-	private static final String RSS_TYPE_EVENTS_OTHER = "EVENTS-OTHER";
 	private static final String RSS_TYPE_EVENTS_GENERAL = "EVENTS-GENERAL";
 	private static final String DATA_XML_REPLACEMENT_TOKENS = "Data.XML.Replacement.Tokens";
 	private static final String EVENTS_CCL_PARSER_HEADER = "Events.CCL.Parser.Header";
 	private static final String EVENTS_CCL_PARSER_FOOTER = "Events.CCL.Parser.Footer";
-	private static final String EVENTS_CCL_PARSER_DELIMITER = "Events.CCL.Parser.Delimiter";
-	private static final String EVENTS_CCL_PARSER_LINEFORMAT = "Events.CCL.Parser.LineFormat";
-	private static final String EVENTS_URL_MATCHER_REGEX = "Events.Url.Matcher.Regex";
-	private static final String EVENTS_URL_MATCHER_FORMAT = "Events.Url.Matcher.Format";
 	private static final String EVENTS_DEFAULT_PARSER_HEADER = "Events.Default.Parser.Header";
 	private static final String EVENTS_DEFAULT_PARSER_FOOTER = "Events.Default.Parser.Footer";
 
@@ -136,22 +143,20 @@ public class EventsServiceImpl implements EventsService {
 							// desc =
 							// desc.replaceAll("\\|\\|VALIDLINETAG\\|\\|",
 							// "<br/>");
+							// } else
 							if (this.isOneStartCalendar(maintRss)) {
 								parseEvent(sdfNormal, sdfAllDay, item, event);
 							} else if (this.isNorthwestMarketingCalendar(categoryId)) {
-								LinkFeed lf = this.getDynamicRssCacheService().getLinkFeed(eventId, rss);
-								desc = lf.getBodyText();
+								LinkFeed lf = this.getDynamicRssCacheService().getLinkFeed(item.getLink(), rss);
+								event.setDescription(parseDescription(lf.getBodyText()));
 							} else if (this.isEventsGeneral(maintRss)) {
 								try {
-									// desc =
-									// this.transformEventDescription(desc);
+									event.setDescription(parseDescription(this.transformEventDescription(desc)));
 								} catch (Exception e) {
-									desc = StringEscapeUtils.escapeHtml(desc);
-									desc = desc.replaceAll("\n", "<br/>");
+									event.setDescription(parseDescription(StringEscapeUtils.escapeHtml(desc)));
 								}
 							} else {
-								desc = StringEscapeUtils.escapeHtml(desc);
-								desc = desc.replaceAll("\n", "<br/>");
+								event.setDescription(parseDescription(StringEscapeUtils.escapeHtml(desc)));
 							}
 							/*
 							 * if (event.getFields() != null &&
@@ -163,7 +168,6 @@ public class EventsServiceImpl implements EventsService {
 							 * event.setFields(fields); }
 							 */
 
-							// event.setPubDate(item.getPublishDate());
 							if (item.getPublishDate() != null) {
 								event.setStartDate(new Date(item.getPublishDate().getTime()));
 							}
@@ -198,20 +202,10 @@ public class EventsServiceImpl implements EventsService {
 			}
 		}
 		return event;
-
 	}
 
 	public Category getAllEvents(String campus, String categoryId) {
-		boolean deepLinked = false;
-		MaintRss maintRss = null;
-		if (deepLinked) {
-			maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode("ZZ", categoryId);
-			// if ("nw_shuttle".equals(code)) {
-			// page.setNavbarImage("bc-icons-iunshuttle");
-			// }
-		} else {
-			maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode(campus, categoryId);
-		}
+		MaintRss maintRss = this.getRssCacheService().getMaintRssByCampusAndShortCode(campus, categoryId);
 		if (maintRss != null) {
 			String timezone = null;
 			if (maintRss.getCampus() != null && (maintRss.getCampus().equals("NW") || maintRss.getCampus().equals("ZZ"))) {
@@ -249,7 +243,47 @@ public class EventsServiceImpl implements EventsService {
 		return categories;
 	}
 
-	public void parseIUPUIEvent(Event event, String eventId) {
+	private List<String> parseDescription(String description) {
+		List<String> descriptions = new ArrayList<String>();
+		if (description != null && !"".equals(description)) {
+			String[] array = description.split("\n");
+
+			for (int i = 0; i < array.length; i++) {
+				String desc = array[i];
+
+				String[] d = desc.split("<br/>");
+				for (int ii = 0; ii < d.length; ii++) {
+					String desc2 = d[ii];
+					descriptions.add(desc2);
+				}
+			}
+		}
+		return descriptions;
+	}
+
+	private String transformEventDescription(String description) throws Exception {
+		String parserHeader = this.getConfigParamService().findValueByName(EVENTS_DEFAULT_PARSER_HEADER);
+		String parserFooter = this.getConfigParamService().findValueByName(EVENTS_DEFAULT_PARSER_FOOTER);
+		if (parserHeader == null || parserHeader.trim().length() < 1) {
+			parserHeader = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><fields>";
+		}
+		if (parserFooter == null || parserFooter.trim().length() < 1) {
+			parserFooter = "</fields>";
+		}
+		String xml = parserHeader + description + parserFooter;
+		Xsl xsl = this.getXslDao().findXslByCode("events_general");
+
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Templates templates = transformerFactory.newTemplates(new StreamSource(new ByteArrayInputStream(xsl.getValue().getBytes())));
+		Transformer transformer = templates.newTransformer();
+
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		transformer.transform(new StreamSource(new ByteArrayInputStream(xml.getBytes())), new StreamResult(byteArrayOutputStream));
+		String output = byteArrayOutputStream.toString();
+		return output;
+	}
+
+	private void parseIUPUIEvent(Event event, String eventId) {
 		String url = "http://events.iupui.edu/mobile/event_detail.php?event_id=" + eventId;
 		try {
 			SAXBuilder builder = new SAXBuilder();
@@ -259,7 +293,8 @@ public class EventsServiceImpl implements EventsService {
 			Document doc = builder.build(new InputSource(new StringReader(xml)));
 			Element root = doc.getRootElement();
 			event.setTitle(root.getChildText("EVENT_TITLE"));
-			event.setDescription(StringEscapeUtils.escapeHtml(root.getChild("SUMMARY").getValue().trim()));
+
+			event.setDescription(parseDescription(StringEscapeUtils.escapeHtml(root.getChild("SUMMARY").getValue().trim())));
 			event.setLocation(StringEscapeUtils.escapeHtml(root.getChildText("LOCATION_NAME")) + StringEscapeUtils.escapeHtml(root.getChildText("LOCATION")));
 			event.setContactEmail(StringEscapeUtils.escapeHtml(root.getChildText("EMAIL")));
 			event.setContact(StringEscapeUtils.escapeHtml(root.getChildText("CONTACT")));
@@ -386,15 +421,38 @@ public class EventsServiceImpl implements EventsService {
 			if (this.isOneStartCalendar(maintRss)) {
 				events = parseEvents(rss);
 			} else {
-				// StandardEventsParser standardParser = new
-				// StandardEventsParser();
-				// events = standardParser.parseEvents(rss);
+				events = parseStandardEvents(rss);
 			}
 		} else {
 			Date date = new Date();
 			// String replacementTokens =
 			// getConfigParamService().findValueByName(DATA_XML_REPLACEMENT_TOKENS);
 			events = parseIUPUIEventsList(maintRss.getUrl(), date);
+		}
+		return events;
+	}
+
+	public List<Event> parseStandardEvents(Rss rss) {
+		List<Event> events = new ArrayList<Event>();
+		for (RssItem item : rss.getRssItems()) {
+			try {
+				Event event = new Event();
+				event.setTitle(item.getTitle());
+				event.setLink(item.getLinkUrlEncoded());
+				if (item.getPublishDate() != null) {
+					Timestamp pubDateTs = item.getPublishDate();
+					// No way to know if All Day from this information
+					// Calendar.getInstance() probably a better way to do this
+					// in the future
+					Date pubDate = new Date(pubDateTs.getTime());
+					event.setStartDate(pubDate);
+					event.setEventId(item.getLinkUrlEncoded());
+					// event.setPubDate(pubDateTs);
+					events.add(event);
+				}
+			} catch (Exception e) {
+				LOG.error("Error converting event for Rss: " + rss.getRssId(), e);
+			}
 		}
 		return events;
 	}
@@ -516,7 +574,7 @@ public class EventsServiceImpl implements EventsService {
 				event.setLocation(fields.get("Location"));
 			}
 			if (fields.get("Description") != null) {
-				event.setDescription(fields.get("Description"));
+				event.setDescription(parseDescription(fields.get("Description")));
 			}
 			if (fields.get("Contact Email") != null) {
 				event.setContact(fields.get("Contact Email"));
@@ -572,10 +630,6 @@ public class EventsServiceImpl implements EventsService {
 		return RSS_TYPE_EVENTS_ONESTART.equals(maintRss.getType());
 	}
 
-	private boolean isIUEventsCalendar(MaintRss maintRss) {
-		return RSS_TYPE_EVENTS_CALENDAR.equals(maintRss.getType());
-	}
-
 	private boolean isEventsGeneral(MaintRss maintRss) {
 		return RSS_TYPE_EVENTS_GENERAL.equals(maintRss.getType());
 	}
@@ -618,5 +672,13 @@ public class EventsServiceImpl implements EventsService {
 
 	public void setConfigParamService(ConfigParamService configParamService) {
 		this.configParamService = configParamService;
+	}
+
+	public XslDao getXslDao() {
+		return xslDao;
+	}
+
+	public void setXslDao(XslDao xslDao) {
+		this.xslDao = xslDao;
 	}
 }
