@@ -8,23 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #ifdef PHONEGAP_FRAMEWORK
-	#import <PhoneGap/PGPlugin.h>
+#import <PhoneGap/PGPlugin.h>
 #else
-	#import "PGPlugin.h"
+#import "PGPlugin.h"
 #endif
 #import "ChildBrowserViewController.h"
 
-
-
 @interface ChildBrowserCommand : PGPlugin <ChildBrowserDelegate>  {
-
-	ChildBrowserViewController* childBrowser;
+	ChildBrowserViewController *childBrowser;
 }
 
 @property (nonatomic, retain) ChildBrowserViewController *childBrowser;
 
-
-- (void) showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
--(void) onChildLocationChange:(NSString*)newLoc;
+- (void) showWebPage:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options;
+- (void) onChildLocationChange:(NSString *)newLoc;
 
 @end

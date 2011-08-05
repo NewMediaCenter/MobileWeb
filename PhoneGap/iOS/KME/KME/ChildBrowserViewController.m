@@ -14,25 +14,31 @@
 @synthesize supportedOrientations;
 @synthesize isImage;
 @synthesize delegate;
+@synthesize toolbar;
+@synthesize webView;
+@synthesize backBtn;
+@synthesize fwdBtn;
+@synthesize safariBtn;
+@synthesize refreshBtn;
 
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
+- (void) dealloc {
+	[[self webView] setDelegate:nil];
+	 
+	[self setWebView:nil];
+	[self setRefreshBtn:nil];
+	[self setBackBtn:nil];
+	[self setFwdBtn:nil];
+	[self setSafariBtn:nil];
+	[self setSupportedOrientations:nil];
+    
+	[super dealloc];
 }
-*/
 
-+ (NSString*) resolveImageResource:(NSString*)resource
-{
++ (NSString*) resolveImageResource:(NSString*)resource {
 	NSString* systemVersion = [[UIDevice currentDevice] systemVersion];
 	BOOL isLessThaniOS4 = ([systemVersion compare:@"4.0" options:NSNumericSearch] == NSOrderedAscending);
 	
-	// the iPad image (nor retina) differentiation code was not in 3.x, and we have to explicitly set the path
-	if (isLessThaniOS4)
-	{
+	if (isLessThaniOS4) {
         return [NSString stringWithFormat:@"%@.png", resource];
 	}
 	
@@ -40,115 +46,68 @@
 }
 
 
-- (ChildBrowserViewController*)initWithScale:(BOOL)enabled
-{
+- (ChildBrowserViewController *) initWithScale:(BOOL)enabled {
     self = [super init];
-	
-	
-	scaleEnabled = enabled;
-	
+	scaleEnabled = enabled;	
 	return self;	
 }
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
     
-	//refreshBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/but_refresh"]];
-	//backBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_left"]];
-	//fwdBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_right"]];
-	//safariBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/compass"]];
-
-	webView.delegate = self;
-	webView.scalesPageToFit = TRUE;
-	//webView.backgroundColor = [UIColor whiteColor];
+	[refreshBtn setImage:[UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/but_refresh"]]];
+    [backBtn    setImage:[UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_left"]]];
+	[fwdBtn     setImage:[UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_right"]]];
+	[safariBtn  setImage:[UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/compass"]]];
     
-	//NSLog(@"View did load");
+	[webView setDelegate:self];
+	[webView setScalesPageToFit:YES];
+	[webView setBackgroundColor:[UIColor whiteColor]];
+    
+    [toolbar setHidden:YES];    
 }
 
-
-
-
-
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+- (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-	//NSLog(@"View did UN-load");
-}
+- (void) viewDidUnload {}
 
-
-- (void)dealloc {
-
-	webView.delegate = nil;
-	
-	[webView release];
-	//[closeBtn release];
-	//[refreshBtn release];
-	//[addressLabel release];
-	//[backBtn release];
-	//[fwdBtn release];
-	//[safariBtn release];
-	//[spinner release];
-	[ supportedOrientations release];
-	[super dealloc];
-}
-
--(void)closeBrowser
-{
-	
-	if(delegate != NULL)
-	{
+- (void) closeBrowser {	
+	if (delegate != NULL) {
 		[delegate onClose];		
 	}
 	
-	[ [super parentViewController] dismissModalViewControllerAnimated:YES];
+	[[super parentViewController] dismissModalViewControllerAnimated:YES];
 }
 
--(IBAction) onDoneButtonPress:(id)sender
-{
-	[ self closeBrowser];
-
+- (IBAction) onDoneButtonPress:(id)sender {
+	[self closeBrowser];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]];
     [webView loadRequest:request];
 }
 
 
--(IBAction) onSafariButtonPress:(id)sender
-{
-	
-	if(delegate != NULL)
-	{
+- (IBAction) onSafariButtonPress:(id)sender {
+	if (delegate != NULL) {
 		[delegate onOpenInSafari];		
 	}
 	
-	if(isImage)
-	{
-		NSURL* pURL = [ [NSURL alloc] initWithString:imageURL ];
-		[ [ UIApplication sharedApplication ] openURL:pURL  ];
-	}
-	else
-	{
+	if (isImage) {
+		NSURL* pURL = [[NSURL alloc] initWithString:imageURL];
+		[[UIApplication sharedApplication] openURL:pURL];
+	} else {
 		NSURLRequest *request = webView.request;
 		[[UIApplication sharedApplication] openURL:request.URL];
 	}
-
-	 
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation 
-{
-	BOOL autoRotate = [self.supportedOrientations count] > 1; // autorotate if only more than 1 orientation supported
-	if (autoRotate)
-	{
-		if ([self.supportedOrientations containsObject:
-			 [NSNumber numberWithInt:interfaceOrientation]]) {
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation  {
+	BOOL autoRotate = [[self supportedOrientations] count] > 1; 
+
+	if (autoRotate) {
+		if ([[self supportedOrientations] containsObject:[NSNumber numberWithInt:interfaceOrientation]]) {
 			return YES;
 		}
     }
@@ -156,67 +115,58 @@
 	return NO;
 }
 
-
-
-
-- (void)loadURL:(NSString*)url
-{
-	//NSLog(@"Opening Url : %@",url);
-	 
-	if( [url hasSuffix:@".png" ]  || 
-	    [url hasSuffix:@".jpg" ]  || 
-		[url hasSuffix:@".jpeg" ] || 
-		[url hasSuffix:@".bmp" ]  || 
-		[url hasSuffix:@".gif" ]  )
-	{
-		[ imageURL release ];
+- (void) loadURL:(NSString*)url {    
+	if ([url hasSuffix:@".png"]  || 
+        [url hasSuffix:@".jpg"]  || 
+        [url hasSuffix:@".jpeg"] || 
+        [url hasSuffix:@".bmp"]  || 
+        [url hasSuffix:@".gif"]) {
+        
+		[imageURL release];
 		imageURL = [url copy];
-		isImage = YES;
-		NSString* htmlText = @"<html><body style='background-color:#333;margin:0px;padding:0px;'><img style='min-height:200px;margin:0px;padding:0px;width:100%;height:auto;' alt='' src='IMGSRC'/></body></html>";
-		htmlText = [ htmlText stringByReplacingOccurrencesOfString:@"IMGSRC" withString:url ];
-
-		[webView loadHTMLString:htmlText baseURL:[NSURL URLWithString:@""]];
 		
-	}
-	else
-	{
+        isImage = YES;
+		
+        NSString* htmlText = @"<html><body style='background-color:#333;margin:0px;padding:0px;'><img style='min-height:200px;margin:0px;padding:0px;width:100%;height:auto;' alt='' src='IMGSRC'/></body></html>";
+		htmlText = [htmlText stringByReplacingOccurrencesOfString:@"IMGSRC" withString:url];
+        
+		[webView loadHTMLString:htmlText baseURL:[NSURL URLWithString:@""]];
+	} else {
 		imageURL = @"";
 		isImage = NO;
 		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-		[webView loadRequest:request];
+        [webView loadRequest:request];
 	}
-	webView.hidden = NO;
+	
+    [webView setHidden:NO];
 }
 
 
 - (void)webViewDidStartLoad:(UIWebView *)sender {
-    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-	//addressLabel.text = @"Loading...";
-	//backBtn.enabled = webView.canGoBack;
-	//fwdBtn.enabled = webView.canGoForward;
-	
-	//[ spinner startAnimating ];
-	
+
+	[backBtn setEnabled:[webView canGoBack]];
+    [fwdBtn setEnabled:[webView canGoForward]];	
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)sender 
-{
-	NSURLRequest *request = webView.request;
-	//NSLog(@"New Address is : %@",request.URL.absoluteString);
-	//addressLabel.text = request.URL.absoluteString;
-	//backBtn.enabled = webView.canGoBack;
-	//fwdBtn.enabled = webView.canGoForward;
-	//[ spinner stopAnimating ];
+- (void)webViewDidFinishLoad:(UIWebView *)sender {
+	[backBtn setEnabled:[webView canGoBack]];
+	[fwdBtn setEnabled:webView.canGoForward];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	if(delegate != NULL)
-	{
+        
+	NSURLRequest *request = [webView request];
+    if ([request.URL.absoluteString isEqualToString:@"http://www.iupuijags.com/mobile/"]) {
+        [toolbar setHidden:NO];
+        [webView setFrame:CGRectMake(0, 0, webView.frame.size.width, webView.frame.size.height - toolbar.frame.size.height)];                
+    } else {
+        [webView setFrame:CGRectMake(0, 0, webView.frame.size.width, webView.frame.size.height + toolbar.frame.size.height)];
+        [toolbar setHidden:YES];
+    }
+    
+	if(delegate != NULL) {
 		[delegate onChildLocationChange:request.URL.absoluteString];		
-	}
-
+	}    
 }
 
 
